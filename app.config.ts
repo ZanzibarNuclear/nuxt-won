@@ -1,6 +1,14 @@
 export default defineAppConfig({
   ui: {
-    primary: 'blue',
-    gray: 'slate',
+    primary: 'nuclear-blue',
+    gray: 'stone',
+    colors: ['nuclear-blue'],
+    button: {
+      font: 'font-bold',
+      default: {
+        size: 'md',
+        variant: 'outline',
+      },
+    },
   },
 })

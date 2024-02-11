@@ -1,9 +1,9 @@
 <template>
-  <div class="container">
+  <UContainer>
     <header>This is on every page at the top.</header>
     <slot />
     <footer>&copy; Copyright 2024. This is on every page at the bottom.</footer>
-  </div>
+  </UContainer>
 </template>
 
 <style scoped>
