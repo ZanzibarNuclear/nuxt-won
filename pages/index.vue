@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Hello, World of Nuclear!</h1>
-    <p>Today I am {{ age }} <button @click="older">+</button> years old.</p>
+    <age-declaration :age="age" @increment="older" @decrement="younger" />
   </div>
 </template>
 
@@ -10,11 +10,14 @@ const age = ref(4)
 const older = () => {
   age.value += 1
 }
+const younger = () => {
+  age.value -= 1
+}
 </script>
 
 <style scoped>
 h1 {
-  color: teal;
+  color: primary;
   margin-bottom: 1.5rem;
   font-size: xx-large;
 }

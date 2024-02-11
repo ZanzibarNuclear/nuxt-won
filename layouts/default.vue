@@ -1,7 +1,9 @@
 <template>
-  <header>This is on every page at the top.</header>
-  <slot />
-  <footer>&copy; Copyright 2024. This is on every page at the bottom.</footer>
+  <div class="container">
+    <header>This is on every page at the top.</header>
+    <slot />
+    <footer>&copy; Copyright 2024. This is on every page at the bottom.</footer>
+  </div>
 </template>
 
 <style scoped>
