@@ -20,20 +20,25 @@ const links = [
     {
       label: 'Daily Lessons',
       icon: 'i-heroicons-academic-cap',
+      to: 'daily-lessons',
     },
     {
       label: 'Simulators',
       icon: 'i-heroicons-cog',
+      to: 'simulators',
     },
     {
       label: 'Fun and Games',
       icon: 'i-heroicons-puzzle-piece',
+      to: 'fun-and-games',
     },
   ],
   [
     {
       label: "Zanzi's Nuclear Stack",
       icon: 'i-heroicons-document-text',
+      to: 'https://zanzisnuclearstack.substack.com/',
+      target: '_blank',
     },
     {
       label: 'Zanzibar on X',
