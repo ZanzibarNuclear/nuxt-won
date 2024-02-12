@@ -4,30 +4,26 @@
       <div class="text-2xl tracking-widest">Declaration of Age</div>
     </template>
 
-    <div class="h-32 leading-loose">
-      <div class="row">
-        <div class="col">
+    <div class="leading-loose">
+      <div class="flex">
+        <div class="flex-col pr-4">
           <p v-for="n in count">Today I am {{ age }} years old.</p>
         </div>
-        <div class="col">
-          <UButton color="primary" @click="() => (count += 1)">
+        <div class="flex-col">
+          <UButton class="mr-2" @click="() => (count += 1)">
             <Icon name="mdi:plus" />
           </UButton>
-          <UButton
-            :disabled="count <= 1"
-            color="primary"
-            @click="() => (count -= 1)"
-          >
+          <UButton :disabled="count <= 1" @click="() => (count -= 1)">
             <Icon name="mdi:minus" />
           </UButton>
         </div>
       </div>
       <p class="mt-4">
-        <UButton color="primary" @click="emit('increment')">
+        <UButton @click="emit('increment')">
           <Icon name="mdi:arrow-up" size="1.5em" />
         </UButton>
         or
-        <UButton :disabled="age <= 0" color="indigo" @click="emit('decrement')">
+        <UButton color="indigo" :disabled="age <= 0" @click="emit('decrement')">
           <Icon name="mdi:arrow-down" size="1.5em" />
         </UButton>
       </p>
