@@ -17,7 +17,6 @@ const younger = () => {
 
 <style scoped>
 h1 {
-  color: primary;
   margin-bottom: 1.5rem;
   font-size: xx-large;
 }

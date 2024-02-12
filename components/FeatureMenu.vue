@@ -42,11 +42,8 @@ const links = [
     },
     {
       label: 'Zanzibar on X',
-      icon: 'i-ri-twitter-x-fill',
-    },
-    {
-      label: 'Discord Chat Channel',
-      icon: 'i-ic-baseline-discord',
+      icon: 'i-heroicons-x-mark',
+      to: 'https://twitter.com/ZanzibarNuclear',
     },
   ],
 ]
