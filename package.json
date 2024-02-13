@@ -1,5 +1,5 @@
 {
-  "name": "nuxt-app",
+  "name": "world-of-nuclear",
   "private": true,
   "type": "module",
   "scripts": {
@@ -10,8 +10,14 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@nuxt/ui": "^2.13.0",
     "nuxt": "^3.10.0",
+    "nuxt-icon": "^0.6.8",
     "vue": "^3.4.15",
     "vue-router": "^4.2.5"
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true
   }
 }
