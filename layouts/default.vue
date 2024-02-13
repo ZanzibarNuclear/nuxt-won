@@ -1,8 +1,14 @@
 <template>
   <UContainer>
     <header>
-      <UButton to="/" icon="i-heroicons-home" variant="ghost" />
-      This is on every page at the top.
+      <UButton
+        button-class="pt-2"
+        to="/"
+        icon="i-heroicons-home"
+        variant="ghost"
+        size="xl"
+      />
+      <span class="px-5 text-2xl">Zanzibar's World of Nuclear</span>
     </header>
     <div class="flex gap-x-5">
       <div class="flex-col">

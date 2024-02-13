@@ -1,23 +1,7 @@
 <template>
-  <div>
-    <h1>Hello, World of Nuclear!</h1>
-    <age-declaration :age="age" @increment="older" @decrement="younger" />
-  </div>
+  <div>Welcome & Features</div>
 </template>
 
-<script setup>
-const age = ref(4)
-const older = () => {
-  age.value += 1
-}
-const younger = () => {
-  age.value -= 1
-}
-</script>
+<script setup></script>
 
-<style scoped>
-h1 {
-  margin-bottom: 1.5rem;
-  font-size: xx-large;
-}
-</style>
+<style scoped></style>
