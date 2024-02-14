@@ -1,13 +1,11 @@
 <template>
   <UContainer>
     <header>
-      <UButton
-        button-class="pt-2"
-        to="/"
-        icon="i-heroicons-home"
-        variant="ghost"
-        size="xl"
-      />
+      <UButton square variant="ghost" to="/">
+        <template #leading>
+          <UAvatar src="/images/Zanzibar.svg" size="md" />
+        </template>
+      </UButton>
       <span class="px-5 text-2xl">Zanzibar's World of Nuclear</span>
     </header>
     <div class="flex gap-x-5">
