@@ -14,7 +14,7 @@
       <div class="flex-col">
         <feature-menu />
       </div>
-      <div class="flex-col bg-gray-800 w-full px-4 py-4">
+      <div class="flex-col w-full px-4 py-4">
         <slot />
       </div>
     </div>
