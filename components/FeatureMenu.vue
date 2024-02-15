@@ -33,9 +33,9 @@ const links = [
       to: '/fun-and-games',
     },
     {
-      label: 'Blog',
-      icon: 'i-heroicons-puzzle-piece',
-      to: '/blog',
+      label: 'Essays',
+      icon: 'i-heroicons-document-text',
+      to: '/essays',
     },
   ],
   [
