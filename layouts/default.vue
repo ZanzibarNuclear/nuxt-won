@@ -16,7 +16,7 @@
         <slot />
       </div>
     </div>
-    <footer>&copy; Copyright 2024, The Nuclear Stack, LLC.</footer>
+    <footer>&copy; Copyright 2024, Nuclear Ambitions</footer>
   </UContainer>
 </template>
 
