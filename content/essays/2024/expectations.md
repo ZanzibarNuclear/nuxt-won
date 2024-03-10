@@ -2,6 +2,10 @@
 
 > The surest path to disappointment is to have expectations.
 
+No, I don't mean it. That's way too cynical.
+
+Regardless, let's make sure you understand what World of Nuclear is all about.
+
 - This is a place to learn about nuclear energy and the ways we can use it to benefit humanity.
   - We will talk about nuclear science, our best understanding of how nuclear energy is released, and the byproducts of fission and fusion.
   - We will talk about nuclear power: the many ways to turn nuclear energy into electricity.
