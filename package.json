@@ -23,5 +23,8 @@
   "prettier": {
     "semi": false,
     "singleQuote": true
+  },
+  "devDependencies": {
+    "sass": "^1.71.1"
   }
 }
