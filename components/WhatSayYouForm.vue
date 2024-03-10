@@ -33,8 +33,10 @@
 
 <script setup lang="ts">
 import { object, string, type InferType } from 'yup'
-import type { FormSubmitEvent } from '#ui/types'
+import type { FormSubmitEvent, Form } from '#ui/types'
 import { useWsyStore } from '@/stores/wsyStore'
+
+type Schema = InferType<typeof schema>
 
 const wsy = useWsyStore()
 const wsyForm = ref(null)
@@ -42,8 +44,6 @@ const wsyForm = ref(null)
 const schema = object({
   statement: string().required('Say something, please.'),
 })
-
-type Schema = InferType<typeof schema>
 
 const state = reactive({
   statement: undefined,

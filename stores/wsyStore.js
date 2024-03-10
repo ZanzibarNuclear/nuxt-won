@@ -4,7 +4,7 @@ export const useWsyStore = defineStore('wsy', () => {
   const statements = ref([])
 
   const makeStatement = (statement) => {
-    statements.value.push(statement)
+    statements.value.push({ statement, createdOn: new Date() })
   }
 
   const takeItBack = () => {
