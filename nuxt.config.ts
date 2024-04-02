@@ -10,6 +10,9 @@ export default defineNuxtConfig({
     '@nuxt/test-utils/module',
   ],
   content: {},
+  supabase: {
+    redirect: false,
+  },
   vite: {
     define: {
       global: 'window',
