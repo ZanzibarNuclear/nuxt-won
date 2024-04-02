@@ -10,4 +10,9 @@ export default defineNuxtConfig({
     '@nuxt/test-utils/module',
   ],
   content: {},
+  vite: {
+    define: {
+      global: 'window',
+    },
+  },
 })
