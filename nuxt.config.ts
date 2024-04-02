@@ -6,7 +6,13 @@ export default defineNuxtConfig({
     'nuxt-icon',
     '@nuxt/content',
     '@pinia/nuxt',
+    '@nuxtjs/supabase',
     '@nuxt/test-utils/module',
   ],
   content: {},
+  vite: {
+    define: {
+      global: 'window',
+    },
+  },
 })
