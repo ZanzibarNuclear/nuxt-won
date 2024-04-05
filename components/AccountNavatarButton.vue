@@ -1,12 +1,13 @@
 <template>
   <div class="m-2">
-    <UButton v-if="!signedIn" @click="toggleSignedIn" variant="solid">
+    <UButton v-if="!signedIn" @click="toggleSignedIn" variant="ghost">
       <UIcon name="i-mdi-login" class="big-icon" />
     </UButton>
     <UDropdown
       v-if="signedIn"
       :items="items"
       :popper="{ placement: 'bottom-start' }"
+      class="text-primary"
       ><UButton
         color="white"
         label="Bubba"
@@ -32,6 +33,7 @@ const items = [
       icon: 'i-mdi-logout',
       click: () => {
         toggleSignedIn()
+        navigateTo('/')
       },
     },
   ],
