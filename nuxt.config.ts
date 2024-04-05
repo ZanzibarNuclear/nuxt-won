@@ -13,6 +13,9 @@ export default defineNuxtConfig({
   supabase: {
     redirect: false,
   },
+  ui: {
+    icons: ['mdi', 'el', 'mingcute'],
+  },
   vite: {
     define: {
       global: 'window',
