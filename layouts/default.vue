@@ -7,8 +7,8 @@
             <UAvatar src="/images/Zanzibar.svg" size="md" />
           </template>
         </UButton>
-        <span class="b px-5 text-4xl">Zanzibar's World of Nuclear</span>
-        <AccountNavatarButton class="c" />
+        <span class="title text-4xl">Zanzibar's World of Nuclear</span>
+        <AccountNavatarWidget class="corner" />
       </div>
     </header>
     <div class="flex gap-x-5">
@@ -19,7 +19,9 @@
         <slot />
       </div>
     </div>
-    <footer>&copy; Copyright 2024, Nuclear Ambitions</footer>
+    <footer class="text-center">
+      &copy; Copyright 2024, Nuclear Ambitions
+    </footer>
   </UContainer>
 </template>
 
@@ -32,11 +34,11 @@ footer {
   margin-top: 5rem;
   margin-bottom: 1rem;
 }
-.b {
+.title {
   flex: 1;
   text-align: center;
 }
-.c {
+.corner {
   margin-left: auto;
 }
 </style>

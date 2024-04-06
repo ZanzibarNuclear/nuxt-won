@@ -1,5 +1,7 @@
 <template>
-  <div class="text-4xl mb-10">Let's learn about nuclear energy.</div>
+  <div class="text-center text-4xl mb-10">
+    Explore the world of nuclear energy.
+  </div>
   <div class="flex flex-wrap">
     <feature-tile
       class="w-72 mx-4 my-4"
