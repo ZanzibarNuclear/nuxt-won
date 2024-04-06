@@ -28,11 +28,27 @@
           />
         </template>
 
-        <UForm>
-          <div>username</div>
-          <div>password</div>
-          <UButton v-if="isJoin" @click="handleSignUp">Sign Me Up!</UButton>
-          <UButton v-else @click="handleSignIn">Sign In</UButton>
+        <UForm
+          :schema="schema"
+          :state="state"
+          class="space-y-4"
+          @submit="onSubmit"
+        >
+          <UFormGroup label="Email" name="email">
+            <UInput v-model="state.email" />
+          </UFormGroup>
+
+          <UFormGroup label="Password" name="password">
+            <UInput
+              v-model="state.password"
+              type="password"
+              autocomplete="off"
+            />
+          </UFormGroup>
+
+          <UButton type="submit">
+            {{ isJoin ? 'Sign Me Up!' : 'Sign In' }}
+          </UButton>
         </UForm>
 
         <template #footer>
@@ -45,7 +61,34 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
+import { object, string, type InferType } from 'yup'
+import type { FormSubmitEvent } from '#ui/types'
+
+const schema = object({
+  email: string().email('Invalid email').required('Required'),
+  password: string()
+    .min(8, 'Must be at least 8 characters')
+    .required('Required'),
+})
+
+type Schema = InferType<typeof schema>
+
+const state = reactive({
+  email: undefined,
+  password: undefined,
+})
+
+async function onSubmit(event: FormSubmitEvent<Schema>) {
+  // Do something with event.data
+  console.log(event.data)
+  if (isJoin.value) {
+    handleSignUp()
+  } else {
+    handleSignIn()
+  }
+}
+
 const isJoin = ref(false)
 const signedIn = ref(false)
 const handlePresentSignIn = () => {
