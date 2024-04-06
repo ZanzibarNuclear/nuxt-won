@@ -1,6 +1,6 @@
 <template>
   <div class="m-2">
-    <UButton v-if="!signedIn" @click="handleSignIn" variant="ghost">
+    <UButton v-if="!signedIn" @click="handlePresentSignIn" variant="ghost">
       <UIcon name="i-mdi-login" class="big-icon" /> Sign In
     </UButton>
     <UDropdown
@@ -13,34 +13,57 @@
         label="Bubba"
         trailing-icon="i-heroicons-chevron-down-20-solid"
     /></UDropdown>
-    <UModal v-model="authPanelIsOpen">
+    <UModal v-model="authPanelIsOpen" prevent-close>
       <UCard
         :ui="{
           ring: '',
           divide: 'divide-y divide-gray-100 dark:divide-gray-800',
         }"
       >
-        <template #header> Sign In or Join </template>
+        <template #header>
+          <UCheckbox
+            v-model="isJoin"
+            name="join"
+            label="Join World of Nuclear"
+          />
+        </template>
 
         <UForm>
           <div>username</div>
           <div>password</div>
-          <button>Sign In</button>
+          <UButton v-if="isJoin" @click="handleSignUp">Sign Me Up!</UButton>
+          <UButton v-else @click="handleSignIn">Sign In</UButton>
         </UForm>
 
-        <template #footer> Cancel </template>
+        <template #footer>
+          <UButton @click="handleCancel">
+            <UIcon name="i-mdi-cancel" class="big-icon" /> Cancel
+          </UButton>
+        </template>
       </UCard>
     </UModal>
   </div>
 </template>
 
 <script setup>
+const isJoin = ref(false)
 const signedIn = ref(false)
-const handleSignIn = () => {
-  signedIn.value = !signedIn.value
+const handlePresentSignIn = () => {
   authPanelIsOpen.value = true
 }
-
+const handleSignIn = () => {
+  signedIn.value = true
+  authPanelIsOpen.value = false
+}
+const handleSignUp = () => {
+  alert('Joining World of Nuclear...get excited.')
+  signedIn.value = true
+  isJoin.value = false
+  authPanelIsOpen.value = false
+}
+const handleCancel = () => {
+  authPanelIsOpen.value = false
+}
 const authPanelIsOpen = ref(false)
 
 const items = [
