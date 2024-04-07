@@ -89,8 +89,10 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
   }
 }
 
-const isJoin = ref(false)
+const user = useSupabaseUser()
 const signedIn = ref(false)
+
+const isJoin = ref(false)
 const handlePresentSignIn = () => {
   authPanelIsOpen.value = true
 }
@@ -126,6 +128,10 @@ const items = [
     },
   ],
 ]
+
+onMounted(() => {
+  signedIn.value = !!user
+})
 </script>
 
 <style lang="scss" scoped>
