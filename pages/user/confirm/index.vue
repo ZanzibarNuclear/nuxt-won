@@ -1,4 +1,4 @@
-<template>Sign In</template>
+<template>Confirm Sign In</template>
 
 <script setup lang="ts"></script>
 
