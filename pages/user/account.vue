@@ -1,7 +1,6 @@
 <template>
   <div>
-    <div class="text-3xl">Magic Link Authentication</div>
-    <SupabaseMagicLinkWidget />
+    <AccountDetails />
   </div>
 </template>
 

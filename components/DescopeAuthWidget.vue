@@ -33,8 +33,8 @@ const { logout } = useDescope()
 
 // const app = useNuxtApp().vueApp
 // app.use(descope, {
-//   projectId: 'P2emsXa7ut3UNIocHtXFrwUjyId6',
-//   baseUrl: 'http://localhost:3000',
+//   projectId: config.public.descopeProjectId,
+//   baseUrl: config.public.baseUrl,
 //   sessionTokenViaCookie: true,
 // })
 </script>
