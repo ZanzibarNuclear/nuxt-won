@@ -10,7 +10,7 @@
       class="text-primary"
       ><UButton
         color="white"
-        label="Bubba"
+        :label="user.email"
         trailing-icon="i-heroicons-chevron-down-20-solid"
     /></UDropdown>
     <UModal v-model="authPanelIsOpen" prevent-close>
