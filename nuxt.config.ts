@@ -32,7 +32,7 @@ export default defineNuxtConfig({
       ],
       cookieRedirect: true,
     },
-    cookieName: 'blargy',
+    cookieName: 'won',
     cookieOptions: {
       maxAge: 60 * 60 * 8,
       sameSite: 'lax',
