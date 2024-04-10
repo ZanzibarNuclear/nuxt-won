@@ -15,6 +15,7 @@
     /></UDropdown>
     <UModal v-model="authPanelIsOpen">
       <AuthMagicLinkCard @finish="closeAuthPanel" />
+      <AuthOAuthCard @finish="closeAuthPanel" />
     </UModal>
   </div>
 </template>

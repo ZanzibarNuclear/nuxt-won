@@ -1,5 +1,14 @@
-<template>Confirm Sign In</template>
+<script setup lang="ts">
+const user = useSupabaseUser()
 
-<script setup lang="ts"></script>
+watch(user, () => {
+  if (user.value) {
+      // Redirect to protected page
+      return navigateTo('/')
+  }
+}, { immediate: true })
+</script>
 
-<style scoped></style>
+<template>
+  <div>Waiting for login...</div>
+</template>
