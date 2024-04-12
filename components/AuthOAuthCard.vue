@@ -6,15 +6,17 @@
     <UButton
       icon="i-mdi-github"
       size="lg"
-      variant="solid"
+      variant="outline"
       label="GitHub"
+      class="mx-1"
       @click="signIn('github')"
     />
     <UButton
       icon="i-mdi-google"
       size="lg"
-      variant="solid"
+      variant="outline"
       label="Google"
+      class="mx-1"
       @click="signIn('google')"
     />
   </UCard>

@@ -10,7 +10,7 @@
       class="text-primary"
       ><UButton
         color="white"
-        :label="user?.email || 'Anonymous'"
+        :label="user?.email || 'Mystery VIP'"
         trailing-icon="i-heroicons-chevron-down-20-solid"
     /></UDropdown>
     <UModal v-model="authPanelIsOpen">
@@ -21,6 +21,7 @@
 </template>
 
 <script setup lang="ts">
+const supabase = useSupabaseClient()
 const user = useSupabaseUser()
 const signedIn = ref(false)
 const authPanelIsOpen = ref(false)
@@ -33,7 +34,7 @@ const closeAuthPanel = () => {
 }
 
 onMounted(() => {
-  signedIn.value = !!user
+  signedIn.value = !!user.value
 })
 
 const items = [
@@ -46,7 +47,8 @@ const items = [
     {
       label: 'Sign Out',
       icon: 'i-mdi-logout',
-      click: () => {
+      click: async () => {
+        await supabase.auth.signOut()
         signedIn.value = false
         navigateTo('/')
       },
