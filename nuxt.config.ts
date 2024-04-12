@@ -17,19 +17,11 @@ export default defineNuxtConfig({
   },
   content: {},
   supabase: {
-    redirect: false,
+    redirect: true,
     redirectOptions: {
       login: '/user/login',
       callback: '/user/confirm',
-      include: undefined,
-      exclude: [
-        'daily-lessons',
-        'fun-and-games',
-        'nuclear-news',
-        'simulators',
-        'what-say-you',
-        'essays',
-      ],
+      include: ['/what-say-you', '/user/account'],
       cookieRedirect: true,
     },
     cookieName: 'won',
