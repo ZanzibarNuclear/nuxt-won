@@ -8,7 +8,14 @@
       size="lg"
       variant="solid"
       label="GitHub"
-      @click="signInWithGithub"
+      @click="signIn('github')"
+    />
+    <UButton
+      icon="i-mdi-google"
+      size="lg"
+      variant="solid"
+      label="Google"
+      @click="signIn('google')"
     />
   </UCard>
 </template>
@@ -17,9 +24,9 @@
 const emit = defineEmits(['finish'])
 const supabase = useSupabaseClient()
 
-async function signInWithGithub() {
+async function signIn(provider) {
   const { data, error } = await supabase.auth.signInWithOAuth({
-    provider: 'github',
+    provider,
   })
   emit('finish')
 }
