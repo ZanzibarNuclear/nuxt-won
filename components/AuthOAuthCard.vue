@@ -20,16 +20,28 @@
       class="mx-1"
       @click="signIn('google')"
     />
+    <UButton
+      icon="i-ri-twitter-x-line"
+      size="lg"
+      variant="outline"
+      label="X / Twitter"
+      class="mx-1"
+      @click="signIn('twitter')"
+    />
   </UCard>
 </template>
 
 <script setup lang="ts">
+const config = useRuntimeConfig()
 const emit = defineEmits(['finish'])
 const supabase = useSupabaseClient()
 
 async function signIn(provider) {
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider,
+    options: {
+      redirectTo: `${config.baseUrl}/auth/confirm`,
+    },
   })
   emit('finish')
 }

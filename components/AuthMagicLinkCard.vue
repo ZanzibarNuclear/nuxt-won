@@ -43,11 +43,15 @@ const state = reactive({
 })
 
 async function onSendMagicLink(event: FormSubmitEvent<Schema>) {
+  const config = useRuntimeConfig()
   const { email } = event.data
   try {
     loading.value = true
     const { error } = await supabase.auth.signInWithOtp({
       email,
+      options: {
+        emailRedirectTo: `${config.baseUrl}/auth/confirm`,
+      },
     })
     if (error) throw error
     alert('Check your email for the login link!')
