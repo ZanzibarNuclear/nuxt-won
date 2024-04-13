@@ -19,9 +19,9 @@ export default defineNuxtConfig({
   supabase: {
     redirect: true,
     redirectOptions: {
-      login: '/user/login',
-      callback: '/user/confirm',
-      include: ['/what-say-you', '/user/account'],
+      login: '/auth/sign-in',
+      callback: '/auth/confirm',
+      include: ['/workshop', '/user'],
       cookieRedirect: true,
     },
     cookieName: 'won',

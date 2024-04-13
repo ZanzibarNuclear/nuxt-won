@@ -10,27 +10,27 @@ const links = [
     {
       label: 'Nuclear News',
       icon: 'i-heroicons-newspaper',
-      to: '/nuclear-news',
+      to: '/features/nuclear-news',
     },
     {
       label: 'What Say You',
       icon: 'i-heroicons-chat-bubble-left-ellipsis',
-      to: '/what-say-you',
+      to: '/features/what-say-you',
     },
     {
       label: 'Daily Lessons',
       icon: 'i-heroicons-academic-cap',
-      to: '/daily-lessons',
+      to: '/features/daily-lessons',
     },
     {
       label: 'Simulators',
       icon: 'i-heroicons-cog',
-      to: '/simulators',
+      to: '/features/simulators',
     },
     {
       label: 'Fun and Games',
       icon: 'i-heroicons-puzzle-piece',
-      to: '/fun-and-games',
+      to: '/features/fun-and-games',
     },
     {
       label: 'Essays',

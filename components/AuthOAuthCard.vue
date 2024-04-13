@@ -1,7 +1,8 @@
 <template>
   <UCard>
     <template #header>
-      <div class="text-2xl">Sign in using another service</div>
+      <h2>Sign in using your account on any of these services.</h2>
+      <div>You will be asked to share public profile information with us.</div>
     </template>
     <UButton
       icon="i-mdi-github"

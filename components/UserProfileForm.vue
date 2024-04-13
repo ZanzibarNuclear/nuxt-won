@@ -19,10 +19,10 @@
         size="sm"
       />
     </UFormGroup>
-    <UFormGroup label="Legal Name" description="For official correspondence">
+    <UFormGroup label="Full Name" description="For official correspondence">
       <UInput
         placeholder="John Smith, Billy Dee Williams"
-        v-model="state.legalName"
+        v-model="state.fullName"
         size="sm"
       />
     </UFormGroup>
@@ -61,7 +61,7 @@ import type { FormSubmitEvent } from '#ui/types'
 const schema = object({
   email: string(),
   screenName: string(),
-  legalName: string(),
+  fullName: string(),
   about: string(),
   xUsername: string(),
   linkedInUsername: string(),
@@ -72,7 +72,7 @@ type Schema = InferType<typeof schema>
 
 const state = reactive({
   screenName: undefined,
-  legalName: undefined,
+  fullName: undefined,
   about: undefined,
   xUsername: undefined,
   linkedInUsername: undefined,

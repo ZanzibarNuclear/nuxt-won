@@ -1,11 +1,23 @@
 <template>
   <UCard>
     <template #header>
-      <div class="text-2xl">Sign in with Magic Link</div>
+      <h2>Sign in with Magic Link</h2>
+      <div>
+        We will create a World of Nuclear account for you if you need one.
+      </div>
     </template>
     <UForm :state="state" :schema="schema" @submit="onSendMagicLink">
-      <UInput v-model="state.email" type="email" />
-      <UButton type="submit" label="Send link" />
+      <UFormGroup label="Email" name="email">
+        <UButtonGroup size="md" orientation="horizontal">
+          <UInput
+            class="mr-4"
+            name="email"
+            v-model="state.email"
+            placeholder="your email address"
+          />
+          <UButton type="submit" label="Send link" />
+        </UButtonGroup>
+      </UFormGroup>
     </UForm>
   </UCard>
 </template>
@@ -19,7 +31,9 @@ const supabase = useSupabaseClient()
 const loading = ref(false)
 
 const schema = object({
-  email: string().email('Invalid email').required('Required'),
+  email: string()
+    .email('Invalid email')
+    .required('We need to know where to send the link'),
 })
 
 type Schema = InferType<typeof schema>
@@ -29,7 +43,6 @@ const state = reactive({
 })
 
 async function onSendMagicLink(event: FormSubmitEvent<Schema>) {
-  console.log(event.data)
   const { email } = event.data
   try {
     loading.value = true
