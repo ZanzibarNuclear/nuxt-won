@@ -1,49 +1,66 @@
 <template>
   <UCard>
-    <div v-for="item in profile" class="mb-4 grid grid-cols-5">
-      <span class="label">{{ item.label }}</span>
-      <span class="col-span-4">{{ item.value }}</span>
+    <div class="mb-4 grid grid-cols-4">
+      <span class="label">User ID</span>
+      <span class="col-span-3">{{ profile.id }}</span>
+    </div>
+    <div class="mb-4 grid grid-cols-4">
+      <span class="label">Username</span>
+      <span class="col-span-3">{{ profile.username }}</span>
+    </div>
+    <div class="mb-4 grid grid-cols-4">
+      <span class="label">Screen Name</span>
+      <span class="col-span-3">{{ profile.screenName }}</span>
+    </div>
+    <div class="mb-4 grid grid-cols-4">
+      <span class="label">Full Name</span>
+      <span class="col-span-3">{{ profile.fullName }}</span>
+    </div>
+    <div class="mb-4 grid grid-cols-4">
+      <span class="label">Avatar URL</span>
+      <span class="col-span-3">{{ profile.avatarURl }}</span>
+    </div>
+    <div class="mb-4 grid grid-cols-4">
+      <span class="label">Website</span>
+      <span class="col-span-3">{{ profile.website }}</span>
+    </div>
+    <div class="mb-4 grid grid-cols-4">
+      <span class="label">Join Reason</span>
+      <span class="col-span-3">{{ profile.joinReason }}</span>
+    </div>
+    <div class="mb-4 grid grid-cols-4">
+      <span class="label">Nuclear Likes</span>
+      <span class="col-span-3">{{ profile.nuclearLikes }}</span>
+    </div>
+    <div class="mb-4 grid grid-cols-4">
+      <span class="label">X Username</span>
+      <span class="col-span-3">@{{ profile.xUsername }}</span>
+    </div>
+    <div class="mb-4 grid grid-cols-4">
+      <span class="label">LinkedIn Profile Name</span>
+      <span class="col-span-3">{{ profile.linkedInProfileName }}</span>
+    </div>
+    <div class="mb-4 grid grid-cols-4">
+      <span class="label">Joined on</span>
+      <span class="col-span-3">{{ profile.joinedAt }}</span>
+    </div>
+    <div class="mb-4 grid grid-cols-4">
+      <span class="label">Last update</span>
+      <span class="col-span-3">{{ profile.updatedAt }}</span>
     </div>
   </UCard>
 </template>
 
 <script setup lang="ts">
-const profile = ref([
-  {
-    label: 'Email',
-    value: 'me@domain.com',
-  },
-  {
-    label: 'Screen Name',
-    value: 'Blargy Pants Man',
-  },
-  {
-    label: 'Legal Name',
-    value: 'Mr. Blargy Pants, III',
-  },
-  {
-    label: 'About',
-    value:
-      "I am the man of blargy who wears pants. Some call me Mr. Fancy Pants, but that's not my real name. Frankly, I am insulted.",
-  },
-  {
-    label: 'X',
-    value: '@blargypantsman',
-  },
-  {
-    label: 'LinkedIn',
-    value: '@blargypantsiii',
-  },
-  {
-    label: 'Discord',
-    value: 'blargypants',
-  },
-])
+import { useUserStore } from '~/stores/userStore'
+const profile = useUserStore().profile
 </script>
 
 <style scoped>
 .label {
-  font-weight: bold;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
   margin-right: 3rem;
+  text-align: right;
 }
 </style>

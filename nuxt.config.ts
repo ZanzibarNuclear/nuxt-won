@@ -17,11 +17,12 @@ export default defineNuxtConfig({
   },
   content: {},
   supabase: {
-    redirect: false,
+    redirect: true,
     redirectOptions: {
       login: '/auth/sign-in',
       callback: '/auth/confirm',
       cookieRedirect: true,
+      include: ['/user(/*)?', '/workshop(/*)?'],
     },
     cookieName: 'won',
     cookieOptions: {

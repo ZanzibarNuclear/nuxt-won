@@ -42,7 +42,7 @@ const items = [
     {
       label: 'Profile',
       icon: 'i-mdi-card-account-details',
-      to: '/user-settings',
+      to: '/user/account',
     },
     {
       label: 'Sign Out',
