@@ -18,6 +18,7 @@ export const useUserStore = defineStore('user', () => {
   const settings = ref({})
 
   const loadProfile = async (data) => {
+    console.log('loadProfile', data)
     profile.value.id = data.id
     profile.value.username = data.username
     profile.value.screenName = data.screen_name
@@ -34,9 +35,5 @@ export const useUserStore = defineStore('user', () => {
 
   // TODO: format timestamps to date or date-time as needed
 
-  const updateProfile = async (updates) => {
-    console.log('Send update to backend and store locally', updates)
-  }
-
-  return { profile, settings, loadProfile, updateProfile }
+  return { profile, settings, loadProfile }
 })

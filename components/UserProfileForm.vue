@@ -1,14 +1,5 @@
 <template>
   <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
-    <UFormGroup label="Email" description="Your primary email address">
-      <UInput
-        type="email"
-        placeholder="you@somewhere.com"
-        v-model="state.email"
-        size="sm"
-        disabled
-      />
-    </UFormGroup>
     <UFormGroup
       label="Screen Name"
       description="The name you want to show others"
@@ -26,10 +17,17 @@
         size="sm"
       />
     </UFormGroup>
-    <UFormGroup label="About You">
+    <UFormGroup label="Why did you join?">
       <UTextarea
-        placeholder="Tell others a little about yourself"
-        v-model="state.about"
+        placeholder="What do you hope to get from World of Nuclear?"
+        v-model="state.joinReason"
+        size="sm"
+      />
+    </UFormGroup>
+    <UFormGroup label="What do you like about nuclear?">
+      <UTextarea
+        placeholder="Tell the world your favorite thing."
+        v-model="state.nuclearLikes"
         size="sm"
       />
     </UFormGroup>
@@ -38,49 +36,49 @@
         <template #leading>@</template>
       </UInput>
     </UFormGroup>
-    <UFormGroup label="LinkedIn Username">
+    <UFormGroup label="LinkedIn Profile Name">
       <UInput
         placeholder="LinkedIn Username"
-        v-model="state.linkedInUsername"
+        v-model="state.linkedInProfileName"
         size="sm"
       >
         <template #leading>@</template>
       </UInput>
     </UFormGroup>
-    <UFormGroup label="Discord Username">
-      <UInput placeholder="Discord" v-model="state.discordUsername" size="sm" />
-    </UFormGroup>
-    <UButton type="submit">Save Changes</UButton>
+    <UButton type="submit">Save Profile</UButton>
   </UForm>
 </template>
 
 <script setup lang="ts">
 import { object, string, type InferType } from 'yup'
 import type { FormSubmitEvent } from '#ui/types'
+import { useUserStore } from '~/stores/userStore'
+
+const profile = useUserStore().profile
+const emit = defineEmits(['saveChanges'])
 
 const schema = object({
-  email: string(),
   screenName: string(),
   fullName: string(),
-  about: string(),
+  joinReason: string(),
+  nuclearLikes: string(),
   xUsername: string(),
-  linkedInUsername: string(),
-  discordUsername: string(),
+  linkedInProfileName: string(),
 })
 
 type Schema = InferType<typeof schema>
 
 const state = reactive({
-  screenName: undefined,
-  fullName: undefined,
-  about: undefined,
-  xUsername: undefined,
-  linkedInUsername: undefined,
-  discordUsername: undefined,
+  screenName: profile.screenName,
+  fullName: profile.fullName,
+  joinReason: profile.joinReason,
+  nuclearLikes: profile.nuclearLikes,
+  xUsername: profile.xUsername,
+  linkedInProfileName: profile.linkedInProfileName,
 })
 
 async function onSubmit(event: FormSubmitEvent<Schema>) {
-  console.log(event.data)
+  emit('saveChanges', event.data)
 }
 </script>
 
