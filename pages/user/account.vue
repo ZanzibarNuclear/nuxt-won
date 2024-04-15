@@ -35,6 +35,8 @@ onBeforeMount(async () => {
 })
 
 const mapProfileChangesForUpdate = (update) => {
+  const now = new Date().toISOString()
+  console.log(now)
   return {
     screen_name: update.screenName,
     full_name: update.fullName,
@@ -42,6 +44,7 @@ const mapProfileChangesForUpdate = (update) => {
     nuclear_likes: update.nuclearLikes,
     x_username: update.xUsername,
     linkedin_profile_name: update.linkedInProfileName,
+    updated_at: now,
   }
 }
 

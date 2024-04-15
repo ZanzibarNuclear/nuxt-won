@@ -5,10 +5,6 @@
       <span class="col-span-3">{{ profile.id }}</span>
     </div>
     <div class="mb-4 grid grid-cols-4">
-      <span class="label">Username</span>
-      <span class="col-span-3">{{ profile.username }}</span>
-    </div>
-    <div class="mb-4 grid grid-cols-4">
       <span class="label">Screen Name</span>
       <span class="col-span-3">{{ profile.screenName }}</span>
     </div>
@@ -17,12 +13,8 @@
       <span class="col-span-3">{{ profile.fullName }}</span>
     </div>
     <div class="mb-4 grid grid-cols-4">
-      <span class="label">Avatar URL</span>
-      <span class="col-span-3">{{ profile.avatarURl }}</span>
-    </div>
-    <div class="mb-4 grid grid-cols-4">
-      <span class="label">Website</span>
-      <span class="col-span-3">{{ profile.website }}</span>
+      <span class="label">Joined on</span>
+      <span class="col-span-3">{{ profile.joinedAt }}</span>
     </div>
     <div class="mb-4 grid grid-cols-4">
       <span class="label">Join Reason</span>
@@ -41,11 +33,7 @@
       <span class="col-span-3">{{ profile.linkedInProfileName }}</span>
     </div>
     <div class="mb-4 grid grid-cols-4">
-      <span class="label">Joined on</span>
-      <span class="col-span-3">{{ profile.joinedAt }}</span>
-    </div>
-    <div class="mb-4 grid grid-cols-4">
-      <span class="label">Last update</span>
+      <span class="label">Last updated</span>
       <span class="col-span-3">{{ profile.updatedAt }}</span>
     </div>
   </UCard>
