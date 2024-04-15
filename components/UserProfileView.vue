@@ -14,7 +14,7 @@
     </div>
     <div class="mb-4 grid grid-cols-4">
       <span class="label">Joined on</span>
-      <span class="col-span-3">{{ profile.joinedAt }}</span>
+      <span class="col-span-3">{{ formatToDate(profile.joinedAt) }}</span>
     </div>
     <div class="mb-4 grid grid-cols-4">
       <span class="label">Join Reason</span>
@@ -34,14 +34,31 @@
     </div>
     <div class="mb-4 grid grid-cols-4">
       <span class="label">Last updated</span>
-      <span class="col-span-3">{{ profile.updatedAt }}</span>
+      <span class="col-span-3">{{ formatToDateTime(profile.updatedAt) }}</span>
     </div>
   </UCard>
 </template>
 
 <script setup lang="ts">
 import { useUserStore } from '~/stores/userStore'
+import { format } from 'date-fns'
+
 const profile = useUserStore().profile
+
+const formatToDate = (ts) => {
+  console.log('formatToDate', ts)
+  if (ts === '') {
+    return ''
+  }
+  return format(new Date(ts), 'd MMMM yyyy')
+}
+const formatToDateTime = (ts) => {
+  console.log('formatToDateTime', ts)
+  if (ts === '') {
+    return ''
+  }
+  return format(new Date(ts), "d MMMM yyyy 'at' hh:mm b")
+}
 </script>
 
 <style scoped>

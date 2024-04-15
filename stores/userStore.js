@@ -12,8 +12,8 @@ export const useUserStore = defineStore('user', () => {
     nuclearLikes: '__empty__',
     xUsername: '__empty__',
     linkedInProfileName: '__empty__',
-    joinedAt: '__empty__',
-    updatedAt: '__empty__',
+    joinedAt: '',
+    updatedAt: '',
   })
   const settings = ref({})
 
