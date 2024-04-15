@@ -31,19 +31,22 @@
         size="sm"
       />
     </UFormGroup>
-    <UFormGroup label="X Username">
+    <UFormGroup>
+      <template #label><UIcon name="i-ri-twitter-x-line" /> Username</template>
       <UInput placeholder="X Username" v-model="state.xUsername" size="sm">
         <template #leading>@</template>
       </UInput>
     </UFormGroup>
-    <UFormGroup label="LinkedIn Profile Name">
+    <UFormGroup
+      label="LinkedIn"
+      description="The part that comes after https://www.linkedin.com/in/"
+    >
+      <template #label><UIcon name="i-mdi-linkedin" /> LinkedIn</template>
       <UInput
-        placeholder="LinkedIn Username"
+        placeholder="LinkedIn Profile Name"
         v-model="state.linkedInProfileName"
         size="sm"
-      >
-        <template #leading>@</template>
-      </UInput>
+      />
     </UFormGroup>
     <UButton type="submit">Save Profile</UButton>
   </UForm>

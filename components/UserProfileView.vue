@@ -25,12 +25,24 @@
       <span class="col-span-3">{{ profile.nuclearLikes }}</span>
     </div>
     <div class="mb-4 grid grid-cols-4">
-      <span class="label">X Username</span>
-      <span class="col-span-3">@{{ profile.xUsername }}</span>
+      <span class="label"><icon name="i-ri-twitter-x-line" /></span>
+      <span class="col-span-3">
+        @{{ profile.xUsername }} &nbsp; (<NuxtLink
+          :to="`https://www.x.com/${profile.xUsername}`"
+          target="_blank"
+          >Try it <UIcon name="i-mdi-arrow-top-right" /></NuxtLink
+        >)
+      </span>
     </div>
     <div class="mb-4 grid grid-cols-4">
-      <span class="label">LinkedIn Profile Name</span>
-      <span class="col-span-3">{{ profile.linkedInProfileName }}</span>
+      <span class="label">LinkedIn <icon name="i-mdi-linkedin" /></span>
+      <span class="col-span-3">
+        {{ profile.linkedInProfileName }} &nbsp; (<NuxtLink
+          :to="`https://www.linkedin.com/in/${profile.linkedInProfileName}`"
+          target="_blank"
+          >Try it <UIcon name="i-mdi-arrow-top-right" /></NuxtLink
+        >)
+      </span>
     </div>
     <div class="mb-4 grid grid-cols-4">
       <span class="label">Last updated</span>
