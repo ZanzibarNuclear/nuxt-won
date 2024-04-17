@@ -11,10 +11,16 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@descope/vue-sdk": "^2.0.11",
+    "@iconify-json/el": "^1.1.8",
+    "@iconify-json/mdi": "^1.1.65",
+    "@iconify-json/mingcute": "^1.1.17",
+    "@iconify-json/ri": "^1.1.20",
     "@nuxt/content": "^2.12.0",
     "@nuxt/ui": "^2.13.0",
     "@pinia/nuxt": "^0.5.1",
     "@tailwindcss/typography": "^0.5.10",
+    "date-fns": "^3.6.0",
     "nuxt": "^3.10.0",
     "nuxt-icon": "^0.6.8",
     "pinia": "^2.1.7",

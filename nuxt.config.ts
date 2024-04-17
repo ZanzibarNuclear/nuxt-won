@@ -9,9 +9,30 @@ export default defineNuxtConfig({
     '@nuxtjs/supabase',
     '@nuxt/test-utils/module',
   ],
+  runtimeConfig: {
+    public: {
+      baseUrl: process.env.BASE_URL || 'http://localhost:3000',
+      descopeProjectId: process.env.DESCOPE_PROJECT_ID,
+    },
+  },
   content: {},
   supabase: {
-    redirect: false,
+    redirect: true,
+    redirectOptions: {
+      login: '/auth/sign-in',
+      callback: '/auth/confirm',
+      cookieRedirect: true,
+      include: ['/user(/*)?', '/workshop(/*)?'],
+    },
+    cookieName: 'won',
+    cookieOptions: {
+      maxAge: 60 * 60 * 8,
+      sameSite: 'lax',
+      secure: true,
+    },
+  },
+  ui: {
+    icons: ['mdi', 'el', 'ri'],
   },
   vite: {
     define: {

@@ -1,5 +1,7 @@
 <template>
-  <div class="text-4xl mb-10">Let's learn about nuclear energy.</div>
+  <div class="text-center text-4xl mb-10">
+    Explore the world of nuclear energy.
+  </div>
   <div class="flex flex-wrap">
     <feature-tile
       class="w-72 mx-4 my-4"
@@ -19,7 +21,7 @@ const features = [
     description:
       'Long-form discussions for sharing ideas about nuclear energy.',
     callToAction: 'Share Ideas',
-    routeName: 'what-say-you',
+    routeName: 'features-what-say-you',
   },
   {
     category: 'learning',
@@ -28,7 +30,7 @@ const features = [
     description:
       'Learn everything you need to know to understand how nuclear energy can be put to good use.',
     callToAction: 'Get Smarter',
-    routeName: 'daily-lessons',
+    routeName: 'features-daily-lessons',
   },
   {
     category: 'events',
@@ -37,7 +39,7 @@ const features = [
     description:
       'Long-form discussions for sharing ideas about nuclear energy.',
     callToAction: 'Stay Current',
-    routeName: 'nuclear-news',
+    routeName: 'features-nuclear-news',
   },
   {
     category: 'learning',
@@ -45,7 +47,7 @@ const features = [
     coverImage: '/images/Cherenkov-radiation.jpg',
     description: 'Try nuclear simulators - fun and educational.',
     callToAction: 'Learn By Doing',
-    routeName: 'simulators',
+    routeName: 'features-simulators',
   },
   {
     category: 'fun',
@@ -54,7 +56,7 @@ const features = [
     description:
       'Long-form discussions for sharing ideas about nuclear energy.',
     callToAction: 'Play Now',
-    routeName: 'fun-and-games',
+    routeName: 'features/-un-and-games',
   },
 ]
 </script>
