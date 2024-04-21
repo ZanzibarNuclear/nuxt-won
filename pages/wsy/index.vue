@@ -15,50 +15,68 @@
     </div>
     <div v-else>
       <h2>
-        Listen up. <span class="text_primary">{{ wsy.alias }}</span> has
-        something to say
+        Listen up, people.
+        <span class="text-primary">{{ wsy.alias }}</span> has a few things to
+        say.
       </h2>
     </div>
 
-    <div class="my-6" v-if="isRegistered">
-      <div>
-        Next, say what you want to talk about, the subject of your
-        pontification.
-      </div>
-      <UFormGroup label="Topic" description="What is the topic?">
-        <UInput v-model="wsy.topic" />
-      </UFormGroup>
-      <UButton @click="doStartThread">Start a Topic</UButton>
-    </div>
-
-    <div class="my-6" v-if="isActiveThread">
-      <div>
-        Now make as many statements as you want. Simply stop when you have said
-        it all. Sit back and wait for reactions.
-      </div>
-      <div>Invite your friends to respond.</div>
-      <div>Change the subject whenever you want to.</div>
-      <div v-if="isRegistered">
-        <UFormGroup label="Make a statement. Speak your mind.">
-          <UTextarea v-model="wsy.statement" />
+    <div v-if="isRegistered">
+      <div class="my-6" v-if="!activeThread">
+        <div>
+          Next, say what you want to talk about, the subject of your
+          pontification.
+        </div>
+        <UFormGroup label="Topic" description="What is the topic?">
+          <UInput v-model="wsy.topic" />
         </UFormGroup>
-        <UButton @click="doPost">Post</UButton>
+        <UFormGroup label="Topic Key" description="Make it unique (temporary)">
+          <UInput v-model="wsy.topicKey" />
+        </UFormGroup>
+        <UButton @click="doStartThread">Start a Topic</UButton>
       </div>
-    </div>
+      <div v-else>
+        <h2>
+          We are talking about:
+          <span class="text-primary">{{ activeThread.topic }}</span>
+        </h2>
+        <div>
+          Invite your friends to respond.
+          <UFormGroup label="Email" description="Your friend's email address">
+            <UInput v-model="wsy.friendEmail" />
+          </UFormGroup>
+          <UButton @click="doInvite">Invite</UButton>
+        </div>
+        <div class="my-2">
+          <UButton @click="doNewThread">Change the topic</UButton>
+        </div>
+      </div>
 
-    <div v-if="isActiveThread">
-      <h2>{{ wsy.alias }} says...</h2>
-      <h3>{{ activeThread.topic }}</h3>
-      <ul>
-        <li v-for="item in activeThread.statements" class="my-3">
-          <UCard>
-            <template #header>
-              <span class="text-xs">{{ item.postedAt }}</span>
-            </template>
-            {{ item.statement }}
-          </UCard>
-        </li>
-      </ul>
+      <hr class="y-6" />
+      <div v-if="activeThread">
+        <div class="my-6">
+          <div>
+            Now make as many statements as you want. Simply stop when you have
+            said it all. Sit back and wait for reactions.
+          </div>
+          <div v-if="isRegistered">
+            <UFormGroup label="Make a statement. Speak your mind.">
+              <UTextarea v-model="wsy.statement" />
+            </UFormGroup>
+            <UButton @click="doPost">Post</UButton>
+          </div>
+        </div>
+        <ul>
+          <li v-for="item in activeThread.statements" class="my-3">
+            <UCard>
+              <template #header>
+                <span class="text-xs">{{ item.postedAt }}</span>
+              </template>
+              {{ item.statement }}
+            </UCard>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
@@ -70,40 +88,51 @@ const wsy = reactive({
   alias: '',
   statement: '',
   topic: '',
-  activeThread: 'abcd',
-  threads: {
-    abcd: {
-      topic: 'Cheese',
-      statements: [{ statement: 'I like cheese.', postedAt: new Date() }],
-    },
-  },
+  topicKey: '',
+  friendEmail: '',
+  activeThreadKey: null,
+  threads: {},
 })
 
 const isRegistered = ref(false)
-const isActiveThread = ref(false)
-
-const activeThread = computed(() => {
-  if (!isActiveThread) {
-    return {
-      topic: '',
-      statements: [],
-    }
-  }
-  return wsy.threads[wsy.activeThread]
-})
 
 const doRegister = () => {
+  // TODO: register WSY participant
   isRegistered.value = true
 }
 
 const doStartThread = () => {
-  const key = 'abcd'
-  wsy.activeThread = key
-  wsy.threads[key].topic = wsy.topic
-  isActiveThread.value = true
+  if (wsy.threads[wsy.topicKey]) {
+    wsy.activeThreadKey = wsy.topicKey
+  }
+  const key = wsy.topicKey // TODO: generate by the backend on insert
+  wsy.threads[key] = { topic: wsy.topic, statements: [] }
+  wsy.activeThreadKey = key
+}
+
+const doNewThread = () => {
+  wsy.topicKey = ''
+  wsy.topic = ''
+  wsy.activeThreadKey = null
+}
+
+const activeThread = computed(() => {
+  if (!wsy.activeThreadKey) {
+    return null
+  }
+  return wsy.threads[wsy.activeThreadKey]
+})
+
+const doInvite = () => {
+  alert(
+    `We will send an invitation to ${wsy.friendEmail} and bring them to [${wsy.activeThreadKey}].`
+  )
 }
 
 const doPost = () => {
+  if (!activeThread) {
+    return
+  }
   activeThread.value.statements.push({
     statement: wsy.statement,
     postedAt: new Date(),
