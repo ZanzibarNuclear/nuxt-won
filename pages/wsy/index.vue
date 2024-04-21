@@ -47,8 +47,19 @@
           </UFormGroup>
           <UButton @click="doInvite">Invite</UButton>
         </div>
-        <div class="my-2">
-          <UButton @click="doNewThread">Change the topic</UButton>
+        <div class="my-4">
+          <UButton @click="doNewThread">Start a new topic</UButton>
+        </div>
+        <div v-if="inactiveTopics.length > 0" class="my-4">
+          <UFormGroup label="Pick another topic">
+            <USelect
+              v-model="chosenTopic"
+              :options="inactiveTopics"
+              option-attribute="topic"
+              value-attribute="key"
+            />
+          </UFormGroup>
+          <UButton @click="doChooseTopic">Change topics</UButton>
         </div>
       </div>
 
@@ -94,8 +105,9 @@ const wsy = reactive({
   threads: {},
 })
 
-const isRegistered = ref(false)
+const chosenTopic = ref(null)
 
+const isRegistered = ref(false)
 const doRegister = () => {
   // TODO: register WSY participant
   isRegistered.value = true
@@ -122,6 +134,23 @@ const activeThread = computed(() => {
   }
   return wsy.threads[wsy.activeThreadKey]
 })
+const inactiveTopics = computed(() => {
+  const topicKeys = Object.keys(wsy.threads)
+  const topics = topicKeys
+    .filter((key) => key != wsy.activeThreadKey)
+    .map((key) => ({
+      key: key,
+      topic: wsy.threads[key].topic,
+    }))
+  return topics
+})
+
+const doChooseTopic = () => {
+  if (chosenTopic.value === null) {
+    return
+  }
+  wsy.activeThreadKey = chosenTopic.value
+}
 
 const doInvite = () => {
   alert(
