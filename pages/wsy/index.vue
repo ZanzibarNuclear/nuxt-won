@@ -11,7 +11,7 @@
       >
         <UInput v-model="wsy.alias" />
       </UFormGroup>
-      <UButton @click="doRegister">Join the Fun</UButton>
+      <UButton class="mt-2" @click="doRegister">Join the Fun</UButton>
     </div>
     <div v-else>
       <h2>
@@ -33,7 +33,7 @@
         <UFormGroup label="Topic Key" description="Make it unique (temporary)">
           <UInput v-model="wsy.topicKey" />
         </UFormGroup>
-        <UButton @click="doStartThread">Start a Topic</UButton>
+        <UButton class="mt-2" @click="doStartThread">Start a Topic</UButton>
       </div>
       <div v-else>
         <h2>
@@ -45,7 +45,7 @@
           <UFormGroup label="Email" description="Your friend's email address">
             <UInput v-model="wsy.friendEmail" />
           </UFormGroup>
-          <UButton @click="doInvite">Invite</UButton>
+          <UButton class="mt-2" @click="doInvite">Invite</UButton>
         </div>
         <div class="my-4">
           <UButton @click="doNewThread">Start a new topic</UButton>
@@ -59,7 +59,7 @@
               value-attribute="key"
             />
           </UFormGroup>
-          <UButton @click="doChooseTopic">Change topics</UButton>
+          <UButton class="mt-2" @click="doChooseTopic">Change topics</UButton>
         </div>
       </div>
 
@@ -74,7 +74,7 @@
             <UFormGroup label="Make a statement. Speak your mind.">
               <UTextarea v-model="wsy.statement" />
             </UFormGroup>
-            <UButton @click="doPost">Post</UButton>
+            <UButton class="mt-2" @click="doPost">Post</UButton>
           </div>
         </div>
         <ul>
@@ -95,7 +95,20 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
 
-const wsy = reactive({
+type Post = { statement: string, postedAt: Date }
+type Thread = { topic: string, statements: Post[] }
+type ThreadMap = { [k: string]: Thread }
+type WhatSayYouContext = {
+  alias: string;
+  statement: string;
+  topic: string;
+  topicKey: string;
+  friendEmail: string;
+  activeThreadKey: string | null;
+  threads: ThreadMap
+}
+
+const wsy : WhatSayYouContext = reactive({
   alias: '',
   statement: '',
   topic: '',
@@ -105,7 +118,7 @@ const wsy = reactive({
   threads: {},
 })
 
-const chosenTopic = ref(null)
+const chosenTopic = ref('')
 
 const isRegistered = ref(false)
 const doRegister = () => {
@@ -114,10 +127,11 @@ const doRegister = () => {
 }
 
 const doStartThread = () => {
-  if (wsy.threads[wsy.topicKey]) {
+
+  if (wsy.threads[wsy.topicKey] !== null) {
     wsy.activeThreadKey = wsy.topicKey
   }
-  const key = wsy.topicKey // TODO: generate by the backend on insert
+  const key : string = wsy.topicKey // TODO: generate by the backend on insert
   wsy.threads[key] = { topic: wsy.topic, statements: [] }
   wsy.activeThreadKey = key
 }
@@ -159,7 +173,7 @@ const doInvite = () => {
 }
 
 const doPost = () => {
-  if (!activeThread) {
+  if (!activeThread.value) {
     return
   }
   activeThread.value.statements.push({
