@@ -1,6 +1,129 @@
+<script setup lang="ts">
+const supabase = useSupabaseClient()
+const user = useSupabaseUser()
+
+type Post = { statement: string; postedAt: Date }
+type Thread = { topic: string; statements: Post[] }
+type ThreadMap = { [k: string]: Thread }
+type WhatSayYouContext = {
+  alias: string
+  statement: string
+  topic: string
+  topicKey: string
+  friendEmail: string
+  activeThreadKey: string | null
+  threads: ThreadMap
+}
+const wsy: WhatSayYouContext = reactive({
+  alias: '',
+  statement: '',
+  topic: '',
+  topicKey: '',
+  friendEmail: '',
+  activeThreadKey: null,
+  threads: {},
+})
+const chosenTopic = ref('')
+
+const { data: participants } = await useFetch('/api/participants', {
+  onResponse({ request, response, options }) {
+    console.log('data', response._data)
+    console.log('data.participants', response._data.participants)
+    console.log('data.participants[0]', response._data.participants[0])
+    console.log(
+      'data.participants[0].alias',
+      response._data.participants[0].alias
+    )
+  },
+})
+
+const isRegistered = computed(() => {
+  return wsy.alias !== ''
+})
+
+const doRegister = async () => {
+  if (!user.value) {
+    alert('You are not signed in')
+    return
+  }
+  const user_id = user.value.id
+  console.log('For user ID: ' + user_id)
+
+  const { body } = await $fetch('/api/participants', {
+    method: 'post',
+    body: { alias: wsy.alias, user_id },
+  })
+}
+
+const doStartThread = () => {
+  if (wsy.threads[wsy.topicKey] !== null) {
+    wsy.activeThreadKey = wsy.topicKey
+  }
+  const key: string = wsy.topicKey // TODO: generate by the backend on insert
+  wsy.threads[key] = { topic: wsy.topic, statements: [] }
+  wsy.activeThreadKey = key
+}
+
+const doNewThread = () => {
+  wsy.topicKey = ''
+  wsy.topic = ''
+  wsy.activeThreadKey = null
+}
+
+const activeThread = computed(() => {
+  if (!wsy.activeThreadKey) {
+    return null
+  }
+  return wsy.threads[wsy.activeThreadKey]
+})
+const inactiveTopics = computed(() => {
+  const topicKeys = Object.keys(wsy.threads)
+  const topics = topicKeys
+    .filter((key) => key != wsy.activeThreadKey)
+    .map((key) => ({
+      key: key,
+      topic: wsy.threads[key].topic,
+    }))
+  return topics
+})
+
+const doChooseTopic = () => {
+  if (chosenTopic.value === null) {
+    return
+  }
+  wsy.activeThreadKey = chosenTopic.value
+}
+
+const doInvite = () => {
+  alert(
+    `We will send an invitation to ${wsy.friendEmail} and bring them to [${wsy.activeThreadKey}].`
+  )
+}
+
+const doPost = () => {
+  if (!activeThread.value) {
+    return
+  }
+  activeThread.value.statements.push({
+    statement: wsy.statement,
+    postedAt: new Date(),
+  })
+  wsy.statement = ''
+}
+</script>
+
 <template>
   <div>
-    <div class="my-6" v-if="!isRegistered">
+    <div v-if="isRegistered">
+      <div>Participant: {{ participant.alias }} ({{ participant.id }})</div>
+      <h2>
+        Listen up, people.
+        <span class="text-primary">{{ participant.alias }}</span> has a few
+        things to say.
+      </h2>
+    </div>
+    <div class="my-6" v-else>
+      <h2>Join in the Fun</h2>
       <div>
         First join the discussion by giving yourself an alias. This is how you
         want to be known to the group.
@@ -12,13 +135,6 @@
         <UInput v-model="wsy.alias" />
       </UFormGroup>
       <UButton class="mt-2" @click="doRegister">Join the Fun</UButton>
-    </div>
-    <div v-else>
-      <h2>
-        Listen up, people.
-        <span class="text-primary">{{ wsy.alias }}</span> has a few things to
-        say.
-      </h2>
     </div>
 
     <div v-if="isRegistered">
@@ -91,95 +207,3 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import { reactive, ref } from 'vue'
-
-type Post = { statement: string, postedAt: Date }
-type Thread = { topic: string, statements: Post[] }
-type ThreadMap = { [k: string]: Thread }
-type WhatSayYouContext = {
-  alias: string;
-  statement: string;
-  topic: string;
-  topicKey: string;
-  friendEmail: string;
-  activeThreadKey: string | null;
-  threads: ThreadMap
-}
-
-const wsy : WhatSayYouContext = reactive({
-  alias: '',
-  statement: '',
-  topic: '',
-  topicKey: '',
-  friendEmail: '',
-  activeThreadKey: null,
-  threads: {},
-})
-
-const chosenTopic = ref('')
-
-const isRegistered = ref(false)
-const doRegister = () => {
-  // TODO: register WSY participant
-  isRegistered.value = true
-}
-
-const doStartThread = () => {
-
-  if (wsy.threads[wsy.topicKey] !== null) {
-    wsy.activeThreadKey = wsy.topicKey
-  }
-  const key : string = wsy.topicKey // TODO: generate by the backend on insert
-  wsy.threads[key] = { topic: wsy.topic, statements: [] }
-  wsy.activeThreadKey = key
-}
-
-const doNewThread = () => {
-  wsy.topicKey = ''
-  wsy.topic = ''
-  wsy.activeThreadKey = null
-}
-
-const activeThread = computed(() => {
-  if (!wsy.activeThreadKey) {
-    return null
-  }
-  return wsy.threads[wsy.activeThreadKey]
-})
-const inactiveTopics = computed(() => {
-  const topicKeys = Object.keys(wsy.threads)
-  const topics = topicKeys
-    .filter((key) => key != wsy.activeThreadKey)
-    .map((key) => ({
-      key: key,
-      topic: wsy.threads[key].topic,
-    }))
-  return topics
-})
-
-const doChooseTopic = () => {
-  if (chosenTopic.value === null) {
-    return
-  }
-  wsy.activeThreadKey = chosenTopic.value
-}
-
-const doInvite = () => {
-  alert(
-    `We will send an invitation to ${wsy.friendEmail} and bring them to [${wsy.activeThreadKey}].`
-  )
-}
-
-const doPost = () => {
-  if (!activeThread.value) {
-    return
-  }
-  activeThread.value.statements.push({
-    statement: wsy.statement,
-    postedAt: new Date(),
-  })
-  wsy.statement = ''
-}
-</script>

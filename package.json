@@ -30,7 +30,8 @@
   },
   "prettier": {
     "semi": false,
-    "singleQuote": true
+    "singleQuote": true,
+    "tabWidth": 2
   },
   "devDependencies": {
     "@nuxt/test-utils": "^3.11.0",
