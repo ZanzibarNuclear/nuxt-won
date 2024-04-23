@@ -2,30 +2,7 @@
 const supabase = useSupabaseClient()
 const user = useSupabaseUser()
 
-type Post = { statement: string; postedAt: Date }
-type Thread = { topic: string; statements: Post[] }
-type ThreadMap = { [k: string]: Thread }
-type WhatSayYouContext = {
-  alias: string
-  statement: string
-  topic: string
-  topicKey: string
-  friendEmail: string
-  activeThreadKey: string | null
-  threads: ThreadMap
-}
-const wsy: WhatSayYouContext = reactive({
-  alias: '',
-  statement: '',
-  topic: '',
-  topicKey: '',
-  friendEmail: '',
-  activeThreadKey: null,
-  threads: {},
-})
-const chosenTopic = ref('')
-
-const { data: participants } = await useFetch('/api/participants', {
+const { data: pageData } = await useFetch('/api/participants', {
   onResponse({ request, response, options }) {
     console.log('data', response._data)
     console.log('data.participants', response._data.participants)
@@ -37,8 +14,51 @@ const { data: participants } = await useFetch('/api/participants', {
   },
 })
 
+type Post = { statement: string; postedAt: Date }
+type Thread = { topic: string; statements: Post[] }
+type ThreadMap = { [k: string]: Thread }
+type WhatSayYouContext = {
+  alias: string
+  joinedAt: Date | null
+  statement: string
+  topic: string
+  topicKey: string
+  friendEmail: string
+  activeThreadKey: string | null
+  threads: ThreadMap
+}
+const wsy: WhatSayYouContext = reactive({
+  alias: '',
+  joinedAt: null,
+  statement: '',
+  topic: '',
+  topicKey: '',
+  friendEmail: '',
+  activeThreadKey: null,
+  threads: {},
+})
+type Participant = {
+  id: number
+  user_id: string
+  alias: string
+  joinedAt: Date | null
+  karma: number
+}
+
+const myContext = ref({})
+
+const chosenTopic = ref('')
+
+onMounted(() => {
+  if (pageData.value?.participants) {
+    console.log('me', pageData.value.participants[0].alias)
+    myContext.value = pageData.value.participants[0]
+    console.log('my context', myContext.value)
+  }
+})
+
 const isRegistered = computed(() => {
-  return wsy.alias !== ''
+  return !!myContext.value.id
 })
 
 const doRegister = async () => {
@@ -115,11 +135,15 @@ const doPost = () => {
 <template>
   <div>
     <div v-if="isRegistered">
-      <div>Participant: {{ participant.alias }} ({{ participant.id }})</div>
+      <div>
+        Participant: {{ myContext.alias }} ({{ myContext.id }}) joined on
+        {{ displayAsDateTime(myContext.joined_at) }}. You have
+        {{ myContext.karma }} karma points.
+      </div>
       <h2>
         Listen up, people.
-        <span class="text-primary">{{ participant.alias }}</span> has a few
-        things to say.
+        <span class="text-primary">{{ myContext.alias }}</span> has a few things
+        to say.
       </h2>
     </div>
     <div class="my-6" v-else>
