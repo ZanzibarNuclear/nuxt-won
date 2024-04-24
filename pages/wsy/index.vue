@@ -36,6 +36,7 @@ const myContext: Ref<Participant | undefined> = ref()
 const myActiveThread = ref()
 const latestEntry = ref()
 const allThreads = ref()
+const loadedThread = ref()
 
 const chosenTopic = ref('')
 const { data: pageData } = await useFetch('/api/participants')
@@ -119,13 +120,14 @@ const inactiveTopics = computed(() => {
   return topics
 })
 
-const doChooseTopic = () => {
+const doChooseTopic = async () => {
   if (chosenTopic.value === null) {
     return
   }
 
   // TODO: load thread and its entries
-
+  loadedThread.value = await $fetch(`/api/threads/${chosenTopic.value}`)
+  console.log('fetched thread', loadedThread.value)
   wsy.activeThreadKey = chosenTopic.value
 }
 
