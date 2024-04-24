@@ -37,6 +37,7 @@ const myActiveThread = ref()
 const latestEntry = ref()
 const allThreads = ref()
 const loadedThread = ref()
+const loadedEntriesForThread = ref()
 
 const chosenTopic = ref('')
 const { data: pageData } = await useFetch('/api/participants')
@@ -130,8 +131,15 @@ const doChooseTopic = async () => {
   console.log('fetched thread', loadedThread.value)
 
   const loaded = loadedThread.value
+  loadedEntriesForThread.value = await $fetch(
+    `/api/entries/${loaded.public_key}`
+  )
+
   wsy.threads[loaded.public_key] = loaded
   wsy.activeThreadKey = loaded.public_key
+
+  // TODO: attach entries if any or []
+  wsy.threads[loaded.public_key].entries = loadedEntriesForThread.value
 }
 
 const doInvite = () => {
