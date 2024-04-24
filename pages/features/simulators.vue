@@ -6,9 +6,13 @@
       Some day you will be able to start and care for your own simulated nuclear
       power plant. How awesome is that? Super awesome.
     </p>
-    <p>For now, you might see some experiments below.</p>
+    <p>
+      Read
+      <NuxtLink to="/essays/2024/my-nuclear-simulator">a little essay</NuxtLink>
+      about this feature.
+    </p>
+    <p><NuxtLink to="/my-nu-sim">My Nuclear Simulator</NuxtLink></p>
   </div>
-  <database-access-test />
 </template>
 
 <script setup></script>
