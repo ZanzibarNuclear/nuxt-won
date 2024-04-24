@@ -1,18 +1,5 @@
 <script setup lang="ts">
-const supabase = useSupabaseClient()
 const user = useSupabaseUser()
-
-const { data: pageData } = await useFetch('/api/participants', {
-  onResponse({ request, response, options }) {
-    console.log('data', response._data)
-    console.log('data.participants', response._data.participants)
-    console.log('data.participants[0]', response._data.participants[0])
-    console.log(
-      'data.participants[0].alias',
-      response._data.participants[0].alias
-    )
-  },
-})
 
 type Post = { statement: string; postedAt: Date }
 type Thread = { topic: string; statements: Post[] }
@@ -41,24 +28,22 @@ type Participant = {
   id: number
   user_id: string
   alias: string
-  joinedAt: Date | null
+  joined_at: string
   karma: number
 }
 
-const myContext = ref({})
-
+const myContext: Ref<Participant | undefined> = ref()
 const chosenTopic = ref('')
+const { data: pageData } = await useFetch('/api/participants')
+
+const isRegistered = computed(() => {
+  return !!myContext.value?.id
+})
 
 onMounted(() => {
   if (pageData.value?.participants) {
-    console.log('me', pageData.value.participants[0].alias)
-    myContext.value = pageData.value.participants[0]
-    console.log('my context', myContext.value)
+    myContext.value = pageData.value.participants
   }
-})
-
-const isRegistered = computed(() => {
-  return !!myContext.value.id
 })
 
 const doRegister = async () => {
@@ -67,9 +52,7 @@ const doRegister = async () => {
     return
   }
   const user_id = user.value.id
-  console.log('For user ID: ' + user_id)
-
-  const { body } = await $fetch('/api/participants', {
+  myContext.value = await $fetch('/api/participants', {
     method: 'post',
     body: { alias: wsy.alias, user_id },
   })
@@ -134,7 +117,7 @@ const doPost = () => {
 
 <template>
   <div>
-    <div v-if="isRegistered">
+    <div v-if="isRegistered && myContext">
       <div>
         Participant: {{ myContext.alias }} ({{ myContext.id }}) joined on
         {{ displayAsDateTime(myContext.joined_at) }}. You have
