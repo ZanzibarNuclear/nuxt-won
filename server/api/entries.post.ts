@@ -22,10 +22,10 @@ export default defineEventHandler(async (event) => {
     responding_to: body.respondingToId,
     statement: body.statement,
   }
-  console.log('starting thread', threadValues)
+  console.log('posting an entry', entryValues)
   const { data, error } = await client
-    .from('wsy_threads')
-    .insert(threadValues)
+    .from('wsy_entries')
+    .insert(entryValues)
     .select()
 
   if (error) {

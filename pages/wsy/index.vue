@@ -128,7 +128,10 @@ const doChooseTopic = async () => {
   // TODO: load thread and its entries
   loadedThread.value = await $fetch(`/api/threads/${chosenTopic.value}`)
   console.log('fetched thread', loadedThread.value)
-  wsy.activeThreadKey = chosenTopic.value
+
+  const loaded = loadedThread.value
+  wsy.threads[loaded.public_key] = loaded
+  wsy.activeThreadKey = loaded.public_key
 }
 
 const doInvite = () => {
@@ -151,7 +154,9 @@ const doPostEntry = async () => {
       statement: wsy.statement,
     },
   })
-
+  if (!activeThread.value.entries) {
+    activeThread.value.entries = []
+  }
   activeThread.value.entries.push({ ...latestEntry.value })
   wsy.statement = ''
 }
@@ -215,17 +220,17 @@ const doPostEntry = async () => {
         <div class="my-4">
           <UButton @click="doNewThread">Start a new topic</UButton>
         </div>
-        <div v-if="allTopicsList.length > 0" class="my-4">
-          <UFormGroup label="Pick another topic">
-            <USelect
-              v-model="chosenTopic"
-              :options="allTopicsList"
-              option-attribute="topic"
-              value-attribute="key"
-            />
-          </UFormGroup>
-          <UButton class="mt-2" @click="doChooseTopic">Change topics</UButton>
-        </div>
+      </div>
+      <div v-if="allTopicsList.length > 0" class="my-4">
+        <UFormGroup label="Pick another topic">
+          <USelect
+            v-model="chosenTopic"
+            :options="allTopicsList"
+            option-attribute="topic"
+            value-attribute="key"
+          />
+        </UFormGroup>
+        <UButton class="mt-2" @click="doChooseTopic">Change topics</UButton>
       </div>
 
       <hr class="y-6" />
