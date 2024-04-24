@@ -1,8 +1,8 @@
 <script setup lang="ts">
 const user = useSupabaseUser()
 
-type Post = { statement: string; postedAt: Date }
-type Thread = { topic: string; statements: Post[] }
+type Entry = { statement: string; posted_at: string }
+type Thread = { id: number | null; topic: string; entries: Entry[] }
 type ThreadMap = { [k: string]: Thread }
 type WhatSayYouContext = {
   alias: string
@@ -34,9 +34,12 @@ type Participant = {
 
 const myContext: Ref<Participant | undefined> = ref()
 const myActiveThread = ref()
+const latestEntry = ref()
+const allThreads = ref()
 
 const chosenTopic = ref('')
 const { data: pageData } = await useFetch('/api/participants')
+const { data: threadsData } = await useFetch('/api/threads')
 
 const isRegistered = computed(() => {
   return !!myContext.value?.id
@@ -45,6 +48,10 @@ const isRegistered = computed(() => {
 onMounted(() => {
   if (pageData.value?.participants) {
     myContext.value = pageData.value.participants
+  }
+  if (threadsData.value?.threads) {
+    console.log('loaded thread info')
+    allThreads.value = threadsData.value.threads
   }
 })
 
@@ -89,6 +96,18 @@ const activeThread = computed(() => {
   }
   return wsy.threads[wsy.activeThreadKey]
 })
+
+const allTopicsList = computed(() => {
+  console.log('build list of topics')
+  const topics = allThreads.value
+    .filter((thread) => thread.public_key != activeThread.key)
+    .map((thread) => ({
+      key: thread.public_key,
+      topic: thread.topic,
+    }))
+  return topics
+})
+
 const inactiveTopics = computed(() => {
   const topicKeys = Object.keys(wsy.threads)
   const topics = topicKeys
@@ -104,6 +123,9 @@ const doChooseTopic = () => {
   if (chosenTopic.value === null) {
     return
   }
+
+  // TODO: load thread and its entries
+
   wsy.activeThreadKey = chosenTopic.value
 }
 
@@ -113,14 +135,22 @@ const doInvite = () => {
   )
 }
 
-const doPost = () => {
+const doPostEntry = async () => {
   if (!activeThread.value) {
     return
   }
-  activeThread.value.statements.push({
-    statement: wsy.statement,
-    postedAt: new Date(),
+
+  latestEntry.value = await $fetch('/api/entries', {
+    method: 'post',
+    body: {
+      threadId: activeThread.value.id,
+      participantId: myContext.value?.id,
+      respondingToId: latestEntry.value?.id,
+      statement: wsy.statement,
+    },
   })
+
+  activeThread.value.entries.push({ ...latestEntry.value })
   wsy.statement = ''
 }
 </script>
@@ -183,11 +213,11 @@ const doPost = () => {
         <div class="my-4">
           <UButton @click="doNewThread">Start a new topic</UButton>
         </div>
-        <div v-if="inactiveTopics.length > 0" class="my-4">
+        <div v-if="allTopicsList.length > 0" class="my-4">
           <UFormGroup label="Pick another topic">
             <USelect
               v-model="chosenTopic"
-              :options="inactiveTopics"
+              :options="allTopicsList"
               option-attribute="topic"
               value-attribute="key"
             />
@@ -207,14 +237,14 @@ const doPost = () => {
             <UFormGroup label="Make a statement. Speak your mind.">
               <UTextarea v-model="wsy.statement" />
             </UFormGroup>
-            <UButton class="mt-2" @click="doPost">Post</UButton>
+            <UButton class="mt-2" @click="doPostEntry">Post</UButton>
           </div>
         </div>
         <ul>
-          <li v-for="item in activeThread.statements" class="my-3">
+          <li v-for="item in activeThread.entries" class="my-3">
             <UCard>
               <template #header>
-                <span class="text-xs">{{ item.postedAt }}</span>
+                <span class="text-xs">{{ item.posted_at }}</span>
               </template>
               {{ item.statement }}
             </UCard>
