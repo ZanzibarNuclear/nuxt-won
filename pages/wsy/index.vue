@@ -33,6 +33,8 @@ type Participant = {
 }
 
 const myContext: Ref<Participant | undefined> = ref()
+const myActiveThread = ref()
+
 const chosenTopic = ref('')
 const { data: pageData } = await useFetch('/api/participants')
 
@@ -58,13 +60,21 @@ const doRegister = async () => {
   })
 }
 
-const doStartThread = () => {
-  if (wsy.threads[wsy.topicKey] !== null) {
-    wsy.activeThreadKey = wsy.topicKey
-  }
-  const key: string = wsy.topicKey // TODO: generate by the backend on insert
-  wsy.threads[key] = { topic: wsy.topic, statements: [] }
-  wsy.activeThreadKey = key
+const doStartThread = async () => {
+  // TODO: add validation to topic field
+
+  myActiveThread.value = await $fetch('/api/threads', {
+    method: 'post',
+    body: {
+      owner_id: myContext.value?.id,
+      topic: wsy.topic,
+    },
+  })
+  console.log('Created thread ' + myActiveThread.value)
+
+  const thread = myActiveThread.value
+  wsy.threads[thread.public_key] = { ...thread }
+  wsy.activeThreadKey = thread.public_key
 }
 
 const doNewThread = () => {
