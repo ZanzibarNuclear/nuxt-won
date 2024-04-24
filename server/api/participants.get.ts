@@ -12,6 +12,9 @@ export default defineEventHandler(async (event) => {
     .select('*')
     .eq('user_id', user.id)
 
+  if (!data) {
+    return null
+  }
   console.log(data[0])
   return { participants: data[0] }
 })
