@@ -6,7 +6,10 @@ export default defineEventHandler(async (event) => {
   const body = await readBody(event)
 
   if (!user) {
-    throw new Error('not logged in')
+    throw createError({
+      statusCode: 401,
+      statusMessage: `who are you? Please sign in`,
+    })
   }
   console.log(user.id + ' wants to register for WSY', body)
   const setupParams = {

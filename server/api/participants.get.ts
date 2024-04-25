@@ -5,7 +5,11 @@ export default defineEventHandler(async (event) => {
   const client = await serverSupabaseClient(event)
 
   if (!user) {
-    throw new Error('not logged in')
+    // TODO: enforce authentication in middleware on protected routes
+    throw createError({
+      statusCode: 401,
+      statusMessage: `who are you? Please sign in`,
+    })
   }
   const { data } = await client
     .from('wsy_participants')

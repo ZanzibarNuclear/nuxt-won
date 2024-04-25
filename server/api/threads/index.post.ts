@@ -12,7 +12,10 @@ export default defineEventHandler(async (event) => {
     topic: string
   }
   if (!user) {
-    throw new Error('not logged in')
+    throw createError({
+      statusCode: 401,
+      statusMessage: `who are you? Please sign in`,
+    })
   }
   const key = genKey()
   const threadValues: Thread = {
