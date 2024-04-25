@@ -73,6 +73,7 @@ onMounted(async () => {
   // myContext.value = data[0]
 
   if (pageData.value?.participants) {
+    console.log('loaded participant ' + pageData.value)
     myContext.value = pageData.value.participants
   }
   if (threadsData.value?.threads) {
@@ -196,33 +197,7 @@ const doPostEntry = async () => {
 
 <template>
   <div>
-    <div v-if="isRegistered && myContext">
-      <div>
-        Participant: {{ myContext.alias }} ({{ myContext.id }}) joined on
-        {{ displayAsDateTime(myContext.joined_at) }}. You have
-        {{ myContext.karma }} karma points.
-      </div>
-      <h2>
-        Listen up, people.
-        <span class="text-primary">{{ myContext.alias }}</span> has a few things
-        to say.
-      </h2>
-    </div>
-    <div class="my-6" v-else>
-      <h2>Join in the Fun</h2>
-      <div>
-        First join the discussion by giving yourself an alias. This is how you
-        want to be known to the group.
-      </div>
-      <UFormGroup
-        label="Alias"
-        description="What name do you want others to see?"
-      >
-        <UInput v-model="wsy.alias" />
-      </UFormGroup>
-      <UButton class="mt-2" @click="doRegister">Join the Fun</UButton>
-    </div>
-
+    <WhatSayYouHeader />
     <div v-if="isRegistered">
       <div class="my-6" v-if="!activeThread">
         <div>
