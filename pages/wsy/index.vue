@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const supabase = useSupabaseClient()
 const user = useSupabaseUser()
 
 type Entry = { statement: string; posted_at: string }
@@ -58,10 +59,10 @@ const headers = useRequestHeaders(['cookie'])
 // myContext2.value = wsyContext.value.participant
 // allThreads2.value = wsyContext.value.threads
 
-const { data: pageData } = await useFetch('/api/participants', {
-  headers,
-})
-meAsParticipant.value = pageData
+// const { data: pageData } = await useFetch('/api/participants', {
+//   headers,
+// })
+// meAsParticipant.value = pageData
 
 const { data: threadsData } = await useFetch('/api/threads')
 
@@ -69,10 +70,12 @@ const isRegistered = computed(() => {
   return !!myContext.value?.id
 })
 
-onMounted(() => {
-  if (pageData.value?.participants) {
-    myContext.value = pageData.value.participants
-  }
+onMounted(async () => {
+  const { data } = await supabase.from('wsy_participants').select('*')
+  myContext.value = data[0]
+  // if (pageData.value?.participants) {
+  //   myContext.value = pageData.value.participants
+  // }
   if (threadsData.value?.threads) {
     console.log('loaded thread info')
     allThreads.value = threadsData.value.threads
