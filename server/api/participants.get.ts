@@ -5,6 +5,7 @@ export default defineEventHandler(async (event) => {
   const client = await serverSupabaseClient(event)
 
   if (!user) {
+    console.error('Unable to determine DB user')
     // TODO: enforce authentication in middleware on protected routes
     throw createError({
       statusCode: 401,
