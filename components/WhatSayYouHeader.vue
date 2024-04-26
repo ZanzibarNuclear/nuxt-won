@@ -1,36 +1,40 @@
 <script setup lang="ts">
 import { object, string, type InferType } from 'yup'
 import type { FormSubmitEvent } from '#ui/types'
+import type { Database } from '~/types/supabase'
 
-const supabase = useSupabaseClient()
+const supabase = useSupabaseClient<Database>()
 const user = useSupabaseUser()
+const wsy = useWsyStore()
 
-type Participant = {
-  id: number
-  user_id: string
-  alias: string
-  joined_at: string
-  karma: number
-}
-const aboutMe: Ref<Participant | undefined> = ref()
+const edit = ref(false)
 
-const schema = object({
+const playerSchema = object({
   alias: string(),
 })
-type Schema = InferType<typeof schema>
-const state = reactive({
-  alias: undefined,
+type Schema = InferType<typeof playerSchema>
+const playerState = reactive({
+  alias: '',
 })
 
 const isSignedIn = computed(() => !!user.value)
+const player = computed(() => wsy.player)
+const isKnownPlayer = computed(() => player.value)
 
 onMounted(async () => {
   const { data } = await supabase.from('wsy_participants').select('*')
-  if (data) {
-    aboutMe.value = data[0]
-    state.alias = aboutMe.value?.alias
+  if (data?.length > 0) {
+    wsy.setPlayer(data[0])
+    playerState.alias = data[0].alias
   }
 })
+
+function editPlayer() {
+  edit.value = true
+}
+function cancelEditPlayer() {
+  edit.value = false
+}
 
 async function onSubmit(event: FormSubmitEvent<Schema>) {
   if (!user.value) {
@@ -39,51 +43,73 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     )
     return
   }
-  const values = {
-    user_id: user.value.id,
-    alias: event.data.alias,
-  }
   const { data, error } = await supabase
     .from('wsy_participants')
-    .upsert(values)
+    .upsert({
+      id: player.value?.id,
+      user_id: user.value.id,
+      alias: event.data.alias,
+    })
     .select()
 
   if (error) {
     alert('Something dreadful happened: ' + error.message)
   }
-  aboutMe.value = data[0]
+  wsy.setPlayer(data[0])
+  edit.value = false
 }
 </script>
 
 <template>
-  <div v-if="aboutMe">
+  <div v-if="isKnownPlayer && !edit">
     <div>
-      People know you as <span class="text-primary">{{ aboutMe.alias }}</span
-      >. You joined on {{ displayAsDateTime(aboutMe.joined_at) }}. You have
-      {{ aboutMe.karma }} karma points.
+      People know you as <span class="text-primary">{{ player.alias }}</span
+      >. You joined on {{ displayAsDateTime(player.joined_at) }}. You have
+      {{ player.karma }} karma points.
+      <UButton
+        @click="editPlayer"
+        icon="i-mdi-edit"
+        label="edit"
+        variant="solid"
+        color="lime"
+        size="xs"
+      />
     </div>
     <h2>
       Listen up, people.
-      <span class="text-primary">{{ aboutMe.alias }}</span> has a few things to
+      <span class="text-primary">{{ player.alias }}</span> has a few things to
       say.
     </h2>
   </div>
   <div v-else>
     <div v-if="isSignedIn">
-      <h2>Join in the Fun</h2>
-      <div>
-        First join the discussion by giving yourself an alias. This is how you
-        want to be known to the group.
-      </div>
-      <UForm :state="state" :schema="schema" @submit="onSubmit">
+      <h2 v-if="edit">Change Your Alias</h2>
+      <h2 v-else>Join in the Fun</h2>
+      <UForm :state="playerState" :schema="playerSchema" @submit="onSubmit">
         <UFormGroup
           label="Alias"
-          description="What name do you want others to see?"
+          description="This is how you will be known to the world. Think of it as a pen name."
         >
-          <UInput v-model="state.alias" />
+          <UInput v-model="playerState.alias" />
         </UFormGroup>
-        <UButton class="mt-2" type="submit">Join the Fun</UButton>
+        <UButton
+          block
+          type="submit"
+          color="gray"
+          variant="solid"
+          label="Submit"
+          class="mt-2"
+        />
       </UForm>
+      <UButton
+        @click="cancelEditPlayer"
+        icon="i-mdi-cancel"
+        label="cancel"
+        variant="solid"
+        color="amber"
+        size="xs"
+        class="mt-4"
+      />
     </div>
     <div v-else>Who are you? Sign in, please.</div>
   </div>

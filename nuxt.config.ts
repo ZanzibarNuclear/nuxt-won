@@ -1,4 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import type { Database } from '~/types/supabase'
+
 export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: [
