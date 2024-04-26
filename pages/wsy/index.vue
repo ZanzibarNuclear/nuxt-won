@@ -33,34 +33,14 @@ type Participant = {
   karma: number
 }
 
-const meAsParticipant = ref()
 const myContext: Ref<Participant | undefined> = ref()
-const myContext2: Ref<Participant | undefined> = ref()
 const myActiveThread = ref()
 const latestEntry = ref()
 const allThreads = ref()
-const allThreads2 = ref()
 const loadedThread = ref()
 const loadedEntriesForThread = ref()
 
 const chosenTopic = ref('')
-
-const headers = useRequestHeaders(['cookie'])
-
-// const { data: wsyContext, pending } = await useAsyncData(
-//   'wsy-context',
-//   async () => {
-//     const [participant, threads] = await Promise.all([
-//       $fetch('/api/participants', { headers }),
-//       $fetch('/api/threads'),
-//     ])
-//   }
-// )
-// myContext2.value = wsyContext.value.participant
-// allThreads2.value = wsyContext.value.threads
-
-const { data: pageData } = await useFetch('/api/participants')
-// meAsParticipant.value = pageData
 
 const { data: threadsData } = await useFetch('/api/threads')
 
@@ -69,13 +49,6 @@ const isRegistered = computed(() => {
 })
 
 onMounted(async () => {
-  // const { data } = await supabase.from('wsy_participants').select('*')
-  // myContext.value = data[0]
-
-  if (pageData.value?.participants) {
-    console.log('loaded participant ' + pageData.value)
-    myContext.value = pageData.value.participants
-  }
   if (threadsData.value?.threads) {
     console.log('loaded thread info')
     allThreads.value = threadsData.value.threads

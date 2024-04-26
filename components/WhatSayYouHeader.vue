@@ -4,31 +4,25 @@ import type { FormSubmitEvent } from '#ui/types'
 
 const supabase = useSupabaseClient()
 const user = useSupabaseUser()
+const wsy = useWsyStore()
 
-type Participant = {
-  id: number
-  user_id: string
-  alias: string
-  joined_at: string
-  karma: number
-}
-const aboutMe: Ref<Participant | undefined> = ref()
-
-const schema = object({
+const playerSchema = object({
   alias: string(),
 })
-type Schema = InferType<typeof schema>
-const state = reactive({
-  alias: undefined,
+type Schema = InferType<typeof playerSchema>
+const playerState = reactive({
+  alias: '',
 })
 
 const isSignedIn = computed(() => !!user.value)
+const player = computed(() => wsy.player)
+const isKnownPlayer = computed(() => player.value)
 
 onMounted(async () => {
   const { data } = await supabase.from('wsy_participants').select('*')
   if (data) {
-    aboutMe.value = data[0]
-    state.alias = aboutMe.value?.alias
+    wsy.setPlayer(data[0])
+    playerState.alias = wsy.player.alias
   }
 })
 
@@ -51,20 +45,20 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
   if (error) {
     alert('Something dreadful happened: ' + error.message)
   }
-  aboutMe.value = data[0]
+  wsy.setPlayer(data[0])
 }
 </script>
 
 <template>
-  <div v-if="aboutMe">
+  <div v-if="isKnownPlayer">
     <div>
-      People know you as <span class="text-primary">{{ aboutMe.alias }}</span
-      >. You joined on {{ displayAsDateTime(aboutMe.joined_at) }}. You have
-      {{ aboutMe.karma }} karma points.
+      People know you as <span class="text-primary">{{ player.alias }}</span
+      >. You joined on {{ displayAsDateTime(player.joined_at) }}. You have
+      {{ player.karma }} karma points.
     </div>
     <h2>
       Listen up, people.
-      <span class="text-primary">{{ aboutMe.alias }}</span> has a few things to
+      <span class="text-primary">{{ player.alias }}</span> has a few things to
       say.
     </h2>
   </div>
@@ -75,12 +69,12 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
         First join the discussion by giving yourself an alias. This is how you
         want to be known to the group.
       </div>
-      <UForm :state="state" :schema="schema" @submit="onSubmit">
+      <UForm :state="playerState" :schema="playerSchema" @submit="onSubmit">
         <UFormGroup
           label="Alias"
           description="What name do you want others to see?"
         >
-          <UInput v-model="state.alias" />
+          <UInput v-model="playerState.alias" />
         </UFormGroup>
         <UButton class="mt-2" type="submit">Join the Fun</UButton>
       </UForm>
