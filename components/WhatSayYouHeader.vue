@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import { object, string, type InferType } from 'yup'
 import type { FormSubmitEvent } from '#ui/types'
+import type { Database } from '~/types/supabase'
 
-const supabase = useSupabaseClient()
+const supabase = useSupabaseClient<Database>()
 const user = useSupabaseUser()
 const wsy = useWsyStore()
+
+const edit = ref(false)
 
 const playerSchema = object({
   alias: string(),
@@ -20,11 +23,18 @@ const isKnownPlayer = computed(() => player.value)
 
 onMounted(async () => {
   const { data } = await supabase.from('wsy_participants').select('*')
-  if (data) {
+  if (data?.length > 0) {
     wsy.setPlayer(data[0])
-    playerState.alias = wsy.player.alias
+    playerState.alias = data[0].alias
   }
 })
+
+function editPlayer() {
+  edit.value = true
+}
+function cancelEditPlayer() {
+  edit.value = false
+}
 
 async function onSubmit(event: FormSubmitEvent<Schema>) {
   if (!user.value) {
@@ -33,28 +43,37 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     )
     return
   }
-  const values = {
-    user_id: user.value.id,
-    alias: event.data.alias,
-  }
   const { data, error } = await supabase
     .from('wsy_participants')
-    .upsert(values)
+    .upsert({
+      id: player.value?.id,
+      user_id: user.value.id,
+      alias: event.data.alias,
+    })
     .select()
 
   if (error) {
     alert('Something dreadful happened: ' + error.message)
   }
   wsy.setPlayer(data[0])
+  edit.value = false
 }
 </script>
 
 <template>
-  <div v-if="isKnownPlayer">
+  <div v-if="isKnownPlayer && !edit">
     <div>
       People know you as <span class="text-primary">{{ player.alias }}</span
       >. You joined on {{ displayAsDateTime(player.joined_at) }}. You have
       {{ player.karma }} karma points.
+      <UButton
+        @click="editPlayer"
+        icon="i-mdi-edit"
+        label="edit"
+        variant="solid"
+        color="lime"
+        size="xs"
+      />
     </div>
     <h2>
       Listen up, people.
@@ -64,20 +83,33 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
   </div>
   <div v-else>
     <div v-if="isSignedIn">
-      <h2>Join in the Fun</h2>
-      <div>
-        First join the discussion by giving yourself an alias. This is how you
-        want to be known to the group.
-      </div>
+      <h2 v-if="edit">Change Your Alias</h2>
+      <h2 v-else>Join in the Fun</h2>
       <UForm :state="playerState" :schema="playerSchema" @submit="onSubmit">
         <UFormGroup
           label="Alias"
-          description="What name do you want others to see?"
+          description="This is how you will be known to the world. Think of it as a pen name."
         >
           <UInput v-model="playerState.alias" />
         </UFormGroup>
-        <UButton class="mt-2" type="submit">Join the Fun</UButton>
+        <UButton
+          block
+          type="submit"
+          color="gray"
+          variant="solid"
+          label="Submit"
+          class="mt-2"
+        />
       </UForm>
+      <UButton
+        @click="cancelEditPlayer"
+        icon="i-mdi-cancel"
+        label="cancel"
+        variant="solid"
+        color="amber"
+        size="xs"
+        class="mt-4"
+      />
     </div>
     <div v-else>Who are you? Sign in, please.</div>
   </div>

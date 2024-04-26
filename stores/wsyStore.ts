@@ -14,6 +14,9 @@ export const useWsyStore = defineStore('wsy', () => {
   function setPlayer(myPlayer: Participant) {
     player.value = myPlayer
   }
-
-  return { player, setPlayer }
+  function clear() {
+    player.value = undefined
+    console.log('clear store')
+  }
+  return { player, setPlayer, clear }
 })
