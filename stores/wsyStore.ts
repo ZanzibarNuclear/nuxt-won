@@ -16,7 +16,7 @@ export const useWsyStore = defineStore('wsy', () => {
     topic: string
     starting_entry_id: number
     owner_id: number
-    entries: [Entry]
+    entries: []
   }
   type ThreadMap = { [k: string]: Thread }
   // type Entry = { statement: string; posted_at: string }
@@ -54,6 +54,9 @@ export const useWsyStore = defineStore('wsy', () => {
       `thread to load: ${myThread.topic} ${myThread.created_at} ${myThread.public_key}`
     )
     threads.value[myThread.public_key] = { ...myThread }
+    if (!threads.value[myThread.public_key].entries) {
+      threads.value[myThread.public_key].entries = []
+    }
   }
   function activateThread(key: string) {
     if (threads.value[key] !== null) {
@@ -68,9 +71,6 @@ export const useWsyStore = defineStore('wsy', () => {
     })
   }
   function addEntryToActive(entry: Entry) {
-    if (isActiveThread && !isActiveEntries) {
-      activeThread.value.entries = []
-    }
     activeThread.value.entries.push({ ...entry })
   }
 
