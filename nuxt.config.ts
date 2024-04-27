@@ -24,7 +24,7 @@ export default defineNuxtConfig({
       login: '/auth/sign-in',
       callback: '/auth/confirm',
       cookieRedirect: true,
-      include: ['/user(/*)?', '/workshop(/*)?'],
+      include: ['/user(/*)?', '/workshop(/*)?', '/wsy(/*)?'],
     },
     cookieName: 'won',
     cookieOptions: {

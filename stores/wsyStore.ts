@@ -8,6 +8,7 @@ export const useWsyStore = defineStore('wsy', () => {
     joined_at: string
     karma: number
   }
+  type Entry = { statement: string; posted_at: string }
   type Thread = {
     id: number
     created_at: string
@@ -15,6 +16,7 @@ export const useWsyStore = defineStore('wsy', () => {
     topic: string
     starting_entry_id: number
     owner_id: number
+    entries: [Entry]
   }
   type ThreadMap = { [k: string]: Thread }
   // type Entry = { statement: string; posted_at: string }
@@ -37,6 +39,13 @@ export const useWsyStore = defineStore('wsy', () => {
     return !!activeThread.value
   })
 
+  const activeEntries = computed(() => {
+    return activeThread.value?.entries
+  })
+  const isActiveEntries = computed(() => {
+    return !!activeEntries.value
+  })
+
   function setPlayer(myPlayer: Participant) {
     player.value = myPlayer
   }
@@ -45,7 +54,6 @@ export const useWsyStore = defineStore('wsy', () => {
       `thread to load: ${myThread.topic} ${myThread.created_at} ${myThread.public_key}`
     )
     threads.value[myThread.public_key] = { ...myThread }
-    // console.log(threads[myThread.public_key])
   }
   function activateThread(key: string) {
     if (threads.value[key] !== null) {
@@ -54,6 +62,18 @@ export const useWsyStore = defineStore('wsy', () => {
       console.error('Thread not found for key=' + key)
     }
   }
+  function loadActiveEntries(entries) {
+    activeThread.value.entries = entries.map((entry) => {
+      return { ...entry }
+    })
+  }
+  function addEntryToActive(entry: Entry) {
+    if (isActiveThread && !isActiveEntries) {
+      activeThread.value.entries = []
+    }
+    activeThread.value.entries.push({ ...entry })
+  }
+
   function clearActiveThread() {
     activeThreadKey.value = undefined
   }
@@ -70,6 +90,10 @@ export const useWsyStore = defineStore('wsy', () => {
     isPlayerLoaded,
     activeThread,
     isActiveThread,
+    activeEntries,
+    isActiveEntries,
+    loadActiveEntries,
+    addEntryToActive,
     setPlayer,
     updateThread,
     activateThread,
