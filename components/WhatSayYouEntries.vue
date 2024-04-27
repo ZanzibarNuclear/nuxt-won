@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const supabase = useSupabaseClient()
 const wsy = useWsyStore()
 const statement = ref('')
 
@@ -12,15 +13,20 @@ const doPostEntry = async () => {
 
   // TODO: fix responding to, which wasn't coded right in the first place
 
-  const newEntry = await $fetch('/api/entries', {
-    method: 'post',
-    body: {
-      threadId: wsy.activeThread.id,
-      participantId: wsy.player.id,
+  const { data, error } = await supabase
+    .from('wsy_entries')
+    .insert({
+      thread_id: wsy.activeThread.id,
+      author_id: wsy.player.id,
       statement: statement.value.trim(),
-    },
-  })
-  wsy.addEntryToActive(newEntry)
+    })
+    .select()
+
+  if (error) {
+    console.error('Unable to post entry', error)
+    return
+  }
+  wsy.addEntryToActive(data[0])
   statement.value = ''
 }
 </script>
