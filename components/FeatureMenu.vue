@@ -15,7 +15,7 @@ const links = [
     {
       label: 'What Say You',
       icon: 'i-heroicons-chat-bubble-left-ellipsis',
-      to: '/features/what-say-you',
+      to: '/wsy',
     },
     {
       label: 'Daily Lessons',
