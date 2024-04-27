@@ -97,7 +97,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
           type="submit"
           color="gray"
           variant="solid"
-          label="Submit"
+          :label="isKnownPlayer ? 'Change' : 'Start'"
           class="mt-2"
         />
       </UForm>

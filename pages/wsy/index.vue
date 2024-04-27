@@ -4,6 +4,7 @@ const wsy = useWsyStore()
 
 <template>
   <div>
+    <h1>What Say You?</h1>
     <WhatSayYouHeader />
     <WhatSayYouTopic v-if="wsy.isPlayerLoaded" />
     <WhatSayYouEntries v-if="wsy.isActiveThread" />
