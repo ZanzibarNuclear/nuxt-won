@@ -27,14 +27,11 @@ const doChooseTopic = async () => {
   if (chosenTopic.value === null) return
 
   const loadedThread = await $fetch(`/api/threads/${chosenTopic.value}`)
-
-  const loadedEntries = await $fetch(`/api/entries/${loadedThread.public_key}`)
+  const loadedEntries = await $fetch(`/api/entries/${chosenTopic.value}`)
 
   wsy.updateThread(loadedThread)
   wsy.activateThread(loadedThread.public_key)
-
-  // TODO: load thread entries
-  // wsy.updateEntries(threadKey)
+  wsy.loadActiveEntries(loadedEntries)
 }
 </script>
 
