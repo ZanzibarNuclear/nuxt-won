@@ -1,5 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import type { Database } from '~/types/supabase'
+// TODO: figure out how to use, whether it does anything useful
+// import type { Database } from '~/types/supabase'
 
 export default defineNuxtConfig({
   devtools: { enabled: true },
@@ -12,9 +13,9 @@ export default defineNuxtConfig({
     '@nuxt/test-utils/module',
   ],
   runtimeConfig: {
+    wsyInvitationsResendKey: process.env.WSY_RESEND_PROJECT_KEY,
     public: {
       baseUrl: process.env.BASE_URL || 'http://localhost:3000',
-      descopeProjectId: process.env.DESCOPE_PROJECT_ID,
     },
   },
   content: {},
