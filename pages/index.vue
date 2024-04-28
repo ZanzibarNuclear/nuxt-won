@@ -1,15 +1,15 @@
 <template>
-  <div class="text-center text-4xl mb-10">
-    Explore the world of nuclear energy.
-  </div>
-  <div class="flex flex-wrap">
-    <feature-tile
-      class="w-72 mx-4 my-4"
-      v-for="feature in features"
-      :id="feature.name"
-      :feature="feature"
-    />
-  </div>
+  <UContainer>
+    <h1 class="text-center">Explore the world of nuclear energy.</h1>
+    <div class="flex flex-wrap">
+      <feature-tile
+        class="w-72 mx-4 my-4"
+        v-for="feature in features"
+        :id="feature.name"
+        :feature="feature"
+      />
+    </div>
+  </UContainer>
 </template>
 
 <script setup>
@@ -33,30 +33,12 @@ const features = [
     routeName: 'features-daily-lessons',
   },
   {
-    category: 'events',
-    name: 'News',
-    coverImage: '/images/Diablo-Canyon-power-plant.png',
-    description:
-      'Long-form discussions for sharing ideas about nuclear energy.',
-    callToAction: 'Stay Current',
-    routeName: 'features-nuclear-news',
-  },
-  {
     category: 'learning',
     name: 'Simulators',
     coverImage: '/images/Cherenkov-radiation.jpg',
     description: 'Try nuclear simulators - fun and educational.',
     callToAction: 'Learn By Doing',
     routeName: 'features-simulators',
-  },
-  {
-    category: 'fun',
-    name: 'Games',
-    coverImage: '/images/word-search.jpg',
-    description:
-      'Long-form discussions for sharing ideas about nuclear energy.',
-    callToAction: 'Play Now',
-    routeName: 'features/-un-and-games',
   },
 ]
 </script>

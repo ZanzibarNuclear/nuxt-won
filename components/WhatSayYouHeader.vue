@@ -21,6 +21,8 @@ const isSignedIn = computed(() => !!user.value)
 const player = computed(() => wsy.player)
 const isKnownPlayer = computed(() => player.value)
 
+// TODO: have parent load player info and pass as property
+
 onMounted(async () => {
   const { data } = await supabase.from('wsy_participants').select('*')
   if (data?.length > 0) {
@@ -61,56 +63,55 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 </script>
 
 <template>
-  <div v-if="isKnownPlayer && !edit">
-    <div>
-      People know you as <span class="text-primary">{{ player.alias }}</span
-      >. You joined on {{ displayAsDateTime(player.joined_at) }}. You have
-      {{ player.karma }} karma points.
-      <UButton
-        @click="editPlayer"
-        icon="i-mdi-edit"
-        label="edit"
-        variant="solid"
-        color="lime"
-        size="xs"
-      />
-    </div>
-    <h2>
-      Listen up, people.
-      <span class="text-primary">{{ player.alias }}</span> has a few things to
-      say.
-    </h2>
-  </div>
-  <div v-else>
-    <div v-if="isSignedIn">
-      <h2 v-if="edit">Change Your Alias</h2>
-      <h2 v-else>Join in the Fun</h2>
-      <UForm :state="playerState" :schema="playerSchema" @submit="onSubmit">
-        <UFormGroup
-          label="Alias"
-          description="This is how you will be known to the world. Think of it as a pen name."
+  <div class="my-6 border p-2 rounded-md bg-slate-100">
+    <div v-if="isKnownPlayer && !edit">
+      <div class="text-xl">People know you as "{{ player.alias }}."</div>
+      <div>
+        You joined on {{ displayAsDateTime(player.joined_at) }}.
+        <UBadge class="mx-2" color="primary" variant="solid" rounded
+          >{{ player.karma }} karma points</UBadge
         >
-          <UInput v-model="playerState.alias" />
-        </UFormGroup>
         <UButton
-          block
-          type="submit"
-          color="gray"
+          @click="editPlayer"
+          icon="i-mdi-edit"
+          label="change alias"
           variant="solid"
-          :label="isKnownPlayer ? 'Change' : 'Start'"
-          class="mt-2"
+          color="lime"
+          size="xs"
         />
-      </UForm>
-      <UButton
-        @click="cancelEditPlayer"
-        icon="i-mdi-cancel"
-        label="cancel"
-        variant="solid"
-        color="amber"
-        size="xs"
-        class="mt-4"
-      />
+      </div>
     </div>
-    <div v-else>Who are you? Sign in, please.</div>
+    <div v-else>
+      <div v-if="isSignedIn">
+        <div class="text-xl" v-if="edit">Change Your Alias</div>
+        <div class="text-xl" v-else>Join in the Fun</div>
+        <UForm :state="playerState" :schema="playerSchema" @submit="onSubmit">
+          <UFormGroup
+            label="Alias"
+            description="This is how you will be known to the world. Think of it as a pen name."
+          >
+            <UInput v-model="playerState.alias" />
+          </UFormGroup>
+          <UButton
+            block
+            type="submit"
+            color="gray"
+            variant="solid"
+            :label="isKnownPlayer ? 'Change' : 'Start'"
+            class="mt-2"
+          />
+        </UForm>
+        <UButton
+          @click="cancelEditPlayer"
+          icon="i-mdi-cancel"
+          label="cancel"
+          variant="solid"
+          color="amber"
+          size="xs"
+          class="mt-4"
+        />
+      </div>
+      <div v-else>Who are you? Sign in, please.</div>
+    </div>
   </div>
 </template>

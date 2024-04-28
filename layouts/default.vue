@@ -1,7 +1,21 @@
+<script setup lang="ts">
+const hideNav = ref(true)
+const toggleLeftNavVisibility = () => {
+  hideNav.value = !hideNav.value
+}
+</script>
+
 <template>
   <UContainer>
     <header>
       <div class="flex flex-center">
+        <UButton
+          size="md"
+          variant="ghost"
+          icon="i-mdi-menu"
+          title="Navigation"
+          @click="toggleLeftNavVisibility"
+        />
         <UButton square variant="ghost" to="/">
           <template #leading>
             <UAvatar src="/images/Zanzibar.svg" size="md" />
@@ -12,7 +26,7 @@
       </div>
     </header>
     <div class="flex gap-x-5">
-      <div class="flex-col">
+      <div class="flex-col" :hidden="hideNav">
         <feature-menu />
       </div>
       <div class="flex-col w-full px-4 py-4">

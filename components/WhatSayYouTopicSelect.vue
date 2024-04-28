@@ -7,13 +7,11 @@ const { data: threadsData } = await useFetch('/api/threads')
 
 onMounted(async () => {
   if (threadsData.value?.threads) {
-    console.log('loaded thread info')
     allThreads.value = threadsData.value.threads
   }
 })
 
 const allTopicsList = computed(() => {
-  console.log('build list of topics')
   const topics = allThreads.value
     .filter((thread) => thread.public_key != wsy.activeThreadKey)
     .map((thread) => ({
@@ -24,6 +22,7 @@ const allTopicsList = computed(() => {
 })
 
 const doChooseTopic = async () => {
+  // TODO: have this emit and let parent handle
   if (chosenTopic.value === null) return
 
   const loadedThread = await $fetch(`/api/threads/${chosenTopic.value}`)
@@ -36,8 +35,8 @@ const doChooseTopic = async () => {
 </script>
 
 <template>
-  <div v-if="allTopicsList.length > 0" class="my-4">
-    <UFormGroup label="Pick another topic">
+  <div v-if="allTopicsList.length > 0">
+    <UFormGroup label="Pick one of these topics">
       <USelect
         v-model="chosenTopic"
         :options="allTopicsList"
@@ -45,6 +44,8 @@ const doChooseTopic = async () => {
         value-attribute="key"
       />
     </UFormGroup>
-    <UButton class="mt-2" @click="doChooseTopic">Change topics</UButton>
+    <UButton class="mt-2" @click="doChooseTopic" :disabled="!chosenTopic"
+      >Open</UButton
+    >
   </div>
 </template>

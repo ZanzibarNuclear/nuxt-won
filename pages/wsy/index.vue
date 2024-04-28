@@ -1,5 +1,28 @@
 <script setup lang="ts">
 const wsy = useWsyStore()
+const url = useRequestURL()
+
+onBeforeMount(() => {
+  const threadKey = url.searchParams.get('topic')
+  if (threadKey) {
+    // TODO: check if user is a player?
+    console.log('loading topic from params')
+    handleChooseTopic(threadKey)
+  } else {
+    console.log('no topic found in params')
+  }
+})
+
+const handleChooseTopic = async (threadKey: string) => {
+  if (threadKey === null) return
+
+  const loadedThread = await $fetch(`/api/threads/${threadKey}`)
+  const loadedEntries = await $fetch(`/api/entries/${threadKey}`)
+
+  wsy.updateThread(loadedThread)
+  wsy.activateThread(loadedThread.public_key)
+  wsy.loadActiveEntries(loadedEntries)
+}
 </script>
 
 <template>
