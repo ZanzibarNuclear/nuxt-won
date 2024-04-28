@@ -21,6 +21,8 @@ const isSignedIn = computed(() => !!user.value)
 const player = computed(() => wsy.player)
 const isKnownPlayer = computed(() => player.value)
 
+// TODO: have parent load player info and pass as property
+
 onMounted(async () => {
   const { data } = await supabase.from('wsy_participants').select('*')
   if (data?.length > 0) {

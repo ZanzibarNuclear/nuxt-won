@@ -24,6 +24,7 @@ const allTopicsList = computed(() => {
 })
 
 const doChooseTopic = async () => {
+  // TODO: have this emit and let parent handle
   if (chosenTopic.value === null) return
 
   const loadedThread = await $fetch(`/api/threads/${chosenTopic.value}`)
