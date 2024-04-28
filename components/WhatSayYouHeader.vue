@@ -63,9 +63,9 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 </script>
 
 <template>
-  <div class="my-6">
+  <div class="my-6 border p-2 rounded-md bg-slate-100">
     <div v-if="isKnownPlayer && !edit">
-      <h2>People know you as "{{ player.alias }}"</h2>
+      <div class="text-xl">People know you as "{{ player.alias }}."</div>
       <div>
         You joined on {{ displayAsDateTime(player.joined_at) }}.
         <UBadge class="mx-2" color="primary" variant="solid" rounded
@@ -83,8 +83,8 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     </div>
     <div v-else>
       <div v-if="isSignedIn">
-        <h2 v-if="edit">Change Your Alias</h2>
-        <h2 v-else>Join in the Fun</h2>
+        <div class="text-xl" v-if="edit">Change Your Alias</div>
+        <div class="text-xl" v-else>Join in the Fun</div>
         <UForm :state="playerState" :schema="playerSchema" @submit="onSubmit">
           <UFormGroup
             label="Alias"
