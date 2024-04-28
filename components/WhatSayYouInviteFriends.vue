@@ -20,8 +20,8 @@ const doInvite = async () => {
 </script>
 
 <template>
-  <div>
-    Invite your friends to respond.
+  <div class="p-4">
+    Invite someone to respond. (Best if it's someone you know.)
     <UFormGroup label="Email" description="Your friend's email address">
       <UInput v-model="friendEmail" />
     </UFormGroup>

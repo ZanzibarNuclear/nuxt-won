@@ -37,8 +37,8 @@ const doChooseTopic = async () => {
 </script>
 
 <template>
-  <div v-if="allTopicsList.length > 0" class="my-4">
-    <UFormGroup label="Pick another topic">
+  <div v-if="allTopicsList.length > 0">
+    <UFormGroup label="Pick one of these topics">
       <USelect
         v-model="chosenTopic"
         :options="allTopicsList"
