@@ -7,13 +7,11 @@ const { data: threadsData } = await useFetch('/api/threads')
 
 onMounted(async () => {
   if (threadsData.value?.threads) {
-    console.log('loaded thread info')
     allThreads.value = threadsData.value.threads
   }
 })
 
 const allTopicsList = computed(() => {
-  console.log('build list of topics')
   const topics = allThreads.value
     .filter((thread) => thread.public_key != wsy.activeThreadKey)
     .map((thread) => ({
@@ -46,6 +44,8 @@ const doChooseTopic = async () => {
         value-attribute="key"
       />
     </UFormGroup>
-    <UButton class="mt-2" @click="doChooseTopic">Change topics</UButton>
+    <UButton class="mt-2" @click="doChooseTopic" :disabled="!chosenTopic"
+      >Open</UButton
+    >
   </div>
 </template>

@@ -1,9 +1,29 @@
 <script setup lang="ts">
 const supabase = useSupabaseClient()
 const wsy = useWsyStore()
+
 const newThreadTopic = ref('')
+const topicInputRef = ref()
+defineShortcuts({
+  meta_f: () => {
+    focusOnTopicInput()
+  },
+})
+const focusOnTopicInput = () => {
+  topicInputRef.value.$refs.input.focus()
+}
 
 const inviteOpen = ref(false)
+const openInviteForm = () => {
+  inviteOpen.value = true
+}
+const closeInviteForm = () => {
+  inviteOpen.value = false
+}
+
+onMounted(() => {
+  focusOnTopicInput()
+})
 
 const canStartTopic = computed(() => {
   return newThreadTopic.value || newThreadTopic.value.trim() !== ''
@@ -44,11 +64,11 @@ const doNewTopic = () => {
     <h3>Of what shall we speak?</h3>
     <div class="columns-2 my-6">
       <div>
-        <UFormGroup label="New Topic">
-          <UInput v-model="newThreadTopic" />
+        <UFormGroup label="Introduce a new topic">
+          <UInput v-model="newThreadTopic" ref="topicInputRef" />
         </UFormGroup>
         <UButton class="mt-2" @click="doStartThread" :disabled="!canStartTopic"
-          >Start this topic</UButton
+          >Start</UButton
         >
       </div>
       <WhatSayYouTopicSelect />
@@ -61,10 +81,7 @@ const doNewTopic = () => {
         {{ wsy.activeThread.topic }}
       </div>
       <div class="m-2">
-        <UButton
-          @click="() => (inviteOpen = true)"
-          label="Invite someone to this topic"
-        />
+        <UButton @click="openInviteForm" label="Invite someone to this topic" />
       </div>
       <div class="m-2">
         <UButton @click="doNewTopic">Change topics</UButton>
@@ -73,10 +90,6 @@ const doNewTopic = () => {
   </div>
   <UModal v-model="inviteOpen">
     <WhatSayYouInviteFriends />
-    <UButton
-      @click="() => (inviteOpen = false)"
-      icon="i-mdi-close"
-      label="Close"
-    />
+    <UButton @click="closeInviteForm" icon="i-mdi-close" label="Close" />
   </UModal>
 </template>

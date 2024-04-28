@@ -1,7 +1,31 @@
 <script setup lang="ts">
 const supabase = useSupabaseClient()
 const wsy = useWsyStore()
+
 const statement = ref('')
+const statementTextareaRef = ref()
+defineShortcuts({
+  meta_e: () => {
+    focusOnEntryInput()
+  },
+  meta_enter: {
+    usingInput: 'entry',
+    handler: () => {
+      doPostEntry()
+    },
+  },
+})
+const focusOnEntryInput = () => {
+  statementTextareaRef.value.$refs.textarea.focus()
+}
+
+onMounted(() => {
+  focusOnEntryInput()
+})
+
+const formatEntry = (entry) => {
+  return entry.replaceAll('\n', '<br/><br/>')
+}
 
 const doPostEntry = async () => {
   if (!wsy.isActiveThread) {
@@ -28,6 +52,7 @@ const doPostEntry = async () => {
   }
   wsy.addEntryToActive(data[0])
   statement.value = ''
+  focusOnEntryInput()
 }
 </script>
 
@@ -38,7 +63,7 @@ const doPostEntry = async () => {
       all. Sit back and wait for reactions.
     </div>
     <UFormGroup label="Make a statement. Speak your mind.">
-      <UTextarea v-model="statement" />
+      <UTextarea v-model="statement" ref="statementTextareaRef" name="entry" />
     </UFormGroup>
     <UButton class="mt-2" @click="doPostEntry">Post</UButton>
   </div>
@@ -48,7 +73,7 @@ const doPostEntry = async () => {
         <template #header>
           <span class="text-xs">{{ item.posted_at }}</span>
         </template>
-        {{ item.statement }}
+        <span v-html="formatEntry(item.statement)" />
       </UCard>
     </li>
   </ul>
