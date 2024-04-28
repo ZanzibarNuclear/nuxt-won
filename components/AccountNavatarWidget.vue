@@ -10,7 +10,7 @@
       class="text-primary"
       ><UButton
         color="white"
-        :label="user?.email || 'Mystery VIP'"
+        :label="profile?.screenName || user?.email || '??'"
         trailing-icon="i-heroicons-chevron-down-20-solid"
     /></UDropdown>
     <UModal v-model="authPanelIsOpen">
@@ -23,6 +23,8 @@
 <script setup lang="ts">
 const supabase = useSupabaseClient()
 const user = useSupabaseUser()
+const { profile } = useUserStore()
+
 const signedIn = ref(false)
 const authPanelIsOpen = ref(false)
 
