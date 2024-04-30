@@ -8,7 +8,14 @@ export const useWsyStore = defineStore('wsy', () => {
     joined_at: string
     karma: number
   }
-  type Entry = { statement: string; posted_at: string }
+  type Entry = {
+    id: number
+    author_id: number
+    statement: string
+    thread_id: number
+    responding_to: number
+    posted_at: string
+  }
   type Thread = {
     id: number
     created_at: string
@@ -16,15 +23,30 @@ export const useWsyStore = defineStore('wsy', () => {
     topic: string
     starting_entry_id: number
     owner_id: number
-    entries: []
+    entries: [Entry]
   }
   type ThreadMap = { [k: string]: Thread }
-  // type Entry = { statement: string; posted_at: string }
+  type EntryMap = { [k: string]: Entry }
+  type ReplyMap = { [k: string]: [number] }
 
   // values
   const player: Ref<Participant | undefined> = ref()
   const threads: Ref<ThreadMap> = ref({})
   const activeThreadKey: Ref<string | undefined> = ref()
+  const entryMap: Ref<EntryMap> = ref({})
+  const replyTree: Ref<ReplyMap> = ref({})
+
+  const topLevelEntries = computed(() => {
+    return activeEntries.value?.filter((entry) => !entry.responding_to)
+  })
+  const hasResponses = computed((id) => !!replyTree.value[id.toString()])
+  const responseEntries = computed((entryId) => {
+    const replies = replyTree.value[entryId.toString()]
+    if (replies) {
+      return replies.map((id) => entryMap.value[id.toString()])
+    }
+    return null
+  })
 
   const isPlayerLoaded = computed(() => {
     return !!player.value
@@ -69,9 +91,27 @@ export const useWsyStore = defineStore('wsy', () => {
     activeThread.value.entries = entries.map((entry) => {
       return { ...entry }
     })
+    entries.forEach((entry) => {
+      entryMap.value[entry.id.toString()] = entry
+      addEntryToReplyTree(entry)
+    })
+    console.log(replyTree.value)
   }
   function addEntryToActive(entry: Entry) {
     activeThread.value.entries.push({ ...entry })
+    addEntryToReplyTree(entry)
+  }
+  function addEntryToReplyTree(entry: Entry) {
+    if (!entry.responding_to) {
+      return
+    }
+    const parentId = entry.responding_to?.toString()
+    if (parentId) {
+      if (!replyTree.value[parentId]) {
+        replyTree.value[parentId] = []
+      }
+      replyTree.value[parentId].push(entry.id)
+    }
   }
 
   function clearActiveThread() {
@@ -87,11 +127,16 @@ export const useWsyStore = defineStore('wsy', () => {
     player,
     threads,
     activeThreadKey,
+    entryMap,
+    replyTree,
     isPlayerLoaded,
     activeThread,
     isActiveThread,
     activeEntries,
     isActiveEntries,
+    topLevelEntries,
+    hasResponses,
+    responseEntries,
     loadActiveEntries,
     addEntryToActive,
     setPlayer,

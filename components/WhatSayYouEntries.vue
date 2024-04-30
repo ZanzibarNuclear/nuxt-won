@@ -17,7 +17,7 @@ const onReply = (entryId) => {
 <template>
   <WhatSayYouEntryForm />
   <ul v-if="wsy.isActiveEntries">
-    <li v-for="item in wsy.activeEntries" class="my-3">
+    <li v-for="item in wsy.topLevelEntries" class="my-3">
       <UCard>
         <div class="flex">
           <div class="flex-none mr-6 text-xs">
