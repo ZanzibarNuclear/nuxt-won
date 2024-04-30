@@ -35,6 +35,12 @@ const onReply = (entryId) => {
           </div>
         </div>
       </UCard>
+      <div v-if="wsy.hasResponses(item.id)">
+        <!-- TODO: make entry display component with indent prop -->
+        <div v-for="entry in wsy.responseEntries(item.id)">
+          <div class="ml-6 text-sm">{{ entry.statement }}</div>
+        </div>
+      </div>
     </li>
   </ul>
   <UModal v-model="showReplyForm">

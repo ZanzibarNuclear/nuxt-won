@@ -39,14 +39,16 @@ export const useWsyStore = defineStore('wsy', () => {
   const topLevelEntries = computed(() => {
     return activeEntries.value?.filter((entry) => !entry.responding_to)
   })
-  const hasResponses = computed((id) => !!replyTree.value[id.toString()])
-  const responseEntries = computed((entryId) => {
+  const hasResponses = (id) => {
+    return !!replyTree.value[id.toString()]
+  }
+  const responseEntries = (entryId) => {
     const replies = replyTree.value[entryId.toString()]
     if (replies) {
       return replies.map((id) => entryMap.value[id.toString()])
     }
     return null
-  })
+  }
 
   const isPlayerLoaded = computed(() => {
     return !!player.value
