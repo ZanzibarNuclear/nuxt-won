@@ -10,7 +10,7 @@
       class="text-primary"
       ><UButton
         color="white"
-        :label="profile?.screen_name || user?.email || '??'"
+        :label="screenName"
         trailing-icon="i-heroicons-chevron-down-20-solid"
     /></UDropdown>
     <UModal v-model="authPanelIsOpen">
@@ -35,6 +35,10 @@ const openAuthPanel = () => {
 const closeAuthPanel = () => {
   authPanelIsOpen.value = false
 }
+
+const screenName = computed(() => {
+  return profile?.screen_name || user.value?.email || 'VIP'
+})
 
 onMounted(async () => {
   signedIn.value = !!user.value
