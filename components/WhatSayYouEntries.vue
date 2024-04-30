@@ -1,77 +1,21 @@
 <script setup lang="ts">
-const supabase = useSupabaseClient()
 const wsy = useWsyStore()
 
-const statement = ref('')
-const statementTextareaRef = ref()
-defineShortcuts({
-  meta_e: () => {
-    focusOnEntryInput()
-  },
-  meta_enter: {
-    usingInput: 'entry',
-    handler: () => {
-      doPostEntry()
-    },
-  },
-})
-const focusOnEntryInput = () => {
-  statementTextareaRef.value.$refs.textarea.focus()
-}
-
-onMounted(() => {
-  focusOnEntryInput()
-})
+const showReplyForm = ref(false)
+const inResponseTo = ref()
 
 const formatEntry = (entry) => {
   return entry.replaceAll('\n', '<br/><br/>')
 }
 
-const doPostEntry = async () => {
-  if (!wsy.isActiveThread) {
-    return
-  }
-  if (statement.value.trim() === '') {
-    return
-  }
-
-  // TODO: fix responding to, which wasn't coded right in the first place
-
-  const { data, error } = await supabase
-    .from('wsy_entries')
-    .insert({
-      thread_id: wsy.activeThread.id,
-      author_id: wsy.player.id,
-      statement: statement.value.trim(),
-    })
-    .select()
-
-  if (error) {
-    console.error('Unable to post entry', error)
-    return
-  }
-  wsy.addEntryToActive(data[0])
-  statement.value = ''
-  focusOnEntryInput()
-}
-
 const onReply = (entryId) => {
-  console.log(`Reply to entry with ID=${entryId}`)
-  alert('Coming soon...you will be able to respond.')
+  inResponseTo.value = entryId
+  showReplyForm.value = true
 }
 </script>
 
 <template>
-  <div class="my-6">
-    <UFormGroup
-      label="Make a statement. Speak your mind. Click Post to share with the world."
-    >
-      <UTextarea v-model="statement" ref="statementTextareaRef" name="entry" />
-    </UFormGroup>
-    <UButton class="mt-2" @click="doPostEntry" title="(ctrl+enter)"
-      >Post</UButton
-    >
-  </div>
+  <WhatSayYouEntryForm />
   <ul v-if="wsy.isActiveEntries">
     <li v-for="item in wsy.activeEntries" class="my-3">
       <UCard>
@@ -93,4 +37,11 @@ const onReply = (entryId) => {
       </UCard>
     </li>
   </ul>
+  <UModal v-model="showReplyForm">
+    <WhatSayYouEntryForm
+      :responding-to="inResponseTo"
+      @close="() => (showReplyForm = false)"
+    />
+    <UButton @click="showReplyForm = false" icon="i-mdi-close" label="Cancel" />
+  </UModal>
 </template>

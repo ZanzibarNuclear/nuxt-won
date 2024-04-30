@@ -49,6 +49,10 @@ export const useUserStore = defineStore('user', () => {
       .select()
       .eq('id', user.id)
 
+    if (error) {
+      console.error(error.message)
+      return false
+    }
     loadProfile(data[0])
     return true
   }
@@ -70,6 +74,10 @@ export const useUserStore = defineStore('user', () => {
       .eq('id', user.id)
       .select()
 
+    if (error) {
+      console.error(error.message)
+      return false
+    }
     loadProfile(data[0])
     return true
   }
