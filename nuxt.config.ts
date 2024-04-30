@@ -37,6 +37,7 @@ export default defineNuxtConfig({
   ui: {
     icons: ['mdi', 'el', 'ri'],
   },
+  css: ['~/assets/css/tailwind.css'],
   vite: {
     define: {
       global: 'window',

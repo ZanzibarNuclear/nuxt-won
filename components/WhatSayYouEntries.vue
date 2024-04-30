@@ -55,7 +55,8 @@ const doPostEntry = async () => {
   focusOnEntryInput()
 }
 
-const onReply = () => {
+const onReply = (entryId) => {
+  console.log(`Reply to entry with ID=${entryId}`)
   alert('Coming soon...you will be able to respond.')
 }
 </script>
@@ -78,7 +79,10 @@ const onReply = () => {
           <div class="flex-none mr-6 text-xs">
             by writer {{ item.author_id }}<br />
             {{ displayAsDateTime(item.posted_at) }}<br />
-            <UButton @click="onReply" icon="i-mdi-reply" size="xs"
+            <UButton
+              @click="() => onReply(item.id)"
+              icon="i-mdi-reply"
+              size="xs"
               >reply</UButton
             >
           </div>

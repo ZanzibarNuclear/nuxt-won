@@ -10,7 +10,7 @@
       class="text-primary"
       ><UButton
         color="white"
-        :label="profile?.screenName || user?.email || '??'"
+        :label="profile?.screen_name || user?.email || '??'"
         trailing-icon="i-heroicons-chevron-down-20-solid"
     /></UDropdown>
     <UModal v-model="authPanelIsOpen">
@@ -21,9 +21,10 @@
 </template>
 
 <script setup lang="ts">
+import { useUserStore } from '~/stores/userStore'
+const { profile, fetchAndLoadProfile } = useUserStore()
 const supabase = useSupabaseClient()
 const user = useSupabaseUser()
-const { profile } = useUserStore()
 
 const signedIn = ref(false)
 const authPanelIsOpen = ref(false)
@@ -35,8 +36,11 @@ const closeAuthPanel = () => {
   authPanelIsOpen.value = false
 }
 
-onMounted(() => {
+onMounted(async () => {
   signedIn.value = !!user.value
+  if (signedIn.value) {
+    await fetchAndLoadProfile()
+  }
 })
 
 const items = [
