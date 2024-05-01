@@ -14,7 +14,7 @@ const onReply = (id: number) => {
   emit('reply', id)
 }
 
-// FIXME: find a good way to indent replies
+// FIXME: find a good way to indent replies, and add recursion to a limited depth
 </script>
 
 <template>

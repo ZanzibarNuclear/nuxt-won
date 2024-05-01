@@ -16,7 +16,6 @@ const handleReply = (entryId) => {
     <li v-for="item in wsy.topLevelEntries" class="my-3">
       <WhatSayYouEntryView :entry="item" @reply="handleReply" />
       <div v-if="wsy.hasResponses(item.id)">
-        <!-- TODO: make entry display component with indent prop -->
         <div v-for="responseEntry in wsy.responseEntries(item.id)">
           <WhatSayYouEntryView
             :entry="responseEntry"
