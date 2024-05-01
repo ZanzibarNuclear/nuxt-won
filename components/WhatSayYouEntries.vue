@@ -4,11 +4,7 @@ const wsy = useWsyStore()
 const showReplyForm = ref(false)
 const inResponseTo = ref()
 
-const formatEntry = (entry) => {
-  return entry.replaceAll('\n', '<br/><br/>')
-}
-
-const onReply = (entryId) => {
+const handleReply = (entryId) => {
   inResponseTo.value = entryId
   showReplyForm.value = true
 }
@@ -18,27 +14,15 @@ const onReply = (entryId) => {
   <WhatSayYouEntryForm />
   <ul v-if="wsy.isActiveEntries">
     <li v-for="item in wsy.topLevelEntries" class="my-3">
-      <UCard>
-        <div class="flex">
-          <div class="flex-none mr-6 text-xs">
-            by writer {{ item.author_id }}<br />
-            {{ displayAsDateTime(item.posted_at) }}<br />
-            <UButton
-              @click="() => onReply(item.id)"
-              icon="i-mdi-reply"
-              size="xs"
-              >reply</UButton
-            >
-          </div>
-          <div class="grow">
-            <span v-html="formatEntry(item.statement)" />
-          </div>
-        </div>
-      </UCard>
+      <WhatSayYouEntryView :entry="item" @reply="handleReply" />
       <div v-if="wsy.hasResponses(item.id)">
         <!-- TODO: make entry display component with indent prop -->
-        <div v-for="entry in wsy.responseEntries(item.id)">
-          <div class="ml-6 text-sm">{{ entry.statement }}</div>
+        <div v-for="responseEntry in wsy.responseEntries(item.id)">
+          <WhatSayYouEntryView
+            :entry="responseEntry"
+            @reply="handleReply"
+            indent="2"
+          />
         </div>
       </div>
     </li>
