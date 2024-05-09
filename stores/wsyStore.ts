@@ -101,6 +101,7 @@ export const useWsyStore = defineStore('wsy', () => {
   }
   function addEntryToActive(entry: Entry) {
     activeThread.value.entries.push({ ...entry })
+    entryMap.value[entry.id.toString()] = entry
     addEntryToReplyTree(entry)
   }
   function addEntryToReplyTree(entry: Entry) {

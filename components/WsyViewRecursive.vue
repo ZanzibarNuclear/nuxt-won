@@ -3,8 +3,19 @@
     <WsyPostViewRow
       :entry="entry"
       :indent="indent"
-      @reply="() => emit('reply')"
+      @reply="showReplyForm = true"
     />
+    <div v-if="showReplyForm">
+      <WhatSayYouEntryForm
+        :responding-to="entry.id"
+        @close="showReplyForm = false"
+      />
+      <UButton
+        @click="showReplyForm = false"
+        icon="i-mdi-close"
+        label="Cancel"
+      />
+    </div>
     <div v-if="wsy.hasResponses(entry.id)">
       <WsyViewRecursive
         :entries="wsy.responseEntries(entry.id)"
@@ -18,7 +29,8 @@
 const wsy = useWsyStore()
 
 defineProps(['entries', 'indent'])
-const emit = defineEmits(['reply'])
+
+const showReplyForm = ref(false)
 </script>
 
 <style scoped></style>
