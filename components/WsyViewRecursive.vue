@@ -1,0 +1,36 @@
+<template>
+  <div v-for="entry in entries" class="my-3">
+    <WsyPostViewRow
+      :entry="entry"
+      :indent="indent"
+      @reply="showReplyForm = true"
+    />
+    <div v-if="showReplyForm">
+      <WhatSayYouEntryForm
+        :responding-to="entry.id"
+        @close="showReplyForm = false"
+      />
+      <UButton
+        @click="showReplyForm = false"
+        icon="i-mdi-close"
+        label="Cancel"
+      />
+    </div>
+    <div v-if="wsy.hasResponses(entry.id)">
+      <WsyViewRecursive
+        :entries="wsy.responseEntries(entry.id)"
+        :indent="indent + 1"
+      />
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+const wsy = useWsyStore()
+
+defineProps(['entries', 'indent'])
+
+const showReplyForm = ref(false)
+</script>
+
+<style scoped></style>

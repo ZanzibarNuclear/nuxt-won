@@ -12,7 +12,6 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "@descope/vue-sdk": "^2.0.11",
     "@iconify-json/el": "^1.1.8",
     "@iconify-json/mdi": "^1.1.65",
     "@iconify-json/mingcute": "^1.1.17",

@@ -6,34 +6,34 @@
     >
       <UInput
         placeholder="Have fun with this one"
-        v-model="state.screenName"
+        v-model="state.screen_name"
         size="sm"
       />
     </UFormGroup>
     <UFormGroup label="Full Name" description="For official correspondence">
       <UInput
         placeholder="John Smith, Billy Dee Williams"
-        v-model="state.fullName"
+        v-model="state.full_name"
         size="sm"
       />
     </UFormGroup>
     <UFormGroup label="Why did you join?">
       <UTextarea
         placeholder="What do you hope to get from World of Nuclear?"
-        v-model="state.joinReason"
+        v-model="state.join_reason"
         size="sm"
       />
     </UFormGroup>
     <UFormGroup label="What do you like about nuclear?">
       <UTextarea
         placeholder="Tell the world your favorite thing."
-        v-model="state.nuclearLikes"
+        v-model="state.nuclear_likes"
         size="sm"
       />
     </UFormGroup>
     <UFormGroup>
       <template #label><UIcon name="i-ri-twitter-x-line" /> Username</template>
-      <UInput placeholder="X Username" v-model="state.xUsername" size="sm">
+      <UInput placeholder="X Username" v-model="state.x_username" size="sm">
         <template #leading>@</template>
       </UInput>
     </UFormGroup>
@@ -44,7 +44,7 @@
       <template #label><UIcon name="i-mdi-linkedin" /> LinkedIn</template>
       <UInput
         placeholder="LinkedIn Profile Name"
-        v-model="state.linkedInProfileName"
+        v-model="state.linkedin_profile_name"
         size="sm"
       />
     </UFormGroup>
@@ -61,28 +61,26 @@ const profile = useUserStore().profile
 const emit = defineEmits(['saveChanges'])
 
 const schema = object({
-  screenName: string(),
-  fullName: string(),
-  joinReason: string(),
-  nuclearLikes: string(),
-  xUsername: string(),
-  linkedInProfileName: string(),
+  screen_name: string(),
+  full_name: string(),
+  join_reason: string(),
+  nuclear_likes: string(),
+  x_username: string(),
+  linkedin_profile_name: string(),
 })
 
 type Schema = InferType<typeof schema>
 
 const state = reactive({
-  screenName: profile.screenName,
-  fullName: profile.fullName,
-  joinReason: profile.joinReason,
-  nuclearLikes: profile.nuclearLikes,
-  xUsername: profile.xUsername,
-  linkedInProfileName: profile.linkedInProfileName,
+  screen_name: profile.screen_name,
+  full_name: profile.full_name,
+  join_reason: profile.join_reason,
+  nuclear_likes: profile.nuclear_likes,
+  x_username: profile.x_username,
+  linkedin_profile_name: profile.linkedin_profile_name,
 })
 
 async function onSubmit(event: FormSubmitEvent<Schema>) {
   emit('saveChanges', event.data)
 }
 </script>
-
-<style scoped></style>
