@@ -17,10 +17,11 @@ const handleReply = (entryId) => {
       <WhatSayYouEntryView :entry="item" @reply="handleReply" />
       <div v-if="wsy.hasResponses(item.id)">
         <div v-for="responseEntry in wsy.responseEntries(item.id)">
+          <WsyPostViewRow :entry="responseEntry" @reply="handleReply" />
           <WhatSayYouEntryView
             :entry="responseEntry"
+            :indent="1"
             @reply="handleReply"
-            indent="2"
           />
         </div>
       </div>

@@ -1,35 +1,62 @@
 <script setup lang="ts">
-const props = defineProps(['entry', 'indent'])
+const props = defineProps({
+  entry: {
+    type: Object,
+    required: true,
+  },
+  indent: {
+    type: Number,
+    default: 0,
+  },
+})
 const emit = defineEmits(['reply'])
 
-const formatEntry = (entry) => {
+const formatEntry = (entry: string) => {
   return entry.replaceAll('\n', '<br/><br/>')
 }
 
-const indentation = computed(() => {
-  return props.indent ? `ml-${props.indent * 2}` : null
+const spacerClass = ref('post-spacer')
+const indentedStyle = computed(() => {
+  const indentColumnWidth = props.indent * 40
+  return {
+    grid: 'display',
+    'grid-template-columns': `${indentColumnWidth}px auto`,
+  }
 })
 
 const onReply = (id: number) => {
   emit('reply', id)
 }
-
-// FIXME: find a good way to indent replies, and add recursion to a limited depth
 </script>
 
 <template>
-  <UCard :class="{ 'margin-left': indent * 2 }">
-    <div class="flex">
-      <div class="flex-none mr-6 text-xs">
+  <div :class="[indentedStyle, spacerClass]">
+    <div class="marker">-></div>
+    <UCard class="post">
+      <div>
         by writer {{ entry.author_id }}<br />
         {{ displayAsDateTime(entry.posted_at) }}<br />
         <UButton @click="() => onReply(entry.id)" icon="i-mdi-reply" size="xs"
           >reply</UButton
         >
       </div>
-      <div class="grow">
+      <div>
         <span v-html="formatEntry(entry.statement)" />
       </div>
-    </div>
-  </UCard>
+    </UCard>
+  </div>
 </template>
+
+<style lang="scss" scoped>
+.post {
+  display: grid;
+  grid-template-columns: 200px auto;
+}
+.post-spacer {
+  margin-bottom: 1.25rem;
+}
+.marker {
+  text-align: right;
+  padding-right: 5px;
+}
+</style>
