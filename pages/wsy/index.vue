@@ -30,6 +30,9 @@ const handleChooseTopic = async (threadKey: string) => {
     <h1>What Say You?</h1>
     <WhatSayYouHeader />
     <WhatSayYouTopic v-if="wsy.isPlayerLoaded" />
-    <WhatSayYouEntries v-if="wsy.isActiveThread" />
+    <WhatSayYouEntries
+      v-if="wsy.isActiveThread"
+      :entries="wsy.topLevelEntries"
+    />
   </div>
 </template>

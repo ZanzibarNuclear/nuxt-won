@@ -93,3 +93,5 @@ const doNewTopic = () => {
     <UButton @click="closeInviteForm" icon="i-mdi-close" label="Close" />
   </UModal>
 </template>
+
+<style lang="scss" scoped></style>

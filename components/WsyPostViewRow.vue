@@ -1,6 +1,8 @@
 <template>
-  <div class="row-indent-1 post-vspace">
-    <div class="marker"><UIcon name="i-mdi-arrow-right-bottom" /></div>
+  <div class="post-vspace" :style="indentStyle">
+    <div v-if="indent" class="marker">
+      <UIcon name="i-mdi-arrow-right-bottom" />
+    </div>
     <div class="post">
       <div>
         by writer {{ entry.author_id }}<br />
@@ -20,8 +22,25 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+  indent: {
+    type: Number,
+    default: 0,
+  },
 })
 const emit = defineEmits(['reply'])
+
+const indentStyle = computed(() => {
+  if (props.indent) {
+    const indentSize = props.indent * 50
+    return {
+      display: 'grid',
+      'grid-template-columns': indentSize + 'px auto',
+    }
+  } else {
+    return {}
+  }
+})
+
 const formatEntry = (entry: string) => {
   return entry.replaceAll('\n', '<br/><br/>')
 }
