@@ -28,12 +28,14 @@ export const useWsyStore = defineStore('wsy', () => {
   type ThreadMap = { [k: string]: Thread }
   type EntryMap = { [k: string]: Entry }
   type ReplyMap = { [k: string]: [number] }
+  type WriterMap = { [k: string]: string } // aliases referenced by participant ID
 
   // values
   const player: Ref<Participant | undefined> = ref()
   const threads: Ref<ThreadMap> = ref({})
   const activeThreadKey: Ref<string | undefined> = ref()
   const entryMap: Ref<EntryMap> = ref({})
+  const writerMap: Ref<WriterMap> = ref({})
   const replyTree: Ref<ReplyMap> = ref({})
 
   const topLevelEntries = computed(() => {
@@ -42,12 +44,16 @@ export const useWsyStore = defineStore('wsy', () => {
   const hasResponses = (id) => {
     return !!replyTree.value[id.toString()]
   }
-  const responseEntries = (entryId) => {
+  const responseEntries = (entryId: number) => {
     const replies = replyTree.value[entryId.toString()]
     if (replies) {
       return replies.map((id) => entryMap.value[id.toString()])
     }
     return null
+  }
+  const lookupAlias = (writerId: number) => {
+    const alias = writerMap.value[writerId.toString()]
+    return !!alias ? alias : 'writer ' + writerId
   }
 
   const isPlayerLoaded = computed(() => {
@@ -88,6 +94,11 @@ export const useWsyStore = defineStore('wsy', () => {
     } else {
       console.error('Thread not found for key=' + key)
     }
+  }
+  function loadWriters(writers) {
+    writers.forEach(
+      (writer) => (writerMap.value[writer.id.toString()] = writer.alias)
+    )
   }
   function loadActiveEntries(entries) {
     activeThread.value.entries = entries.map((entry) => {
@@ -140,7 +151,9 @@ export const useWsyStore = defineStore('wsy', () => {
     topLevelEntries,
     hasResponses,
     responseEntries,
+    lookupAlias,
     loadActiveEntries,
+    loadWriters,
     addEntryToActive,
     setPlayer,
     updateThread,
