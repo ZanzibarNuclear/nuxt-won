@@ -18,10 +18,12 @@ const handleChooseTopic = async (threadKey: string) => {
 
   const loadedThread = await $fetch(`/api/threads/${threadKey}`)
   const loadedEntries = await $fetch(`/api/entries/${threadKey}`)
+  const writers = await $fetch(`/api/writers/${threadKey}`)
 
   wsy.updateThread(loadedThread)
   wsy.activateThread(loadedThread.public_key)
   wsy.loadActiveEntries(loadedEntries)
+  wsy.loadWriters(writers)
 }
 </script>
 
