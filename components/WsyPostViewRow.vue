@@ -5,7 +5,7 @@
     </div>
     <div class="post">
       <div>
-        by writer {{ entry.author_id }}<br />
+        by writer {{ wsy.lookupAlias(entry.author_id) }}<br />
         {{ displayAsDateTime(entry.posted_at) }}<br />
         <UButton @click="() => onReply(entry.id)" icon="i-mdi-reply" size="xs"
           >reply</UButton
@@ -17,6 +17,7 @@
 </template>
 
 <script setup lang="ts">
+const wsy = useWsyStore()
 const props = defineProps({
   entry: {
     type: Object,
