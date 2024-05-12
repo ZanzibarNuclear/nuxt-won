@@ -6,10 +6,7 @@
       @reply="showReplyForm = true"
     />
     <div v-if="showReplyForm">
-      <WhatSayYouEntryForm
-        :responding-to="entry.id"
-        @close="showReplyForm = false"
-      />
+      <WsyEntryForm :responding-to="entry.id" @close="showReplyForm = false" />
       <UButton
         @click="showReplyForm = false"
         icon="i-mdi-close"

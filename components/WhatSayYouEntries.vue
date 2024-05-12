@@ -5,6 +5,6 @@ defineProps(['entries', 'indent'])
 </script>
 
 <template>
-  <WhatSayYouEntryForm />
+  <WsyEntryForm />
   <WsyViewRecursive :entries="wsy.topLevelEntries" :indent="0" />
 </template>

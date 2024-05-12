@@ -4,8 +4,9 @@
       <UIcon name="i-mdi-arrow-right-bottom" />
     </div>
     <div class="post">
-      <div>
-        by writer {{ wsy.lookupAlias(entry.author_id) }}<br />
+      <div class="text-xs">
+        <span class="font-bold">{{ wsy.lookupAlias(entry.author_id) }}</span
+        ><br />
         {{ displayAsDateTime(entry.posted_at) }}<br />
         <UButton @click="() => onReply(entry.id)" icon="i-mdi-reply" size="xs"
           >reply</UButton
