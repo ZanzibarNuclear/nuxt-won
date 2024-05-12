@@ -5,14 +5,11 @@
       :indent="indent"
       @reply="showReplyForm = true"
     />
-    <div v-if="showReplyForm">
-      <WsyEntryForm :responding-to="entry.id" @close="showReplyForm = false" />
-      <UButton
-        @click="showReplyForm = false"
-        icon="i-mdi-close"
-        label="Cancel"
-      />
-    </div>
+    <WsyEntryForm
+      v-if="showReplyForm"
+      :responding-to="entry.id"
+      @close="showReplyForm = false"
+    />
     <div v-if="wsy.hasResponses(entry.id)">
       <WsyViewRecursive
         :entries="wsy.responseEntries(entry.id)"
