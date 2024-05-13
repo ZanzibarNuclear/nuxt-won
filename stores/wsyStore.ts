@@ -23,11 +23,11 @@ export const useWsyStore = defineStore('wsy', () => {
     topic: string
     starting_entry_id: number
     owner_id: number
-    entries: [Entry]
+    entries: Entry[]
   }
   type ThreadMap = { [k: string]: Thread }
   type EntryMap = { [k: string]: Entry }
-  type ReplyMap = { [k: string]: [number] }
+  type ReplyMap = { [k: string]: number[] }
   type WriterMap = { [k: string]: string } // aliases referenced by participant ID
 
   // values
@@ -38,27 +38,34 @@ export const useWsyStore = defineStore('wsy', () => {
   const writerMap: Ref<WriterMap> = ref({})
   const replyTree: Ref<ReplyMap> = ref({})
 
-  const topLevelEntries = computed(() => {
-    return activeEntries.value?.filter((entry) => !entry.responding_to)
-  })
-  const hasResponses = (id) => {
-    return !!replyTree.value[id.toString()]
+  function reset() {
+    player.value = undefined
+    threads.value = {}
+    activeThreadKey.value = undefined
+    entryMap.value = {}
+    writerMap.value = {}
+    replyTree.value = {}
+    console.log('reset')
   }
-  const responseEntries = (entryId: number) => {
-    const replies = replyTree.value[entryId.toString()]
-    if (replies) {
-      return replies.map((id) => entryMap.value[id.toString()])
-    }
-    return null
-  }
+
   const lookupAlias = (writerId: number) => {
     const alias = writerMap.value[writerId.toString()]
     return !!alias ? alias : 'writer ' + writerId
   }
-
+  const stashAlias = (writerId: number, alias: string) => {
+    writerMap.value[writerId.toString()] = alias
+  }
+  function loadWriters(writers: Participant[]) {
+    writers.forEach((writer) => stashAlias(writer.id, writer.alias))
+  }
+  function setPlayer(myPlayer: Participant) {
+    player.value = myPlayer
+    stashAlias(myPlayer.id, myPlayer.alias)
+  }
   const isPlayerLoaded = computed(() => {
     return !!player.value
   })
+
   const activeThread = computed(() => {
     if (activeThreadKey.value) {
       return threads.value[activeThreadKey.value]
@@ -68,17 +75,6 @@ export const useWsyStore = defineStore('wsy', () => {
   const isActiveThread = computed(() => {
     return !!activeThread.value
   })
-
-  const activeEntries = computed(() => {
-    return activeThread.value?.entries
-  })
-  const isActiveEntries = computed(() => {
-    return !!activeEntries.value
-  })
-
-  function setPlayer(myPlayer: Participant) {
-    player.value = myPlayer
-  }
   function updateThread(myThread: Thread) {
     console.log(
       `thread to load: ${myThread.topic} ${myThread.created_at} ${myThread.public_key}`
@@ -95,25 +91,47 @@ export const useWsyStore = defineStore('wsy', () => {
       console.error('Thread not found for key=' + key)
     }
   }
-  function loadWriters(writers) {
-    writers.forEach(
-      (writer) => (writerMap.value[writer.id.toString()] = writer.alias)
-    )
+  function clearActiveThread() {
+    activeThreadKey.value = undefined
   }
-  function loadActiveEntries(entries) {
-    activeThread.value.entries = entries.map((entry) => {
-      return { ...entry }
-    })
-    entries.forEach((entry) => {
-      entryMap.value[entry.id.toString()] = entry
-      addEntryToReplyTree(entry)
-    })
-    console.log(replyTree.value)
+
+  const topLevelEntries = computed(() => {
+    return activeEntries.value?.filter((entry) => !entry.responding_to)
+  })
+  const activeEntries = computed(() => {
+    return activeThread.value?.entries
+  })
+  const isActiveEntries = computed(() => {
+    return !!activeEntries.value
+  })
+  const hasResponses = (id: number) => {
+    return !!replyTree.value[id.toString()]
+  }
+  const responseEntries = (entryId: number) => {
+    const replies = replyTree.value[entryId.toString()]
+    if (replies) {
+      return replies.map((id) => entryMap.value[id.toString()])
+    }
+    return null
+  }
+
+  function loadActiveEntries(entries: Entry[]) {
+    if (activeThread.value) {
+      activeThread.value.entries = entries.map((entry) => {
+        return { ...entry }
+      })
+      entries.forEach((entry) => {
+        entryMap.value[entry.id.toString()] = entry
+        addEntryToReplyTree(entry)
+      })
+    }
   }
   function addEntryToActive(entry: Entry) {
-    activeThread.value.entries.push({ ...entry })
-    entryMap.value[entry.id.toString()] = entry
-    addEntryToReplyTree(entry)
+    if (activeThread.value) {
+      activeThread.value.entries.push({ ...entry })
+      entryMap.value[entry.id.toString()] = entry
+      addEntryToReplyTree(entry)
+    }
   }
   function addEntryToReplyTree(entry: Entry) {
     if (!entry.responding_to) {
@@ -128,15 +146,6 @@ export const useWsyStore = defineStore('wsy', () => {
     }
   }
 
-  function clearActiveThread() {
-    activeThreadKey.value = undefined
-  }
-  function clear() {
-    player.value = undefined
-    threads.value = {}
-    activeThreadKey.value = undefined
-    console.log('cleared')
-  }
   return {
     player,
     threads,
@@ -159,6 +168,6 @@ export const useWsyStore = defineStore('wsy', () => {
     updateThread,
     activateThread,
     clearActiveThread,
-    clear,
+    reset,
   }
 })
