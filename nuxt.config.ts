@@ -11,6 +11,7 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@nuxtjs/supabase',
     '@nuxt/test-utils/module',
+    'nuxt-tiptap-editor',
   ],
   runtimeConfig: {
     wsyInvitationsResendKey: process.env.WSY_RESEND_PROJECT_KEY,
@@ -19,6 +20,9 @@ export default defineNuxtConfig({
     },
   },
   content: {},
+  tiptap: {
+    prefix: 'Tiptap',
+  },
   supabase: {
     redirect: true,
     redirectOptions: {
@@ -35,7 +39,7 @@ export default defineNuxtConfig({
     },
   },
   ui: {
-    icons: ['mdi', 'el', 'ri'],
+    icons: ['mdi', 'el', 'ri', 'ph'],
   },
   css: ['~/assets/css/tailwind.css'],
   vite: {
