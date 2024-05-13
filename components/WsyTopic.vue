@@ -71,7 +71,7 @@ const doNewTopic = () => {
           >Start</UButton
         >
       </div>
-      <WhatSayYouTopicSelect />
+      <WsyTopicSelect />
     </div>
   </div>
   <div v-else>
@@ -89,7 +89,7 @@ const doNewTopic = () => {
     </div>
   </div>
   <UModal v-model="inviteOpen">
-    <WhatSayYouInviteFriends />
+    <WsyInviteFriends />
     <UButton @click="closeInviteForm" icon="i-mdi-close" label="Close" />
   </UModal>
 </template>
