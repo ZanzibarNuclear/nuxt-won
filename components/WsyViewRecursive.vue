@@ -3,12 +3,12 @@
     <WsyPostViewRow
       :entry="entry"
       :indent="indent"
-      @reply="showReplyForm = true"
+      @reply="() => openReplyForm(entry.id)"
     />
     <WsyEntryForm
-      v-if="showReplyForm"
+      v-if="showReplyForm(entry.id)"
       :responding-to="entry.id"
-      @close="showReplyForm = false"
+      @close="closeReplyForm"
     />
     <div v-if="wsy.hasResponses(entry.id)">
       <WsyViewRecursive
@@ -24,7 +24,10 @@ const wsy = useWsyStore()
 
 defineProps(['entries', 'indent'])
 
-const showReplyForm = ref(false)
+const activeReply = ref(0)
+const showReplyForm = (id: number) => id === activeReply.value
+const openReplyForm = (id: number) => (activeReply.value = id)
+const closeReplyForm = () => (activeReply.value = 0)
 </script>
 
 <style scoped></style>
