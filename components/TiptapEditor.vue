@@ -1,14 +1,16 @@
 <template>
   <div>
-    <UModal v-model="isOpen" prevent-close>
-      <TiptapEditorToolbar
-        v-if="editor"
-        :editor="editor"
-        @save-changes="handleSave"
-        @close-editor="handleClose"
-      />
-      <TiptapEditorContent :editor="editor" />
-    </UModal>
+    <div>
+      <UModal v-model="isOpen" prevent-close>
+        <TiptapEditorToolbar
+          v-if="editor"
+          :editor="editor"
+          @save-changes="handleSave"
+          @close-editor="handleClose"
+        />
+        <TiptapEditorContent :editor="editor" />
+      </UModal>
+    </div>
     <UButton @click="isOpen = true" label="Let's write!" />
   </div>
 </template>
@@ -18,6 +20,7 @@ import Superscript from '@tiptap/extension-superscript'
 import Subscript from '@tiptap/extension-subscript'
 import Underline from '@tiptap/extension-underline'
 
+const emit = defineEmits(['saveChanges', 'closeEditor'])
 const isOpen = ref(false)
 const editor = useEditor({
   extensions: [TiptapStarterKit, Superscript, Subscript, Underline],
@@ -35,10 +38,12 @@ onMounted(() => {
 })
 
 const handleSave = () => {
-  console.log('Saving...is not implemented')
-  console.log(editor.value.getHTML())
+  console.log('Saving...')
+  emit('saveChanges', editor.value)
+  emit('closeEditor')
 }
 const handleClose = () => {
+  emit('closeEditor')
   isOpen.value = false
 }
 onBeforeUnmount(() => {
