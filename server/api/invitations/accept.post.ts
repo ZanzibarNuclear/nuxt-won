@@ -2,7 +2,8 @@ import { serverSupabaseClient } from '#supabase/server'
 
 export default defineEventHandler(async (event) => {
   const client = await serverSupabaseClient(event)
-  const referralCode = getRouterParam(event, 'referral_code')
+  const body = await readBody(event)
+  const { referralCode } = body
 
   console.log('Accept invitation: ' + referralCode)
 
@@ -16,4 +17,5 @@ export default defineEventHandler(async (event) => {
     console.error(error)
     return '<p>Houston, we had a problem. Sorry about that.</p>'
   }
+  return invitation[0]
 })
