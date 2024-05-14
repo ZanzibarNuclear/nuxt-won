@@ -1,3 +1,12 @@
+<template>
+  <div>
+    <h1>What Say You?</h1>
+    <WsyHeader />
+    <WsyTopic v-if="wsy.isPlayerLoaded" />
+    <WsyEntries v-if="wsy.isActiveThread" />
+  </div>
+</template>
+
 <script setup lang="ts">
 const wsy = useWsyStore()
 const url = useRequestURL()
@@ -26,12 +35,3 @@ const handleChooseTopic = async (threadKey: string) => {
   wsy.loadWriters(writers)
 }
 </script>
-
-<template>
-  <div>
-    <h1>What Say You?</h1>
-    <WsyHeader />
-    <WsyTopic v-if="wsy.isPlayerLoaded" />
-    <WsyEntries v-if="wsy.isActiveThread" />
-  </div>
-</template>

@@ -1,12 +1,15 @@
 <script setup lang="ts">
 const wsy = useWsyStore()
 const friendEmail = ref('')
+const friendName = ref('')
 
 const doInvite = async () => {
   const result = await $fetch('/api/invitations', {
     method: 'POST',
     body: {
       friendEmail: friendEmail.value,
+      friendName: friendName.value,
+      solicitorId: wsy.player?.user_id,
       solicitorAlias: wsy.player?.alias,
       topicKey: wsy.activeThreadKey,
     },
@@ -24,6 +27,9 @@ const doInvite = async () => {
     Invite someone to respond. (Best if it's someone you know.)
     <UFormGroup label="Email" description="Your friend's email address">
       <UInput v-model="friendEmail" />
+    </UFormGroup>
+    <UFormGroup label="Name" description="Your friend's name">
+      <UInput v-model="friendName" />
     </UFormGroup>
     <UButton class="mt-2" @click="doInvite">Invite</UButton>
   </div>
