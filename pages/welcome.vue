@@ -1,29 +1,32 @@
 <template>
-  <div>You are responding to an invitation. Great.</div>
-  <div>
-    The World of Nuclear Energy is a lot of fun to explore. You will get smarter
-    just by reading everything this site offers.
-  </div>
-  <div v-if="isAccept">
-    I see that you are accepting the invitation to join. Fantastic. You are
-    going to love this experience, and you will learn a lot. Maybe you will even
-    make some friends for life.
-  </div>
-  <div v-if="isDecline">
-    I see that you are declining the invitation to join. We have made a record
-    of that, and we will not send you any more email.
-  </div>
-  <div v-if="target">
-    You are being invited to {{ target.service }} to see this topic
-    {{ target.topicKey }}. When you are ready,
-    <NuxtLink :to="`/wsy?topic=${target.topicKey}`">go there</NuxtLink>. You may
-    need to create an account or sign in first.
-  </div>
-  <div>
-    Have a look around. Everything you see if free. You might want to sign up
-    for a free account when you want to participate in one or our activities,
-    like <em>What Say You?</em> or <em>Nuclear Simulations</em>.
-  </div>
+  <UContainer class="w-3/4">
+    <h1>Someone invited you...and here you are!</h1>
+    <div v-if="isAccept" class="my-6">
+      I see that you are accepting the invitation to check out Zanzibar's World
+      of Nuclear Energy. Fantastic. You are going to love this experience, and
+      you will learn a lot. Maybe you will even make some friends for life.
+    </div>
+    <div v-if="isDecline" class="my-6">
+      I see that you are declining the invitation to check out Zanzibar's World
+      of Nuclear Energy. That's okay. We have made a record of that, and we will
+      not send you any more email. After all, affordable energy is not for
+      everyone.
+    </div>
+    <div v-if="serviceInfo" class="my-6">
+      You are being invited to {{ serviceInfo.serviceName }}, which is
+      {{ serviceInfo.briefDescription }}. When you are ready,
+      <NuxtLink :to="`${serviceInfo.urlPath}?topic=${target.topicKey}`"
+        >go there</NuxtLink
+      >. You may need to create an account or sign in first.
+    </div>
+    <div class="my-6">
+      Zanzibar's World of Nuclear Energy is a lot of fun to explore. You will
+      get smarter just by reading everything this site offers. Have a look
+      around. Everything you see if free. You might want to sign up for a free
+      account when you want to participate in one or our activities, like
+      <em>What Say You?</em> or <em>Nuclear Simulations</em>.
+    </div>
+  </UContainer>
 </template>
 
 <script setup lang="ts">
@@ -38,6 +41,20 @@ const isDecline = computed(() => {
 })
 const isAccept = computed(() => {
   return action.value === 'accept'
+})
+const serviceDecoder = {
+  wsy: {
+    serviceName: 'What Say You?',
+    briefDescription: 'a discussion forum for ideas about nuclear energy',
+    urlPath: '/wsy',
+  },
+}
+const serviceInfo = computed(() => {
+  if (target.value?.service) {
+    return serviceDecoder[target.value.service]
+  } else {
+    return null
+  }
 })
 
 onMounted(async () => {

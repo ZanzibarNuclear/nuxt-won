@@ -59,15 +59,15 @@ export default defineEventHandler(async (event) => {
   const from = 'World of Nuclear <moderator@support.worldofnuclear.com>'
   const subject = `${solicitorAlias} wants you to respond`
   const message = `<p><strong>World of Nuclear - What Say You?</strong></p>
-<p>You have been invited to join the discussion forum at World of Nuclear. 
+<p>You have been invited to join the discussion forum at Zanzibar's World of Nuclear Energy. 
 The person who invited you is known as "${solicitorAlias}" in the forum. We have asked ${solicitorAlias} to contact you, too.</p>
-<p>If you are interested, please 
-<a href="${config.public.baseUrl}/welcome?action=confirm&referral_code=${referralCode}">click here to join the discussion.</a></p>
-<p>Feel free to ignore this email if you are not interested.</p>
+<p>If you are curious to find out why ${solicitorAlias} invited you, please 
+<a href="${config.public.baseUrl}/welcome?action=accept&referral_code=${referralCode}">click here, and join the discussion.</a></p>
+<p>Of course, feel free to ignore this email if you are not interested. Or take a look later if you change your mind.</p>
 <p>Regards,</p>
-<p><a href="https://worldofnuclear.com">World of Nuclear</a> moderator</p>
+<p>Dave, your friendly moderator @ <a href="https://worldofnuclear.com">World of Nuclear</a> (https://worldofnuclear.com)</p>
 <p>P.S. If you never want to be contacted by World of Nuclear, you can 
-<a href="${config.public.baseUrl}/welcome?action=decline&referral_code=${referralCode}">decline this invitation</a>. We will prevent future invitations.</p>
+<a href="${config.public.baseUrl}/welcome?action=decline&referral_code=${referralCode}">decline this invitation</a>. We will prevent future invitations from being sent.</p>
 `
 
   const resend = new Resend(config.wsyInvitationsResendKey)
