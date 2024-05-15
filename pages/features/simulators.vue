@@ -15,7 +15,16 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+useSeoMeta({
+  title: 'World of Nuclear - Simulations',
+  ogTitle: 'World of Nuclear - Simulations',
+  description:
+    'Play with our simulators to improve your instincts about how nuclear energy can benefit humanity.',
+  ogDescription:
+    'Play with our simulators to improve your instincts about how nuclear energy can benefit humanity.',
+})
+</script>
 
 <style lang="scss" scoped>
 p {

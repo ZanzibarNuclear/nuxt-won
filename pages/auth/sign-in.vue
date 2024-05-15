@@ -38,6 +38,15 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+useSeoMeta({
+  title: 'World of Nuclear - Sign In or Sign Up',
+  ogTitle: 'World of Nuclear - Sign In or Sign Up',
+  description:
+    "Join Zanzibar's World of Nuclear, a safe place to explore the beneficial uses of nuclear energy. Consume our bite-sized lessons, join in interactive discussions, and operate nuclear simulations. Find out about unlimited power.",
+  ogDescription:
+    "Join Zanzibar's World of Nuclear, a safe place to explore the beneficial uses of nuclear energy. Consume our bite-sized lessons, join in interactive discussions, and operate nuclear simulations. Find out about unlimited power.",
+})
+</script>
 
 <style scoped></style>

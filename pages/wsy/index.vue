@@ -8,6 +8,17 @@
 </template>
 
 <script setup lang="ts">
+useSeoMeta({
+  title: 'World of Nuclear - What Say You?',
+  ogTitle: 'World of Nuclear - What Say You?',
+  description:
+    'Discussion forum to talk about beneficial aspects of nuclear energy. Read what others have to say, and respond with your own ideas.',
+  ogDescription:
+    'Discussion forum to talk about beneficial aspects of nuclear energy. Read what others have to say, and respond with your own ideas.',
+  ogImage: 'https://worldofnuclear.com/Diable-Canyon-power-plant.png',
+  twitterCard: 'summary',
+})
+
 const wsy = useWsyStore()
 const url = useRequestURL()
 

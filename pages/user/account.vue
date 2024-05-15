@@ -1,4 +1,11 @@
 <script setup lang="ts">
+useSeoMeta({
+  title: 'World of Nuclear - Member Account',
+  ogTitle: 'World of Nuclear - Member Account',
+  description: 'Update your profile and preferences.',
+  ogDescription: 'Update your profile and preferences.',
+})
+
 import { useUserStore } from '~/stores/userStore'
 const { fetchAndLoadProfile, updateProfile } = useUserStore()
 

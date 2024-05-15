@@ -12,24 +12,33 @@
   </UContainer>
 </template>
 
-<script setup>
+<script setup lang="ts">
+useSeoMeta({
+  title: 'World of Nuclear',
+  ogTitle: 'World of Nuclear',
+  description:
+    "Zanzibar's World of Nuclear is a safe place to explore the beneficial uses of nuclear energy. Consume our bite-sized lessons, join in interactive discussions, and operate nuclear simulations. Find out about unlimited power.",
+  ogDescription:
+    "Zanzibar's World of Nuclear is a safe place to explore the beneficial uses of nuclear energy. Consume our bite-sized lessons, join in interactive discussions, and operate nuclear simulations. Find out about unlimited power.",
+})
+
 const features = [
   {
     category: 'forum',
-    name: 'What Say You',
+    name: 'What Say You?',
     coverImage: '/images/speech-bubbles.png',
     description:
       'Long-form discussions for sharing ideas about nuclear energy.',
-    callToAction: 'Share Ideas',
+    callToAction: 'Join the Discussion',
     routeName: 'features-what-say-you',
   },
   {
     category: 'learning',
-    name: 'Daily Lessons',
+    name: 'Mini Lessons',
     coverImage: '/images/atomic-symbol.jpg',
     description:
       'Learn everything you need to know to understand how nuclear energy can be put to good use.',
-    callToAction: 'Get Smarter',
+    callToAction: 'Get Smarter Every Day',
     routeName: 'features-daily-lessons',
   },
   {
