@@ -49,6 +49,15 @@
 </template>
 
 <script setup>
+useSeoMeta({
+  title: 'World of Nuclear - Simulations',
+  ogTitle: 'World of Nuclear - Simulations',
+  description:
+    'Play with our simulators to improve your instincts about how nuclear energy can benefit humanity.',
+  ogDescription:
+    'Play with our simulators to improve your instincts about how nuclear energy can benefit humanity.',
+})
+
 const state = reactive({
   name: undefined,
   reactorType: undefined,
