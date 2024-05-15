@@ -17,5 +17,17 @@ export default defineEventHandler(async (event) => {
     console.error(error)
     return 'Houston, we had a problem.'
   }
-  return invitation[0]
+  const myInvite = invitation[0]
+  const { error: unsubError } = await client
+    .from('unsubscribed_emails')
+    .insert({
+      email: myInvite.email,
+    })
+  if (unsubError) {
+    console.error(
+      'Problem adding email to unsubscribe list: ' + JSON.stringify(unsubError)
+    )
+  }
+
+  return myInvite
 })

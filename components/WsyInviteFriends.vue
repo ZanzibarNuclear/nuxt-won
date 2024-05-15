@@ -17,7 +17,7 @@ const doInvite = async () => {
 
   const alertMsg = result.success
     ? 'We sent your friend an invitation. You might want to let them know that it was really you.'
-    : 'Something happened and we were unable to send the invitation. Sorry about that.'
+    : 'Sorry, we did not send the invitation. The email address you provided may be on our "no contact" list.'
   const invited = alert(alertMsg)
 }
 </script>

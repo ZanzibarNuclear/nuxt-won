@@ -1,10 +1,3 @@
-<script setup lang="ts">
-const hideNav = ref(true)
-const toggleLeftNavVisibility = () => {
-  hideNav.value = !hideNav.value
-}
-</script>
-
 <template>
   <UContainer>
     <header>
@@ -38,6 +31,13 @@ const toggleLeftNavVisibility = () => {
     </footer>
   </UContainer>
 </template>
+
+<script setup lang="ts">
+const hideNav = ref(true)
+const toggleLeftNavVisibility = () => {
+  hideNav.value = !hideNav.value
+}
+</script>
 
 <style scoped>
 header {
