@@ -26,6 +26,19 @@ export default defineEventHandler(async (event) => {
     })
   }
 
+  const client = await serverSupabaseClient(event)
+
+  // see if email on unsubscribe list
+  const { data: unsub, error: unsubError } = await client
+    .from('unsubscribed_emails')
+    .select()
+    .eq('email', friendEmail)
+  if (unsub && unsub.length > 0) {
+    console.log('This email address has been unsubscribed: ' + friendEmail)
+    return { success: true }
+  }
+
+  // create invitation record
   const referralCode = genKey(10)
   const target = {
     service: 'wsy',
@@ -39,9 +52,6 @@ export default defineEventHandler(async (event) => {
     target: JSON.stringify(target),
   }
   console.log('invitation record: ', invitationRecord)
-
-  // create referral record
-  const client = await serverSupabaseClient(event)
 
   const { data: invitation, error: insertError } = await client
     .from('invitations')
