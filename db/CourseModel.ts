@@ -38,7 +38,7 @@ export async function loadCourse(id) {
   return result ? mapToObject(result) : null
 }
 
-export async function saveCourse(course: Course) {
+export async function createCourse(course: Course) {
   const input = mapToTable({ ...course, publicKey: genKey(10) })
   // input['public_key'] = genKey(10)
   console.log('course data in', input)
@@ -47,7 +47,21 @@ export async function saveCourse(course: Course) {
     body: input,
   })
   if (results) {
-    return results[0]
+    return mapToObject(results[0])
+  } else {
+    return null
+  }
+}
+
+export async function saveCourse(course: Course) {
+  console.log('saving course', course)
+  const input = mapToTable(course)
+  const results = await $fetch(`/api/courses/${input.id}`, {
+    method: 'PUT',
+    body: input,
+  })
+  if (results) {
+    return mapToObject(results[0])
   } else {
     return null
   }

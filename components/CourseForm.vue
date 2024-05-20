@@ -12,30 +12,67 @@
     <UFormGroup label="Cover Art" name="coverArt">
       <UInput v-model="state.coverArt" />
     </UFormGroup>
-    <UButton type="submit">Add Course</UButton>
+    <UButton
+      type="submit"
+      :label="isEditMode ? 'Submit changes' : 'Add course'"
+      class="mr-2"
+    />
+    <UButton
+      type="button"
+      label="Cancel"
+      @click="emit('cancel')"
+      class="mr-2"
+    />
   </UForm>
 </template>
 
 <script setup lang="ts">
-import { object, string, type InferType } from 'yup'
+import { object, string, number, type InferType } from 'yup'
 import type { FormSubmitEvent } from '#ui/types'
-const emit = defineEmits(['save-course'])
+
+const emit = defineEmits(['save-course', 'cancel'])
+const props = defineProps(['course'])
 
 const schema = object({
+  id: number(),
   title: string().required(),
   description: string(),
   syllabus: string(),
   coverArt: string(),
 })
 type Schema = InferType<typeof schema>
-const state = {
+const state = reactive({
+  id: undefined,
   title: undefined,
   description: undefined,
   syllabus: undefined,
   coverArt: undefined,
+})
+
+const isEditMode = computed(() => !!props.course)
+
+const setDefaults = (course) => {
+  const { id, title, description, coverArt, syllabus } = course
+  state.id = id
+  state.title = title
+  state.description = description
+  state.coverArt = coverArt
+  state.syllabus = syllabus
 }
+
+onMounted(() => {
+  if (props.course) {
+    setDefaults(props.course)
+  }
+})
+
+onUpdated(() => {
+  if (props.course) {
+    setDefaults(props.course)
+  }
+})
+
 async function onSubmit(event: FormSubmitEvent<Schema>) {
-  console.log(event.data)
   emit('save-course', event.data)
 }
 </script>
