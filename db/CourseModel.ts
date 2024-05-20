@@ -33,9 +33,14 @@ export async function loadCourses() {
   }
 }
 
+export async function loadCourse(id) {
+  const result = await $fetch(`/api/courses/${id}`)
+  return result ? mapToObject(result) : null
+}
+
 export async function saveCourse(course: Course) {
-  const input = mapToTable(course)
-  input['public_key'] = genKey(10)
+  const input = mapToTable({ ...course, publicKey: genKey(10) })
+  // input['public_key'] = genKey(10)
   console.log('course data in', input)
   const results = await $fetch('/api/courses', {
     method: 'POST',

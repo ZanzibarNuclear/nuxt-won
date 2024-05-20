@@ -24,22 +24,45 @@
         <CourseForm @save-course="onSaveCourse" />
       </div>
     </div>
+    <div v-if="editingCourse">
+      <h2>Make this Course Awesome</h2>
+      <div v-if="!uiState.editCourse">
+        <div>Public Key: {{ workshop.activeCourse.publicKey }}</div>
+        <div>Title: {{ workshop.activeCourse.title }}</div>
+        <div>Description: {{ workshop.activeCourse.description }}</div>
+        <div>Cover Art: {{ workshop.activeCourse.coverArt }}</div>
+        <div>Syllabus: {{ workshop.activeCourse.syllabus }}</div>
+        <UButton @click="onEditCourse" label="Edit" />
+      </div>
+      <div v-else>
+        <CourseForm :course="workshop.activeCourse" />
+      </div>
+    </div>
   </UContainer>
 </template>
 
 <script setup>
-import { loadCourses, saveCourse } from '~/db/CourseModel'
+import { loadCourses, loadCourse, saveCourse } from '~/db/CourseModel'
 
 const workshop = useWorkshopStore()
 const uiState = reactive({
   addCourseOpen: false,
-  activeCourse: null,
-  editCourseOpen: false,
+  editCourse: false,
   addLessonOpen: false,
 })
 
-const openForEdit = (id) => {
-  workshop.editCourse(id)
+const editingCourse = computed(() => {
+  return !!workshop.activeCourse
+})
+
+const onEditCourse = () => (uiState.editCourse = true)
+
+const openForEdit = async (id) => {
+  const course = await loadCourse(id)
+  if (course) {
+    workshop.addCourse(course)
+    workshop.editCourse(id)
+  }
 }
 
 onMounted(async () => {
