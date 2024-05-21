@@ -1,6 +1,6 @@
 <template>
   <UContainer>
-    <h1>Lesson Workshop</h1>
+    <h1>Curriculum Builder's Workshop</h1>
     <div>
       <h2>Course Library</h2>
       <ul>
@@ -51,10 +51,7 @@
           label="Edit"
           class="mr-2"
         />
-        <UButton
-          @click="() => workshop.closeCourseEdit()"
-          label="Clear course view"
-        />
+        <UButton @click="cancelActive" label="Clear course view" />
       </div>
       <div v-else>
         <CourseForm
@@ -74,6 +71,10 @@ import {
   createCourse,
   saveCourse,
 } from '~/db/CourseModel'
+
+// TODO: use Tiptap editor for description and syllabus
+// TODO: level-up usability: one focal point at a time
+// TODO: add transition to lessons of a course
 
 const workshop = useWorkshopStore()
 const uiState = reactive({
