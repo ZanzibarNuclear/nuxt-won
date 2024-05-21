@@ -1,14 +1,13 @@
 import { defineStore } from 'pinia'
-import type { Course } from '~/types/won-types'
+import type { Course, LessonPlan } from '~/types/won-types'
 
 export const useWorkshopStore = defineStore('workshop', () => {
   type CourseMap = { [k: string]: Course }
+  type LessonMap = { [k: string]: LessonPlan }
 
   const courses: Ref<CourseMap> = ref({})
-  // const courseList: Ref<Course[]> = ref([])
-  const activeCourseId = ref()
-
   const courseList = computed(() => Object.values(courses.value))
+  const activeCourseId = ref()
 
   const addCourse = (courseToAdd: Course) => {
     courses.value[courseToAdd.id.toString()] = courseToAdd
@@ -32,7 +31,6 @@ export const useWorkshopStore = defineStore('workshop', () => {
   })
 
   return {
-    courses,
     courseList,
     activeCourse,
     loadCourses,

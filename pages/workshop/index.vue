@@ -1,8 +1,8 @@
 <template>
   <UContainer>
     <h1>Curriculum Builder's Workshop</h1>
-    <div>
-      <h2>Course Library</h2>
+    <h2>Course Library</h2>
+    <div v-if="!isActiveCourse">
       <ul>
         <li
           v-for="course in workshop.courseList"
@@ -12,23 +12,39 @@
           <span v-html="course.description" />
         </li>
       </ul>
-    </div>
-    <div>
-      <UButton
-        v-if="!uiState.addCourse"
-        label="Add Course"
-        @click="() => (uiState.addCourse = true)"
-      />
-      <div v-else>
-        <h2>Add a Course</h2>
-        <CourseForm
-          @save-course="onCreateCourse"
-          @cancel="onCancelCreateCourse"
+      <div>
+        <UButton
+          v-if="!uiState.addCourse"
+          label="Add Course"
+          @click="() => (uiState.addCourse = true)"
         />
+        <div v-else>
+          <h3>Add a Course</h3>
+          <CourseForm
+            @save-course="onCreateCourse"
+            @cancel="onCancelCreateCourse"
+          />
+        </div>
       </div>
     </div>
-    <div v-if="editingCourse">
+    <div v-if="isActiveCourse">
       <h2>Make this Course Awesome</h2>
+      <div>
+        <strong>Actions:</strong>
+        <UButton
+          @click="() => (uiState.editCourse = true)"
+          label="Edit course"
+          class="mx-1"
+        />
+        <UButton
+          @click="
+            navigateTo(`/workshop/course-${workshop.activeCourse.id}/lessons`)
+          "
+          label="Work on lessons"
+          class="mx-1"
+        />
+        <UButton @click="cancelActive" label="Put this away" class="mx-1" />
+      </div>
       <div v-if="!uiState.editCourse">
         <div>Public Key: {{ workshop.activeCourse.publicKey }}</div>
         <h3>{{ workshop.activeCourse.title }}</h3>
@@ -46,12 +62,6 @@
           Syllabus:
           <div><span v-html="workshop.activeCourse.syllabus" /></div>
         </UCard>
-        <UButton
-          @click="() => (uiState.editCourse = true)"
-          label="Edit"
-          class="mr-2"
-        />
-        <UButton @click="cancelActive" label="Clear course view" />
       </div>
       <div v-else>
         <CourseForm
@@ -73,8 +83,6 @@ import {
 } from '~/db/CourseModel'
 
 // TODO: use Tiptap editor for description and syllabus
-// TODO: level-up usability: one focal point at a time
-// TODO: add transition to lessons of a course
 
 const workshop = useWorkshopStore()
 const uiState = reactive({
@@ -82,7 +90,7 @@ const uiState = reactive({
   editCourse: false,
 })
 
-const editingCourse = computed(() => {
+const isActiveCourse = computed(() => {
   return !!workshop.activeCourse
 })
 const cancelActive = () => {

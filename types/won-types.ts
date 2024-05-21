@@ -21,6 +21,19 @@ export type LessonPlan = {
   publishedAt: string | null
 }
 
+export type LessonPath = {
+  id: number
+  name: string
+  courseId: number
+  firstLessonId: number
+}
+
+export type LessonStep = {
+  fromId: number
+  toId: number
+  teaser: string | null
+}
+
 enum LessonContentEnum {
   html = 'html',
   md = 'md',
