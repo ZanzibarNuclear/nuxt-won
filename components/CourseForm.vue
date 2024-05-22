@@ -15,8 +15,17 @@
         <UIcon name="i-mdi-edit" @click="descriptionEdit = true" />
       </div>
     </UFormGroup>
-    <UFormGroup label="Syllabus" name="syllabus">
-      <UInput v-model="state.syllabus" />
+    <UFormGroup label="Syllabus" name="description">
+      <simple-editor
+        v-if="syllabusEdit"
+        :initial-content="state.syllabus"
+        @share-changes="(updates) => handleSaveSyllabus(updates)"
+        @close="handleCloseSyllabus"
+      />
+      <div v-if="!syllabusEdit">
+        <span v-html="state.syllabus" />
+        <UIcon name="i-mdi-edit" @click="syllabusEdit = true" />
+      </div>
     </UFormGroup>
     <UFormGroup label="Cover Art" name="coverArt">
       <UInput v-model="state.coverArt" />
@@ -74,6 +83,19 @@ const handleOpenDescription = () => {
 const handleCloseDescription = () => {
   descriptionEdit.value = false
 }
+
+const syllabusEdit = ref(false)
+const handleSaveSyllabus = (updates) => {
+  state.syllabus = updates
+  syllabusEdit.value = false
+}
+const handleOpenSyllabus = () => {
+  syllabusEdit.value = true
+}
+const handleCloseSyllabus = () => {
+  syllabusEdit.value = false
+}
+
 const setDefaults = (course) => {
   const { id, title, description, coverArt, syllabus } = course
   state.id = id
