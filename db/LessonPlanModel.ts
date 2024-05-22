@@ -42,7 +42,6 @@ export async function loadLessonPlan(lessonPlanId) {
 
 export async function createLessonPlan(lessonPlan: LessonPlan) {
   const input = mapToTable({ ...lessonPlan, publicKey: genKey(10) })
-  console.log('lesson plan data in', input)
   const results = await $fetch('/api/lesson-plans', {
     method: 'POST',
     body: input,
@@ -56,7 +55,6 @@ export async function createLessonPlan(lessonPlan: LessonPlan) {
 
 export async function saveLessonPlan(lessonPlan: LessonPlan) {
   const input = mapToTable(lessonPlan)
-  console.log('saving lesson plan', input)
   const results = await $fetch(`/api/lesson-plans/${input.id}`, {
     method: 'PUT',
     body: input,

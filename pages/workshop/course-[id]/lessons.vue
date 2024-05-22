@@ -69,8 +69,9 @@
     </div>
     <div v-else>
       <LessonPlanForm
-        @save-lesson-plan="handleSaveLesson"
+        :course-id="courseId"
         :lesson-plan="lessonToEdit"
+        @save-lesson-plan="handleSaveLesson"
         @cancel="handleCancelUpdateLesson"
       />
     </div>
@@ -91,7 +92,7 @@ const uiState = reactive({
   editLesson: false,
 })
 
-const courseId = computed(() => route.params.id)
+const courseId = computed(() => parseInt(route.params.id))
 const isActiveLesson = computed(() => !!workshop.activeLesson)
 const cancelActive = () => workshop.closeLessonEdit()
 const lessonToEdit = computed(() => workshop.activeLesson)
@@ -121,10 +122,8 @@ const handleCancelCreateLesson = () => (uiState.addLesson = false)
 const handleCancelUpdateLesson = () => (uiState.editLesson = false)
 
 const handleSaveLesson = async (details) => {
-  console.log('save lesson changes', details)
   const updated = await saveLessonPlan(details)
   if (updated) {
-    console.log('saved lesson plan', updated)
     workshop.addLesson(updated)
   }
   uiState.editLesson = false

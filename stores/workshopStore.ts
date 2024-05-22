@@ -38,7 +38,6 @@ export const useWorkshopStore = defineStore('workshop', () => {
     lessonPlans.value[lessonToAdd.id.toString()] = lessonToAdd
   }
   const loadLessons = (items: LessonPlan[]) => {
-    console.log('caching lessons', items)
     items.forEach((lesson) => addLesson(lesson))
   }
   const editLesson = (id: number) => {

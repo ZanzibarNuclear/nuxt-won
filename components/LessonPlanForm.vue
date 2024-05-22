@@ -29,7 +29,7 @@ import type { FormSubmitEvent } from '#ui/types'
 const emit = defineEmits(['save-lesson-plan', 'cancel'])
 
 const props = defineProps({
-  courseId: { type: number, required: true },
+  courseId: { type: Number, required: true },
   lessonPlan: { type: Object, required: false },
 })
 
@@ -37,8 +37,8 @@ const schema = object({
   id: number(),
   courseId: number(),
   title: string().required(),
-  description: string(),
-  objective: string(),
+  description: string().nullable(),
+  objective: string().nullable(),
   coverArt: string(),
 })
 type Schema = InferType<typeof schema>
