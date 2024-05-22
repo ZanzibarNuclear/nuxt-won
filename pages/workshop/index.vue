@@ -6,7 +6,7 @@
       <ul>
         <li
           v-for="course in workshop.courseList"
-          @click="() => openForEdit(course.id)"
+          @click="activateCourse(course.id)"
         >
           {{ course.title }} -
           <span v-html="course.description" />
@@ -90,17 +90,10 @@ const uiState = reactive({
   editCourse: false,
 })
 
-const isActiveCourse = computed(() => {
-  return !!workshop.activeCourse
-})
-const cancelActive = () => {
-  workshop.closeCourseEdit()
-}
-const courseToEdit = computed(() => {
-  return workshop.activeCourse
-})
-
-const openForEdit = async (id) => {
+const isActiveCourse = computed(() => !!workshop.activeCourse)
+const cancelActive = () => workshop.closeCourseEdit()
+const courseToEdit = computed(() => workshop.activeCourse)
+const activateCourse = async (id) => {
   const course = await loadCourse(id)
   if (course) {
     workshop.addCourse(course)

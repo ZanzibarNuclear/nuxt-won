@@ -1,5 +1,5 @@
 <template>
-  <UFormGroup label="Description" name="description">
+  <UFormGroup :label="fieldNameLabel" :name="fieldName">
     <simple-editor
       v-if="isEdit"
       :initial-content="fields[fieldName]"
@@ -29,6 +29,9 @@ const handleOpen = () => {
 const handleClose = () => {
   isEdit.value = false
 }
+const fieldNameLabel = computed(() => {
+  return props.fieldName[0].toUpperCase() + props.fieldName.slice(1)
+})
 </script>
 
 <style scoped></style>

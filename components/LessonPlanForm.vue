@@ -10,7 +10,7 @@
     </UFormGroup>
     <UButton
       type="submit"
-      :label="isEdit ? 'Submit changes' : 'Add course'"
+      :label="isEdit ? 'Submit changes' : 'Add lesson'"
       class="mr-2"
     />
     <UButton
@@ -27,7 +27,11 @@ import { object, string, number, type InferType } from 'yup'
 import type { FormSubmitEvent } from '#ui/types'
 
 const emit = defineEmits(['save-lesson-plan', 'cancel'])
-const props = defineProps(['courseId', 'lessonPlan'])
+
+const props = defineProps({
+  courseId: { type: number, required: true },
+  lessonPlan: { type: Object, required: false },
+})
 
 const schema = object({
   id: number(),
@@ -52,7 +56,7 @@ const state = reactive({
 const isEdit = computed(() => !!props.lessonPlan)
 
 const setInitialValues = (lessonPlan) => {
-  const { id, courseId, title, description, coverArt, objective } = lessonPlan
+  const { id, title, description, coverArt, objective } = lessonPlan
   state.id = id
   state.title = title
   state.description = description
@@ -75,6 +79,7 @@ onUpdated(() => {
 })
 
 async function onSubmit(event: FormSubmitEvent<Schema>) {
+  console.log('clicked save', event.data)
   emit('save-lesson-plan', event.data)
 }
 </script>

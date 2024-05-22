@@ -36,13 +36,13 @@ export async function loadLessonPlans(courseId) {
 }
 
 export async function loadLessonPlan(lessonPlanId) {
-  const result = await $fetch(`/api/lessons/${lessonPlanId}`)
+  const result = await $fetch(`/api/lesson-plans/${lessonPlanId}`)
   return result ? mapToObject(result) : null
 }
 
 export async function createLessonPlan(lessonPlan: LessonPlan) {
   const input = mapToTable({ ...lessonPlan, publicKey: genKey(10) })
-  console.log('course data in', input)
+  console.log('lesson plan data in', input)
   const results = await $fetch('/api/lesson-plans', {
     method: 'POST',
     body: input,
@@ -55,8 +55,8 @@ export async function createLessonPlan(lessonPlan: LessonPlan) {
 }
 
 export async function saveLessonPlan(lessonPlan: LessonPlan) {
-  console.log('saving lesson plan', lessonPlan)
   const input = mapToTable(lessonPlan)
+  console.log('saving lesson plan', input)
   const results = await $fetch(`/api/lesson-plans/${input.id}`, {
     method: 'PUT',
     body: input,

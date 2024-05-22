@@ -3,7 +3,7 @@ import type { Course, LessonPlan } from '~/types/won-types'
 
 export const useWorkshopStore = defineStore('workshop', () => {
   type CourseMap = { [k: string]: Course }
-  type LessonMap = { [k: string]: LessonPlan }
+  type LessonMap = { [k: string]: LessonPlan } // TODO: think about caching by course, then lesson
 
   const courses: Ref<CourseMap> = ref({})
   const courseList = computed(() => Object.values(courses.value))
@@ -16,15 +16,40 @@ export const useWorkshopStore = defineStore('workshop', () => {
     items.forEach((course) => addCourse(course))
   }
   const editCourse = (id: number) => {
-    // TODO: fetch list of lessons
     activeCourseId.value = id.toString()
   }
   const closeCourseEdit = (id: number) => {
     activeCourseId.value = null
   }
   const activeCourse = computed(() => {
-    if (activeCourseId) {
+    if (activeCourseId.value) {
       return courses.value[activeCourseId.value]
+    } else {
+      return null
+    }
+  })
+
+  const lessonPlans: Ref<LessonMap> = ref({})
+  // TODO: return these in sorted order
+  const lessonList = computed(() => Object.values(lessonPlans.value))
+  const activeLessonId = ref()
+
+  const addLesson = (lessonToAdd: LessonPlan) => {
+    lessonPlans.value[lessonToAdd.id.toString()] = lessonToAdd
+  }
+  const loadLessons = (items: LessonPlan[]) => {
+    console.log('caching lessons', items)
+    items.forEach((lesson) => addLesson(lesson))
+  }
+  const editLesson = (id: number) => {
+    activeLessonId.value = id.toString()
+  }
+  const closeLessonEdit = () => {
+    activeLessonId.value = null
+  }
+  const activeLesson = computed(() => {
+    if (activeLessonId.value) {
+      return lessonPlans.value[activeLessonId.value]
     } else {
       return null
     }
@@ -37,5 +62,11 @@ export const useWorkshopStore = defineStore('workshop', () => {
     addCourse,
     editCourse,
     closeCourseEdit,
+    lessonList,
+    activeLesson,
+    loadLessons,
+    addLesson,
+    editLesson,
+    closeLessonEdit,
   }
 })

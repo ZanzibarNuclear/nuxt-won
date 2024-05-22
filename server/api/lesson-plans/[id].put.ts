@@ -1,13 +1,13 @@
 import { serverSupabaseClient } from '#supabase/server'
 
 export default defineEventHandler(async (event) => {
-  console.log('saving course details')
+  console.log('saving lesson plan details')
   const client = await serverSupabaseClient(event)
   const body = await readBody(event)
 
   console.log('saving', body)
   const { data, error } = await client
-    .from('courses')
+    .from('lesson_plans')
     .update(body)
     .eq('id', body.id)
     .select()
