@@ -4,7 +4,16 @@
       <UInput v-model="state.title" />
     </UFormGroup>
     <UFormGroup label="Description" name="description">
-      <UInput v-model="state.description" />
+      <simple-editor
+        v-if="descriptionEdit"
+        :initial-content="state.description"
+        @share-changes="(updates) => handleSaveDescription(updates)"
+        @close="handleCloseDescription"
+      />
+      <div v-if="!descriptionEdit">
+        <span v-html="state.description" />
+        <UIcon name="i-mdi-edit" @click="descriptionEdit = true" />
+      </div>
     </UFormGroup>
     <UFormGroup label="Syllabus" name="syllabus">
       <UInput v-model="state.syllabus" />
@@ -30,6 +39,10 @@
 import { object, string, number, type InferType } from 'yup'
 import type { FormSubmitEvent } from '#ui/types'
 
+const SimpleEditor = defineAsyncComponent(
+  () => import('~/components/SimpleEditor.vue')
+)
+
 const emit = defineEmits(['save-course', 'cancel'])
 const props = defineProps(['course'])
 
@@ -50,7 +63,17 @@ const state = reactive({
 })
 
 const isEditMode = computed(() => !!props.course)
-
+const descriptionEdit = ref(false)
+const handleSaveDescription = (updates) => {
+  state.description = updates
+  descriptionEdit.value = false
+}
+const handleOpenDescription = () => {
+  descriptionEdit.value = true
+}
+const handleCloseDescription = () => {
+  descriptionEdit.value = false
+}
 const setDefaults = (course) => {
   const { id, title, description, coverArt, syllabus } = course
   state.id = id

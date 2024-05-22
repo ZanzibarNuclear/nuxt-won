@@ -8,11 +8,18 @@
         content-type="html"
         v-model:content="editorContent"
       />
-      <UButton
-        label="Save"
-        @click="emit('shareChanges', editorRef.getHTML())"
-      />
-      <UButton label="Cancel without save" @click="emit('close')" />
+      <div class="my-2">
+        <UButton
+          icon="i-mdi-arrow-right"
+          label="Save"
+          @click="emit('shareChanges', editorRef.getHTML())"
+        />
+        <UButton
+          icon="i-mdi-cancel"
+          label="Cancel edit"
+          @click="emit('close')"
+        />
+      </div>
     </div>
   </client-only>
 </template>
