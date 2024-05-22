@@ -51,6 +51,13 @@ const links = [
       to: 'https://twitter.com/ZanzibarNuclear',
     },
   ],
+  [
+    {
+      label: 'Curriculum Workshop',
+      icon: 'i-heroicons-academic-cap',
+      to: '/workshop',
+    },
+  ],
 ]
 </script>
 
