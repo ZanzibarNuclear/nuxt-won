@@ -1,7 +1,11 @@
 <template>
   <div>
     <h1>Curriculum Workshop: {{ courseTitle }}</h1>
-    <UIcon name="mdi-arrow-left-top" />
+    <UButton
+      label="Back to course"
+      icon="i-mdi-arrow-left-top"
+      to="/workshop/courses"
+    />
     <h2>Lesson Builder</h2>
     <div v-if="!isActiveLesson">
       <div class="mb-2 italic">Lessons in this course</div>
@@ -23,7 +27,7 @@
           />
           <UButton
             label="Change lesson order"
-            @click="console.log('implement')"
+            @click="console.log('change lesson sequence: not implemented')"
             class="mx-1"
           />
         </div>

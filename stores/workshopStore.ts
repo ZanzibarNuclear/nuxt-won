@@ -20,6 +20,7 @@ export const useWorkshopStore = defineStore('workshop', () => {
   }
   const closeCourseEdit = (id: number) => {
     activeCourseId.value = null
+    activeLessonId.value = null
   }
   const activeCourse = computed(() => {
     if (activeCourseId.value) {
