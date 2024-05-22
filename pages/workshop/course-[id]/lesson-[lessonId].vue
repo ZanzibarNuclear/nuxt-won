@@ -10,18 +10,21 @@
     <div>Course: {{ activeCourse.title }}</div>
     <h2>{{ activeLesson.title }}</h2>
 
-    <div>
-      <UIcon name="i-ph-plus-circle" />
+    <div class="flex">
+      <USelect :options="contentTypeOptions" v-model="contentType" />
+      <UButton label="Add Content" size="sm" icon="i-ph-plus-circle" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { loadLessonPlan } from '~/db/LessonPlanModel'
-
+import type { ContentPart, ContentDetails } from '~/types/won-types'
+const workshop = useWorkshopStore()
 const route = useRoute()
 const { id: courseId, lessonId } = route.params
-const workshop = useWorkshopStore()
+const contentTypeOptions = ['html', 'image', 'formula', 'video', 'figure']
+const contentType = ref('html')
+const contentParts: Ref<ContentPart[]> = ref([])
 
 const activeCourse = {
   id: courseId,
@@ -33,7 +36,61 @@ const activeLesson = {
   courseId: courseId,
 }
 
-onMounted(async () => {})
+onMounted(async () => {
+  // TODO: load whatever makes sense
+})
+
+const addContent = () => {
+  let details: ContentDetails
+  switch (contentType.value) {
+    case 'html': {
+      details = {
+        html: '',
+      }
+      break
+    }
+    case 'image': {
+      details = {
+        src: '',
+        alt: '',
+        width: null,
+        height: null,
+      }
+      break
+    }
+    case 'formula': {
+      details = {
+        latex: '',
+        caption: '',
+      }
+      break
+    }
+    case 'video': {
+      details = {
+        url: '',
+        caption: '',
+      }
+      break
+    }
+    case 'figure': {
+      details = {
+        src: '',
+        caption: '',
+        border: 'solid',
+      }
+      break
+    }
+    default: {
+      details = {
+        text: '',
+      }
+    }
+  }
+  contentParts.value.push({
+    type: contentType.value,
+    details,
+  })
+}
 </script>
 
 <style scoped></style>
