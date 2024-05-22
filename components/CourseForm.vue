@@ -3,36 +3,14 @@
     <UFormGroup label="Title" name="title">
       <UInput v-model="state.title" />
     </UFormGroup>
-    <UFormGroup label="Description" name="description">
-      <simple-editor
-        v-if="descriptionEdit"
-        :initial-content="state.description"
-        @share-changes="(updates) => handleSaveDescription(updates)"
-        @close="handleCloseDescription"
-      />
-      <div v-if="!descriptionEdit">
-        <span v-html="state.description" />
-        <UIcon name="i-mdi-edit" @click="descriptionEdit = true" />
-      </div>
-    </UFormGroup>
-    <UFormGroup label="Syllabus" name="description">
-      <simple-editor
-        v-if="syllabusEdit"
-        :initial-content="state.syllabus"
-        @share-changes="(updates) => handleSaveSyllabus(updates)"
-        @close="handleCloseSyllabus"
-      />
-      <div v-if="!syllabusEdit">
-        <span v-html="state.syllabus" />
-        <UIcon name="i-mdi-edit" @click="syllabusEdit = true" />
-      </div>
-    </UFormGroup>
+    <SimpleEditorFormGroup :fields="state" field-name="description" />
+    <SimpleEditorFormGroup :fields="state" field-name="syllabus" />
     <UFormGroup label="Cover Art" name="coverArt">
       <UInput v-model="state.coverArt" />
     </UFormGroup>
     <UButton
       type="submit"
-      :label="isEditMode ? 'Submit changes' : 'Add course'"
+      :label="isEdit ? 'Submit changes' : 'Add course'"
       class="mr-2"
     />
     <UButton
@@ -71,30 +49,7 @@ const state = reactive({
   coverArt: undefined,
 })
 
-const isEditMode = computed(() => !!props.course)
-const descriptionEdit = ref(false)
-const handleSaveDescription = (updates) => {
-  state.description = updates
-  descriptionEdit.value = false
-}
-const handleOpenDescription = () => {
-  descriptionEdit.value = true
-}
-const handleCloseDescription = () => {
-  descriptionEdit.value = false
-}
-
-const syllabusEdit = ref(false)
-const handleSaveSyllabus = (updates) => {
-  state.syllabus = updates
-  syllabusEdit.value = false
-}
-const handleOpenSyllabus = () => {
-  syllabusEdit.value = true
-}
-const handleCloseSyllabus = () => {
-  syllabusEdit.value = false
-}
+const isEdit = computed(() => !!props.course)
 
 const setDefaults = (course) => {
   const { id, title, description, coverArt, syllabus } = course

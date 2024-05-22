@@ -3,18 +3,14 @@
     <UFormGroup label="Title" name="title">
       <UInput v-model="state.title" />
     </UFormGroup>
-    <UFormGroup label="Description" name="description">
-      <UInput v-model="state.description" />
-    </UFormGroup>
-    <UFormGroup label="Objective" name="objective">
-      <UInput v-model="state.objective" />
-    </UFormGroup>
+    <SimpleEditorFormGroup :fields="state" field-name="description" />
+    <SimpleEditorFormGroup :fields="state" field-name="objective" />
     <UFormGroup label="Cover Art" name="coverArt">
       <UInput v-model="state.coverArt" />
     </UFormGroup>
     <UButton
       type="submit"
-      :label="isEditMode ? 'Submit changes' : 'Add course'"
+      :label="isEdit ? 'Submit changes' : 'Add course'"
       class="mr-2"
     />
     <UButton
@@ -51,7 +47,9 @@ const state = reactive({
   coverArt: undefined,
 })
 
-const isEditMode = computed(() => !!props.lessonPlan)
+// TODO: make a component for wrapping Editor in FormGroup
+
+const isEdit = computed(() => !!props.lessonPlan)
 
 const setInitialValues = (lessonPlan) => {
   const { id, courseId, title, description, coverArt, objective } = lessonPlan
