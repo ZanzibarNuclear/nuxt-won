@@ -19,41 +19,14 @@
         @click="addContent"
       />
     </div>
-
     <div v-for="part in contentParts">
-      <div v-if="part.type === 'html'" class="field">
-        <SimpleEditor :initial-content="part.details.html" />
-      </div>
-      <ContentPart
-        v-if="part.type === 'image' || part.type === 'formula'"
-        :part="part"
-      />
-      <div v-if="part.type === 'video'" class="field">
-        <UFormGroup label="Video URL">
-          <UInput v-model="part.details.url" />
-        </UFormGroup>
-        <UFormGroup label="Caption">
-          <UInput v-model="part.details.caption" />
-        </UFormGroup>
-      </div>
-      <div v-if="part.type === 'figure'" class="field">
-        <UFormGroup label="Figure URL">
-          <UInput v-model="part.details.src" />
-        </UFormGroup>
-        <UFormGroup label="Caption">
-          <UInput v-model="part.details.caption" />
-        </UFormGroup>
-        <UFormGroup label="Border style">
-          <USelect :options="['solid', 'dashed', 'light', 'shadow']" />
-        </UFormGroup>
-      </div>
+      <ContentPart :part="part" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import type { ContentPart, ContentDetails } from '~/types/won-types'
-const workshop = useWorkshopStore()
 const route = useRoute()
 const { id: courseId, lessonId } = route.params
 const contentTypeOptions = ['html', 'image', 'formula', 'video', 'figure']
@@ -127,10 +100,4 @@ const addContent = () => {
 }
 </script>
 
-<style scoped>
-.field {
-  border: 1px purple dashed;
-  padding: 0.5rem;
-  margin: 0.5rem 0;
-}
-</style>
+<style scoped></style>

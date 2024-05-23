@@ -1,10 +1,19 @@
 <template>
   <div class="field">
     <UButton icon="i-ph-pencil" @click="setEdit" />
+    <ContentPartHtml
+      v-if="part.type === 'html'"
+      :fields="part.details"
+      :edit="edit"
+      :preview="preview"
+      @save="handleChanges"
+      @cancel="setReadOnly"
+    />
     <ContentPartImage
       v-if="part.type === 'image'"
       :fields="part.details"
       :edit="edit"
+      :preview="preview"
       @save="handleChanges"
       @cancel="setReadOnly"
     />
@@ -12,7 +21,23 @@
       v-if="part.type === 'formula'"
       :fields="part.details"
       :edit="edit"
-      :preview="edit"
+      :preview="preview"
+      @save="handleChanges"
+      @cancel="setReadOnly"
+    />
+    <ContentPartFigure
+      v-if="part.type === 'figure'"
+      :fields="part.details"
+      :edit="edit"
+      :preview="preview"
+      @save="handleChanges"
+      @cancel="setReadOnly"
+    />
+    <ContentPartVideo
+      v-if="part.type === 'video'"
+      :fields="part.details"
+      :edit="edit"
+      :preview="preview"
       @save="handleChanges"
       @cancel="setReadOnly"
     />
@@ -22,6 +47,7 @@
 <script setup lang="ts">
 const props = defineProps(['part'])
 const edit = ref(false)
+const preview = ref(false)
 
 const setReadOnly = () => {
   edit.value = false
@@ -31,7 +57,10 @@ const setEdit = () => {
 }
 const handleChanges = (details) => {
   console.log('commit changes', details)
-  // TODO: commit updates to part -- need some kind of ID
+  // detect changes - compare prop.details to details
+
+  // if changes detected, save changes - use IDs or public key
+
   setReadOnly()
 }
 </script>

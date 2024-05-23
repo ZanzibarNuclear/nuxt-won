@@ -20,6 +20,8 @@
     <div>URL of image: {{ details.src }}</div>
     <div>Alternate text: {{ details.alt }}</div>
     <div>Width: {{ details.width }}</div>
+  </div>
+  <div v-if="preview">
     <img
       v-if="details.src"
       :src="details.src"
@@ -30,7 +32,7 @@
 </template>
 
 <script setup lang="ts">
-const props = defineProps(['fields', 'edit'])
+const props = defineProps(['fields', 'edit', 'preview'])
 const emit = defineEmits(['save', 'cancel'])
 
 const details = ref({
