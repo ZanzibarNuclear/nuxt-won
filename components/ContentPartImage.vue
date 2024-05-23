@@ -2,10 +2,13 @@
   <div v-if="edit">
     <div>
       <UFormGroup label="Image URL">
-        <UInput v-model="src" />
+        <UInput v-model="details.src" />
       </UFormGroup>
       <UFormGroup label="Alt text">
-        <UInput v-model="alt" />
+        <UInput v-model="details.alt" />
+      </UFormGroup>
+      <UFormGroup label="Width">
+        <UInput v-model="details.width" />
       </UFormGroup>
       <div>
         <UButton @click="commit" label="Update" class="mx-1" />
@@ -14,9 +17,15 @@
     </div>
   </div>
   <div v-if="!edit">
-    <div>URL of image: {{ fields.src }}</div>
-    <div>Alternate text: {{ fields.alt }}</div>
-    <img v-if="fields.src" :src="fields.src" :alt="fields.alt" width="300px" />
+    <div>URL of image: {{ details.src }}</div>
+    <div>Alternate text: {{ details.alt }}</div>
+    <div>Width: {{ details.width }}</div>
+    <img
+      v-if="details.src"
+      :src="details.src"
+      :alt="details.alt"
+      :width="details.width"
+    />
   </div>
 </template>
 
@@ -24,16 +33,22 @@
 const props = defineProps(['fields', 'edit'])
 const emit = defineEmits(['save', 'cancel'])
 
-const src = ref()
-const alt = ref()
+const details = ref({
+  src: null,
+  alt: '',
+  width: '300px',
+})
 
 onMounted(() => {
-  src.value = props.fields.src
-  alt.value = props.fields.alt
+  details.value = {
+    src: props.fields.src,
+    alt: props.fields.alt,
+    width: props.fields.width,
+  }
 })
 
 const commit = () => {
-  emit('save', { src: src.value, alt: alt.value })
+  emit('save', details.value)
 }
 const cancel = () => {
   emit('cancel')

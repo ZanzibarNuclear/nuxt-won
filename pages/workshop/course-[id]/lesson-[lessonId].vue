@@ -24,15 +24,10 @@
       <div v-if="part.type === 'html'" class="field">
         <SimpleEditor :initial-content="part.details.html" />
       </div>
-      <ContentPart v-if="part.type === 'image'" :part="part" />
-      <div v-if="part.type === 'formula'" class="field">
-        <UFormGroup label="Latex expression">
-          <UInput v-model="part.details.latex" />
-        </UFormGroup>
-        <UFormGroup label="Caption">
-          <UInput v-model="part.details.caption" />
-        </UFormGroup>
-      </div>
+      <ContentPart
+        v-if="part.type === 'image' || part.type === 'formula'"
+        :part="part"
+      />
       <div v-if="part.type === 'video'" class="field">
         <UFormGroup label="Video URL">
           <UInput v-model="part.details.url" />

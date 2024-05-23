@@ -8,6 +8,14 @@
       @save="handleChanges"
       @cancel="setReadOnly"
     />
+    <ContentPartFormula
+      v-if="part.type === 'formula'"
+      :fields="part.details"
+      :edit="edit"
+      :preview="edit"
+      @save="handleChanges"
+      @cancel="setReadOnly"
+    />
   </div>
 </template>
 
