@@ -26,6 +26,7 @@
 </template>
 
 <script setup lang="ts">
+import { loadContentParts } from '~/db/ContentPartModel'
 import type { ContentPart, ContentDetails } from '~/types/won-types'
 const route = useRoute()
 const { id: courseId, lessonId } = route.params
@@ -44,7 +45,9 @@ const activeLesson = {
 }
 
 onMounted(async () => {
-  // TODO: load whatever makes sense
+  const parts = await loadContentParts(parseInt(lessonId))
+  contentParts.value.push(...parts)
+  console.log(parts)
 })
 
 const addContent = () => {
