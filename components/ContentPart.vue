@@ -2,7 +2,7 @@
   <div class="field">
     <UButton icon="i-ph-pencil" @click="setEdit" />
     <ContentPartHtml
-      v-if="part.type === 'html'"
+      v-if="part.type === LessonContentEnum.html"
       :fields="part.details"
       :edit="edit"
       :preview="preview"
@@ -10,7 +10,7 @@
       @cancel="setReadOnly"
     />
     <ContentPartImage
-      v-if="part.type === 'image'"
+      v-if="part.type === LessonContentEnum.image"
       :fields="part.details"
       :edit="edit"
       :preview="preview"
@@ -18,7 +18,7 @@
       @cancel="setReadOnly"
     />
     <ContentPartFormula
-      v-if="part.type === 'formula'"
+      v-if="part.type === LessonContentEnum.formula"
       :fields="part.details"
       :edit="edit"
       :preview="preview"
@@ -26,7 +26,7 @@
       @cancel="setReadOnly"
     />
     <ContentPartFigure
-      v-if="part.type === 'figure'"
+      v-if="part.type === LessonContentEnum.figure"
       :fields="part.details"
       :edit="edit"
       :preview="preview"
@@ -34,7 +34,7 @@
       @cancel="setReadOnly"
     />
     <ContentPartVideo
-      v-if="part.type === 'video'"
+      v-if="part.type === LessonContentEnum.video"
       :fields="part.details"
       :edit="edit"
       :preview="preview"
@@ -45,9 +45,11 @@
 </template>
 
 <script setup lang="ts">
-import { createContentPart } from '~/db/ContentPartModel'
+import { saveContentPart } from '~/db/ContentPartModel'
+import { LessonContentEnum } from '~/types/won-types'
 
 const props = defineProps(['part'])
+const emit = defineEmits(['cacheUpdatedPart'])
 const edit = ref(false)
 const preview = ref(false)
 
@@ -57,7 +59,7 @@ const setReadOnly = () => {
 const setEdit = () => {
   edit.value = true
 }
-const handleChanges = (details) => {
+const handleChanges = async (details) => {
   console.log('commit changes', details)
   // detect changes - compare prop.details to details
 
@@ -72,10 +74,13 @@ const handleChanges = (details) => {
   if (props.part?.publicKey) {
     // update
     console.log('update existing part')
+    const update = await saveContentPart(input)
+    // need to cache the return value --- move caching logic to workshop store; but for now can emit
+    emit('cacheUpdatedPart', update)
   } else {
-    // otherwise, save
-    console.log('new part')
-    createContentPart(input)
+    // otherwise, save -- which is unexpected at this point
+    console.error('expected to be editing stored parts')
+    // const minted = await createContentPart(input)
   }
 
   setReadOnly()

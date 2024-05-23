@@ -44,12 +44,12 @@ export type FigureContent = {
   caption: string
   border: 'solid' | 'dashed' | 'light' | 'shadow'
 }
-enum LessonContentEnum {
+export enum LessonContentEnum {
   html = 'html',
   image = 'image',
   formula = 'formula',
   video = 'video',
-  diagram = 'figure',
+  figure = 'figure',
   text = 'text',
 }
 export type ContentDetails =

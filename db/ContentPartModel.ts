@@ -53,7 +53,7 @@ export async function createContentPart(contentPart: ContentPart) {
 
 export async function saveContentPart(contentPart: ContentPart) {
   const input = mapToTable(contentPart)
-  const results = await $fetch(`/api/lesson-plans/${input.id}`, {
+  const results = await $fetch(`/api/content-parts/${input.public_key}`, {
     method: 'PUT',
     body: input,
   })

@@ -20,23 +20,32 @@
       />
     </div>
     <div v-for="part in sortedContentParts">
-      <ContentPart :part="part" />
+      <ContentPart :part="part" @cache-updated-part="handleCacheUpdatedPart" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { loadContentParts } from '~/db/ContentPartModel'
-import type { ContentPart, ContentDetails } from '~/types/won-types'
+import { loadContentParts, createContentPart } from '~/db/ContentPartModel'
+import {
+  type ContentPart,
+  type ContentDetails,
+  LessonContentEnum,
+} from '~/types/won-types'
 const route = useRoute()
 const { id: courseId, lessonId } = route.params
-const contentTypeOptions = ['html', 'image', 'formula', 'video', 'figure']
-const contentType = ref('html')
-const contentParts: Ref<ContentPart[]> = ref([])
+const contentTypeOptions = [
+  LessonContentEnum.html,
+  LessonContentEnum.image,
+  LessonContentEnum.formula,
+  LessonContentEnum.video,
+  LessonContentEnum.figure,
+]
+const contentType: Ref<LessonContentEnum> = ref(LessonContentEnum.html)
 
 type ContentPartMap = { [k: string]: ContentPart }
 const contents: ContentPartMap = reactive({})
-const notIndexed: Ref<ContentPart[]> = ref([])
+const notIndexed: Ref<ContentPart[]> = ref([]) // if anything ends up here, must be a mistake
 
 const sortedContentParts = computed(() => {
   const sorted = Object.values(contents).sort(
@@ -56,7 +65,7 @@ const activeLesson = {
   courseId: courseId,
 }
 
-const cacheContentPart = (part) => {
+const cacheContentPart = (part: ContentPart) => {
   if (part.publicKey) {
     contents[part.publicKey] = part
   } else {
@@ -78,16 +87,18 @@ onMounted(async () => {
   parts.forEach((part) => cacheContentPart(part))
 })
 
-const addContent = () => {
+const handleCacheUpdatedPart = (update: ContentPart) => cacheContentPart(update)
+
+const addContent = async () => {
   let details: ContentDetails
   switch (contentType.value) {
-    case 'html': {
+    case LessonContentEnum.html: {
       details = {
         html: '',
       }
       break
     }
-    case 'image': {
+    case LessonContentEnum.image: {
       details = {
         src: '',
         alt: '',
@@ -96,21 +107,21 @@ const addContent = () => {
       }
       break
     }
-    case 'formula': {
+    case LessonContentEnum.formula: {
       details = {
         latex: '',
         caption: '',
       }
       break
     }
-    case 'video': {
+    case LessonContentEnum.video: {
       details = {
         url: '',
         caption: '',
       }
       break
     }
-    case 'figure': {
+    case LessonContentEnum.figure: {
       details = {
         src: '',
         caption: '',
@@ -124,12 +135,14 @@ const addContent = () => {
       }
     }
   }
-  contentParts.value.push({
+  const input = {
     lessonId: lessonId,
     type: contentType.value,
     sequence: nextCount.value,
     details,
-  })
+  }
+  const minted = await createContentPart(input)
+  cacheContentPart(minted)
 }
 </script>
 

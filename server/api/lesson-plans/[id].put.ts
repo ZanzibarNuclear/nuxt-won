@@ -5,6 +5,8 @@ export default defineEventHandler(async (event) => {
   const client = await serverSupabaseClient(event)
   const body = await readBody(event)
 
+  // TODO: check that ID matches URL param (and switch to public key while you're at it)
+
   console.log('saving', body)
   const { data, error } = await client
     .from('lesson_plans')
