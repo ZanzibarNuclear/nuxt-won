@@ -19,7 +19,7 @@
         @click="addContent"
       />
     </div>
-    <div v-for="part in contentParts">
+    <div v-for="part in sortedContentParts">
       <ContentPart :part="part" />
     </div>
   </div>
@@ -34,6 +34,18 @@ const contentTypeOptions = ['html', 'image', 'formula', 'video', 'figure']
 const contentType = ref('html')
 const contentParts: Ref<ContentPart[]> = ref([])
 
+type ContentPartMap = { [k: string]: ContentPart }
+const contents: ContentPartMap = reactive({})
+const notIndexed: Ref<ContentPart[]> = ref([])
+
+const sortedContentParts = computed(() => {
+  const sorted = Object.values(contents).sort(
+    (partA, partB) => partA.sequence - partB.sequence
+  )
+  sorted.push(...notIndexed.value)
+  return sorted
+})
+
 const activeCourse = {
   id: courseId,
   title: 'My Wonderful Course',
@@ -44,10 +56,26 @@ const activeLesson = {
   courseId: courseId,
 }
 
+const cacheContentPart = (part) => {
+  if (part.publicKey) {
+    contents[part.publicKey] = part
+  } else {
+    notIndexed.value.push(part)
+  }
+}
+const nextCount = computed(() => {
+  if (sortedContentParts.value.length > 0) {
+    return (
+      sortedContentParts.value[sortedContentParts.value.length - 1].sequence + 1
+    )
+  } else {
+    return 1
+  }
+})
+
 onMounted(async () => {
   const parts = await loadContentParts(parseInt(lessonId))
-  contentParts.value.push(...parts)
-  console.log(parts)
+  parts.forEach((part) => cacheContentPart(part))
 })
 
 const addContent = () => {
@@ -97,7 +125,9 @@ const addContent = () => {
     }
   }
   contentParts.value.push({
+    lessonId: lessonId,
     type: contentType.value,
+    sequence: nextCount.value,
     details,
   })
 }

@@ -45,6 +45,8 @@
 </template>
 
 <script setup lang="ts">
+import { createContentPart } from '~/db/ContentPartModel'
+
 const props = defineProps(['part'])
 const edit = ref(false)
 const preview = ref(false)
@@ -59,7 +61,22 @@ const handleChanges = (details) => {
   console.log('commit changes', details)
   // detect changes - compare prop.details to details
 
+  // put together payload
+  const input = {
+    ...props.part,
+    details,
+  }
+  console.log('saving...', input)
+
   // if changes detected, save changes - use IDs or public key
+  if (props.part?.publicKey) {
+    // update
+    console.log('update existing part')
+  } else {
+    // otherwise, save
+    console.log('new part')
+    createContentPart(input)
+  }
 
   setReadOnly()
 }

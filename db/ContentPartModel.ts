@@ -39,8 +39,8 @@ export async function loadContentPart(publicKey: string) {
 }
 
 export async function createContentPart(contentPart: ContentPart) {
-  const input = mapToTable({ ...contentPart, publicKey: genKey(10) })
-  const results = await $fetch('/api/lesson-plans', {
+  const input = mapToTable({ ...contentPart, publicKey: genKey(8) })
+  const results = await $fetch('/api/content-parts', {
     method: 'POST',
     body: input,
   })
