@@ -22,7 +22,7 @@
 
 <script setup lang="ts">
 const props = defineProps(['fields', 'edit'])
-const emit = defineEmits(['setChanges', 'close'])
+const emit = defineEmits(['save', 'cancel'])
 
 const src = ref()
 const alt = ref()
@@ -33,10 +33,10 @@ onMounted(() => {
 })
 
 const commit = () => {
-  emit('setChanges', { src: src.value, alt: alt.value })
+  emit('save', { src: src.value, alt: alt.value })
 }
 const cancel = () => {
-  emit('close')
+  emit('cancel')
 }
 </script>
 

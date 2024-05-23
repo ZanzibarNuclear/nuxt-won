@@ -24,14 +24,6 @@
       <div v-if="part.type === 'html'" class="field">
         <SimpleEditor :initial-content="part.details.html" />
       </div>
-      <div v-if="part.type === 'image'" class="field">
-        <UFormGroup label="Image URL">
-          <UInput v-model="part.details.src" />
-        </UFormGroup>
-        <UFormGroup label="Alt text">
-          <UInput v-model="part.details.alt" />
-        </UFormGroup>
-      </div>
       <ContentPart v-if="part.type === 'image'" :part="part" />
       <div v-if="part.type === 'formula'" class="field">
         <UFormGroup label="Latex expression">

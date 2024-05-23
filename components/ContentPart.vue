@@ -1,12 +1,14 @@
 <template>
-  <UButton icon="i-ph-pencil" @click="setEdit" />
-  <ContentPartImage
-    v-if="part.type === 'image'"
-    :fields="part.details"
-    :edit="edit"
-    @close="setReadOnly"
-    @set-changes="handleChanges"
-  />
+  <div class="field">
+    <UButton icon="i-ph-pencil" @click="setEdit" />
+    <ContentPartImage
+      v-if="part.type === 'image'"
+      :fields="part.details"
+      :edit="edit"
+      @save="handleChanges"
+      @cancel="setReadOnly"
+    />
+  </div>
 </template>
 
 <script setup lang="ts">
