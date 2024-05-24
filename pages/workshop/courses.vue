@@ -77,7 +77,7 @@
 <script setup>
 import {
   loadCourses,
-  loadCourse,
+  loadCourseById,
   createCourse,
   saveCourse,
 } from '~/db/CourseModel'
@@ -94,7 +94,7 @@ const isActiveCourse = computed(() => !!workshop.activeCourse)
 const cancelActive = () => workshop.closeCourseEdit()
 const courseToEdit = computed(() => workshop.activeCourse)
 const activateCourse = async (id) => {
-  const course = await loadCourse(id)
+  const course = await loadCourseById(id)
   if (course) {
     workshop.addCourse(course)
     workshop.editCourse(id)

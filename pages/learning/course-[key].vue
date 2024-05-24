@@ -1,16 +1,11 @@
 <template>
   <div>
-    <h1>Check it out!</h1>
-    <h2>This may be the course you are looking for.</h2>
-    <div>{{ coursePublicKey }}</div>
-    <div>Title</div>
+    <h1>{{ activeCourse.title }}</h1>
     <div>Description</div>
     <div>
       <h3>Lessons</h3>
       <ol>
-        <li>What is an atom?</li>
-        <li>Parts of an atom</li>
-        <li>Quantum mechanics - just a taste</li>
+        <li v-for="lesson in lessons">{{ lesson.title }}</li>
       </ol>
     </div>
     <h3>Syllabus</h3>
@@ -19,10 +14,38 @@
 </template>
 
 <script setup lang="ts">
-const route = useRoute()
-const coursePublicKey = route.params.key
+import { loadCourse } from '~/db/CourseModel'
+import { loadLessonPlans } from '~/db/LessonPlanModel'
+import type { LessonPlan } from '~/types/won-types'
 
-onMounted(() => {})
+const learning = useLearningStore()
+
+const route = useRoute()
+const courseKey = route.params.key
+const lessons: Ref<LessonPlan[]> = ref([])
+
+const activeCourse = computed(() => {
+  if (learning.activeCourse) {
+    return learning.activeCourse
+  } else {
+    return {
+      title: 'This may be the course you are looking for...loading...',
+    }
+  }
+})
+
+onMounted(async () => {
+  const course = await loadCourse(courseKey)
+  if (course) {
+    learning.cacheCourse(course)
+  }
+  const plans: LessonPlan[] = await loadLessonPlans(courseKey)
+  console.log('found lessons:', plans)
+
+  if (plans) {
+    lessons.value.push(...plans)
+  }
+})
 </script>
 
 <style scoped>
