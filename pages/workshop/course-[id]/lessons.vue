@@ -60,6 +60,15 @@
         label="Work on lesson content"
         class="mx-1"
       />
+      <UButton
+        @click="
+          navigateTo(
+            `/workshop/course-${workshop.activeCourse?.id}/preview-${lessonToEdit?.id}`
+          )
+        "
+        label="Preview lesson"
+        class="mx-1"
+      />
       <UButton @click="cancelActive" label="Put this away" class="mx-1" />
     </div>
     <div v-if="!uiState.editLesson">

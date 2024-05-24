@@ -18,7 +18,7 @@
     <div>Caption: {{ details.caption }}</div>
   </div>
   <div v-if="preview">
-    <div>TODO: Show playable video</div>
+    <div>TODO: Play video at '{{ details.url }}'</div>
   </div>
 </template>
 

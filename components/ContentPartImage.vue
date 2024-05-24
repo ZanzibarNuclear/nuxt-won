@@ -16,7 +16,7 @@
       </div>
     </div>
   </div>
-  <div v-if="!edit">
+  <div v-if="!edit && !preview">
     <div>URL of image: {{ details.src }}</div>
     <div>Alternate text: {{ details.alt }}</div>
     <div>Width: {{ details.width }}</div>
