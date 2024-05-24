@@ -44,8 +44,8 @@ export async function loadLessonPlans(courseKey) {
   }
 }
 
-export async function loadLessonPlan(lessonPlanId) {
-  const result = await $fetch(`/api/lesson-plans/${lessonPlanId}`)
+export async function loadLessonPlan(lessonKey) {
+  const result = await $fetch(`/api/lesson-plan/${lessonKey}`)
   return result ? mapToObject(result) : null
 }
 

@@ -1,15 +1,14 @@
 <template>
-  <UCard>
+  <UCard class="card">
     <template #header>
       <div class="flex">
-        <img :src="coverArt" class="w-full" />
+        <img :src="coverArt" class="cover-art" />
       </div>
     </template>
     <div>
       <div class="text-2xl mb-4">{{ title }}</div>
-      <div class="description">
-        {{ description }}
-        {{ syllabus }}
+      <div class="my-2">
+        <span v-html="description" />
       </div>
     </div>
     <template #footer>
@@ -39,4 +38,13 @@ const goTo = () => {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.card {
+  display: grid;
+  grid-template-rows: max-content 200px 1fr;
+}
+.card img {
+  max-height: 150px;
+  margin: 0 auto;
+}
+</style>

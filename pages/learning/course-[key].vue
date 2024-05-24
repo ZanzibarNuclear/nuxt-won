@@ -4,9 +4,11 @@
     <div>Description</div>
     <div>
       <h3>Lessons</h3>
-      <ol>
-        <li v-for="lesson in lessons">{{ lesson.title }}</li>
-      </ol>
+      <ul>
+        <li v-for="lesson in lessons" class="my-6 px-4">
+          <LessonListItem :lesson-plan="lesson" />
+        </li>
+      </ul>
     </div>
     <h3>Syllabus</h3>
     <div>syllabus</div>
@@ -35,10 +37,14 @@ const activeCourse = computed(() => {
 })
 
 onMounted(async () => {
-  const course = await loadCourse(courseKey)
-  if (course) {
+  // see if course is cached
+  if (!learning.useCourse(courseKey)) {
+    // not cached, so fetch it, cache it, and make it active
+    const course = await loadCourse(courseKey)
     learning.cacheCourse(course)
+    learning.useCourse(courseKey)
   }
+
   const plans: LessonPlan[] = await loadLessonPlans(courseKey)
   console.log('found lessons:', plans)
 
@@ -48,9 +54,4 @@ onMounted(async () => {
 })
 </script>
 
-<style scoped>
-ol {
-  list-style-type: decimal;
-  list-style-position: inside;
-}
-</style>
+<style scoped></style>
