@@ -1,5 +1,29 @@
 <template>
-  <div>Daily Lessons</div>
+  <UContainer class="w-2/3">
+    <h1>Learn about nuclear energy</h1>
+    <div class="my-4">
+      Enjoy these free courses on topics related to the productive use of
+      nuclear energy. We will cover everything, from the fundamental physics and
+      engineering to power generation and medical treatments.
+    </div>
+    <div class="my-4">
+      Each lesson is designed to be consumable in ten minutes or less. That
+      means you will be able to complete one or two lessons per day. Also, it's
+      simple to repeat lessons to reinforce what you have learned.
+    </div>
+    <div class="my-4">
+      For now, everything you see is <span class="bold">free</span>. All we ask
+      is that you
+      <NuxtLink :to="{ name: 'auth-sign-in' }"
+        >register for a free account</NuxtLink
+      >. That way we will know who is enjoying our courses. Plus, you will gain
+      access to other members-only features of the World of Nuclear. So sign up
+      today, and jump right in.
+    </div>
+    <div>
+      <UButton to="/learning" label="Go to Lessons" />
+    </div>
+  </UContainer>
 </template>
 
 <script setup>

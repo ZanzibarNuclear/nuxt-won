@@ -22,10 +22,21 @@ const mapToTable = (contentPart: ContentPart) => {
   }
 }
 
-export async function loadContentParts(lessonId: number) {
+export async function loadContentPartsByLessonId(lessonId: number) {
   console.log(`lesson ${lessonId}`)
 
   const results = await $fetch(`/api/lesson-plans/${lessonId}/content-parts`)
+  if (results) {
+    return results.map((row) => mapToObject(row))
+  } else {
+    return []
+  }
+}
+
+export async function loadContentParts(lessonKey: string) {
+  const results = await $fetch(`/api/lesson-plan/${lessonKey}/content-parts`)
+  console.log(`found content parts for lesson ${lessonKey}`, results)
+
   if (results) {
     return results.map((row) => mapToObject(row))
   } else {
