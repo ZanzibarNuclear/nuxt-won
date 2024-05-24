@@ -1,9 +1,14 @@
 <template>
   <div>
+    <h1>Curriculum Workshop: {{ courseTitle }}</h1>
+    <UButton
+      label="Back to course"
+      icon="i-mdi-arrow-left-top"
+      to="/workshop/courses"
+    />
     <h2>Lesson Builder</h2>
-    <div>Course ID: {{ courseId }}</div>
     <div v-if="!isActiveLesson">
-      <div>Lessons</div>
+      <div class="mb-2 italic">Lessons in this course</div>
       <ol>
         <li
           v-for="lesson in workshop.lessonList"
@@ -13,12 +18,20 @@
         </li>
       </ol>
       <div>
-        <UButton
-          v-if="!uiState.addLesson"
-          label="Add Lesson"
-          @click="() => (uiState.addLesson = true)"
-        />
-        <div v-else>
+        <div v-if="!uiState.addLesson" class="mt-2">
+          <strong>Actions:</strong>
+          <UButton
+            label="Add Lesson"
+            @click="() => (uiState.addLesson = true)"
+            class="mx-1"
+          />
+          <UButton
+            label="Change lesson order"
+            @click="console.log('change lesson sequence: not implemented')"
+            class="mx-1"
+          />
+        </div>
+        <div v-if="uiState.addLesson">
           <h3>Add a Lesson</h3>
           <LessonPlanForm
             :course-id="courseId"
@@ -45,6 +58,15 @@
           )
         "
         label="Work on lesson content"
+        class="mx-1"
+      />
+      <UButton
+        @click="
+          navigateTo(
+            `/workshop/course-${workshop.activeCourse?.id}/preview-${lessonToEdit?.id}`
+          )
+        "
+        label="Preview lesson"
         class="mx-1"
       />
       <UButton @click="cancelActive" label="Put this away" class="mx-1" />
@@ -79,6 +101,7 @@
 </template>
 
 <script setup lang="ts">
+import { loadCourse } from '~/db/CourseModel'
 import {
   loadLessonPlans,
   createLessonPlan,
@@ -101,10 +124,19 @@ const activateLesson = (id) => {
   workshop.editLesson(id)
 }
 
+const courseTitle = computed(() => workshop.activeCourse?.title || 'Loading...')
 onMounted(async () => {
+  if (!workshop.isActiveCourse) {
+    const course = await loadCourse(courseId.value)
+    if (course) {
+      console.log('caching course', course)
+      workshop.addCourse(course)
+      workshop.editCourse(course.id)
+    }
+  }
   const lessons = await loadLessonPlans(courseId.value)
   if (lessons?.length > 0) {
-    console.log('storing lessons')
+    console.log('caching lessons', lessons)
     workshop.loadLessons(lessons)
   }
 })
@@ -133,6 +165,10 @@ const handleSaveLesson = async (details) => {
 <style scoped>
 ul {
   list-style: disc;
+  list-style-position: inside;
+}
+ol {
+  list-style-type: decimal;
   list-style-position: inside;
 }
 </style>

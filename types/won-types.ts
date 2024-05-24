@@ -1,5 +1,3 @@
-import type { Json } from './supabase'
-
 export type Course = {
   id: number
   publicKey: string
@@ -21,30 +19,51 @@ export type LessonPlan = {
   publishedAt: string | null
 }
 
-export type LessonPath = {
-  id: number
-  name: string
-  courseId: number
-  firstLessonId: number
+export type TextContent = {
+  text: string
 }
-
-export type LessonStep = {
-  fromId: number
-  toId: number
-  teaser: string | null
+export type HtmlContent = {
+  html: string
 }
-
-enum LessonContentEnum {
+export type ImageContent = {
+  src: string
+  alt: string
+  width: number | null
+  height: number | null
+}
+export type FormulaContent = {
+  latex: string
+  caption: string
+}
+export type VideoContent = {
+  url: string
+  caption: string
+}
+export type FigureContent = {
+  src: string
+  caption: string
+  border: 'solid' | 'dashed' | 'light' | 'shadow'
+}
+export enum LessonContentEnum {
   html = 'html',
-  md = 'md',
-  diagram = 'diagram',
   image = 'image',
+  formula = 'formula',
   video = 'video',
+  figure = 'figure',
+  text = 'text',
 }
-
-export type LessonPart = {
+export type ContentDetails =
+  | TextContent
+  | HtmlContent
+  | ImageContent
+  | FormulaContent
+  | VideoContent
+  | FigureContent
+export type ContentPart = {
   id: number
+  publicKey: string
   lessonId: number
-  contentType: LessonContentEnum
-  content: Json
+  type: LessonContentEnum
+  details: ContentDetails
+  sequence: number
 }

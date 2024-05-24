@@ -1,17 +1,19 @@
 import { serverSupabaseClient } from '#supabase/server'
 
 export default defineEventHandler(async (event) => {
-  console.log('saving lesson plan details')
   const client = await serverSupabaseClient(event)
   const body = await readBody(event)
+  const key = getRouterParam(event, 'key')
+  console.log('saving lesson content part', body)
 
-  // TODO: check that ID matches URL param (and switch to public key while you're at it)
+  if (key !== body.public_key) {
+    throw createError({ status: 400, statusText: 'key mismatch' })
+  }
 
-  console.log('saving', body)
   const { data, error } = await client
-    .from('lesson_plans')
+    .from('lesson_content_parts')
     .update(body)
-    .eq('id', body.id)
+    .eq('public_key', body.public_key)
     .select()
   if (error) {
     // TODO: handle errors
