@@ -26,7 +26,10 @@
 </template>
 
 <script setup lang="ts">
-import { loadContentParts, createContentPart } from '~/db/ContentPartModel'
+import {
+  loadContentPartsByLessonId,
+  createContentPart,
+} from '~/db/ContentPartModel'
 import {
   type ContentPart,
   type ContentDetails,
@@ -83,7 +86,7 @@ const nextCount = computed(() => {
 })
 
 onMounted(async () => {
-  const parts = await loadContentParts(parseInt(lessonId))
+  const parts = await loadContentPartsByLessonId(parseInt(lessonId))
   parts.forEach((part) => cacheContentPart(part))
 })
 

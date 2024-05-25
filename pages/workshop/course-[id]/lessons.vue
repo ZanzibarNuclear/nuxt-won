@@ -101,9 +101,9 @@
 </template>
 
 <script setup lang="ts">
-import { loadCourse } from '~/db/CourseModel'
+import { loadCourseById } from '~/db/CourseModel'
 import {
-  loadLessonPlans,
+  loadLessonPlansByCourseId,
   createLessonPlan,
   saveLessonPlan,
 } from '~/db/LessonPlanModel'
@@ -127,14 +127,14 @@ const activateLesson = (id) => {
 const courseTitle = computed(() => workshop.activeCourse?.title || 'Loading...')
 onMounted(async () => {
   if (!workshop.isActiveCourse) {
-    const course = await loadCourse(courseId.value)
+    const course = await loadCourseById(courseId.value)
     if (course) {
       console.log('caching course', course)
       workshop.addCourse(course)
       workshop.editCourse(course.id)
     }
   }
-  const lessons = await loadLessonPlans(courseId.value)
+  const lessons = await loadLessonPlansByCourseId(courseId.value)
   if (lessons?.length > 0) {
     console.log('caching lessons', lessons)
     workshop.loadLessons(lessons)
