@@ -12,7 +12,7 @@
       <ol>
         <li
           v-for="lesson in workshop.lessonList"
-          @click="activateLesson(lesson.id)"
+          @click="onActivateLesson(lesson.id)"
         >
           {{ lesson.title }}
         </li>
@@ -43,9 +43,8 @@
     </div>
   </div>
   <div v-if="isActiveLesson">
-    <h2>Make this the Best Lesson Ever!!</h2>
-    <div>
-      <strong>Actions:</strong>
+    <h2>Make this the best lesson ever!!</h2>
+    <SimpleToolbar>
       <UButton
         @click="() => (uiState.editLesson = true)"
         label="Edit lesson"
@@ -70,7 +69,7 @@
         class="mx-1"
       />
       <UButton @click="cancelActive" label="Put this away" class="mx-1" />
-    </div>
+    </SimpleToolbar>
     <div v-if="!uiState.editLesson">
       <div>Public Key: {{ lessonToEdit?.publicKey }}</div>
       <h3>{{ lessonToEdit?.title }}</h3>
@@ -119,25 +118,25 @@ const courseId = computed(() => parseInt(route.params.id))
 const isActiveLesson = computed(() => !!workshop.activeLesson)
 const cancelActive = () => workshop.closeLessonEdit()
 const lessonToEdit = computed(() => workshop.activeLesson)
-const activateLesson = (id) => {
+const onActivateLesson = (id) => {
   // TODO: any need to load lesson again? maybe check if already cached
   workshop.editLesson(id)
 }
 
 const courseTitle = computed(() => workshop.activeCourse?.title || 'Loading...')
 onMounted(async () => {
-  if (!workshop.isActiveCourse) {
+  if (!workshop.isCourseActive) {
     const course = await loadCourseById(courseId.value)
     if (course) {
       console.log('caching course', course)
-      workshop.addCourse(course)
+      workshop.cacheCourse(course)
       workshop.editCourse(course.id)
     }
   }
   const lessons = await loadLessonPlansByCourseId(courseId.value)
   if (lessons?.length > 0) {
     console.log('caching lessons', lessons)
-    workshop.loadLessons(lessons)
+    workshop.cacheLessons(lessons)
   }
 })
 
@@ -146,7 +145,7 @@ const handleCreateLesson = async (details) => {
   const minted = await createLessonPlan(details)
   if (minted) {
     console.log('added lesson plan', minted)
-    workshop.addLesson(minted)
+    workshop.cacheLesson(minted)
   }
   uiState.addLesson = false
 }
@@ -156,7 +155,7 @@ const handleCancelUpdateLesson = () => (uiState.editLesson = false)
 const handleSaveLesson = async (details) => {
   const updated = await saveLessonPlan(details)
   if (updated) {
-    workshop.addLesson(updated)
+    workshop.cacheLesson(updated)
   }
   uiState.editLesson = false
 }
@@ -171,10 +170,10 @@ ol {
   list-style-type: decimal;
   list-style-position: inside;
 }
-.rich-text ::v-deep p {
+.rich-text :deep(p) {
   margin: 0.75rem 0;
 }
-.rich-text ::v-deep ul {
+.rich-text :deep(ul) {
   margin-top: 1rem;
   margin-bottom: 1rem;
   list-style: disc;

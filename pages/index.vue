@@ -53,10 +53,10 @@ const features = [
 </script>
 
 <style>
-.rich-text ::v-deep p {
+.rich-text :deep(p) {
   margin: 0.75rem 0;
 }
-.rich-text ::v-deep ul {
+.rich-text :deep(ul) {
   margin-top: 1rem;
   margin-bottom: 1rem;
   list-style: disc;

@@ -9,11 +9,11 @@ export const useWorkshopStore = defineStore('workshop', () => {
   const courseList = computed(() => Object.values(courses.value))
   const activeCourseId = ref()
 
-  const addCourse = (courseToAdd: Course) => {
-    courses.value[courseToAdd.id.toString()] = courseToAdd
+  const cacheCourse = (courseToCache: Course) => {
+    courses.value[courseToCache.id.toString()] = courseToCache
   }
-  const loadCourses = (items: Course[]) => {
-    items.forEach((course) => addCourse(course))
+  const cacheCourses = (items: Course[]) => {
+    items.forEach((course) => cacheCourse(course))
   }
   const editCourse = (id: number) => {
     activeCourseId.value = id.toString()
@@ -29,17 +29,20 @@ export const useWorkshopStore = defineStore('workshop', () => {
       return null
     }
   })
+  const isCourseActive = computed(() => {
+    return !!activeCourse
+  })
 
   const lessonPlans: Ref<LessonMap> = ref({})
   // TODO: return these in sorted order
   const lessonList = computed(() => Object.values(lessonPlans.value))
   const activeLessonId = ref()
 
-  const addLesson = (lessonToAdd: LessonPlan) => {
+  const cacheLesson = (lessonToAdd: LessonPlan) => {
     lessonPlans.value[lessonToAdd.id.toString()] = lessonToAdd
   }
-  const loadLessons = (items: LessonPlan[]) => {
-    items.forEach((lesson) => addLesson(lesson))
+  const cacheLessons = (items: LessonPlan[]) => {
+    items.forEach((lesson) => cacheLesson(lesson))
   }
   const editLesson = (id: number) => {
     activeLessonId.value = id.toString()
@@ -54,18 +57,23 @@ export const useWorkshopStore = defineStore('workshop', () => {
       return null
     }
   })
+  const isLessonActive = computed(() => {
+    return !!activeLesson
+  })
 
   return {
     courseList,
+    isCourseActive,
     activeCourse,
-    loadCourses,
-    addCourse,
+    cacheCourses,
+    cacheCourse,
     editCourse,
     closeCourseEdit,
     lessonList,
+    isLessonActive,
     activeLesson,
-    loadLessons,
-    addLesson,
+    cacheLessons,
+    cacheLesson,
     editLesson,
     closeLessonEdit,
   }
