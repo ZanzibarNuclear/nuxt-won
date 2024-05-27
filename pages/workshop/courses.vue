@@ -1,15 +1,13 @@
 <template>
   <UContainer>
-    <h1>Curriculum Builder's Workshop</h1>
-    <h2>Course Library</h2>
+    <h1>Curriculum Workshop &ndash; Courses</h1>
     <div v-if="!isActiveCourse" class="rich-text">
       <ul>
         <li
           v-for="course in workshop.courseList"
           @click="activateCourse(course.id)"
         >
-          {{ course.title }} -
-          <span v-html="course.description" />
+          {{ course.title }} - ({{ course.publicKey }})
         </li>
       </ul>
       <div>
@@ -28,26 +26,36 @@
       </div>
     </div>
     <div v-if="isActiveCourse">
-      <h2>Make this Course Awesome</h2>
-      <div>
-        <strong>Actions:</strong>
+      <h2>Make this course awesome!!</h2>
+      <div
+        class="p-4 bg-slate-200 flex justify-center rounded-lg border-2 border-solid border-slate-400"
+      >
         <UButton
+          icon="i-ph-pencil"
           @click="() => (uiState.editCourse = true)"
           label="Edit course"
+          variant="solid"
           class="mx-1"
         />
         <UButton
+          icon="i-ph-presentation-chart-duotone"
           @click="
             navigateTo(`/workshop/course-${workshop.activeCourse.id}/lessons`)
           "
           label="Work on lessons"
+          variant="solid"
           class="mx-1"
         />
-        <UButton @click="cancelActive" label="Put this away" class="mx-1" />
+        <UButton
+          icon="i-ph-arrow-bend-up-left-duotone"
+          @click="cancelActive"
+          label="Back to course list"
+          variant="solid"
+          class="mx-1"
+        />
       </div>
       <div v-if="!uiState.editCourse" class="rich-text">
-        <div>Public Key: {{ workshop.activeCourse.publicKey }}</div>
-        <h3>{{ workshop.activeCourse.title }}</h3>
+        <h3>Title: {{ workshop.activeCourse.title }}</h3>
         <div>
           <img
             :src="workshop.activeCourse.coverArt"
@@ -56,10 +64,11 @@
           />
         </div>
         <div>
-          Description: <span v-html="workshop.activeCourse.description" />
+          <h3>Description:</h3>
+          <span v-html="workshop.activeCourse.description" />
         </div>
-        Syllabus:
         <div>
+          <h3>Syllabus:</h3>
           <span v-html="workshop.activeCourse.syllabus" />
         </div>
       </div>
@@ -81,8 +90,6 @@ import {
   createCourse,
   saveCourse,
 } from '~/db/CourseModel'
-
-// TODO: use Tiptap editor for description and syllabus
 
 const workshop = useWorkshopStore()
 const uiState = reactive({
@@ -109,7 +116,6 @@ onMounted(async () => {
 })
 
 const onCreateCourse = async (details) => {
-  console.log('add new course to library', details)
   const minted = await createCourse(details)
   if (minted) {
     console.log('added course', minted)
@@ -121,7 +127,6 @@ const onCancelCreateCourse = () => (uiState.addCourse = false)
 const onCancelUpdateCourse = () => (uiState.editCourse = false)
 
 const onSaveCourse = async (details) => {
-  console.log('save course changes', details)
   const updated = await saveCourse(details)
   if (updated) {
     console.log('saved course', updated)
