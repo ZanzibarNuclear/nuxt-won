@@ -52,4 +52,14 @@ const features = [
 ]
 </script>
 
-<style scoped></style>
+<style>
+.rich-text ::v-deep p {
+  margin: 0.75rem 0;
+}
+.rich-text ::v-deep ul {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  list-style: disc;
+  list-style-position: inside;
+}
+</style>

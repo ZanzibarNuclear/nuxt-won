@@ -81,7 +81,7 @@
         />
         <div>Cover Art: {{ lessonToEdit?.coverArt }}</div>
       </div>
-      <UCard>
+      <UCard class="rich-text">
         <template #header
           >Description: <span v-html="lessonToEdit?.description"
         /></template>
@@ -169,6 +169,15 @@ ul {
 }
 ol {
   list-style-type: decimal;
+  list-style-position: inside;
+}
+.rich-text ::v-deep p {
+  margin: 0.75rem 0;
+}
+.rich-text ::v-deep ul {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  list-style: disc;
   list-style-position: inside;
 }
 </style>

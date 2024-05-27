@@ -12,7 +12,7 @@
     <div>HTML: {{ details.html }}</div>
   </div>
   <div v-if="preview">
-    <div><span v-html="details.html" /></div>
+    <div class="rich-text"><span v-html="details.html" /></div>
   </div>
 </template>
 
@@ -39,4 +39,14 @@ const cancel = () => {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.rich-text ::v-deep p {
+  margin: 0.75rem 0;
+}
+.rich-text ::v-deep ul {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  list-style: disc;
+  list-style-position: inside;
+}
+</style>

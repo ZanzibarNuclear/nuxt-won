@@ -2,7 +2,7 @@
   <UContainer>
     <h1>Curriculum Builder's Workshop</h1>
     <h2>Course Library</h2>
-    <div v-if="!isActiveCourse">
+    <div v-if="!isActiveCourse" class="rich-text">
       <ul>
         <li
           v-for="course in workshop.courseList"
@@ -45,23 +45,23 @@
         />
         <UButton @click="cancelActive" label="Put this away" class="mx-1" />
       </div>
-      <div v-if="!uiState.editCourse">
+      <div v-if="!uiState.editCourse" class="rich-text">
         <div>Public Key: {{ workshop.activeCourse.publicKey }}</div>
         <h3>{{ workshop.activeCourse.title }}</h3>
         <div>
           <img
-            src="https://worldofnuclear.com/images/Cherenkov-radiation.jpg"
-            width="300px"
+            :src="workshop.activeCourse.coverArt"
+            width="250px"
+            class="my-6"
           />
-          <div>Cover Art: {{ workshop.activeCourse.coverArt }}</div>
         </div>
-        <UCard>
-          <template #header
-            >Description: <span v-html="workshop.activeCourse.description"
-          /></template>
-          Syllabus:
-          <div><span v-html="workshop.activeCourse.syllabus" /></div>
-        </UCard>
+        <div>
+          Description: <span v-html="workshop.activeCourse.description" />
+        </div>
+        Syllabus:
+        <div>
+          <span v-html="workshop.activeCourse.syllabus" />
+        </div>
       </div>
       <div v-else>
         <CourseForm
@@ -132,7 +132,12 @@ const onSaveCourse = async (details) => {
 </script>
 
 <style lang="scss" scoped>
-ul {
+.rich-text ::v-deep p {
+  margin: 0.75rem 0;
+}
+.rich-text ::v-deep ul {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
   list-style: disc;
   list-style-position: inside;
 }
