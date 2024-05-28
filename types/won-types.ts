@@ -43,6 +43,7 @@ export type FigureContent = {
   src: string
   caption: string
   border: 'solid' | 'dashed' | 'light' | 'shadow'
+  width: string
 }
 export enum LessonContentEnum {
   html = 'html',

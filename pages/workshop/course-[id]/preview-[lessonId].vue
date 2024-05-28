@@ -41,7 +41,7 @@
 </template>
 
 <script setup lang="ts">
-import { loadContentParts } from '~/db/ContentPartModel'
+import { loadContentPartsByLessonId } from '~/db/ContentPartModel'
 import { type ContentPart, LessonContentEnum } from '~/types/won-types'
 
 const route = useRoute()
@@ -72,10 +72,11 @@ const cacheContentPart = (part: ContentPart) => {
   }
 }
 
-onMounted(async () => {
-  const parts = await loadContentParts(parseInt(lessonId))
-  parts.forEach((part) => cacheContentPart(part))
-})
+const { data: parts, error } = await useAsyncData(
+  `lesson-${lessonId}-contents`,
+  () => loadContentPartsByLessonId(parseInt(lessonId))
+)
+parts.value.forEach((part) => cacheContentPart(part))
 </script>
 
 <style scoped></style>

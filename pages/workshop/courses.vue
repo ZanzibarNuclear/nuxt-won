@@ -104,15 +104,10 @@ const onActivateCourse = async (id) => {
   }
 }
 
-const { data, error } = await useAsyncData('courses', () => loadCourses())
-console.log('loaded', data.value, error.value)
-
-onMounted(async () => {
-  const courses = await loadCourses()
-  if (courses) {
-    workshop.cacheCourses(courses)
-  }
-})
+const { data: courses, error } = await useAsyncData('courses', () =>
+  loadCourses()
+)
+workshop.cacheCourses(courses.value)
 
 const onCreateCourse = async (details) => {
   const minted = await createCourse(details)

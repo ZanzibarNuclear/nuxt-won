@@ -85,10 +85,11 @@ const nextCount = computed(() => {
   }
 })
 
-onMounted(async () => {
-  const parts = await loadContentPartsByLessonId(parseInt(lessonId))
-  parts.forEach((part) => cacheContentPart(part))
-})
+const { data: parts, error } = await useAsyncData(
+  `lesson-${lessonId}-content`,
+  () => loadContentPartsByLessonId(parseInt(lessonId))
+)
+parts.value.forEach((part) => cacheContentPart(part))
 
 const handleCacheUpdatedPart = (update: ContentPart) => cacheContentPart(update)
 
@@ -129,6 +130,7 @@ const addContent = async () => {
         src: '',
         caption: '',
         border: 'solid',
+        width: '',
       }
       break
     }
