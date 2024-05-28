@@ -54,7 +54,11 @@
     <div v-if="!uiState.editCourse" class="rich-text">
       <h3>Title: {{ workshop.activeCourse.title }}</h3>
       <div>
-        <img :src="workshop.activeCourse.coverArt" width="250px" class="my-6" />
+        <NuxtImg
+          :src="workshop.activeCourse.coverArt"
+          width="250px"
+          class="my-6"
+        />
       </div>
       <div>
         <h3>Description:</h3>
@@ -99,6 +103,9 @@ const onActivateCourse = async (id) => {
     workshop.editCourse(id)
   }
 }
+
+const { data, error } = await useAsyncData('courses', () => loadCourses())
+console.log('loaded', data.value, error.value)
 
 onMounted(async () => {
   const courses = await loadCourses()

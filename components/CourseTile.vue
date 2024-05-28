@@ -2,7 +2,7 @@
   <UCard class="card">
     <template #header>
       <div class="flex">
-        <img :src="coverArt" class="cover-art" />
+        <NuxtImg :src="coverArt" class="cover-art" />
       </div>
     </template>
     <div>

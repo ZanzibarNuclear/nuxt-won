@@ -22,10 +22,11 @@
     <div>Width: {{ details.width }}</div>
   </div>
   <div v-if="preview">
-    <img
+    <NuxtImg
       v-if="details.src"
       :src="details.src"
       :alt="details.alt"
+      :title="details.alt"
       :width="details.width"
     />
   </div>

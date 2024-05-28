@@ -35,7 +35,7 @@ export async function loadLessonPlansByCourseId(courseId) {
   }
 }
 
-export async function loadLessonPlans(courseKey) {
+export async function loadLessonPlans(courseKey: string) {
   const results = await $fetch(`/api/course/${courseKey}/lesson-plans`)
   if (results) {
     return results.map((row) => mapToObject(row))
@@ -44,7 +44,7 @@ export async function loadLessonPlans(courseKey) {
   }
 }
 
-export async function loadLessonPlan(lessonKey) {
+export async function loadLessonPlan(lessonKey: string) {
   const result = await $fetch(`/api/lesson-plan/${lessonKey}`)
   return result ? mapToObject(result) : null
 }

@@ -23,7 +23,12 @@
   </div>
   <div v-if="preview">
     <div :class="details.border">
-      <img v-if="details.src" :src="details.src" :title="details.caption" />
+      <NuxtImg
+        v-if="details.src"
+        :src="details.src"
+        :title="details.caption"
+        :width="details.width"
+      />
     </div>
     <div class="text-center">{{ details.caption }}</div>
   </div>
@@ -39,6 +44,7 @@ const details = ref({
   src: null,
   caption: '',
   border: 'solid',
+  width: null,
 })
 
 onMounted(() => {
@@ -46,6 +52,7 @@ onMounted(() => {
     src: props.fields.src,
     caption: props.fields.caption,
     border: props.fields.border,
+    width: props.fields.width,
   }
 })
 

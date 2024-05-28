@@ -46,20 +46,34 @@ const awardCredit = () => {
   showCreditMessage.value = true
 }
 
-onMounted(async () => {
-  // see if lesson is cached
-  if (!learning.useLesson(lessonKey)) {
-    // not cached, so fetch it, cache it, and make it active
-    const plan = await loadLessonPlan(lessonKey)
-    learning.cacheLesson(plan)
-    learning.useLesson(lessonKey)
-  }
+if (!learning.useLesson(lessonKey)) {
+  const { data: lessonData, pending } = await useAsyncData(
+    `lesson-data-${lessonKey}`,
+    async () => {
+      const [plan, contents] = await Promise.all([
+        loadLessonPlan(lessonKey),
+        loadContentParts(lessonKey),
+      ])
+      return { plan, contents }
+    }
+  )
+  learning.cacheLesson(lessonData.value.plan)
+  learning.cacheContents(lessonData.value.contents)
+}
 
-  // load lesson and content parts
-  const contents: ContentPart[] = await loadContentParts(lessonKey)
-  if (contents) {
-    learning.cacheContents(contents)
-  }
+onMounted(async () => {
+  // // see if lesson is cached
+  // if (!learning.useLesson(lessonKey)) {
+  //   // not cached, so fetch it, cache it, and make it active
+  //   const plan = await loadLessonPlan(lessonKey)
+  //   learning.cacheLesson(plan)
+  //   learning.useLesson(lessonKey)
+  // }
+  // // load lesson and content parts
+  // const contents: ContentPart[] = await loadContentParts(lessonKey)
+  // if (contents) {
+  //   learning.cacheContents(contents)
+  // }
 })
 </script>
 

@@ -1,14 +1,13 @@
 <template>
   <div>
-    <h1>Curriculum Workshop: {{ courseTitle }}</h1>
+    <h1>Curriculum Workshop: {{ courseTitle }} &ndash; Lessons</h1>
     <UButton
       label="Back to course"
       icon="i-mdi-arrow-left-top"
       to="/workshop/courses"
     />
-    <h2>Lesson Builder</h2>
     <div v-if="!isActiveLesson">
-      <div class="mb-2 italic">Lessons in this course</div>
+      <h2>Lessons in this course</h2>
       <ol>
         <li
           v-for="lesson in workshop.lessonList"
@@ -18,8 +17,7 @@
         </li>
       </ol>
       <div>
-        <div v-if="!uiState.addLesson" class="mt-2">
-          <strong>Actions:</strong>
+        <SimpleToolbar v-if="!uiState.addLesson">
           <UButton
             label="Add Lesson"
             @click="() => (uiState.addLesson = true)"
@@ -30,7 +28,7 @@
             @click="console.log('change lesson sequence: not implemented')"
             class="mx-1"
           />
-        </div>
+        </SimpleToolbar>
         <div v-if="uiState.addLesson">
           <h3>Add a Lesson</h3>
           <LessonPlanForm
@@ -73,12 +71,12 @@
     <div v-if="!uiState.editLesson">
       <div>Public Key: {{ lessonToEdit?.publicKey }}</div>
       <h3>{{ lessonToEdit?.title }}</h3>
-      <div>
-        <img
-          src="https://worldofnuclear.com/images/atomic-symbol.jpg"
+      <div v-if="lessonToEdit?.coverArt">
+        <NuxtImg
+          :src="lessonToEdit.coverArt"
+          :alt="lessonToEdit.title"
           width="300px"
         />
-        <div>Cover Art: {{ lessonToEdit?.coverArt }}</div>
       </div>
       <UCard class="rich-text">
         <template #header
@@ -123,15 +121,20 @@ const onActivateLesson = (id) => {
   workshop.editLesson(id)
 }
 
-const courseTitle = computed(() => workshop.activeCourse?.title || 'Loading...')
+const courseTitle = computed(() =>
+  workshop.isCourseActive ? workshop.activeCourse.title : 'Loading...'
+)
 onMounted(async () => {
   if (!workshop.isCourseActive) {
+    console.log('loading course info')
     const course = await loadCourseById(courseId.value)
     if (course) {
       console.log('caching course', course)
       workshop.cacheCourse(course)
       workshop.editCourse(course.id)
     }
+  } else {
+    console.log('Course is already loaded')
   }
   const lessons = await loadLessonPlansByCourseId(courseId.value)
   if (lessons?.length > 0) {
