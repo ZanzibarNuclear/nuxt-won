@@ -124,24 +124,20 @@ const onActivateLesson = (id) => {
 const courseTitle = computed(() =>
   workshop.isCourseActive ? workshop.activeCourse.title : 'Loading...'
 )
-onMounted(async () => {
-  if (!workshop.isCourseActive) {
-    console.log('loading course info')
-    const course = await loadCourseById(courseId.value)
-    if (course) {
-      console.log('caching course', course)
-      workshop.cacheCourse(course)
-      workshop.editCourse(course.id)
-    }
-  } else {
-    console.log('Course is already loaded')
+
+const { data: courseData, error } = await useAsyncData(
+  `course-${courseId}`,
+  async () => {
+    const [course, lessonPlans] = await Promise.all([
+      loadCourseById(courseId.value),
+      loadLessonPlansByCourseId(courseId.value),
+    ])
+    return { course, lessonPlans }
   }
-  const lessons = await loadLessonPlansByCourseId(courseId.value)
-  if (lessons?.length > 0) {
-    console.log('caching lessons', lessons)
-    workshop.cacheLessons(lessons)
-  }
-})
+)
+workshop.cacheCourse(courseData.value?.course)
+workshop.editCourse(course.id)
+workshop.cacheLessons(courseData.value?.lessonPlans)
 
 const handleCreateLesson = async (details) => {
   console.log('add new lesson to course', details)
