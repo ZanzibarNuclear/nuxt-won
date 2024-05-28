@@ -10,6 +10,9 @@
       <UFormGroup label="Border style">
         <USelect v-model="details.border" :options="borderOptions" />
       </UFormGroup>
+      <UFormGroup label="Width">
+        <UInput v-model="details.width" />
+      </UFormGroup>
       <div>
         <UButton @click="commit" label="Update" class="mx-1" />
         <UButton @click="cancel" label="Cancel" class="mx-1" />

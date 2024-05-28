@@ -5,7 +5,7 @@
     <div>
       <h3>Lessons</h3>
       <ul>
-        <li v-for="lesson in lessons" class="my-6 px-4">
+        <li v-for="lesson in learning.lessonsForActiveCourse" class="my-6 px-4">
           <LessonListItem :lesson-plan="lesson" />
         </li>
       </ul>
@@ -18,13 +18,11 @@
 <script setup lang="ts">
 import { loadCourse } from '~/db/CourseModel'
 import { loadLessonPlans } from '~/db/LessonPlanModel'
-import type { LessonPlan } from '~/types/won-types'
 
 const learning = useLearningStore()
 
 const route = useRoute()
 const courseKey = route.params.key
-const lessons: Ref<LessonPlan[]> = ref([])
 
 const activeCourse = computed(() => {
   if (learning.activeCourse) {
@@ -36,22 +34,22 @@ const activeCourse = computed(() => {
   }
 })
 
-onMounted(async () => {
-  // see if course is cached
-  if (!learning.useCourse(courseKey)) {
-    // not cached, so fetch it, cache it, and make it active
-    const course = await loadCourse(courseKey)
-    learning.cacheCourse(course)
-    learning.useCourse(courseKey)
-  }
-
-  const plans: LessonPlan[] = await loadLessonPlans(courseKey)
-  console.log('found lessons:', plans)
-
-  if (plans) {
-    lessons.value.push(...plans)
-  }
-})
+if (!learning.useCourse(courseKey)) {
+  const { data: courseData, error } = await useAsyncData(
+    `course-${courseKey}`,
+    async () => {
+      const [course, lessonPlans] = await Promise.all([
+        loadCourse(courseKey),
+        loadLessonPlans(courseKey),
+      ])
+      return { course, lessonPlans }
+    }
+  )
+  learning.cacheCourse(courseData.value?.course)
+  learning.useCourse(courseKey)
+  learning.cacheLessons(courseData.value?.lessonPlans)
+  console.log('plans', learning.lessonsForActiveCourse)
+}
 </script>
 
 <style scoped></style>
