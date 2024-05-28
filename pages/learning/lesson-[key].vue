@@ -25,7 +25,6 @@
 <script setup lang="ts">
 import { loadContentParts } from '~/db/ContentPartModel'
 import { loadLessonPlan } from '~/db/LessonPlanModel'
-import type { ContentPart } from '~/types/won-types'
 
 const learning = useLearningStore()
 const route = useRoute()
@@ -58,23 +57,11 @@ if (!learning.useLesson(lessonKey)) {
     }
   )
   learning.cacheLesson(lessonData.value.plan)
+  learning.useLesson(lessonKey)
   learning.cacheContents(lessonData.value.contents)
+} else {
+  console.log('unknown lesson key')
 }
-
-onMounted(async () => {
-  // // see if lesson is cached
-  // if (!learning.useLesson(lessonKey)) {
-  //   // not cached, so fetch it, cache it, and make it active
-  //   const plan = await loadLessonPlan(lessonKey)
-  //   learning.cacheLesson(plan)
-  //   learning.useLesson(lessonKey)
-  // }
-  // // load lesson and content parts
-  // const contents: ContentPart[] = await loadContentParts(lessonKey)
-  // if (contents) {
-  //   learning.cacheContents(contents)
-  // }
-})
 </script>
 
 <style scoped></style>

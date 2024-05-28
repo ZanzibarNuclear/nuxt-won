@@ -34,8 +34,8 @@ export async function loadContentPartsByLessonId(lessonId: number) {
 }
 
 export async function loadContentParts(lessonKey: string) {
+  console.log('loadContentParts', lessonKey)
   const results = await $fetch(`/api/lesson-plan/${lessonKey}/content-parts`)
-  console.log(`found content parts for lesson ${lessonKey}`, results)
 
   if (results) {
     return results.map((row) => mapToObject(row))

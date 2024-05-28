@@ -26,7 +26,7 @@ const mapToTable = (lessonPlan: LessonPlan) => {
   }
 }
 
-export async function loadLessonPlansByCourseId(courseId) {
+export async function loadLessonPlansByCourseId(courseId: number) {
   const results = await $fetch(`/api/courses/${courseId}/lesson-plans`)
   if (results) {
     return results.map((row) => mapToObject(row))
