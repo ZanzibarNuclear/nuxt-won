@@ -6,7 +6,7 @@ export const useWorkshopStore = defineStore('workshop', () => {
   type LessonMap = { [k: string]: LessonPlan }
 
   const courses: CourseMap = reactive({})
-  const courseList = computed(() => Object.values(courses.value))
+  const courseList = computed(() => Object.values(courses))
   const activeCourseKey = ref()
 
   const cacheCourse = (courseToCache: Course) => {
@@ -30,14 +30,16 @@ export const useWorkshopStore = defineStore('workshop', () => {
   })
 
   const lessonPlans: LessonMap = reactive({})
-  const lessonList = computed(() => Object.values(lessonPlans.value))
+  const lessonList = computed(() => Object.values(lessonPlans))
   const activeLessonKey = ref()
 
   const cacheLesson = (lessonToAdd: LessonPlan) => {
     lessonPlans[lessonToAdd.publicKey] = lessonToAdd
   }
   const cacheLessons = (items: LessonPlan[]) => {
-    items.forEach((lesson) => cacheLesson(lesson))
+    if (items && items.length > 0) {
+      items.forEach((lesson) => cacheLesson(lesson))
+    }
   }
   const activateLesson = (key: string) => {
     activeLessonKey.value = key

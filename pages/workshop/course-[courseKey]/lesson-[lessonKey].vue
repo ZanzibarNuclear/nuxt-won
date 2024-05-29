@@ -4,12 +4,10 @@
     <UButton
       label="Back to lesson overview"
       icon="i-mdi-arrow-left-top"
-      :to="`/workshop/course-${courseId}/lessons`"
+      :to="`/workshop/course-${workshop.activeCourse.publicKey}/lessons`"
     />
-
-    <div>Course: {{ activeCourse.title }}</div>
-    <h2>{{ activeLesson.title }}</h2>
-
+    <div>Course: {{ workshop.activeCourse.title }}</div>
+    <h2>{{ workshop.activeLesson.title }}</h2>
     <div class="flex">
       <USelect :options="contentTypeOptions" v-model="contentType" />
       <UButton
@@ -26,17 +24,14 @@
 </template>
 
 <script setup lang="ts">
-import {
-  loadContentPartsByLessonId,
-  createContentPart,
-} from '~/db/ContentPartModel'
+import { loadContentParts, createContentPart } from '~/db/ContentPartModel'
 import {
   type ContentPart,
   type ContentDetails,
   LessonContentEnum,
 } from '~/types/won-types'
 const route = useRoute()
-const { id: courseId, lessonId } = route.params
+const { courseKey, lessonKey } = route.params
 const contentTypeOptions = [
   LessonContentEnum.html,
   LessonContentEnum.image,
@@ -45,6 +40,7 @@ const contentTypeOptions = [
   LessonContentEnum.figure,
 ]
 const contentType: Ref<LessonContentEnum> = ref(LessonContentEnum.html)
+const workshop = useWorkshopStore()
 
 type ContentPartMap = { [k: string]: ContentPart }
 const contents: ContentPartMap = reactive({})
@@ -57,16 +53,6 @@ const sortedContentParts = computed(() => {
   sorted.push(...notIndexed.value)
   return sorted
 })
-
-const activeCourse = {
-  id: courseId,
-  title: 'My Wonderful Course',
-}
-const activeLesson = {
-  id: lessonId,
-  title: 'My Crafty Lesson',
-  courseId: courseId,
-}
 
 const cacheContentPart = (part: ContentPart) => {
   if (part.publicKey) {
@@ -141,7 +127,7 @@ const addContent = async () => {
     }
   }
   const input = {
-    lessonId: lessonId,
+    lessonId: activeLesson.id,
     type: contentType.value,
     sequence: nextCount.value,
     details,

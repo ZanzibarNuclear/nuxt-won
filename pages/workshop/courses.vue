@@ -37,7 +37,9 @@
       <UButton
         icon="i-ph-presentation-chart-duotone"
         @click="
-          navigateTo(`/workshop/course-${workshop.activeCourse.id}/lessons`)
+          navigateTo(
+            `/workshop/course-${workshop.activeCourse.publicKey}/lessons`
+          )
         "
         label="Work on lessons"
         variant="solid"
@@ -100,7 +102,7 @@ const onActivateCourse = async (key) => {
   const course = await loadCourse(key)
   if (course) {
     workshop.cacheCourse(course)
-    workshop.activateCourse(id)
+    workshop.activateCourse(key)
   }
 }
 
@@ -112,7 +114,6 @@ workshop.cacheCourses(courses.value)
 const onCreateCourse = async (details) => {
   const minted = await createCourse(details)
   if (minted) {
-    console.log('added course', minted)
     workshop.cacheCourse(minted)
   }
   uiState.addCourse = false
@@ -123,7 +124,6 @@ const onCancelUpdateCourse = () => (uiState.editCourse = false)
 const onSaveCourse = async (details) => {
   const updated = await saveCourse(details)
   if (updated) {
-    console.log('saved course', updated)
     workshop.cacheCourse(updated)
   }
   uiState.editCourse = false

@@ -35,6 +35,7 @@ const props = defineProps(['course'])
 
 const schema = object({
   id: number(),
+  publicKey: string(),
   title: string().required(),
   description: string(),
   syllabus: string(),
@@ -43,6 +44,7 @@ const schema = object({
 type Schema = InferType<typeof schema>
 const state = reactive({
   id: undefined,
+  publicKey: undefined,
   title: undefined,
   description: undefined,
   syllabus: undefined,
@@ -52,8 +54,9 @@ const state = reactive({
 const isEdit = computed(() => !!props.course)
 
 const setDefaults = (course) => {
-  const { id, title, description, coverArt, syllabus } = course
+  const { id, publicKey, title, description, coverArt, syllabus } = course
   state.id = id
+  state.publicKey = publicKey
   state.title = title
   state.description = description
   state.coverArt = coverArt

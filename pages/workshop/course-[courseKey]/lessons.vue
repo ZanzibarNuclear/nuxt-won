@@ -51,7 +51,7 @@
       <UButton
         @click="
           navigateTo(
-            `/workshop/course-${workshop.activeCourse?.id}/lesson-${lessonToEdit?.id}`
+            `/workshop/course-${workshop.activeCourse?.publicKey}/lesson-${lessonToEdit?.publicKey}`
           )
         "
         label="Work on lesson content"
@@ -60,7 +60,7 @@
       <UButton
         @click="
           navigateTo(
-            `/workshop/course-${workshop.activeCourse?.id}/preview-${lessonToEdit?.id}`
+            `/workshop/course-${workshop.activeCourse?.publicKey}/preview-${lessonToEdit?.publicKey}`
           )
         "
         label="Preview lesson"
@@ -114,12 +114,12 @@ const uiState = reactive({
 
 const courseKey = route.params.courseKey
 const isActiveLesson = computed(() => !!workshop.activeLesson)
-const cancelActive = () => workshop.closeLessonEdit()
 const lessonToEdit = computed(() => workshop.activeLesson)
+
 const onActivateLesson = (publicKey) => {
-  // TODO: any need to load lesson again? maybe check if already cached
   workshop.activateLesson(publicKey)
 }
+const cancelActive = () => workshop.closeLessonEdit()
 
 const courseTitle = computed(() =>
   workshop.isCourseActive ? workshop.activeCourse.title : 'Loading...'
@@ -138,7 +138,7 @@ const { data: courseData, error } = await useAsyncData(
 const course = courseData.value
 const lessonPlans = courseData.value
 workshop.cacheCourse(course)
-workshop.activateCourse(course.id)
+workshop.activateCourse(course.publicKey)
 workshop.cacheLessons(lessonPlans)
 
 const handleCreateLesson = async (details) => {
