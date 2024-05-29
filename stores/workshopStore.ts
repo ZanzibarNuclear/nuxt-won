@@ -16,6 +16,7 @@ export const useWorkshopStore = defineStore('workshop', () => {
     items.forEach((course) => cacheCourse(course))
   }
   const activateCourse = (key: string) => {
+    console.log('activating course', key)
     activeCourseKey.value = key
   }
   const deactivateCourse = () => {
@@ -26,7 +27,7 @@ export const useWorkshopStore = defineStore('workshop', () => {
     return activeCourseKey.value ? courses[activeCourseKey.value] : null
   })
   const isCourseActive = computed(() => {
-    return !!activeCourse
+    return !!activeCourse.value
   })
 
   const lessonPlans: LessonMap = reactive({})
@@ -51,7 +52,7 @@ export const useWorkshopStore = defineStore('workshop', () => {
     return activeLessonKey.value ? lessonPlans[activeLessonKey.value] : null
   })
   const isLessonActive = computed(() => {
-    return !!activeLesson
+    return !!activeLesson.value
   })
 
   return {
@@ -68,5 +69,6 @@ export const useWorkshopStore = defineStore('workshop', () => {
     cacheLessons,
     cacheLesson,
     activateLesson,
+    deactivateLesson,
   }
 })

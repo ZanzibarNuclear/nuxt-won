@@ -4,7 +4,7 @@
     <UButton
       label="Back to lesson overview"
       icon="i-mdi-arrow-left-top"
-      :to="`/workshop/course-${courseId}/lessons`"
+      :to="`/workshop/course-${courseKey}/lessons`"
     />
 
     <div>Course: {{ activeCourse.title }}</div>
@@ -45,16 +45,11 @@ import { loadContentPartsByLessonId } from '~/db/ContentPartModel'
 import { type ContentPart, LessonContentEnum } from '~/types/won-types'
 
 const route = useRoute()
-const { id: courseId, lessonId } = route.params
-const activeCourse = {
-  id: courseId,
-  title: 'My Wonderful Course',
-}
-const activeLesson = {
-  id: lessonId,
-  title: 'My Crafty Lesson',
-  courseId: courseId,
-}
+const { courseKey, lessonKey } = route.params
+
+const workshop = useWorkshopStore()
+
+const { activeCourse, activeLesson } = workshop
 
 type ContentPartMap = { [k: string]: ContentPart }
 const contents: ContentPartMap = reactive({})
@@ -74,7 +69,7 @@ const cacheContentPart = (part: ContentPart) => {
 
 const { data: parts, error } = await useAsyncData(
   `lesson-${lessonId}-contents`,
-  () => loadContentPartsByLessonId(parseInt(lessonId))
+  () => loadContentParts(lessonKey)
 )
 parts.value.forEach((part) => cacheContentPart(part))
 </script>

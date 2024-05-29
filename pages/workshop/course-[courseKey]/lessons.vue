@@ -6,7 +6,7 @@
       icon="i-mdi-arrow-left-top"
       to="/workshop/courses"
     />
-    <div v-if="!isActiveLesson">
+    <div v-if="!workshop.isActiveLesson">
       <h2>Lessons in this course</h2>
       <ol>
         <li
@@ -32,7 +32,7 @@
         <div v-if="uiState.addLesson">
           <h3>Add a Lesson</h3>
           <LessonPlanForm
-            :course-id="courseId"
+            :course-id="workshop.activateCourse.id"
             @save-lesson-plan="handleCreateLesson"
             @cancel="handleCancelCreateLesson"
           />
@@ -40,7 +40,7 @@
       </div>
     </div>
   </div>
-  <div v-if="isActiveLesson">
+  <div v-if="workshop.isActiveLesson">
     <h2>Make this the best lesson ever!!</h2>
     <SimpleToolbar>
       <UButton
@@ -51,7 +51,7 @@
       <UButton
         @click="
           navigateTo(
-            `/workshop/course-${workshop.activeCourse?.publicKey}/lesson-${lessonToEdit?.publicKey}`
+            `/workshop/course-${workshop.activeCourse?.publicKey}/lesson-${workshop.activeLesson?.publicKey}`
           )
         "
         label="Work on lesson content"
@@ -60,7 +60,7 @@
       <UButton
         @click="
           navigateTo(
-            `/workshop/course-${workshop.activeCourse?.publicKey}/preview-${lessonToEdit?.publicKey}`
+            `/workshop/course-${workshop.activeCourse?.publicKey}/preview-${workshop.activeLesson?.publicKey}`
           )
         "
         label="Preview lesson"
@@ -69,12 +69,12 @@
       <UButton @click="cancelActive" label="Put this away" class="mx-1" />
     </SimpleToolbar>
     <div v-if="!uiState.editLesson">
-      <div>Public Key: {{ lessonToEdit?.publicKey }}</div>
-      <h3>{{ lessonToEdit?.title }}</h3>
-      <div v-if="lessonToEdit?.coverArt">
+      <div>Public Key: {{ workshop.activeLesson?.publicKey }}</div>
+      <h3>{{ workshop.activeLesson?.title }}</h3>
+      <div v-if="workshop.activeLesson?.coverArt">
         <NuxtImg
-          :src="lessonToEdit.coverArt"
-          :alt="lessonToEdit.title"
+          :src="workshop.activeLesson.coverArt"
+          :alt="workshop.activeLesson.title"
           width="300px"
         />
       </div>
@@ -113,13 +113,11 @@ const uiState = reactive({
 })
 
 const courseKey = route.params.courseKey
-const isActiveLesson = computed(() => !!workshop.activeLesson)
-const lessonToEdit = computed(() => workshop.activeLesson)
 
 const onActivateLesson = (publicKey) => {
   workshop.activateLesson(publicKey)
 }
-const cancelActive = () => workshop.closeLessonEdit()
+const cancelActive = () => workshop.deactivateLesson()
 
 const courseTitle = computed(() =>
   workshop.isCourseActive ? workshop.activeCourse.title : 'Loading...'
