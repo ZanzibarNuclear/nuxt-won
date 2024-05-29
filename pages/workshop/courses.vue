@@ -94,13 +94,13 @@ const uiState = reactive({
 })
 
 const isActiveCourse = computed(() => !!workshop.activeCourse)
-const cancelActive = () => workshop.closeCourseEdit()
+const cancelActive = () => workshop.deactivateCourse()
 const courseToEdit = computed(() => workshop.activeCourse)
 const onActivateCourse = async (id) => {
   const course = await loadCourseById(id)
   if (course) {
     workshop.cacheCourse(course)
-    workshop.editCourse(id)
+    workshop.activateCourse(id)
   }
 }
 

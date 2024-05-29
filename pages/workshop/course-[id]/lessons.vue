@@ -11,7 +11,7 @@
       <ol>
         <li
           v-for="lesson in workshop.lessonList"
-          @click="onActivateLesson(lesson.id)"
+          @click="onActivateLesson(lesson.publicKey)"
         >
           {{ lesson.title }}
         </li>
@@ -116,9 +116,9 @@ const courseId = computed(() => parseInt(route.params.id))
 const isActiveLesson = computed(() => !!workshop.activeLesson)
 const cancelActive = () => workshop.closeLessonEdit()
 const lessonToEdit = computed(() => workshop.activeLesson)
-const onActivateLesson = (id) => {
+const onActivateLesson = (publicKey) => {
   // TODO: any need to load lesson again? maybe check if already cached
-  workshop.editLesson(id)
+  workshop.activateLesson(publicKey)
 }
 
 const courseTitle = computed(() =>
@@ -135,9 +135,11 @@ const { data: courseData, error } = await useAsyncData(
     return { course, lessonPlans }
   }
 )
-workshop.cacheCourse(courseData.value?.course)
-workshop.editCourse(course.id)
-workshop.cacheLessons(courseData.value?.lessonPlans)
+const course = courseData.value
+const lessonPlans = courseData.value
+workshop.cacheCourse(course)
+workshop.activateCourse(course.id)
+workshop.cacheLessons(lessonPlans)
 
 const handleCreateLesson = async (details) => {
   console.log('add new lesson to course', details)
