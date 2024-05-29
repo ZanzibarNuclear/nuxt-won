@@ -98,9 +98,9 @@
 </template>
 
 <script setup lang="ts">
-import { loadCourseById } from '~/db/CourseModel'
+import { loadCourse } from '~/db/CourseModel'
 import {
-  loadLessonPlansByCourseId,
+  loadLessonPlans,
   createLessonPlan,
   saveLessonPlan,
 } from '~/db/LessonPlanModel'
@@ -112,7 +112,7 @@ const uiState = reactive({
   editLesson: false,
 })
 
-const courseId = computed(() => parseInt(route.params.id))
+const courseKey = route.params.courseKey
 const isActiveLesson = computed(() => !!workshop.activeLesson)
 const cancelActive = () => workshop.closeLessonEdit()
 const lessonToEdit = computed(() => workshop.activeLesson)
@@ -126,11 +126,11 @@ const courseTitle = computed(() =>
 )
 
 const { data: courseData, error } = await useAsyncData(
-  `course-${courseId}`,
+  `course-${courseKey}`,
   async () => {
     const [course, lessonPlans] = await Promise.all([
-      loadCourseById(courseId.value),
-      loadLessonPlansByCourseId(courseId.value),
+      loadCourse(courseKey),
+      loadLessonPlans(courseKey),
     ])
     return { course, lessonPlans }
   }

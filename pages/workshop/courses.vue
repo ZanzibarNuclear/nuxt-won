@@ -4,7 +4,7 @@
     <ul>
       <li
         v-for="course in workshop.courseList"
-        @click="onActivateCourse(course.id)"
+        @click="onActivateCourse(course.publicKey)"
       >
         {{ course.title }} - ({{ course.publicKey }})
       </li>
@@ -82,7 +82,7 @@
 <script setup>
 import {
   loadCourses,
-  loadCourseById,
+  loadCourse,
   createCourse,
   saveCourse,
 } from '~/db/CourseModel'
@@ -96,8 +96,8 @@ const uiState = reactive({
 const isActiveCourse = computed(() => !!workshop.activeCourse)
 const cancelActive = () => workshop.deactivateCourse()
 const courseToEdit = computed(() => workshop.activeCourse)
-const onActivateCourse = async (id) => {
-  const course = await loadCourseById(id)
+const onActivateCourse = async (key) => {
+  const course = await loadCourse(key)
   if (course) {
     workshop.cacheCourse(course)
     workshop.activateCourse(id)

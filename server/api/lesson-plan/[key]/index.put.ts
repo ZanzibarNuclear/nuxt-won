@@ -2,16 +2,15 @@ import { serverSupabaseClient } from '#supabase/server'
 
 export default defineEventHandler(async (event) => {
   const lessonKey = getRouterParam(event, 'key')
+  const body = await readBody(event)
+  console.log('saving lesson plan details', lessonKey, body)
 
   const client = await serverSupabaseClient(event)
-  const { data: lesson_plans } = await client
+  const { data, error } = await client
     .from('lesson_plans')
-    .select()
+    .update(body)
     .eq('public_key', lessonKey)
+    .select()
 
-  if (lesson_plans && lesson_plans.length > 0) {
-    return lesson_plans[0]
-  } else {
-    throw createError({ status: 404, statusText: 'Not found' })
-  }
+  return data
 })
