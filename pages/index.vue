@@ -1,9 +1,8 @@
 <template>
   <UContainer>
     <h1 class="text-center">Explore the world of nuclear energy.</h1>
-    <div class="flex flex-wrap">
+    <div class="feature-layout">
       <feature-tile
-        class="w-72 mx-4 my-4"
         v-for="feature in features"
         :id="feature.name"
         :feature="feature"
@@ -53,6 +52,11 @@ const features = [
 </script>
 
 <style>
+.feature-layout {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-gap: 20px;
+}
 .rich-text :deep(p) {
   margin: 0.75rem 0;
 }

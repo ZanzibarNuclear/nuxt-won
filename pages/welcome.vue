@@ -57,31 +57,22 @@ const serviceInfo = computed(() => {
   }
 })
 
-onMounted(async () => {
-  // register whether request is to accept or decline invitation
-  // in any case, even for unknown actions, we want to show this marketing page
+referralCode.value = url.searchParams.get('referral_code')
+action.value = url.searchParams.get('action')
 
-  referralCode.value = url.searchParams.get('referral_code')
-  action.value = url.searchParams.get('action')
-
-  if (action.value !== 'accept' && action.value !== 'decline') {
-    console.warn('unknown action - do nothing')
-    return
-  }
-
-  if (!referralCode.value) {
-    console.warn('no referral code found')
-    return
-  }
-
-  const invitation = await $fetch(`/api/invitations/${action.value}`, {
+if (action.value !== 'accept' && action.value !== 'decline') {
+  console.warn('unknown action - do nothing')
+} else if (!referralCode.value) {
+  console.warn('no referral code found')
+} else {
+  const invitation = await useFetch(`/api/invitations/${action.value}`, {
     method: 'POST',
     body: {
       referralCode: referralCode.value,
     },
   })
   target.value = JSON.parse(invitation.target)
-})
+}
 </script>
 
 <style scoped></style>
