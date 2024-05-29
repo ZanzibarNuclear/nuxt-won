@@ -34,7 +34,7 @@ export async function loadCourses() {
 }
 
 export async function loadCourse(key) {
-  const result = await $fetch(`/api/course/${key}`)
+  const result = await $fetch(`/api/courses/${key}`)
   return result ? mapToObject(result) : null
 }
 

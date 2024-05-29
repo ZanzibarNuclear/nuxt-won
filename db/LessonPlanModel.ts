@@ -27,7 +27,7 @@ const mapToTable = (lessonPlan: LessonPlan) => {
 }
 
 export async function loadLessonPlans(courseKey: string) {
-  const results = await $fetch(`/api/course/${courseKey}/lesson-plans`)
+  const results = await $fetch(`/api/courses/${courseKey}/lesson-plans`)
   if (results) {
     return results.map((row) => mapToObject(row))
   } else {
@@ -36,7 +36,7 @@ export async function loadLessonPlans(courseKey: string) {
 }
 
 export async function loadLessonPlan(lessonKey: string) {
-  const result = await $fetch(`/api/lesson-plan/${lessonKey}`)
+  const result = await $fetch(`/api/lesson-plans/${lessonKey}`)
   return result ? mapToObject(result) : null
 }
 
