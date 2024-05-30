@@ -1,23 +1,17 @@
 <template>
   <div>
-    <h1>Curriculum Workshop: {{ courseTitle }} &ndash; Lessons</h1>
-    <UButton
-      label="Back to course"
-      icon="i-mdi-arrow-left-top"
-      to="/workshop/courses"
-    />
+    <h1>
+      <UButton
+        icon="i-mdi-arrow-left-top"
+        class="mr-2"
+        to="/workshop/courses"
+      />Course:
+      {{ courseTitle }}
+    </h1>
+    <h2>Lesson Builder</h2>
     <div v-if="!workshop.isLessonActive">
-      <h2>Lessons in this course</h2>
-      <ol>
-        <li
-          v-for="lesson in workshop.lessonList"
-          @click="onActivateLesson(lesson.publicKey)"
-        >
-          {{ lesson.title }}
-        </li>
-      </ol>
-      <div>
-        <SimpleToolbar v-if="!uiState.addLesson">
+      <div v-if="!uiState.addLesson">
+        <SimpleToolbar class="my-6">
           <UButton
             label="Add Lesson"
             @click="() => (uiState.addLesson = true)"
@@ -29,6 +23,20 @@
             class="mx-1"
           />
         </SimpleToolbar>
+        <h3>Lessons in this course</h3>
+        <ol>
+          <li v-for="lesson in workshop.lessonList" class="my-6 px-4">
+            <LessonListItem :lesson-plan="lesson" />
+          </li>
+          <!-- <li
+            v-for="lesson in workshop.lessonList"
+            @click="onActivateLesson(lesson.publicKey)"
+          >
+            {{ lesson.title }}
+          </li> -->
+        </ol>
+      </div>
+      <div>
         <div v-if="uiState.addLesson">
           <h3>Add a Lesson</h3>
           <LessonPlanForm
@@ -42,7 +50,7 @@
   </div>
   <div v-if="workshop.isLessonActive">
     <h2>Make this the best lesson ever!!</h2>
-    <SimpleToolbar>
+    <SimpleToolbar class="my-6">
       <UButton
         @click="() => (uiState.editLesson = true)"
         label="Edit lesson"
@@ -166,14 +174,6 @@ const handleSaveLesson = async (details) => {
 </script>
 
 <style scoped>
-ul {
-  list-style: disc;
-  list-style-position: inside;
-}
-ol {
-  list-style-type: decimal;
-  list-style-position: inside;
-}
 .rich-text :deep(p) {
   margin: 0.75rem 0;
 }

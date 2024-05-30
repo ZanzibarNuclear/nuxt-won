@@ -41,6 +41,7 @@ const contentTypeOptions = [
 ]
 const contentType: Ref<LessonContentEnum> = ref(LessonContentEnum.html)
 const workshop = useWorkshopStore()
+workshop.activateLesson(lessonKey)
 
 type ContentPartMap = { [k: string]: ContentPart }
 const contents: ContentPartMap = reactive({})
@@ -72,8 +73,8 @@ const nextCount = computed(() => {
 })
 
 const { data: parts, error } = await useAsyncData(
-  `lesson-${lessonId}-content`,
-  () => loadContentPartsByLessonId(parseInt(lessonId))
+  `lesson-${lessonKey}-content`,
+  () => loadContentParts(lessonKey)
 )
 parts.value.forEach((part) => cacheContentPart(part))
 
@@ -127,7 +128,7 @@ const addContent = async () => {
     }
   }
   const input = {
-    lessonId: activeLesson.id,
+    lessonId: workshop.activeLesson.id,
     type: contentType.value,
     sequence: nextCount.value,
     details,
