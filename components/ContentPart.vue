@@ -1,6 +1,7 @@
 <template>
   <div class="field">
     <UButton icon="i-ph-pencil" @click="setEdit" />
+    <UButton icon="i-ph-trash" @click="handleDelete" />
     <ContentPartHtml
       v-if="part.type === LessonContentEnum.html"
       :fields="part.details"
@@ -45,11 +46,11 @@
 </template>
 
 <script setup lang="ts">
-import { saveContentPart } from '~/db/ContentPartModel'
+import { saveContentPart, deleteContentPart } from '~/db/ContentPartModel'
 import { LessonContentEnum } from '~/types/won-types'
 
 const props = defineProps(['part'])
-const emit = defineEmits(['cacheUpdatedPart'])
+const emit = defineEmits(['cacheUpdatedPart', 'removePart'])
 const edit = ref(false)
 const preview = ref(false)
 
@@ -58,6 +59,10 @@ const setReadOnly = () => {
 }
 const setEdit = () => {
   edit.value = true
+}
+const handleDelete = () => {
+  deleteContentPart(props.part.publicKey)
+  emit('removePart', props.part.publicKey)
 }
 const handleChanges = async (details) => {
   console.log('commit changes', details)

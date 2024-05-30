@@ -18,7 +18,11 @@
       />
     </div>
     <div v-for="part in sortedContentParts">
-      <ContentPart :part="part" @cache-updated-part="handleCacheUpdatedPart" />
+      <ContentPart
+        :part="part"
+        @cache-updated-part="handleCacheUpdatedPart"
+        @remove-part="handleRemovePart"
+      />
     </div>
   </div>
 </template>
@@ -79,6 +83,8 @@ const { data: parts, error } = await useAsyncData(
 parts.value.forEach((part) => cacheContentPart(part))
 
 const handleCacheUpdatedPart = (update: ContentPart) => cacheContentPart(update)
+
+const handleRemovePart = (publicKey: string) => delete contents[publicKey]
 
 const addContent = async () => {
   let details: ContentDetails

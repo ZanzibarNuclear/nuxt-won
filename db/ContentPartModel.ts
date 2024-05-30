@@ -64,14 +64,8 @@ export async function saveContentPart(contentPart: ContentPart) {
   }
 }
 
-export async function deleteContentPart(contentPart: ContentPart) {
-  const input = mapToTable(contentPart)
-  const results = await $fetch(`/api/content-parts/${input.public_key}`, {
+export async function deleteContentPart(publicKey: string) {
+  const results = await $fetch(`/api/content-parts/${publicKey}`, {
     method: 'DELETE',
   })
-  if (results) {
-    return mapToObject(results[0])
-  } else {
-    return null
-  }
 }
