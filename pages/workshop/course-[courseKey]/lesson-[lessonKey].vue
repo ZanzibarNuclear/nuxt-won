@@ -23,7 +23,7 @@
           label="Change order"
           size="sm"
           icon="i-ph-arrows-out-line-vertical"
-          @click="() => (editSort = true)"
+          @click="openToChangeOrder"
           class="mx-5"
         />
       </div>
@@ -43,18 +43,18 @@
         @click="handleSaveSortOrder"
         class="my-4"
       />
-      <div v-for="(part, index) in sortedContentParts">
+      <div v-for="(part, index) in partsToReorder">
         <UButton
           v-if="index > 0"
           icon="i-ph-arrow-up"
-          @click="up(part.publicKey)"
+          @click="up(index)"
           class="mx-2"
         />
         <UButton v-else icon="i-ph-tree-palm" class="mx-2" />
         <UButton
-          v-if="index < sortedContentParts.length - 1"
+          v-if="index < partsToReorder.length - 1"
           icon="i-ph-arrow-down"
-          @click="down(part.publicKey)"
+          @click="down(index)"
           class="mx-2"
         />
         <UButton v-else icon="i-ph-tree-palm" class="mx-2" />
@@ -89,6 +89,13 @@ const contents: ContentPartMap = reactive({})
 const notIndexed: Ref<ContentPart[]> = ref([]) // if anything ends up here, must be a mistake
 
 const editSort = ref(false)
+const partsToReorder = ref()
+const openToChangeOrder = () => {
+  partsToReorder.value = Object.values(contents).sort(
+    (partA, partB) => partA.sequence - partB.sequence
+  )
+  editSort.value = true
+}
 
 const sortedContentParts = computed(() => {
   const sorted = Object.values(contents).sort(
@@ -126,17 +133,17 @@ const handleCacheUpdatedPart = (update: ContentPart) => cacheContentPart(update)
 const handleRemovePart = (publicKey: string) => delete contents[publicKey]
 
 const swapPositions = (indexFrom, indexTo) => {
-  const parts = [...sortedContentParts.value]
+  const parts = partsToReorder.value
   const toSequence = parts[indexTo].sequence
   parts[indexTo].sequence = parts[indexFrom].sequence
   parts[indexFrom].sequence = toSequence
 }
 const up = (index) => {
-  console.log('move part earlier in sequence - lower number')
+  console.log('move part earlier in sequence - lower number', index)
   swapPositions(index, index - 1)
 }
 const down = (index) => {
-  console.log('move part later in sequence - higher number')
+  console.log('move part later in sequence - higher number', index)
   swapPositions(index, index + 1)
 }
 
