@@ -64,6 +64,15 @@ export async function saveContentPart(contentPart: ContentPart) {
   }
 }
 
+export async function changeSequence(parts: ContentPart[]) {
+  const input = parts.map((part) => ({ id: part.id, sequence: part.sequence }))
+  const results = await $fetch(`/api/content-parts`, {
+    method: 'PUT',
+    body: input,
+  })
+  return results ? results : null
+}
+
 export async function deleteContentPart(publicKey: string) {
   const results = await $fetch(`/api/content-parts/${publicKey}`, {
     method: 'DELETE',
