@@ -41,7 +41,7 @@
 </template>
 
 <script setup lang="ts">
-import { loadContentPartsByLessonId } from '~/db/ContentPartModel'
+import { loadContentParts } from '~/db/ContentPartModel'
 import { type ContentPart, LessonContentEnum } from '~/types/won-types'
 
 const route = useRoute()
@@ -68,7 +68,7 @@ const cacheContentPart = (part: ContentPart) => {
 }
 
 const { data: parts, error } = await useAsyncData(
-  `lesson-${lessonId}-contents`,
+  `lesson-${lessonKey}-contents`,
   () => loadContentParts(lessonKey)
 )
 parts.value.forEach((part) => cacheContentPart(part))

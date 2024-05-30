@@ -6,7 +6,7 @@
       icon="i-mdi-arrow-left-top"
       to="/workshop/courses"
     />
-    <div v-if="!workshop.isActiveLesson">
+    <div v-if="!workshop.isLessonActive">
       <h2>Lessons in this course</h2>
       <ol>
         <li
@@ -32,7 +32,7 @@
         <div v-if="uiState.addLesson">
           <h3>Add a Lesson</h3>
           <LessonPlanForm
-            :course-id="workshop.activateCourse.id"
+            :course-id="workshop.activeCourse.id"
             @save-lesson-plan="handleCreateLesson"
             @cancel="handleCancelCreateLesson"
           />
@@ -40,7 +40,7 @@
       </div>
     </div>
   </div>
-  <div v-if="workshop.isActiveLesson">
+  <div v-if="workshop.isLessonActive">
     <h2>Make this the best lesson ever!!</h2>
     <SimpleToolbar>
       <UButton
@@ -80,16 +80,16 @@
       </div>
       <UCard class="rich-text">
         <template #header
-          >Description: <span v-html="lessonToEdit?.description"
+          >Description: <span v-html="workshop.activeLesson?.description"
         /></template>
         Objective:
-        <div><span v-html="lessonToEdit?.objective" /></div>
+        <div><span v-html="workshop.activeLesson?.objective" /></div>
       </UCard>
     </div>
     <div v-else>
       <LessonPlanForm
-        :course-id="courseId"
-        :lesson-plan="lessonToEdit"
+        :course-id="workshop.activeCourse.id"
+        :lesson-plan="workshop.activeLesson"
         @save-lesson-plan="handleSaveLesson"
         @cancel="handleCancelUpdateLesson"
       />
@@ -116,9 +116,12 @@ const courseKey = route.params.courseKey
 
 const onActivateLesson = (publicKey) => {
   workshop.activateLesson(publicKey)
+  uiState.editLesson = true
 }
-const cancelActive = () => workshop.deactivateLesson()
-
+const cancelActive = () => {
+  workshop.deactivateLesson()
+  uiState.editLesson = false
+}
 const courseTitle = computed(() =>
   workshop.isCourseActive ? workshop.activeCourse.title : 'Loading...'
 )
@@ -130,11 +133,13 @@ const { data: courseData, error } = await useAsyncData(
       loadCourse(courseKey),
       loadLessonPlans(courseKey),
     ])
+    console.log('returning course and lesson plans')
+
     return { course, lessonPlans }
   }
 )
-const course = courseData.value
-const lessonPlans = courseData.value
+console.log('using course and lesson plans', courseData.value)
+const { course, lessonPlans } = courseData.value
 workshop.cacheCourse(course)
 workshop.activateCourse(course.publicKey)
 workshop.cacheLessons(lessonPlans)
