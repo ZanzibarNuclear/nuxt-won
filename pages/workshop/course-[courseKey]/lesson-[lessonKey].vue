@@ -1,13 +1,15 @@
 <template>
   <div>
-    <h1>Curriculum Workshop: Lesson Builder</h1>
-    <UButton
-      label="Back to lesson overview"
-      icon="i-mdi-arrow-left-top"
-      :to="`/workshop/course-${workshop.activeCourse.publicKey}/lessons`"
-    />
-    <div>Course: {{ workshop.activeCourse.title }}</div>
-    <h2>{{ workshop.activeLesson.title }}</h2>
+    <h1>
+      <UButton
+        icon="i-mdi-arrow-left-top"
+        class="mr-2"
+        :to="`/workshop/course-${courseKey}/lessons`"
+      />
+      Lesson:
+      {{ workshop.activeLesson.title }}
+    </h1>
+    <h2>Content Assembly</h2>
     <div class="flex">
       <USelect :options="contentTypeOptions" v-model="contentType" />
       <UButton

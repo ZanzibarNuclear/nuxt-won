@@ -49,7 +49,6 @@
     </div>
   </div>
   <div v-if="workshop.isLessonActive">
-    <h2>Make this the best lesson ever!!</h2>
     <SimpleToolbar class="my-6">
       <UButton
         @click="() => (uiState.editLesson = true)"
