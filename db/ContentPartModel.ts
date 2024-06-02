@@ -66,6 +66,8 @@ export async function saveContentPart(contentPart: ContentPart) {
 
 export async function changeSequence(parts: ContentPart[]) {
   const input = parts.map((part) => ({ id: part.id, sequence: part.sequence }))
+  console.log('sending', input)
+
   const results = await $fetch(`/api/content-parts`, {
     method: 'PUT',
     body: input,

@@ -7,7 +7,7 @@
         :to="`/workshop/course-${courseKey}/lessons`"
       />
       Lesson:
-      {{ workshop.activeLesson.title }}
+      {{ workshop.activeLesson?.title || 'Not loaded' }}
     </h1>
     <h2>Content Assembly</h2>
     <div v-if="!editSort">
@@ -47,7 +47,11 @@
 </template>
 
 <script setup lang="ts">
-import { loadContentParts, createContentPart } from '~/db/ContentPartModel'
+import {
+  loadContentParts,
+  createContentPart,
+  changeSequence,
+} from '~/db/ContentPartModel'
 import {
   type ContentPart,
   type ContentDetails,
@@ -114,8 +118,9 @@ const handleCacheUpdatedPart = (update: ContentPart) => cacheContentPart(update)
 
 const handleRemovePart = (publicKey: string) => delete contents[publicKey]
 
-const handleSaveSortOrder = () => {
-  console.log('save sort order: not implemented')
+const handleSaveSortOrder = (reorderedItems) => {
+  const results = changeSequence(reorderedItems)
+  console.log(results)
 }
 
 const addContent = async () => {
