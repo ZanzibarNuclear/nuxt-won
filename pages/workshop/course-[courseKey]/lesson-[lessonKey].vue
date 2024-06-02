@@ -36,30 +36,12 @@
       </div>
     </div>
     <div v-if="editSort">
-      <UButton
-        label="Save sort order"
-        size="sm"
-        icon="i-ph-cloud-arrow-up"
-        @click="handleSaveSortOrder"
-        class="my-4"
-      />
-      <div v-for="(part, index) in partsToReorder">
-        <UButton
-          v-if="index > 0"
-          icon="i-ph-arrow-up"
-          @click="up(index)"
-          class="mx-2"
+      <UModal v-model="editSort">
+        <Sequencerator
+          :items-to-sequence="partsToReorder"
+          @save-sequence="handleSaveSortOrder"
         />
-        <UButton v-else icon="i-ph-tree-palm" class="mx-2" />
-        <UButton
-          v-if="index < partsToReorder.length - 1"
-          icon="i-ph-arrow-down"
-          @click="down(index)"
-          class="mx-2"
-        />
-        <UButton v-else icon="i-ph-tree-palm" class="mx-2" />
-        {{ part.publicKey }} {{ part.sequence }}
-      </div>
+      </UModal>
     </div>
   </div>
 </template>
@@ -131,21 +113,6 @@ parts.value.forEach((part) => cacheContentPart(part))
 const handleCacheUpdatedPart = (update: ContentPart) => cacheContentPart(update)
 
 const handleRemovePart = (publicKey: string) => delete contents[publicKey]
-
-const swapPositions = (indexFrom, indexTo) => {
-  const parts = partsToReorder.value
-  const toSequence = parts[indexTo].sequence
-  parts[indexTo].sequence = parts[indexFrom].sequence
-  parts[indexFrom].sequence = toSequence
-}
-const up = (index) => {
-  console.log('move part earlier in sequence - lower number', index)
-  swapPositions(index, index - 1)
-}
-const down = (index) => {
-  console.log('move part later in sequence - higher number', index)
-  swapPositions(index, index + 1)
-}
 
 const handleSaveSortOrder = () => {
   console.log('save sort order: not implemented')
