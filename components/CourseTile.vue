@@ -2,12 +2,12 @@
   <UCard class="card">
     <template #header>
       <div class="flex">
-        <img :src="coverArt" class="cover-art" />
+        <NuxtImg :src="coverArt" class="cover-art" />
       </div>
     </template>
     <div>
       <div class="text-2xl mb-4">{{ title }}</div>
-      <div class="my-2">
+      <div class="my-2 rich-text">
         <span v-html="description" />
       </div>
     </div>
@@ -46,5 +46,14 @@ const goTo = () => {
 .card img {
   max-height: 150px;
   margin: 0 auto;
+}
+.rich-text :deep(p) {
+  margin: 0.75rem 0;
+}
+.rich-text :deep(ul) {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  list-style: disc;
+  list-style-position: inside;
 }
 </style>

@@ -1,15 +1,28 @@
+<template>
+  <div v-if="allTopicsList.length > 0">
+    <UFormGroup label="Pick one of these topics">
+      <USelect
+        v-model="chosenTopic"
+        :options="allTopicsList"
+        option-attribute="topic"
+        value-attribute="key"
+      />
+    </UFormGroup>
+    <UButton class="mt-2" @click="doChooseTopic" :disabled="!chosenTopic"
+      >Open</UButton
+    >
+  </div>
+</template>
+
 <script setup lang="ts">
 const wsy = useWsyStore()
 const allThreads = ref([])
 const chosenTopic = ref('')
 
 const { data: threadsData } = await useFetch('/api/threads')
-
-onMounted(async () => {
-  if (threadsData.value?.threads) {
-    allThreads.value = threadsData.value.threads
-  }
-})
+if (threadsData.value?.threads) {
+  allThreads.value = threadsData.value.threads
+}
 
 const allTopicsList = computed(() => {
   const topics = allThreads.value
@@ -35,19 +48,3 @@ const doChooseTopic = async () => {
   wsy.loadWriters(writers)
 }
 </script>
-
-<template>
-  <div v-if="allTopicsList.length > 0">
-    <UFormGroup label="Pick one of these topics">
-      <USelect
-        v-model="chosenTopic"
-        :options="allTopicsList"
-        option-attribute="topic"
-        value-attribute="key"
-      />
-    </UFormGroup>
-    <UButton class="mt-2" @click="doChooseTopic" :disabled="!chosenTopic"
-      >Open</UButton
-    >
-  </div>
-</template>

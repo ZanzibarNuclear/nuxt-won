@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="385.77951"
+   height="394.66928"
+   viewBox="0 0 385.77951 394.66928"
+   version="1.1"
+   id="svg1"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1">
+    <linearGradient
+       id="linearGradient27">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop27" />
+      <stop
+         style="stop-color:#000000;stop-opacity:0;"
+         offset="1"
+         id="stop28" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient16">
+      <stop
+         style="stop-color:#ff00d2;stop-opacity:1;"
+         offset="0"
+         id="stop15" />
+      <stop
+         style="stop-color:#ff00fe;stop-opacity:0;"
+         offset="1"
+         id="stop16" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient14">
+      <stop
+         style="stop-color:#ff0069;stop-opacity:1;"
+         offset="0"
+         id="stop13" />
+      <stop
+         style="stop-color:#ff00fe;stop-opacity:0;"
+         offset="1"
+         id="stop14" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient4">
+      <stop
+         style="stop-color:#000fff;stop-opacity:1;"
+         offset="0"
+         id="stop4" />
+      <stop
+         style="stop-color:#00a3ff;stop-opacity:0;"
+         offset="1"
+         id="stop5" />
+    </linearGradient>
+    <radialGradient
+       xlink:href="#linearGradient14"
+       id="radialGradient39"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.12688161,0,0,0.12688161,221.63983,47.02689)"
+       cx="590"
+       cy="184.99997"
+       fx="590"
+       fy="184.99997"
+       r="96.779541" />
+    <radialGradient
+       xlink:href="#linearGradient16"
+       id="radialGradient40"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.12688161,0,0,0.12688161,221.63983,47.02689)"
+       cx="590"
+       cy="184.99997"
+       fx="590"
+       fy="184.99997"
+       r="96.779541" />
+    <radialGradient
+       xlink:href="#linearGradient4"
+       id="radialGradient49"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.47819563,0,0,0.47819563,11.36458,169.97869)"
+       cx="590"
+       cy="184.99997"
+       fx="590"
+       fy="184.99997"
+       r="96.779541" />
+    <radialGradient
+       xlink:href="#linearGradient4"
+       id="radialGradient50"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.47819563,0,0,0.47819563,11.36458,169.97869)"
+       cx="590"
+       cy="184.99997"
+       fx="590"
+       fy="184.99997"
+       r="96.779541" />
+  </defs>
+  <g
+     id="layer1"
+     transform="translate(-103.11024,-58.220448)">
+    <path
+       style="fill:url(#radialGradient49);fill-opacity:1;fill-rule:evenodd;stroke:url(#radialGradient50);stroke-width:3.61471;stroke-dasharray:none;stroke-opacity:1"
+       id="path33"
+       d="m 337.97219,258.44495 a 44.472195,44.472195 0 0 1 -44.34586,44.47201 44.472195,44.472195 0 0 1 -44.59781,-44.21935 44.472195,44.472195 0 0 1 44.09248,-44.72324 44.472195,44.472195 0 0 1 44.84832,43.96525" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#3f412a;stroke-width:5.44502;stroke-dasharray:none;stroke-opacity:0.123832"
+       id="path35"
+       d="M 486.16724,260 A 190.16724,190.16724 0 0 1 296.29968,450.167 190.16724,190.16724 0 0 1 105.83371,260.59936 190.16724,190.16724 0 0 1 295.10096,69.834889 190.16724,190.16724 0 0 1 486.16346,258.80129" />
+    <path
+       style="fill:url(#radialGradient39);fill-opacity:1;fill-rule:evenodd;stroke:url(#radialGradient40);stroke-width:0.959106;stroke-dasharray:none;stroke-opacity:1"
+       id="path39"
+       d="M 308.29999,70.5 A 11.79999,11.79999 0 0 1 296.53352,82.299942 11.79999,11.79999 0 0 1 284.7002,70.567041 11.79999,11.79999 0 0 1 296.39944,58.700439 11.79999,11.79999 0 0 1 308.29923,70.36592" />
+  </g>
+</svg>

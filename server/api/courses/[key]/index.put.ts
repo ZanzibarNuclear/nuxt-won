@@ -1,21 +1,18 @@
 import { serverSupabaseClient } from '#supabase/server'
 
 export default defineEventHandler(async (event) => {
-  console.log('saving course details')
-  const client = await serverSupabaseClient(event)
+  const courseKey = getRouterParam(event, 'key')
   const body = await readBody(event)
+  console.log('course PUT', courseKey, body)
 
-  console.log('saving', body)
+  const client = await serverSupabaseClient(event)
   const { data, error } = await client
     .from('courses')
     .update(body)
-    .eq('id', body.id)
+    .eq('public_key', courseKey)
     .select()
   if (error) {
-    // TODO: handle errors
     console.error(error)
   }
-  // TODO: is data single or array?
-  console.log('saved as', data)
   return data
 })

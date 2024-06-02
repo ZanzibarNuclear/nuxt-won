@@ -33,13 +33,8 @@ export async function loadCourses() {
   }
 }
 
-export async function loadCourseById(id) {
-  const result = await $fetch(`/api/courses/${id}`)
-  return result ? mapToObject(result) : null
-}
-
 export async function loadCourse(key) {
-  const result = await $fetch(`/api/course/${key}`)
+  const result = await $fetch(`/api/courses/${key}`)
   return result ? mapToObject(result) : null
 }
 
@@ -58,10 +53,21 @@ export async function createCourse(course: Course) {
   }
 }
 
+export async function deleteCoourse(key) {
+  const results = await $fetch(`/api/courses/${key}`, {
+    method: 'DELETE',
+  })
+  if (results) {
+    return mapToObject(results[0])
+  } else {
+    return null
+  }
+}
+
 export async function saveCourse(course: Course) {
   console.log('saving course', course)
   const input = mapToTable(course)
-  const results = await $fetch(`/api/courses/${input.id}`, {
+  const results = await $fetch(`/api/courses/${input.public_key}`, {
     method: 'PUT',
     body: input,
   })

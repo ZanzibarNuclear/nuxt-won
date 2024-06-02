@@ -1,13 +1,10 @@
 import { serverSupabaseClient } from '#supabase/server'
 
 export default defineEventHandler(async (event) => {
-  console.log('courses GET by key')
-  console.log(event.context.params)
   const courseKey = getRouterParam(event, 'key')
-  console.log('Public key is', courseKey)
+  console.log('courses GET by key', courseKey)
 
   const client = await serverSupabaseClient(event)
-
   const { data: courses } = await client
     .from('courses')
     .select()

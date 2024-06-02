@@ -12,7 +12,9 @@
           >reply</UButton
         >
       </div>
-      <div><span v-html="formatEntry(entry.statement)" /></div>
+      <div class="rich-text">
+        <span v-html="formatEntry(entry.statement)" />
+      </div>
     </div>
   </div>
 </template>
@@ -66,5 +68,14 @@ const onReply = (id: number) => {
 .row-indent-1 {
   display: grid;
   grid-template-columns: 100px auto;
+}
+.rich-text :deep(p) {
+  margin: 0.75rem 0;
+}
+.rich-text :deep(ul) {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  list-style: disc;
+  list-style-position: inside;
 }
 </style>

@@ -22,21 +22,32 @@ export const useLearningStore = defineStore('learning', () => {
 
   const cacheLesson = (plan: LessonPlan) => {
     console.log('caching lesson plan', plan)
-
     lessonPlanIndex[plan.publicKey] = plan
   }
+  const cacheLessons = (plans: LessonPlan[]) => {
+    console.log('caching lessons')
+
+    plans.forEach((plan) => cacheLesson(plan))
+  }
+  const lessonsForActiveCourse = computed(() => Object.values(lessonPlanIndex))
+  // const lessonsForActiveCourse = computed(() => {
+  //   Object.values(lessonPlanIndex).filter(
+  //     (plan) => plan.courseId === activeCourse.value?.id
+  //   )
+  // })
   const useLesson = (lessonKey: string) => {
     activeLesson.value = lessonPlanIndex[lessonKey]
     return !!activeLesson.value
   }
 
   const cacheContents = (parts: ContentPart[]) => {
-    // TODO: associate with active lesson? or better to drop content that is not in use?
     const sorted = parts.sort((partA, partB) => partA.sequence - partB.sequence)
     contentParts.value = sorted
   }
 
   return {
+    courseIndex,
+    lessonPlanIndex,
     cacheCourse,
     courseList,
     useCourse,
@@ -44,7 +55,9 @@ export const useLearningStore = defineStore('learning', () => {
     activeLesson,
     contentParts,
     cacheLesson,
+    cacheLessons,
     useLesson,
     cacheContents,
+    lessonsForActiveCourse,
   }
 })

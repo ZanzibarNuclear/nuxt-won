@@ -2,7 +2,7 @@
   <UCard>
     <template #header>
       <div class="flex">
-        <img :src="feature.coverImage" class="w-full" />
+        <img :src="feature.coverImage" />
       </div>
     </template>
     <div>
@@ -25,16 +25,21 @@
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router'
-
 const props = defineProps(['feature'])
 const router = useRouter()
-
-// const { name, category, description, tileImage, callToAction, routeName } = props.feature
 
 const goTo = async () => {
   router.push({ name: props.feature.routeName })
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.card {
+  display: grid;
+  grid-template-rows: max-content auto 1fr;
+}
+.card img {
+  max-height: 150px;
+  margin: 0 auto;
+}
+</style>

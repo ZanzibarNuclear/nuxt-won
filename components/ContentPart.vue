@@ -1,55 +1,65 @@
 <template>
   <div class="field">
-    <UButton icon="i-ph-pencil" @click="setEdit" />
-    <ContentPartHtml
-      v-if="part.type === LessonContentEnum.html"
-      :fields="part.details"
-      :edit="edit"
-      :preview="preview"
-      @save="handleChanges"
-      @cancel="setReadOnly"
-    />
-    <ContentPartImage
-      v-if="part.type === LessonContentEnum.image"
-      :fields="part.details"
-      :edit="edit"
-      :preview="preview"
-      @save="handleChanges"
-      @cancel="setReadOnly"
-    />
-    <ContentPartFormula
-      v-if="part.type === LessonContentEnum.formula"
-      :fields="part.details"
-      :edit="edit"
-      :preview="preview"
-      @save="handleChanges"
-      @cancel="setReadOnly"
-    />
-    <ContentPartFigure
-      v-if="part.type === LessonContentEnum.figure"
-      :fields="part.details"
-      :edit="edit"
-      :preview="preview"
-      @save="handleChanges"
-      @cancel="setReadOnly"
-    />
-    <ContentPartVideo
-      v-if="part.type === LessonContentEnum.video"
-      :fields="part.details"
-      :edit="edit"
-      :preview="preview"
-      @save="handleChanges"
-      @cancel="setReadOnly"
-    />
+    <div class="mb-2">
+      <UButton icon="i-ph-pencil" @click="setEdit" class="mr-2" />
+      <UButton
+        icon="i-ph-trash"
+        @click="handleDelete"
+        class="mr-2"
+        color="amber"
+      />
+    </div>
+    <div>
+      <ContentPartHtml
+        v-if="part.type === LessonContentEnum.html"
+        :fields="part.details"
+        :edit="edit"
+        :preview="preview"
+        @save="handleChanges"
+        @cancel="setReadOnly"
+      />
+      <ContentPartImage
+        v-if="part.type === LessonContentEnum.image"
+        :fields="part.details"
+        :edit="edit"
+        :preview="preview"
+        @save="handleChanges"
+        @cancel="setReadOnly"
+      />
+      <ContentPartFormula
+        v-if="part.type === LessonContentEnum.formula"
+        :fields="part.details"
+        :edit="edit"
+        :preview="preview"
+        @save="handleChanges"
+        @cancel="setReadOnly"
+      />
+      <ContentPartFigure
+        v-if="part.type === LessonContentEnum.figure"
+        :fields="part.details"
+        :edit="edit"
+        :preview="preview"
+        @save="handleChanges"
+        @cancel="setReadOnly"
+      />
+      <ContentPartVideo
+        v-if="part.type === LessonContentEnum.video"
+        :fields="part.details"
+        :edit="edit"
+        :preview="preview"
+        @save="handleChanges"
+        @cancel="setReadOnly"
+      />
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { saveContentPart } from '~/db/ContentPartModel'
+import { saveContentPart, deleteContentPart } from '~/db/ContentPartModel'
 import { LessonContentEnum } from '~/types/won-types'
 
 const props = defineProps(['part'])
-const emit = defineEmits(['cacheUpdatedPart'])
+const emit = defineEmits(['cacheUpdatedPart', 'removePart'])
 const edit = ref(false)
 const preview = ref(false)
 
@@ -58,6 +68,10 @@ const setReadOnly = () => {
 }
 const setEdit = () => {
   edit.value = true
+}
+const handleDelete = () => {
+  deleteContentPart(props.part.publicKey)
+  emit('removePart', props.part.publicKey)
 }
 const handleChanges = async (details) => {
   console.log('commit changes', details)
@@ -89,6 +103,8 @@ const handleChanges = async (details) => {
 
 <style scoped>
 .field {
+  display: grid;
+  grid-template-columns: 100px 1fr;
   border: 1px purple dashed;
   padding: 0.5rem;
   margin: 0.5rem 0;

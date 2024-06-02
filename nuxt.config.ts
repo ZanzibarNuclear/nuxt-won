@@ -10,8 +10,9 @@ export default defineNuxtConfig({
     '@nuxt/content',
     '@pinia/nuxt',
     '@nuxtjs/supabase',
-    '@nuxt/test-utils/module',
     // 'nuxt-tiptap-editor',
+    '@nuxt/test-utils/module',
+    "@nuxt/image"
   ],
   runtimeConfig: {
     wsyInvitationsResendKey: process.env.WSY_RESEND_PROJECT_KEY,

@@ -3,70 +3,72 @@ import type { Course, LessonPlan } from '~/types/won-types'
 
 export const useWorkshopStore = defineStore('workshop', () => {
   type CourseMap = { [k: string]: Course }
-  type LessonMap = { [k: string]: LessonPlan } // TODO: think about caching by course, then lesson
+  type LessonMap = { [k: string]: LessonPlan }
 
-  const courses: Ref<CourseMap> = ref({})
-  const courseList = computed(() => Object.values(courses.value))
-  const activeCourseId = ref()
+  const courses: CourseMap = reactive({})
+  const courseList = computed(() => Object.values(courses))
+  const activeCourseKey = ref()
 
-  const addCourse = (courseToAdd: Course) => {
-    courses.value[courseToAdd.id.toString()] = courseToAdd
+  const cacheCourse = (courseToCache: Course) => {
+    courses[courseToCache.publicKey] = courseToCache
   }
-  const loadCourses = (items: Course[]) => {
-    items.forEach((course) => addCourse(course))
+  const cacheCourses = (items: Course[]) => {
+    items.forEach((course) => cacheCourse(course))
   }
-  const editCourse = (id: number) => {
-    activeCourseId.value = id.toString()
+  const activateCourse = (key: string) => {
+    console.log('activating course', key)
+    activeCourseKey.value = key
   }
-  const closeCourseEdit = (id: number) => {
-    activeCourseId.value = null
-    activeLessonId.value = null
+  const deactivateCourse = () => {
+    activeCourseKey.value = null
+    deactivateLesson()
   }
   const activeCourse = computed(() => {
-    if (activeCourseId.value) {
-      return courses.value[activeCourseId.value]
-    } else {
-      return null
-    }
+    return activeCourseKey.value ? courses[activeCourseKey.value] : null
+  })
+  const isCourseActive = computed(() => {
+    return !!activeCourse.value
   })
 
-  const lessonPlans: Ref<LessonMap> = ref({})
-  // TODO: return these in sorted order
-  const lessonList = computed(() => Object.values(lessonPlans.value))
-  const activeLessonId = ref()
+  const lessonPlans: LessonMap = reactive({})
+  const lessonList = computed(() => Object.values(lessonPlans))
+  const activeLessonKey = ref()
 
-  const addLesson = (lessonToAdd: LessonPlan) => {
-    lessonPlans.value[lessonToAdd.id.toString()] = lessonToAdd
+  const cacheLesson = (lessonToAdd: LessonPlan) => {
+    lessonPlans[lessonToAdd.publicKey] = lessonToAdd
   }
-  const loadLessons = (items: LessonPlan[]) => {
-    items.forEach((lesson) => addLesson(lesson))
+  const cacheLessons = (items: LessonPlan[]) => {
+    if (items && items.length > 0) {
+      items.forEach((lesson) => cacheLesson(lesson))
+    }
   }
-  const editLesson = (id: number) => {
-    activeLessonId.value = id.toString()
+  const activateLesson = (key: string) => {
+    activeLessonKey.value = key
   }
-  const closeLessonEdit = () => {
-    activeLessonId.value = null
+  const deactivateLesson = () => {
+    activeLessonKey.value = null
   }
   const activeLesson = computed(() => {
-    if (activeLessonId.value) {
-      return lessonPlans.value[activeLessonId.value]
-    } else {
-      return null
-    }
+    return activeLessonKey.value ? lessonPlans[activeLessonKey.value] : null
+  })
+  const isLessonActive = computed(() => {
+    return !!activeLesson.value
   })
 
   return {
     courseList,
+    isCourseActive,
     activeCourse,
-    loadCourses,
-    addCourse,
-    editCourse,
-    closeCourseEdit,
+    cacheCourses,
+    cacheCourse,
+    activateCourse,
+    deactivateCourse,
     lessonList,
+    isLessonActive,
     activeLesson,
-    loadLessons,
-    addLesson,
-    editLesson,
-    closeLessonEdit,
+    cacheLessons,
+    cacheLesson,
+    activateLesson,
+    deactivateLesson,
   }
 })

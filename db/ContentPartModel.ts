@@ -22,20 +22,9 @@ const mapToTable = (contentPart: ContentPart) => {
   }
 }
 
-export async function loadContentPartsByLessonId(lessonId: number) {
-  console.log(`lesson ${lessonId}`)
-
-  const results = await $fetch(`/api/lesson-plans/${lessonId}/content-parts`)
-  if (results) {
-    return results.map((row) => mapToObject(row))
-  } else {
-    return []
-  }
-}
-
 export async function loadContentParts(lessonKey: string) {
-  const results = await $fetch(`/api/lesson-plan/${lessonKey}/content-parts`)
-  console.log(`found content parts for lesson ${lessonKey}`, results)
+  console.log('loadContentParts', lessonKey)
+  const results = await $fetch(`/api/lesson-plans/${lessonKey}/content-parts`)
 
   if (results) {
     return results.map((row) => mapToObject(row))
@@ -73,4 +62,21 @@ export async function saveContentPart(contentPart: ContentPart) {
   } else {
     return null
   }
+}
+
+export async function changeSequence(parts: ContentPart[]) {
+  const input = parts.map((part) => ({ id: part.id, sequence: part.sequence }))
+  console.log('sending', input)
+
+  const results = await $fetch(`/api/content-parts`, {
+    method: 'PUT',
+    body: input,
+  })
+  return results ? results : null
+}
+
+export async function deleteContentPart(publicKey: string) {
+  const results = await $fetch(`/api/content-parts/${publicKey}`, {
+    method: 'DELETE',
+  })
 }

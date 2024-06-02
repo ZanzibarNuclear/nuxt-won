@@ -1,34 +1,56 @@
 <template>
   <div>
-    <h1>Curriculum Workshop: Lesson Builder</h1>
-    <UButton
-      label="Back to lesson overview"
-      icon="i-mdi-arrow-left-top"
-      :to="`/workshop/course-${courseId}/lessons`"
-    />
-
-    <div>Course: {{ activeCourse.title }}</div>
-    <h2>{{ activeLesson.title }}</h2>
-
-    <div class="flex">
-      <USelect :options="contentTypeOptions" v-model="contentType" />
+    <h1>
       <UButton
-        label="Add Content"
-        size="sm"
-        icon="i-ph-plus-circle"
-        @click="addContent"
+        icon="i-mdi-arrow-left-top"
+        class="mr-2"
+        :to="`/workshop/course-${courseKey}/lessons`"
       />
+      Lesson:
+      {{ workshop.activeLesson?.title || 'Not loaded' }}
+    </h1>
+    <h2>Content Assembly</h2>
+    <div v-if="!editSort">
+      <div class="flex">
+        <USelect :options="contentTypeOptions" v-model="contentType" />
+        <UButton
+          label="Add Content"
+          size="sm"
+          icon="i-ph-plus-circle"
+          @click="addContent"
+        />
+        <UButton
+          label="Change order"
+          size="sm"
+          icon="i-ph-arrows-out-line-vertical"
+          @click="openToChangeOrder"
+          class="mx-5"
+        />
+      </div>
+      <div v-for="part in sortedContentParts">
+        <ContentPart
+          :part="part"
+          @cache-updated-part="handleCacheUpdatedPart"
+          @remove-part="handleRemovePart"
+        />
+      </div>
     </div>
-    <div v-for="part in sortedContentParts">
-      <ContentPart :part="part" @cache-updated-part="handleCacheUpdatedPart" />
+    <div v-if="editSort">
+      <UModal v-model="editSort">
+        <Sequencerator
+          :items-to-sequence="partsToReorder"
+          @save-sequence="handleSaveSortOrder"
+        />
+      </UModal>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import {
-  loadContentPartsByLessonId,
+  loadContentParts,
   createContentPart,
+  changeSequence,
 } from '~/db/ContentPartModel'
 import {
   type ContentPart,
@@ -36,7 +58,7 @@ import {
   LessonContentEnum,
 } from '~/types/won-types'
 const route = useRoute()
-const { id: courseId, lessonId } = route.params
+const { courseKey, lessonKey } = route.params
 const contentTypeOptions = [
   LessonContentEnum.html,
   LessonContentEnum.image,
@@ -45,10 +67,21 @@ const contentTypeOptions = [
   LessonContentEnum.figure,
 ]
 const contentType: Ref<LessonContentEnum> = ref(LessonContentEnum.html)
+const workshop = useWorkshopStore()
+workshop.activateLesson(lessonKey)
 
 type ContentPartMap = { [k: string]: ContentPart }
 const contents: ContentPartMap = reactive({})
 const notIndexed: Ref<ContentPart[]> = ref([]) // if anything ends up here, must be a mistake
+
+const editSort = ref(false)
+const partsToReorder = ref()
+const openToChangeOrder = () => {
+  partsToReorder.value = Object.values(contents).sort(
+    (partA, partB) => partA.sequence - partB.sequence
+  )
+  editSort.value = true
+}
 
 const sortedContentParts = computed(() => {
   const sorted = Object.values(contents).sort(
@@ -57,16 +90,6 @@ const sortedContentParts = computed(() => {
   sorted.push(...notIndexed.value)
   return sorted
 })
-
-const activeCourse = {
-  id: courseId,
-  title: 'My Wonderful Course',
-}
-const activeLesson = {
-  id: lessonId,
-  title: 'My Crafty Lesson',
-  courseId: courseId,
-}
 
 const cacheContentPart = (part: ContentPart) => {
   if (part.publicKey) {
@@ -85,12 +108,20 @@ const nextCount = computed(() => {
   }
 })
 
-onMounted(async () => {
-  const parts = await loadContentPartsByLessonId(parseInt(lessonId))
-  parts.forEach((part) => cacheContentPart(part))
-})
+const { data: parts, error } = await useAsyncData(
+  `lesson-${lessonKey}-content`,
+  () => loadContentParts(lessonKey)
+)
+parts.value.forEach((part) => cacheContentPart(part))
 
 const handleCacheUpdatedPart = (update: ContentPart) => cacheContentPart(update)
+
+const handleRemovePart = (publicKey: string) => delete contents[publicKey]
+
+const handleSaveSortOrder = (reorderedItems) => {
+  const results = changeSequence(reorderedItems)
+  console.log(results)
+}
 
 const addContent = async () => {
   let details: ContentDetails
@@ -129,6 +160,7 @@ const addContent = async () => {
         src: '',
         caption: '',
         border: 'solid',
+        width: '',
       }
       break
     }
@@ -139,7 +171,7 @@ const addContent = async () => {
     }
   }
   const input = {
-    lessonId: lessonId,
+    lessonId: workshop.activeLesson.id,
     type: contentType.value,
     sequence: nextCount.value,
     details,

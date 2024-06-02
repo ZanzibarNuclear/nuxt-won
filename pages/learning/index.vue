@@ -18,11 +18,17 @@
 import { loadCourses } from '~/db/CourseModel'
 
 const learning = useLearningStore()
+const { data: courses, error } = await useAsyncData('courses', () =>
+  loadCourses()
+)
+console.log(useNuxtApp().payload.data)
 
-onMounted(async () => {
-  const courses = await loadCourses()
-  courses.forEach((course) => learning.cacheCourse(course))
-})
+if (courses.value) {
+  courses.value.forEach((course) => learning.cacheCourse(course))
+}
+if (error.value) {
+  console.error('Something went wrong', error.value?.message)
+}
 </script>
 
 <style scoped>

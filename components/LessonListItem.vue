@@ -1,7 +1,7 @@
 <template>
   <div class="item-container" @click="() => openLesson(lessonPlan.publicKey)">
     <div class="text-xl">{{ lessonPlan.title }}</div>
-    <div><span v-html="lessonPlan.description" /></div>
+    <div class="rich-text"><span v-html="lessonPlan.description" /></div>
   </div>
 </template>
 
@@ -21,5 +21,14 @@ function openLesson(lessonKey: string) {
 .item-container:hover {
   border-color: blue;
   border-style: dashed;
+}
+.rich-text :deep(p) {
+  margin: 0.75rem 0;
+}
+.rich-text :deep(ul) {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  list-style: disc;
+  list-style-position: inside;
 }
 </style>

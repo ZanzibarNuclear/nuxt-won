@@ -6,7 +6,7 @@
       @share-changes="handleSave"
       @close="handleClose"
     />
-    <div v-else>
+    <div v-else class="rich-text">
       <span v-html="fields[fieldName]" />
       <UIcon name="i-mdi-edit" @click="handleOpen" />
     </div>
@@ -34,4 +34,14 @@ const fieldNameLabel = computed(() => {
 })
 </script>
 
-<style scoped></style>
+<style scoped>
+.rich-text :deep(p) {
+  margin: 0.75rem 0;
+}
+.rich-text :deep(ul) {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  list-style: disc;
+  list-style-position: inside;
+}
+</style>
