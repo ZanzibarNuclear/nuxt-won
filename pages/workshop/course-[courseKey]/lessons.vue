@@ -26,14 +26,15 @@
         <h3>Lessons in this course</h3>
         <ol>
           <li v-for="lesson in workshop.lessonList" class="my-6 px-4">
-            <LessonListItem :lesson-plan="lesson" />
+            <div class="flex">
+              <LessonListItem :lesson-plan="lesson" class="mr-6" />
+              <UButton
+                @click="handleDeleteLesson(lesson.publicKey)"
+                icon="i-ph-x-circle"
+                color="amber"
+              />
+            </div>
           </li>
-          <!-- <li
-            v-for="lesson in workshop.lessonList"
-            @click="onActivateLesson(lesson.publicKey)"
-          >
-            {{ lesson.title }}
-          </li> -->
         </ol>
       </div>
       <div>
@@ -110,6 +111,7 @@ import {
   loadLessonPlans,
   createLessonPlan,
   saveLessonPlan,
+  deleteLessonPlan,
 } from '~/db/LessonPlanModel'
 
 const route = useRoute()
@@ -121,10 +123,6 @@ const uiState = reactive({
 
 const courseKey = route.params.courseKey
 
-const onActivateLesson = (publicKey) => {
-  workshop.activateLesson(publicKey)
-  uiState.editLesson = true
-}
 const cancelActive = () => {
   workshop.deactivateLesson()
   uiState.editLesson = false
@@ -169,6 +167,10 @@ const handleSaveLesson = async (details) => {
     workshop.cacheLesson(updated)
   }
   uiState.editLesson = false
+}
+const handleDeleteLesson = async (lessonKey) => {
+  const result = await deleteLessonPlan(lessonKey)
+  workshop.removeLesson(lessonKey)
 }
 </script>
 

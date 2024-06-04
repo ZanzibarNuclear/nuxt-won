@@ -65,3 +65,9 @@ export async function saveLessonPlan(lessonPlan: LessonPlan) {
     return null
   }
 }
+
+export async function deleteLessonPlan(lessonKey: string) {
+  const results = await $fetch(`/api/lesson-plans/${lessonKey}`, {
+    method: 'DELETE',
+  })
+}
