@@ -27,7 +27,11 @@
         <ol>
           <li v-for="lesson in workshop.lessonList" class="my-6 px-4">
             <div class="flex">
-              <LessonListItem :lesson-plan="lesson" class="mr-6" />
+              <LessonListItem
+                :lesson-plan="lesson"
+                class="mr-6"
+                @click="workshop.activateLesson(lesson.publicKey)"
+              />
               <UButton
                 @click="handleDeleteLesson(lesson.publicKey)"
                 icon="i-ph-x-circle"
