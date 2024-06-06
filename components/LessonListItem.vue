@@ -1,5 +1,5 @@
 <template>
-  <div class="item-container" @click="() => openLesson(lessonPlan.publicKey)">
+  <div class="item-container">
     <div class="text-xl">{{ lessonPlan.title }}</div>
     <div class="rich-text"><span v-html="lessonPlan.description" /></div>
   </div>

@@ -57,8 +57,12 @@ import {
   type ContentDetails,
   LessonContentEnum,
 } from '~/types/won-types'
+
 const route = useRoute()
 const { courseKey, lessonKey } = route.params
+const workshop = useWorkshopStore()
+workshop.activateLesson(lessonKey)
+
 const contentTypeOptions = [
   LessonContentEnum.html,
   LessonContentEnum.image,
@@ -66,11 +70,9 @@ const contentTypeOptions = [
   LessonContentEnum.video,
   LessonContentEnum.figure,
 ]
-const contentType: Ref<LessonContentEnum> = ref(LessonContentEnum.html)
-const workshop = useWorkshopStore()
-workshop.activateLesson(lessonKey)
-
 type ContentPartMap = { [k: string]: ContentPart }
+
+const contentType: Ref<LessonContentEnum> = ref(LessonContentEnum.html)
 const contents: ContentPartMap = reactive({})
 const notIndexed: Ref<ContentPart[]> = ref([]) // if anything ends up here, must be a mistake
 
@@ -120,7 +122,7 @@ const handleRemovePart = (publicKey: string) => delete contents[publicKey]
 
 const handleSaveSortOrder = (reorderedItems) => {
   const results = changeSequence(reorderedItems)
-  console.log(results)
+  editSort.value = false
 }
 
 const addContent = async () => {

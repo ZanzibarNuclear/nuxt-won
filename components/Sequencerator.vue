@@ -34,22 +34,22 @@ const emit = defineEmits(['saveSequence'])
 
 const items = ref([...props.itemsToSequence])
 
-function truncateString(str, length) {
+function truncateString(str: string, length: number) {
   if (str.length > length) {
     return str.substring(0, length) + '...'
   } else {
     return str
   }
 }
-const moveItem = (from, to) => {
+const moveItem = (from: number, to: number) => {
   const itemToMove = items.value.splice(from, 1)
   items.value.splice(to, 0, itemToMove[0])
   console.log(items.value)
 }
-const up = (index) => {
+const up = (index: number) => {
   moveItem(index, index - 1)
 }
-const down = (index) => {
+const down = (index: number) => {
   moveItem(index, index + 1)
 }
 

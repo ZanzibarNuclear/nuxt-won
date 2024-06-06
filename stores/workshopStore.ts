@@ -42,6 +42,12 @@ export const useWorkshopStore = defineStore('workshop', () => {
       items.forEach((lesson) => cacheLesson(lesson))
     }
   }
+  const removeLesson = (key: string) => {
+    delete lessonPlans[key]
+    if (activeLessonKey.value === key) {
+      activeLessonKey.value = null
+    }
+  }
   const activateLesson = (key: string) => {
     activeLessonKey.value = key
   }
@@ -68,6 +74,7 @@ export const useWorkshopStore = defineStore('workshop', () => {
     activeLesson,
     cacheLessons,
     cacheLesson,
+    removeLesson,
     activateLesson,
     deactivateLesson,
   }
