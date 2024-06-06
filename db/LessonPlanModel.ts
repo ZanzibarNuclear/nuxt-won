@@ -55,7 +55,7 @@ export async function createLessonPlan(lessonPlan: LessonPlan) {
 
 export async function saveLessonPlan(lessonPlan: LessonPlan) {
   const input = mapToTable(lessonPlan)
-  const results = await $fetch(`/api/lesson-plans/${input.id}`, {
+  const results = await $fetch(`/api/lesson-plans/${input.public_key}`, {
     method: 'PUT',
     body: input,
   })

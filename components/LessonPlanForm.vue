@@ -34,16 +34,18 @@ const props = defineProps({
 })
 
 const schema = object({
-  id: number(),
-  courseId: number(),
+  id: number().nullable(),
+  publicKey: string().nullable(),
+  courseId: number().nullable(),
   title: string().required(),
   description: string().nullable(),
   objective: string().nullable(),
-  coverArt: string(),
+  coverArt: string().nullable(),
 })
 type Schema = InferType<typeof schema>
 const state = reactive({
   id: undefined,
+  publicKey: undefined,
   courseId: undefined,
   title: undefined,
   description: undefined,
@@ -51,13 +53,12 @@ const state = reactive({
   coverArt: undefined,
 })
 
-// TODO: make a component for wrapping Editor in FormGroup
-
 const isEdit = computed(() => !!props.lessonPlan)
 
 const setInitialValues = (lessonPlan) => {
-  const { id, title, description, coverArt, objective } = lessonPlan
+  const { id, publicKey, title, description, coverArt, objective } = lessonPlan
   state.id = id
+  state.publicKey = publicKey
   state.title = title
   state.description = description
   state.coverArt = coverArt
