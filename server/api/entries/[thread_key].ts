@@ -11,5 +11,6 @@ export default defineEventHandler(async (event) => {
     .select('*, wsy_threads!inner(id, public_key)')
     .eq('wsy_threads.public_key', thread_key)
 
+  console.log('found entries', data)
   return data
 })

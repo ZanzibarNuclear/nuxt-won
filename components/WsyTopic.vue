@@ -10,7 +10,9 @@ defineShortcuts({
   },
 })
 const focusOnTopicInput = () => {
-  topicInputRef.value.$refs.input.focus()
+  if (topicInputRef.value) {
+    topicInputRef.value.$refs.input.focus()
+  }
 }
 
 const inviteOpen = ref(false)
