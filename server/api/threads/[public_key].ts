@@ -10,6 +10,6 @@ export default defineEventHandler(async (event) => {
     .select('*')
     .eq('public_key', public_key)
 
-  console.log(data[0])
+  console.log('found thread data', data[0])
   return data[0]
 })

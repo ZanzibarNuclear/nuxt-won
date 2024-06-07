@@ -2,8 +2,8 @@
   <div>
     <h1>What Say You?</h1>
     <WsyHeader />
-    <WsyTopic v-if="wsy.isPlayerLoaded" />
-    <WsyEntries v-if="wsy.isActiveThread" />
+    <WsyTopic v-if="wsyStore.isPlayerLoaded" />
+    <WsyEntries v-if="wsyStore.isActiveThread" />
   </div>
 </template>
 
@@ -19,30 +19,30 @@ useSeoMeta({
   twitterCard: 'summary',
 })
 
-const wsy = useWsyStore()
 const url = useRequestURL()
+const wsyStore = useWsyStore()
 
-onBeforeMount(() => {
-  const threadKey = url.searchParams.get('topic')
-  if (threadKey) {
-    // TODO: check if user is a player?
-    console.log('loading topic from params')
-    handleChooseTopic(threadKey)
-  } else {
-    console.log('no topic found in params')
-  }
-})
+const threadKey = url.searchParams.get('topic')
+console.log('looking for topic', threadKey)
 
-const handleChooseTopic = async (threadKey: string) => {
-  if (threadKey === null) return
-
-  const loadedThread = await $fetch(`/api/threads/${threadKey}`)
-  const loadedEntries = await $fetch(`/api/entries/${threadKey}`)
-  const writers = await $fetch(`/api/writers/${threadKey}`)
-
-  wsy.updateThread(loadedThread)
-  wsy.activateThread(loadedThread.public_key)
-  wsy.loadActiveEntries(loadedEntries)
-  wsy.loadWriters(writers)
+if (threadKey) {
+  const { data: wsy, error } = await useAsyncData(
+    `thread-${threadKey}`,
+    async () => {
+      const [thread, entries, writers] = await Promise.all([
+        $fetch(`/api/threads/${threadKey}`),
+        $fetch(`/api/entries/${threadKey}`),
+        $fetch(`/api/writers/${threadKey}`),
+      ])
+      console.log('returning thread and writer data', thread, entries, writers)
+      return { thread, entries, writers }
+    }
+  )
+  wsyStore.updateThread(wsy.value.thread)
+  wsyStore.loadActiveEntries(wsy.value.entries)
+  wsyStore.loadWriters(wsy.value.writers)
+  wsyStore.activateThread(threadKey)
+} else {
+  console.log('no particular topic')
 }
 </script>

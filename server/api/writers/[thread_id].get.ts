@@ -13,6 +13,6 @@ export default defineEventHandler(async (event) => {
 
   const { data } = await client.from('wsy_participants').select('id, alias')
 
-  console.log(data)
+  console.log('found WSY writers', data)
   return data
 })

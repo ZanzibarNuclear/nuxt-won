@@ -3,7 +3,13 @@
     <div>
       Make a statement. Speak your mind. Click Post to share with the world.
     </div>
-    <QuillEditor ref="statementEditor" content="<p></p>" content-type="html" />
+    <client-only>
+      <QuillEditor
+        ref="statementEditor"
+        content="<p></p>"
+        content-type="html"
+      />
+    </client-only>
     <div class="mt-2">
       <UButton
         class="mr-2"
