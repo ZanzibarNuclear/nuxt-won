@@ -65,11 +65,11 @@ const uiState = reactive({
 })
 
 // make sure requested course is active
-if (workshop.activeCourse.publicKey !== courseKey) {
-  const loadedCourse = workshop.getCourse(courseKey)
+if (!workshop.isCourseActive || workshop.activeCourse.publicKey !== courseKey) {
+  const cachedCourse = workshop.getCourse(courseKey)
 
   // load and cache if necessary
-  if (!loadedCourse) {
+  if (!cachedCourse) {
     const { data: course, error } = await useAsyncData(
       `course-${courseKey}`,
       () => loadCourse(courseKey)
