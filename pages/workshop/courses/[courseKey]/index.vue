@@ -1,60 +1,48 @@
 <template>
-  <h1>Curriculum Workshop &ndash; Courses</h1>
-  <h2>Title: {{ workshop.activeCourse.title }}</h2>
-  <SimpleToolbar>
+  <h1>
     <UButton
-      icon="i-ph-pencil"
-      @click="uiState.editCourse = true"
-      label="Edit course"
-      variant="solid"
-      class="mx-1"
-    />
-    <UButton
-      icon="i-ph-presentation-chart-duotone"
-      @click="
-        navigateTo(
-          `/workshop/course-${workshop.activeCourse.publicKey}/lessons`
-        )
-      "
-      label="Work on lessons"
-      variant="solid"
-      class="mx-1"
-    />
-    <UButton
-      icon="i-ph-arrow-bend-up-left-duotone"
+      icon="i-mdi-arrow-left-top"
+      class="mr-2"
       @click="onGoToCourseList"
-      label="Back to course list"
-      variant="solid"
-      class="mx-1"
     />
-  </SimpleToolbar>
-  <div v-if="!uiState.editCourse" class="rich-text">
-    <div>
-      <NuxtImg
-        :src="workshop.activeCourse.coverArt"
-        width="250px"
-        class="my-6"
-      />
-    </div>
-    <div>
-      <h3>Description:</h3>
-      <span v-html="workshop.activeCourse.description" />
-    </div>
-    <div>
-      <h3>Syllabus:</h3>
-      <span v-html="workshop.activeCourse.syllabus" />
-    </div>
-  </div>
-  <div v-else>
-    <CourseForm
-      @save-course="onSaveCourse"
-      :course="workshop.activeCourse"
-      @cancel="onCancelUpdateCourse"
-    />
-  </div>
+    Course Builder
+  </h1>
+  <UTabs :items="items" class="w-full">
+    <template #item="{ item }">
+      <UCard
+        @submit.prevent="
+          () => onSubmit(item.key === 'account' ? accountForm : passwordForm)
+        "
+      >
+        <template #header>
+          <h2>
+            Course Title: {{ workshop.activeCourse.title }} (key:
+            {{ workshop.activeCourse?.publicKey }})
+          </h2>
+        </template>
+
+        <div v-if="item.key === 'overview'" class="space-y-3">
+          <CourseOverviewBuilder />
+        </div>
+        <div v-else-if="item.key === 'lessons'" class="space-y-3">
+          <LessonListBuilder
+            v-if="!workshop.isLessonActive"
+            :course-key="courseKey"
+          />
+          <div v-else>Show some course details.</div>
+        </div>
+        <div v-else-if="item.key === 'paths'" class="space-y-3">
+          <h3>Component for managing paths goes here</h3>
+        </div>
+        <template #footer>
+          <div>Have a nice day!</div>
+        </template>
+      </UCard>
+    </template>
+  </UTabs>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { loadCourse, saveCourse } from '~/db/CourseModel'
 
 const { courseKey } = useRoute().params
@@ -92,16 +80,28 @@ const onSaveCourse = async (details) => {
   uiState.editCourse = false
 }
 const onCancelUpdateCourse = () => (uiState.editCourse = false)
+
+const items = [
+  {
+    key: 'overview',
+    label: 'Overview',
+    description: 'Information about the course.',
+  },
+  {
+    key: 'lessons',
+    label: 'Lessons',
+    description: 'Detailed topics and concepts in digestable modules.',
+  },
+  {
+    key: 'paths',
+    label: 'Paths',
+    description: 'Sequences of lessons through the course.',
+  },
+]
+
+// TODO: think about using this for forms
+const accountForm = reactive({ name: 'Benjamin', username: 'benjamincanac' })
+const passwordForm = reactive({ currentPassword: '', newPassword: '' })
 </script>
 
-<style lang="scss" scoped>
-.rich-text :deep(p) {
-  margin: 0.75rem 0;
-}
-.rich-text :deep(ul) {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-  list-style: disc;
-  list-style-position: inside;
-}
-</style>
+<style scoped></style>

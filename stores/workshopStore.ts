@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { it } from 'vitest'
 import type { Course, LessonPlan } from '~/types/won-types'
 
 export const useWorkshopStore = defineStore('workshop', () => {
@@ -50,7 +51,7 @@ export const useWorkshopStore = defineStore('workshop', () => {
       activeLessonKey.value = null
     }
   }
-  const activateLesson = (key: string) => {
+  const makeLessonActive = (key: string) => {
     activeLessonKey.value = key
   }
   const deactivateLesson = () => {
@@ -78,7 +79,7 @@ export const useWorkshopStore = defineStore('workshop', () => {
     cacheLessons,
     cacheLesson,
     removeLesson,
-    activateLesson,
+    makeLessonActive,
     deactivateLesson,
   }
 })

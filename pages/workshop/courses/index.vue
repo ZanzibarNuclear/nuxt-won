@@ -4,6 +4,7 @@
     <UButton
       v-if="!uiState.addCourse"
       label="Add Course"
+      icon="i-ph-plus-circle"
       @click="() => (uiState.addCourse = true)"
     />
     <UModal v-model="uiState.addCourse" prevent-close>

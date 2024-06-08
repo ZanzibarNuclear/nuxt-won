@@ -1,6 +1,6 @@
 <template>
   <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
-    <h2>{{ heading || 'Course Information' }}</h2>
+    <h2>{{ heading }}</h2>
     <UFormGroup label="Title" name="title">
       <UInput v-model="state.title" />
     </UFormGroup>
@@ -32,7 +32,10 @@ const SimpleEditor = defineAsyncComponent(
 )
 
 const emit = defineEmits(['save-course', 'cancel'])
-const props = defineProps(['course', 'heading'])
+const props = defineProps({
+  course: { type: Object, required: true },
+  heading: { type: String, default: 'Course Information' },
+})
 
 const schema = object({
   id: number(),
