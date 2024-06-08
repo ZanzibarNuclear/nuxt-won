@@ -15,8 +15,10 @@ export const useWorkshopStore = defineStore('workshop', () => {
   const cacheCourses = (items: Course[]) => {
     items.forEach((course) => cacheCourse(course))
   }
-  const activateCourse = (key: string) => {
-    console.log('activating course', key)
+  const getCourse = (publicKey: string) => {
+    return courses[publicKey]
+  }
+  const makeCourseActive = (key: string) => {
     activeCourseKey.value = key
   }
   const deactivateCourse = () => {
@@ -67,7 +69,8 @@ export const useWorkshopStore = defineStore('workshop', () => {
     activeCourse,
     cacheCourses,
     cacheCourse,
-    activateCourse,
+    getCourse,
+    makeCourseActive,
     deactivateCourse,
     lessonList,
     isLessonActive,

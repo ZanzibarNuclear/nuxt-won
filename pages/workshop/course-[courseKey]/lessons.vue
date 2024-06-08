@@ -150,7 +150,7 @@ const { data: courseData, error } = await useAsyncData(
 console.log('using course and lesson plans', courseData.value)
 const { course, lessonPlans } = courseData.value
 workshop.cacheCourse(course)
-workshop.activateCourse(course.publicKey)
+workshop.makeCourseActive(course.publicKey)
 workshop.cacheLessons(lessonPlans)
 
 const handleCreateLesson = async (details) => {
