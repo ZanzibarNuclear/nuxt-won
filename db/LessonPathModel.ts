@@ -57,6 +57,8 @@ export async function loadLessonPaths(courseKey: string) {
       }
     })
   }
+  console.log(`return paths for ${courseKey}`, paths)
+
   return paths
 }
 

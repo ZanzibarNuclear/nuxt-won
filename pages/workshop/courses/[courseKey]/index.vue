@@ -26,14 +26,12 @@
         </div>
         <div v-else-if="item.key === 'lessons'" class="space-y-3">
           <LessonListBuilder
-            v-if="!workshop.isLessonActive"
             :course-key="courseKey"
             @open-lesson="onOpenLesson"
           />
-          <div v-else>Show some course details.</div>
         </div>
         <div v-else-if="item.key === 'paths'" class="space-y-3">
-          <h3>Component for managing paths goes here</h3>
+          <LessonPathBuilder :lesson-paths="lessonPaths" />
         </div>
         <template #footer>
           <div>Have a nice day!</div>
@@ -45,42 +43,59 @@
 
 <script setup lang="ts">
 import { loadCourse, saveCourse } from '~/db/CourseModel'
+import { loadLessonPlans } from '~/db/LessonPlanModel'
+import { loadLessonPaths } from '~/db/LessonPathModel'
 
 const { courseKey } = useRoute().params
 const workshop = useWorkshopStore()
+const lessonPaths = ref([])
 
 const uiState = reactive({
   editCourse: false,
 })
 
 // make sure requested course is active
-if (!workshop.isCourseActive || workshop.activeCourse.publicKey !== courseKey) {
-  const cachedCourse = workshop.getCourse(courseKey)
+// if (!workshop.isCourseActive || workshop.activeCourse.publicKey !== courseKey) {
+//   const cachedCourse = workshop.getCourse(courseKey)
 
-  // load and cache if necessary
-  if (!cachedCourse) {
-    const { data: course, error } = await useAsyncData(
-      `course-${courseKey}`,
-      () => loadCourse(courseKey)
-    )
-    workshop.cacheCourse(course.value)
-  }
-  workshop.makeCourseActive(courseKey)
+//   // load and cache if necessary
+//   if (!cachedCourse) {
+//     const { data: course, error } = await useAsyncData(
+//       `course-${courseKey}`,
+//       () => loadCourse(courseKey)
+//     )
+//     workshop.cacheCourse(course.value)
+//   }
+//   workshop.makeCourseActive(courseKey)
+// }
+
+const loadData = async () => {
+  const { data: courseData, error } = await useAsyncData(
+    `course-${courseKey}`,
+    async () => {
+      const [course, lessonPlans, paths] = await Promise.all([
+        loadCourse(courseKey),
+        loadLessonPlans(courseKey),
+        loadLessonPaths(courseKey),
+      ])
+      console.log('returning course and lesson plans')
+
+      return { course, lessonPlans, paths }
+    }
+  )
+  console.log('using course and lesson plans', courseData.value)
+  const { course, lessonPlans, paths } = courseData.value
+  workshop.cacheCourse(course)
+  workshop.makeCourseActive(course.publicKey)
+  workshop.cacheLessons(lessonPlans)
+  lessonPaths.value = paths
 }
+loadData()
 
 const onGoToCourseList = () => {
   workshop.deactivateCourse()
   navigateTo('/workshop/courses')
 }
-
-const onSaveCourse = async (details) => {
-  const updated = await saveCourse(details)
-  if (updated) {
-    workshop.cacheCourse(updated)
-  }
-  uiState.editCourse = false
-}
-const onCancelUpdateCourse = () => (uiState.editCourse = false)
 
 const onOpenLesson = (lessonKey) =>
   navigateTo(`/workshop/course-${courseKey}/lesson-${lessonKey}`)
@@ -102,10 +117,6 @@ const items = [
     description: 'Sequences of lessons through the course.',
   },
 ]
-
-// TODO: think about using this for forms
-const accountForm = reactive({ name: 'Benjamin', username: 'benjamincanac' })
-const passwordForm = reactive({ currentPassword: '', newPassword: '' })
 </script>
 
 <style scoped></style>
