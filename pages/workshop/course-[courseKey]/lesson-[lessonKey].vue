@@ -61,7 +61,7 @@ import {
 const route = useRoute()
 const { courseKey, lessonKey } = route.params
 const workshop = useWorkshopStore()
-workshop.activateLesson(lessonKey)
+workshop.makeLessonActive(lessonKey)
 
 const contentTypeOptions = [
   LessonContentEnum.html,

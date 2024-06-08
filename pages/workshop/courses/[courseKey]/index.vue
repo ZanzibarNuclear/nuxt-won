@@ -28,6 +28,7 @@
           <LessonListBuilder
             v-if="!workshop.isLessonActive"
             :course-key="courseKey"
+            @open-lesson="onOpenLesson"
           />
           <div v-else>Show some course details.</div>
         </div>
@@ -80,6 +81,9 @@ const onSaveCourse = async (details) => {
   uiState.editCourse = false
 }
 const onCancelUpdateCourse = () => (uiState.editCourse = false)
+
+const onOpenLesson = (lessonKey) =>
+  navigateTo(`/workshop/course-${courseKey}/lesson-${lessonKey}`)
 
 const items = [
   {

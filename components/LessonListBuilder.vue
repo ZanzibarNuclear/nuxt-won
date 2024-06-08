@@ -38,6 +38,7 @@ import {
 } from '~/db/LessonPlanModel'
 
 const props = defineProps(['courseKey'])
+const emit = defineEmits(['openLesson'])
 
 const workshop = useWorkshopStore()
 const uiState = reactive({
@@ -63,6 +64,7 @@ const onCreateLesson = async (details) => {
 
 const onOpenLesson = (lessonKey) => {
   workshop.makeLessonActive(lessonKey)
+  emit('openLesson', lessonKey)
 }
 
 const onCancelCreateLesson = () => (uiState.addLesson = false)

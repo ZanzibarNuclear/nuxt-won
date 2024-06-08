@@ -30,7 +30,7 @@
               <LessonListItem
                 :lesson-plan="lesson"
                 class="mr-6"
-                @click="workshop.activateLesson(lesson.publicKey)"
+                @click="workshop.makeLessonActive(lesson.publicKey)"
               />
               <UButton
                 @click="handleDeleteLesson(lesson.publicKey)"
