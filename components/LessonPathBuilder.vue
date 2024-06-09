@@ -19,27 +19,32 @@
     <div v-if="!lessonPaths?.length" class="italic">
       Create at least one path through this amazing course.
     </div>
-    <ul v-else>
-      <li v-for="path in lessonPaths">
-        {{ path.name }} {{ path.publicKey }} Start with {{ path.trailhead }}
-        <UButton
-          v-if="!uiState.openEditPath"
-          icon="i-ph-pencil"
-          @click="() => onOpenEditPath(path)"
-        />
-        <UButton
-          class="ml-1"
-          icon="i-ph-path"
-          @click="() => onOpenSteps(path)"
-        />
-        <UButton
-          class="ml-12"
-          icon="i-ph-x-circle"
-          color="amber"
-          @click="() => onDeletePath(path.publicKey)"
-        />
-      </li>
-    </ul>
+    <div v-else>
+      <div v-for="path in lessonPaths" class="list-item">
+        <div class="path-grid">
+          <div>{{ path.name }}</div>
+          <div>{{ path.description }}</div>
+          <div class="bookend">
+            <UButton
+              v-if="!uiState.openEditPath"
+              icon="i-ph-pencil"
+              @click="() => onOpenEditPath(path)"
+            />
+            <UButton
+              class="ml-1"
+              icon="i-ph-path"
+              @click="() => onOpenSteps(path)"
+            />
+            <UButton
+              class="ml-6"
+              icon="i-ph-x-circle"
+              color="amber"
+              @click="() => onDeletePath(path.publicKey)"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
     <UModal v-model="uiState.openEditPath">
       <LessonPathForm
         :lessons="workshop.lessonList"
@@ -114,7 +119,17 @@ ul {
   list-style: circle inside;
   margin-bottom: 1.5rem;
 }
-li ul {
-  margin-left: 1.5rem;
+.path-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+}
+.list-item {
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px lightcoral dotted;
+  list-style: none;
+}
+.bookend {
+  justify-self: end;
 }
 </style>
