@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h3>Put together paths through this course</h3>
     <UButton
       v-if="!uiState.openAddPath"
       icon="i-ph-plus-circle"
@@ -16,8 +15,8 @@
         class="p-6"
       />
     </UModal>
-    <h3>Laying it out there</h3>
-    <div v-if="!lessonPaths?.length">
+    <h3>We have the following paths.</h3>
+    <div v-if="!lessonPaths?.length" class="italic">
       Create at least one path through this amazing course.
     </div>
     <ul v-else>

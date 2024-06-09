@@ -26,7 +26,11 @@ export const useWorkshopStore = defineStore('workshop', () => {
     return courses[publicKey]
   }
   const makeCourseActive = (key: string) => {
-    activeCourseKey.value = key
+    if (activeCourseKey.value !== key) {
+      activeCourseKey.value = key
+      activeLessonKey.value = null
+      Object.keys(lessonPlans).forEach((key) => delete lessonPlans[key])
+    }
   }
   const deactivateCourse = () => {
     activeCourseKey.value = null
