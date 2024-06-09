@@ -56,11 +56,18 @@
       />
     </UModal>
     <div v-if="uiState.openSteps">
-      <ul v-if="openPath.steps">
-        <li v-for="step in openPath.steps">
-          From {{ step.from }} to {{ step.to }} : {{ step.teaser }}
-        </li>
-      </ul>
+      <h3>Steps for {{ openPath.name }}</h3>
+      <div class="mb-4">The trailhead lesson is: {{ openPath.trailhead }}</div>
+      <div>
+        <h3>Add a step</h3>
+        <LessonStepForm
+          :lessons="workshop.lessonList"
+          @save-step="onCreateStep"
+        />
+      </div>
+      <div class="ml-4" v-for="step in openPath.steps">
+        From {{ step.from }} to {{ step.to }} : {{ step.teaser }}
+      </div>
     </div>
   </div>
 </template>
@@ -81,6 +88,25 @@ const uiState = reactive({
 })
 
 const openPath = ref()
+const stepsOnOpenPath = ref([])
+const lessonNameMap = ref({}) // key : { name }
+const stepMap = reactive({})
+
+function setupStepMap(steps) {
+  if (steps) {
+    steps.forEach((step) => {
+      stepMap[step.from] = step
+    })
+  }
+}
+
+const pathFromStart = computed(() => {
+  if (!openPath.value || !openPath.value.trailhead) {
+    return []
+  }
+  const steppies = [openPath.value.trailhead]
+  return steppies
+})
 
 const onAddPath = async (pathData) => {
   const minted = await createLessonPath(pathData)
@@ -94,6 +120,7 @@ const onOpenEditPath = (path) => {
 }
 const onOpenSteps = (path) => {
   openPath.value = path
+  setupStepMap(path.steps)
   uiState.openSteps = true
 }
 const onSavePath = async (pathData) => {
@@ -111,6 +138,20 @@ const onCancelEditPath = () => {
 const onDeletePath = async (pathKey: string) => {
   await deleteLessonPath(pathKey)
   workshop.removeActiveLessonPath(pathKey)
+}
+
+const onCreateStep = (step) => {
+  console.log('create step', step)
+
+  // TODO: use model and update local copy
+}
+const onSaveStep = (step) => {
+  console.log('save step', step)
+  // TODO: use model and update local copy
+}
+const onDeleteStep = (step) => {
+  console.log('delete step', step)
+  // TODO: use model and update local copy
 }
 </script>
 
