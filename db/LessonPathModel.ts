@@ -25,6 +25,7 @@ const mapToPathTable = (path: LessonPath) => {
 
 const mapToStep = (stepData): LessonStep => {
   return {
+    id: stepData.id,
     lessonPath: stepData.lesson_path,
     from: stepData.from,
     to: stepData.to,
@@ -34,6 +35,7 @@ const mapToStep = (stepData): LessonStep => {
 
 const mapToStepTable = (step: LessonStep) => {
   return {
+    id: step.id,
     lesson_path: step.lessonPath,
     from: step.from,
     to: step.to,
@@ -121,4 +123,12 @@ export async function createLessonStep(step: LessonStep) {
   } else {
     return null
   }
+}
+
+export async function deleteLessonStep(id: number) {
+  console.log('request to delete step', id)
+
+  const results = await $fetch(`/api/lesson-steps/${id}`, {
+    method: 'DELETE',
+  })
 }

@@ -18,7 +18,7 @@
     >
       <UInput v-model="pathData.teaser" />
     </UFormGroup>
-    <UButton @click="onSaveStep" icon="i-ph-plus-circle" label="Save Path" />
+    <UButton @click="onSaveStep" icon="i-ph-plus-circle" label="Save Step" />
     <UButton
       class="ml-2"
       @click="onCancel"

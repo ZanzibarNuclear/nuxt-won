@@ -28,6 +28,7 @@ export type LessonPath = {
   steps: LessonStep[] | null
 }
 export type LessonStep = {
+  id: number
   lessonPath: string
   from: string
   to: string

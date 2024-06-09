@@ -70,7 +70,15 @@
             <div>{{ step.from }}</div>
             <div>{{ step.to }}</div>
             <div>{{ step.teaser }}</div>
-            <div>Sort / Edit / Delete</div>
+            <div>
+              Sort / Edit /
+              <UButton
+                class="ml-6"
+                icon="i-ph-x-circle"
+                color="amber"
+                @click="() => onDeleteStep(step)"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -92,6 +100,7 @@ import {
   saveLessonPath,
   deleteLessonPath,
   createLessonStep,
+  deleteLessonStep,
 } from '~/db/LessonPathModel'
 
 const props = defineProps(['lessonPaths', 'courseKey'])
@@ -103,8 +112,6 @@ const uiState = reactive({
 })
 
 const openPath = ref()
-const stepsOnOpenPath = ref([])
-const lessonNameMap = ref({}) // key : { name }
 const stepMap = reactive({})
 
 function setupStepMap(steps) {
@@ -114,14 +121,12 @@ function setupStepMap(steps) {
     })
   }
 }
-
-const pathFromStart = computed(() => {
-  if (!openPath.value || !openPath.value.trailhead) {
-    return []
-  }
-  const steppies = [openPath.value.trailhead]
-  return steppies
-})
+function removeStep(stepToRemove) {
+  delete stepMap[stepToRemove.from]
+  openPath.value.steps = openPath.value.steps.filter(
+    (step) => step !== stepToRemove
+  )
+}
 
 const onAddPath = async (pathData) => {
   const minted = await createLessonPath(pathData)
@@ -168,9 +173,10 @@ const onSaveStep = (step) => {
   console.log('save step', step)
   // TODO: use model and update local copy
 }
-const onDeleteStep = (step) => {
+const onDeleteStep = async (step) => {
   console.log('delete step', step)
-  // TODO: use model and update local copy
+  await deleteLessonStep(step.id)
+  removeStep(step)
 }
 </script>
 

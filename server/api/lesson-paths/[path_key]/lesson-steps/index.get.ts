@@ -5,10 +5,10 @@ export default defineEventHandler(async (event) => {
   console.log('loading steps for path', lessonPathKey)
 
   const client = await serverSupabaseClient(event)
-  const { data: lessonPaths } = await client
+  const { data: lessonSteps } = await client
     .from('lesson_steps')
     .select()
     .eq('lesson_path', lessonPathKey)
 
-  return lessonPaths
+  return lessonSteps
 })
