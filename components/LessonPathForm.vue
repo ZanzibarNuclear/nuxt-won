@@ -33,13 +33,25 @@
 
 <script setup lang="ts">
 const emit = defineEmits(['savePath', 'cancel'])
-const props = defineProps(['lessons', 'courseKey'])
+const props = defineProps(['lessons', 'courseKey', 'path'])
 
 const pathData = reactive({
   name: '',
   description: '',
-  courseKey: props.courseKey,
   trailhead: '',
+  publicKey: '',
+  courseKey: props.courseKey,
+})
+
+onMounted(() => {
+  const { path } = props
+  if (path) {
+    pathData.name = path.name
+    pathData.description = path.description
+    pathData.trailhead = path.trailhead
+    pathData.courseKey = path.courseKey
+    pathData.publicKey = path.publicKey
+  }
 })
 
 const allLessons = computed(() => {
