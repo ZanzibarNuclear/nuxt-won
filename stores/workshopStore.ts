@@ -1,10 +1,16 @@
 import { defineStore } from 'pinia'
-import { it } from 'vitest'
-import type { Course, LessonPlan } from '~/types/won-types'
+import type {
+  Course,
+  LessonPlan,
+  LessonPath,
+  LessonStep,
+} from '~/types/won-types'
 
 export const useWorkshopStore = defineStore('workshop', () => {
   type CourseMap = { [k: string]: Course }
   type LessonMap = { [k: string]: LessonPlan }
+  type PathMap = { [k: string]: LessonPath }
+  type CoursePathMap = { [k: string]: PathMap }
 
   const courses: CourseMap = reactive({})
   const courseList = computed(() => Object.values(courses))
@@ -64,6 +70,22 @@ export const useWorkshopStore = defineStore('workshop', () => {
     return !!activeLesson.value
   })
 
+  const coursePaths: CoursePathMap = reactive({})
+
+  const cacheCoursePaths = (courseKey: string, paths: LessonPath[]) => {
+    const temp: PathMap = {}
+    paths.forEach((path) => (temp[path.publicKey] = path))
+    coursePaths[courseKey] = temp
+  }
+  const getCoursePaths = (courseKey: string) => {
+    return coursePaths[courseKey]
+  }
+  const activeLessonPaths = computed(() => {
+    if (isCourseActive) {
+      return Object.values(getCoursePaths(activeCourseKey))
+    }
+  })
+
   return {
     courseList,
     isCourseActive,
@@ -81,5 +103,7 @@ export const useWorkshopStore = defineStore('workshop', () => {
     removeLesson,
     makeLessonActive,
     deactivateLesson,
+    cacheCoursePaths,
+    activeLessonPaths,
   }
 })

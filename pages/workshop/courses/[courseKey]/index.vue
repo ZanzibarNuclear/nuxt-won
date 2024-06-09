@@ -15,11 +15,10 @@
         "
       >
         <template #header>
-          <h2 v-if="workshop.isCourseActive">
-            Course Title: {{ workshop.activeCourse.title }} (key:
+          <h2 v-if="isLoaded">
+            {{ workshop.activeCourse.title }} (key:
             {{ workshop.activeCourse?.publicKey }})
           </h2>
-          <h2 v-else>Loading...</h2>
           <div>{{ item.description }}</div>
         </template>
 
@@ -52,8 +51,13 @@ const { courseKey } = useRoute().params
 const workshop = useWorkshopStore()
 const lessonPaths = ref([])
 
+const isLoaded = ref(false)
 const uiState = reactive({
   editCourse: false,
+})
+
+onMounted(() => {
+  isLoaded.value = true
 })
 
 const loadData = async () => {
@@ -75,6 +79,7 @@ const loadData = async () => {
   workshop.cacheCourse(course)
   workshop.makeCourseActive(course.publicKey)
   workshop.cacheLessons(lessonPlans)
+  // workshop.cacheCoursePaths(course.publicKey, paths)
   lessonPaths.value = paths
 }
 loadData()
