@@ -1,7 +1,12 @@
 <template>
   <div>
     <h3>Put together paths through this course</h3>
-    <div>Laying it out there</div>
+    <LessonPathForm
+      :lessons="workshop.lessonList"
+      :course-key="courseKey"
+      @save-path="onAddPath"
+    />
+    <h3>Laying it out there</h3>
     <div v-if="!lessonPaths?.length">
       Create at least one path through this amazing course.
     </div>
@@ -19,10 +24,18 @@
 </template>
 
 <script setup lang="ts">
-const props = defineProps(['lessonPaths'])
-onUpdated(() => {
-  console.log('got these paths', props.lessonPaths)
-})
+import { createLessonPath } from '~/db/LessonPathModel'
+
+const props = defineProps(['lessonPaths', 'courseKey'])
+const workshop = useWorkshopStore()
+
+const onAddPath = (pathData) => {
+  const newPath = createLessonPath(pathData)
+  console.log('created a path', newPath)
+}
+const onCancel = () => {
+  console.log('path canceled')
+}
 </script>
 
 <style scoped>

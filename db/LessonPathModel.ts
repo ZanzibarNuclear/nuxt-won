@@ -71,25 +71,20 @@ async function loadLessonSteps(pathKey: string) {
   }
 }
 
-// TODO: rewrite below for lesson paths and steps
+export async function createLessonPath(path: LessonPath) {
+  const input = mapToPathTable({ ...path, publicKey: genKey(10) })
+  const results = await $fetch('/api/lesson-paths', {
+    method: 'POST',
+    body: input,
+  })
+  console.log('path query results:', results)
 
-// export async function loadLessonPlan(lessonKey: string) {
-//   const result = await $fetch(`/api/lesson-plans/${lessonKey}`)
-//   return result ? mapToObject(result) : null
-// }
-
-// export async function createLessonPlan(lessonPlan: LessonPlan) {
-//   const input = mapToTable({ ...lessonPlan, publicKey: genKey(10) })
-//   const results = await $fetch('/api/lesson-plans', {
-//     method: 'POST',
-//     body: input,
-//   })
-//   if (results) {
-//     return mapToObject(results[0])
-//   } else {
-//     return null
-//   }
-// }
+  if (results) {
+    return mapToPath(results)
+  } else {
+    return null
+  }
+}
 
 // export async function saveLessonPlan(lessonPlan: LessonPlan) {
 //   const input = mapToTable(lessonPlan)

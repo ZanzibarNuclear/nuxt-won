@@ -32,7 +32,10 @@
           />
         </div>
         <div v-else-if="item.key === 'paths'" class="space-y-3">
-          <LessonPathBuilder :lesson-paths="lessonPaths" />
+          <LessonPathBuilder
+            :lesson-paths="lessonPaths"
+            :course-key="courseKey"
+          />
         </div>
         <template #footer>
           <div>Have a nice day!</div>
@@ -52,9 +55,6 @@ const workshop = useWorkshopStore()
 const lessonPaths = ref([])
 
 const isLoaded = ref(false)
-const uiState = reactive({
-  editCourse: false,
-})
 
 onMounted(() => {
   isLoaded.value = true
