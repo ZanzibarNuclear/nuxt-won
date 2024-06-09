@@ -20,6 +20,9 @@
 
 <script setup lang="ts">
 const props = defineProps(['lessonPaths'])
+onUpdated(() => {
+  console.log('got these paths', props.lessonPaths)
+})
 </script>
 
 <style scoped>

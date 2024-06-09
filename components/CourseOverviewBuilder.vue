@@ -13,7 +13,7 @@
       @cancel="onCancelUpdateCourse"
     />
   </div>
-  <div v-else class="rich-text">
+  <div v-else-if="workshop.isCourseActive" class="rich-text">
     <h2>Title: {{ workshop.activeCourse.title }}</h2>
     <div>
       <NuxtImg
@@ -31,6 +31,7 @@
       <span v-html="workshop.activeCourse.syllabus" />
     </div>
   </div>
+  <div v-else>Loading...</div>
 </template>
 
 <script setup lang="ts">

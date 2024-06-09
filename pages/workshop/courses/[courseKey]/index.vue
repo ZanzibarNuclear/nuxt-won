@@ -15,10 +15,12 @@
         "
       >
         <template #header>
-          <h2>
+          <h2 v-if="workshop.isCourseActive">
             Course Title: {{ workshop.activeCourse.title }} (key:
             {{ workshop.activeCourse?.publicKey }})
           </h2>
+          <h2 v-else>Loading...</h2>
+          <div>{{ item.description }}</div>
         </template>
 
         <div v-if="item.key === 'overview'" class="space-y-3">
@@ -42,7 +44,7 @@
 </template>
 
 <script setup lang="ts">
-import { loadCourse, saveCourse } from '~/db/CourseModel'
+import { loadCourse } from '~/db/CourseModel'
 import { loadLessonPlans } from '~/db/LessonPlanModel'
 import { loadLessonPaths } from '~/db/LessonPathModel'
 
@@ -54,23 +56,8 @@ const uiState = reactive({
   editCourse: false,
 })
 
-// make sure requested course is active
-// if (!workshop.isCourseActive || workshop.activeCourse.publicKey !== courseKey) {
-//   const cachedCourse = workshop.getCourse(courseKey)
-
-//   // load and cache if necessary
-//   if (!cachedCourse) {
-//     const { data: course, error } = await useAsyncData(
-//       `course-${courseKey}`,
-//       () => loadCourse(courseKey)
-//     )
-//     workshop.cacheCourse(course.value)
-//   }
-//   workshop.makeCourseActive(courseKey)
-// }
-
 const loadData = async () => {
-  const { data: courseData, error } = await useAsyncData(
+  const { data: courseData } = await useAsyncData(
     `course-${courseKey}`,
     async () => {
       const [course, lessonPlans, paths] = await Promise.all([
@@ -109,7 +96,7 @@ const items = [
   {
     key: 'lessons',
     label: 'Lessons',
-    description: 'Detailed topics and concepts in digestable modules.',
+    description: 'Add a new lesson or select one to work on.',
   },
   {
     key: 'paths',
