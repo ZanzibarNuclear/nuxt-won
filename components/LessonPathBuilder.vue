@@ -58,16 +58,29 @@
     <div v-if="uiState.openSteps">
       <h3>Steps for {{ openPath.name }}</h3>
       <div class="mb-4">The trailhead lesson is: {{ openPath.trailhead }}</div>
-      <div>
+      <div class="border-4 border-e-violet-300 p-2">
+        <div class="step-grid font-bold border-b mb-2">
+          <div>From</div>
+          <div>To</div>
+          <div>Teaser</div>
+          <div>Actions</div>
+        </div>
+        <div v-for="step in openPath.steps">
+          <div class="step-grid">
+            <div>{{ step.from }}</div>
+            <div>{{ step.to }}</div>
+            <div>{{ step.teaser }}</div>
+            <div>Sort / Edit / Delete</div>
+          </div>
+        </div>
+      </div>
+      <div class="mb-6">
         <h3>Add a step</h3>
         <LessonStepForm
           :path-key="openPath.publicKey"
           :lessons="workshop.lessonList"
           @save-step="onCreateStep"
         />
-      </div>
-      <div class="ml-4" v-for="step in openPath.steps">
-        From {{ step.from }} to {{ step.to }} : {{ step.teaser }}
       </div>
     </div>
   </div>
@@ -169,6 +182,10 @@ ul {
 .path-grid {
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
+}
+.step-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 2fr 1fr;
 }
 .list-item {
   margin-bottom: 0.75rem;

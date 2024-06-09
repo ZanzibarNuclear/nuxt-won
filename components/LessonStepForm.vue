@@ -1,6 +1,5 @@
 <template>
   <div class="space-y-4">
-    <h2>Lesson Step</h2>
     <div class="side-by-side">
       <div class="mr-4">
         <UFormGroup label="From" description="The lesson one is viewing">
