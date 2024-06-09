@@ -104,3 +104,21 @@ export async function deleteLessonPath(pathKey: string) {
     method: 'DELETE',
   })
 }
+
+export async function createLessonStep(step: LessonStep) {
+  const input = mapToStepTable(step)
+  const results = await $fetch(
+    `/api/lesson-paths/${step.lessonPath}/lesson-steps`,
+    {
+      method: 'POST',
+      body: input,
+    }
+  )
+  console.log('path query results:', results)
+
+  if (results) {
+    return mapToStep(results)
+  } else {
+    return null
+  }
+}

@@ -61,6 +61,7 @@
       <div>
         <h3>Add a step</h3>
         <LessonStepForm
+          :path-key="openPath.publicKey"
           :lessons="workshop.lessonList"
           @save-step="onCreateStep"
         />
@@ -77,6 +78,7 @@ import {
   createLessonPath,
   saveLessonPath,
   deleteLessonPath,
+  createLessonStep,
 } from '~/db/LessonPathModel'
 
 const props = defineProps(['lessonPaths', 'courseKey'])
@@ -140,10 +142,14 @@ const onDeletePath = async (pathKey: string) => {
   workshop.removeActiveLessonPath(pathKey)
 }
 
-const onCreateStep = (step) => {
+const onCreateStep = async (step) => {
   console.log('create step', step)
-
-  // TODO: use model and update local copy
+  await createLessonStep(step)
+  if (openPath.value && !openPath.value.steps) {
+    openPath.value.steps = []
+  }
+  openPath.value.steps.push(step)
+  stepMap[step.from] = step
 }
 const onSaveStep = (step) => {
   console.log('save step', step)

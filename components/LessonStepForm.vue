@@ -32,22 +32,24 @@
 
 <script setup lang="ts">
 const emit = defineEmits(['saveStep'])
-const props = defineProps(['step', 'lessons'])
+const props = defineProps(['pathKey', 'step', 'lessons'])
 
 const pathData = reactive({
+  lessonPath: '',
   from: '',
   to: '',
   teaser: '',
 })
 
 onMounted(() => {
-  const { path } = props
-  if (path) {
-    pathData.from = path.from
-    pathData.to = path.to
-    pathData.teaser = path.teaser
-    if (path.id) {
-      pathData.id = path.id
+  const { step, pathKey } = props
+  pathData.lessonPath = pathKey
+  if (step) {
+    pathData.from = step.from
+    pathData.to = step.to
+    pathData.teaser = step.teaser
+    if (step.id) {
+      pathData.id = step.id
     }
   }
 })
@@ -59,16 +61,20 @@ const allLessons = computed(() => {
   }))
 })
 
-const onSaveStep = () => {
-  emit('saveStep', pathData)
-}
-const onCancel = () => {
+function resetForm() {
   pathData.from = ''
   pathData.to = ''
   pathData.teaser = ''
   if (pathData.id) {
     delete pathData.id
   }
+}
+const onSaveStep = () => {
+  emit('saveStep', { ...pathData })
+  resetForm()
+}
+const onCancel = () => {
+  resetForm()
 }
 </script>
 
