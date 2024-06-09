@@ -86,21 +86,21 @@ export async function createLessonPath(path: LessonPath) {
   }
 }
 
-// export async function saveLessonPlan(lessonPlan: LessonPlan) {
-//   const input = mapToTable(lessonPlan)
-//   const results = await $fetch(`/api/lesson-plans/${input.public_key}`, {
-//     method: 'PUT',
-//     body: input,
-//   })
-//   if (results) {
-//     return mapToObject(results[0])
-//   } else {
-//     return null
-//   }
-// }
+export async function saveLessonPath(path: LessonPath) {
+  const input = mapToPathTable(path)
+  const results = await $fetch(`/api/lesson-paths/${input.public_key}`, {
+    method: 'PUT',
+    body: input,
+  })
+  if (results) {
+    return mapToPath(results)
+  } else {
+    return null
+  }
+}
 
-// export async function deleteLessonPlan(lessonKey: string) {
-//   const results = await $fetch(`/api/lesson-plans/${lessonKey}`, {
-//     method: 'DELETE',
-//   })
-// }
+export async function deleteLessonPath(pathKey: string) {
+  const results = await $fetch(`/api/lesson-paths/${pathKey}`, {
+    method: 'DELETE',
+  })
+}

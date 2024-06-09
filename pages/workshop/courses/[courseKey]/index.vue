@@ -33,7 +33,7 @@
         </div>
         <div v-else-if="item.key === 'paths'" class="space-y-3">
           <LessonPathBuilder
-            :lesson-paths="lessonPaths"
+            :lesson-paths="workshop.activeLessonPaths"
             :course-key="courseKey"
           />
         </div>
@@ -52,11 +52,10 @@ import { loadLessonPaths } from '~/db/LessonPathModel'
 
 const { courseKey } = useRoute().params
 const workshop = useWorkshopStore()
-const lessonPaths = ref([])
-
 const isLoaded = ref(false)
 
 onMounted(() => {
+  // FIXME: attempt to resolve hydration problem
   isLoaded.value = true
 })
 
@@ -79,8 +78,7 @@ const loadData = async () => {
   workshop.cacheCourse(course)
   workshop.makeCourseActive(course.publicKey)
   workshop.cacheLessons(lessonPlans)
-  // workshop.cacheCoursePaths(course.publicKey, paths)
-  lessonPaths.value = paths
+  workshop.cacheCoursePaths(course.publicKey, paths)
 }
 loadData()
 

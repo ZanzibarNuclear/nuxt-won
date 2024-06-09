@@ -18,5 +18,5 @@ export default defineEventHandler(async (event) => {
       statusText: `${error.code} : ${error.message}`,
     })
   }
-  return data
+  return data[0]
 })

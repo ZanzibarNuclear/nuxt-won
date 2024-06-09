@@ -81,10 +81,20 @@ export const useWorkshopStore = defineStore('workshop', () => {
     return coursePaths[courseKey]
   }
   const activeLessonPaths = computed(() => {
-    if (isCourseActive) {
-      return Object.values(getCoursePaths(activeCourseKey))
+    if (isCourseActive.value) {
+      return Object.values(getCoursePaths(activeCourseKey.value))
     }
   })
+  const cacheActiveLessonPath = (path: LessonPath) => {
+    if (isCourseActive) {
+      const paths = coursePaths[activeCourseKey.value]
+      paths[path.publicKey] = path
+    }
+  }
+  const removeActiveLessonPath = (pathKey: string) => {
+    const paths = coursePaths[activeCourseKey.value]
+    delete paths[pathKey]
+  }
 
   return {
     courseList,
@@ -105,5 +115,7 @@ export const useWorkshopStore = defineStore('workshop', () => {
     deactivateLesson,
     cacheCoursePaths,
     activeLessonPaths,
+    cacheActiveLessonPath,
+    removeActiveLessonPath,
   }
 })

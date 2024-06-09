@@ -5,6 +5,7 @@
       :lessons="workshop.lessonList"
       :course-key="courseKey"
       @save-path="onAddPath"
+      @cancel="onCancel"
     />
     <h3>Laying it out there</h3>
     <div v-if="!lessonPaths?.length">
@@ -13,6 +14,11 @@
     <ul v-else>
       <li v-for="path in lessonPaths">
         {{ path.name }} {{ path.publicKey }} Start with {{ path.trailhead }}
+        <UButton
+          icon="i-ph-x-circle"
+          color="amber"
+          @click="() => onDeletePath(path.publicKey)"
+        />
         <ul v-if="path.steps">
           <li v-for="step in path.steps">
             From {{ step.from }} to {{ step.to }} : {{ step.teaser }}
@@ -24,17 +30,26 @@
 </template>
 
 <script setup lang="ts">
-import { createLessonPath } from '~/db/LessonPathModel'
+import {
+  createLessonPath,
+  saveLessonPath,
+  deleteLessonPath,
+} from '~/db/LessonPathModel'
 
 const props = defineProps(['lessonPaths', 'courseKey'])
 const workshop = useWorkshopStore()
 
-const onAddPath = (pathData) => {
-  const newPath = createLessonPath(pathData)
-  console.log('created a path', newPath)
+const onAddPath = async (pathData) => {
+  const minted = await createLessonPath(pathData)
+  console.log('created a path', minted)
+  workshop.cacheActiveLessonPath(minted)
 }
 const onCancel = () => {
   console.log('path canceled')
+}
+const onDeletePath = async (pathKey: string) => {
+  await deleteLessonPath(pathKey)
+  workshop.removeActiveLessonPath(pathKey)
 }
 </script>
 
