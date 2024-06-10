@@ -5,7 +5,7 @@
     <div class="mx-auto">
       <div class="course-layout">
         <CourseTile
-          v-for="course in learning.courseList"
+          v-for="course in learning.publishedCourses"
           class="mx-2 my-4"
           :course="course"
         />

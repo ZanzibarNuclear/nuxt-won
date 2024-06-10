@@ -9,14 +9,10 @@
   </h1>
   <UTabs :items="items" class="w-full">
     <template #item="{ item }">
-      <UCard
-        @submit.prevent="
-          () => onSubmit(item.key === 'account' ? accountForm : passwordForm)
-        "
-      >
+      <UCard>
         <template #header>
           <h2 v-if="isLoaded">
-            {{ workshop.activeCourse.title }} (key:
+            {{ workshop.activeCourse?.title }} (key:
             {{ workshop.activeCourse?.publicKey }})
           </h2>
           <div>{{ item.description }}</div>
@@ -39,6 +35,14 @@
         </div>
         <template #footer>
           <div>Have a nice day!</div>
+          <div v-if="isPublished">
+            Published at: {{ workshop.activeCourse?.publishedAt }}
+            <UButton label="Withdraw" @click="onUnpublish(courseKey)" />
+          </div>
+          <div v-else>
+            This course is an unpublished draft.
+            <UButton label="Publish" @click="onPublish(courseKey)" />
+          </div>
         </template>
       </UCard>
     </template>
@@ -46,7 +50,7 @@
 </template>
 
 <script setup lang="ts">
-import { loadCourse } from '~/db/CourseModel'
+import { loadCourse, publishCourse, unpublishCourse } from '~/db/CourseModel'
 import { loadLessonPlans } from '~/db/LessonPlanModel'
 import { loadLessonPaths } from '~/db/LessonPathModel'
 
@@ -82,6 +86,9 @@ const loadData = async () => {
 }
 loadData()
 
+const isPublished = computed(() => {
+  return workshop.activeCourse?.publishedAt
+})
 const onGoToCourseList = () => {
   workshop.deactivateCourse()
   navigateTo('/workshop/courses')
@@ -89,6 +96,21 @@ const onGoToCourseList = () => {
 
 const onOpenLesson = (lessonKey) =>
   navigateTo(`/workshop/course-${courseKey}/lesson-${lessonKey}`)
+
+const onPublish = async (courseKey) => {
+  const delta = await publishCourse(courseKey)
+  if (delta) {
+    console.log('caching published course', delta)
+    workshop.cacheCourse(delta)
+  }
+}
+const onUnpublish = async (courseKey) => {
+  const delta = await unpublishCourse(courseKey)
+  if (delta) {
+    console.log('caching unpublished course', delta)
+    workshop.cacheCourse(delta)
+  }
+}
 
 const items = [
   {

@@ -1,10 +1,5 @@
 import { defineStore } from 'pinia'
-import type {
-  Course,
-  LessonPlan,
-  LessonPath,
-  LessonStep,
-} from '~/types/won-types'
+import type { Course, LessonPlan, LessonPath } from '~/types/won-types'
 
 export const useWorkshopStore = defineStore('workshop', () => {
   type CourseMap = { [k: string]: Course }
@@ -101,6 +96,7 @@ export const useWorkshopStore = defineStore('workshop', () => {
   }
 
   return {
+    courses,
     courseList,
     isCourseActive,
     activeCourse,
