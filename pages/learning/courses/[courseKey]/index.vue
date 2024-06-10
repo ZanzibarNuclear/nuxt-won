@@ -1,6 +1,6 @@
 <template>
   <div>
-    <UBreadcrumb :links="learningLinks" />
+    <UBreadcrumb :links="breadcrumbLinks" />
     <h1>{{ activeCourse.title }}</h1>
     <div>
       <h3>Pick a path through this course</h3>
@@ -39,8 +39,9 @@
 import { loadCourse } from '~/db/CourseModel'
 import { loadLessonPlans } from '~/db/LessonPlanModel'
 import { loadLessonPaths } from '~/db/LessonPathModel'
+import { logLearningEvent } from '~/db/EventModel'
 
-const learningLinks = [
+const breadcrumbLinks = [
   {
     label: 'Courses',
     icon: 'i-ph-house-line',
@@ -87,6 +88,8 @@ async function loadData() {
 loadData()
 
 const onStartLesson = (path) => {
+  logLearningEvent(courseKey, path.publicKey, path.trailhead, 'choose-path')
+
   learning.choosePath(path.publicKey)
   navigateTo('/learning/courses/' + courseKey + '/lessons/' + path.trailhead)
 }

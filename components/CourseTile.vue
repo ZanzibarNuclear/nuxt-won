@@ -18,7 +18,7 @@
           color="primary"
           variant="outline"
           label="Open this course"
-          @click="() => navigateTo(`/learning/courses/${publicKey}`)"
+          @click="goTo"
         />
       </div>
     </template>
@@ -26,15 +26,15 @@
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router'
+import { logLearningEvent } from '~/db/EventModel'
 
 const props = defineProps(['course'])
-const router = useRouter()
 
 const { publicKey, title, description, coverArt } = props.course
 
 const goTo = () => {
-  router.push(`/learning/courses/${publicKey}`)
+  logLearningEvent(publicKey, null, null, 'open-course')
+  navigateTo(`/learning/courses/${publicKey}`)
 }
 </script>
 

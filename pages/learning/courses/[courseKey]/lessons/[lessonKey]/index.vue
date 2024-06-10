@@ -1,6 +1,6 @@
 <template>
   <div>
-    <UBreadcrumb :links="learningLinks" />
+    <UBreadcrumb :links="breadcrumbLinks" />
     <h1>{{ activeLesson.title }}</h1>
     <LessonContentView :content-parts="learning.contentParts" class="mb-12" />
     <div class="next-lesson-prompt">
@@ -15,6 +15,10 @@
       <div v-else>
         <div class="font-bold text-xl">The End</div>
         <div>You seem to have reached the end of the course.</div>
+        <div v-if="!gotCreditForFinishing">
+          Click to <UButton @click="onClaimCredit">claim credit</UButton> for
+          finishing.
+        </div>
         <div>Want to <NuxtLink to="/learning">try another?</NuxtLink></div>
       </div>
     </div>
@@ -33,9 +37,10 @@
 
 <script setup lang="ts">
 import { loadContentParts } from '~/db/ContentPartModel'
+import { logLearningEvent } from '~/db/EventModel'
 import { loadLessonPlan } from '~/db/LessonPlanModel'
 
-const learningLinks = computed(() => {
+const breadcrumbLinks = computed(() => {
   return [
     {
       label: 'Courses',
@@ -69,8 +74,11 @@ const activeLesson = computed(() => {
   }
 })
 
+const gotCreditForFinishing = ref(false)
 const showCreditMessage = ref(false)
-const awardCredit = () => {
+const onClaimCredit = () => {
+  gotCreditForFinishing.value = true
+  logLearningEvent(courseKey, learning.activePath?.publicKey, null, 'finished')
   showCreditMessage.value = true
 }
 
@@ -93,6 +101,12 @@ async function loadData() {
 loadData()
 
 const onGoNext = () => {
+  logLearningEvent(
+    courseKey,
+    learning.activePath?.publicKey,
+    nextStep.value.to,
+    'take-step'
+  )
   navigateTo('/learning/courses/' + courseKey + '/lessons/' + nextStep.value.to)
 }
 </script>

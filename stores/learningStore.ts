@@ -36,6 +36,9 @@ export const useLearningStore = defineStore('learning', () => {
   }
 
   const courseList = computed(() => Object.values(courseIndex))
+  const publishedCourses = computed(() =>
+    courseList.value.filter((c) => c.publishedAt)
+  )
 
   const cacheCourse = (course: Course) => {
     courseIndex[course.publicKey] = course
@@ -77,6 +80,7 @@ export const useLearningStore = defineStore('learning', () => {
     lessonPlanIndex,
     cacheCourse,
     courseList,
+    publishedCourses,
     useCourse,
     activeCourse,
     activePath,

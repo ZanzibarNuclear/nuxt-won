@@ -33,7 +33,7 @@ export async function loadCourses() {
   }
 }
 
-export async function loadCourse(key) {
+export async function loadCourse(key: string) {
   const result = await $fetch(`/api/courses/${key}`)
   return result ? mapToObject(result) : null
 }
@@ -53,7 +53,7 @@ export async function createCourse(course: Course) {
   }
 }
 
-export async function deleteCoourse(key) {
+export async function deleteCourse(key: string) {
   const results = await $fetch(`/api/courses/${key}`, {
     method: 'DELETE',
   })
@@ -73,6 +73,30 @@ export async function saveCourse(course: Course) {
   })
   if (results) {
     return mapToObject(results[0])
+  } else {
+    return null
+  }
+}
+
+export async function publishCourse(courseKey: string) {
+  console.log('publishing course', courseKey)
+  const results = await $fetch(`/api/courses/${courseKey}/publish`, {
+    method: 'PUT',
+  })
+  if (results) {
+    return mapToObject(results)
+  } else {
+    return null
+  }
+}
+
+export async function unpublishCourse(courseKey: string) {
+  console.log('publishing course', courseKey)
+  const results = await $fetch(`/api/courses/${courseKey}/unpublish`, {
+    method: 'PUT',
+  })
+  if (results) {
+    return mapToObject(results)
   } else {
     return null
   }
