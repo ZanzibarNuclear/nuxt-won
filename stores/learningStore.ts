@@ -44,6 +44,7 @@ export const useLearningStore = defineStore('learning', () => {
     if (activeCourse.value?.publicKey !== courseKey) {
       activeCourse.value = courseIndex[courseKey]
       activePath.value = undefined
+      Object.keys(lessonPathIndex).forEach((key) => delete lessonPathIndex[key])
       activeLesson.value = undefined
       Object.keys(lessonPlanIndex).forEach((key) => delete lessonPlanIndex[key])
     }
