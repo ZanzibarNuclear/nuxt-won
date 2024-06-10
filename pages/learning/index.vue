@@ -1,8 +1,8 @@
 <template>
   <div>
-    <h1>Learn About Nuclear Energy</h1>
+    <UBreadcrumb :links="learningLinks" />
+    <h1>Topics of Interest</h1>
     <div class="mx-auto">
-      <h2>Choose a course</h2>
       <div class="course-layout">
         <CourseTile
           v-for="course in learning.courseList"
@@ -16,6 +16,13 @@
 
 <script setup lang="ts">
 import { loadCourses } from '~/db/CourseModel'
+
+const learningLinks = [
+  {
+    label: 'Courses',
+    icon: 'i-ph-house-line',
+  },
+]
 
 const learning = useLearningStore()
 const { data: courses, error } = await useAsyncData('courses', () =>

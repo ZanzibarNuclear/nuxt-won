@@ -1,15 +1,13 @@
 <template>
   <div class="item-container">
-    <div class="text-xl">{{ lessonPlan.title }}</div>
+    <h3>{{ lessonPlan.title }}</h3>
+    <img v-if="lessonPlan.coverArt" :src="lessonPlan.coverArt" width="250px" />
     <div class="rich-text"><span v-html="lessonPlan.description" /></div>
   </div>
 </template>
 
 <script setup lang="ts">
-const props = defineProps(['lessonPlan'])
-function openLesson(lessonKey: string) {
-  navigateTo(`lesson-${lessonKey}`)
-}
+defineProps(['lessonPlan'])
 </script>
 
 <style scoped>
