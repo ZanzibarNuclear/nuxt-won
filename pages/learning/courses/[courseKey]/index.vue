@@ -39,6 +39,7 @@
 import { loadCourse } from '~/db/CourseModel'
 import { loadLessonPlans } from '~/db/LessonPlanModel'
 import { loadLessonPaths } from '~/db/LessonPathModel'
+import { logLearningEvent } from '~/db/EventModel'
 
 const breadcrumbLinks = [
   {
@@ -87,6 +88,8 @@ async function loadData() {
 loadData()
 
 const onStartLesson = (path) => {
+  logLearningEvent(courseKey, path.publicKey, path.trailhead, 'choose-path')
+
   learning.choosePath(path.publicKey)
   navigateTo('/learning/courses/' + courseKey + '/lessons/' + path.trailhead)
 }

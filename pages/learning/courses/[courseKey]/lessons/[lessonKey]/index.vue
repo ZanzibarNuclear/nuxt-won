@@ -33,6 +33,7 @@
 
 <script setup lang="ts">
 import { loadContentParts } from '~/db/ContentPartModel'
+import { logLearningEvent } from '~/db/EventModel'
 import { loadLessonPlan } from '~/db/LessonPlanModel'
 
 const breadcrumbLinks = computed(() => {
@@ -70,9 +71,6 @@ const activeLesson = computed(() => {
 })
 
 const showCreditMessage = ref(false)
-const awardCredit = () => {
-  showCreditMessage.value = true
-}
 
 async function loadData() {
   const { data: lessonData, pending } = await useAsyncData(
@@ -93,6 +91,12 @@ async function loadData() {
 loadData()
 
 const onGoNext = () => {
+  logLearningEvent(
+    courseKey,
+    learning.activePath?.publicKey,
+    nextStep.value.to,
+    'take-step'
+  )
   navigateTo('/learning/courses/' + courseKey + '/lessons/' + nextStep.value.to)
 }
 </script>
