@@ -60,21 +60,24 @@ const activeCourse = computed(() => {
   }
 })
 
-const { data: courseData } = await useAsyncData(
-  `course-${courseKey}`,
-  async () => {
-    const [course, lessonPlans, paths] = await Promise.all([
-      loadCourse(courseKey as string),
-      loadLessonPlans(courseKey as string),
-      loadLessonPaths(courseKey as string),
-    ])
-    return { course, lessonPlans, paths }
-  }
-)
-learning.cacheCourse(courseData.value?.course)
-learning.useCourse(courseKey)
-learning.cacheLessons(courseData.value?.lessonPlans)
-learning.cacheLessonPaths(courseData.value?.paths)
+async function loadData() {
+  const { data: courseData } = await useAsyncData(
+    `course-${courseKey}`,
+    async () => {
+      const [course, lessonPlans, paths] = await Promise.all([
+        loadCourse(courseKey as string),
+        loadLessonPlans(courseKey as string),
+        loadLessonPaths(courseKey as string),
+      ])
+      return { course, lessonPlans, paths }
+    }
+  )
+  learning.cacheCourse(courseData.value?.course)
+  learning.useCourse(courseKey)
+  learning.cacheLessons(courseData.value?.lessonPlans)
+  learning.cacheLessonPaths(courseData.value?.paths)
+}
+loadData()
 </script>
 
 <style scoped>

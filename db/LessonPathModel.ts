@@ -45,21 +45,15 @@ const mapToStepTable = (step: LessonStep) => {
 
 export async function loadLessonPaths(courseKey: string) {
   const results = await $fetch(`/api/courses/${courseKey}/lesson-paths`)
-
   let paths = []
-  if (results) {
-    paths = results.map((row) => mapToPath(row))
-
-    paths.forEach(async (path) => {
-      const results2 = await loadLessonSteps(path.publicKey)
-
-      if (results2) {
-        const steps = results2.map((row2) => mapToStep(row2))
-        path.steps = steps
-      }
-    })
+  if (!results) {
+    return paths
   }
-  console.log(`return paths for ${courseKey}`, paths)
+  paths = results.map((row) => mapToPath(row))
+
+  for (const path of paths) {
+    path.steps = await loadLessonSteps(path.publicKey)
+  }
 
   return paths
 }
