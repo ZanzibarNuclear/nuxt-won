@@ -1,6 +1,6 @@
 <template>
   <div>
-    <UBreadcrumb :links="learningLinks" />
+    <UBreadcrumb :links="breadcrumbLinks" />
     <h1>{{ activeLesson.title }}</h1>
     <LessonContentView :content-parts="learning.contentParts" class="mb-12" />
     <div class="next-lesson-prompt">
@@ -35,7 +35,7 @@
 import { loadContentParts } from '~/db/ContentPartModel'
 import { loadLessonPlan } from '~/db/LessonPlanModel'
 
-const learningLinks = computed(() => {
+const breadcrumbLinks = computed(() => {
   return [
     {
       label: 'Courses',

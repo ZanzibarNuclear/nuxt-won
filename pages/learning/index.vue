@@ -1,6 +1,6 @@
 <template>
   <div>
-    <UBreadcrumb :links="learningLinks" />
+    <UBreadcrumb :links="breadcrumbLinks" />
     <h1>Topics of Interest</h1>
     <div class="mx-auto">
       <div class="course-layout">
@@ -17,7 +17,7 @@
 <script setup lang="ts">
 import { loadCourses } from '~/db/CourseModel'
 
-const learningLinks = [
+const breadcrumbLinks = [
   {
     label: 'Courses',
     icon: 'i-ph-house-line',
@@ -25,17 +25,19 @@ const learningLinks = [
 ]
 
 const learning = useLearningStore()
-const { data: courses, error } = await useAsyncData('courses', () =>
-  loadCourses()
-)
-console.log(useNuxtApp().payload.data)
 
-if (courses.value) {
-  courses.value.forEach((course) => learning.cacheCourse(course))
+async function loadData() {
+  const { data: courses, error } = await useAsyncData('courses', () =>
+    loadCourses()
+  )
+  if (courses.value) {
+    courses.value.forEach((course) => learning.cacheCourse(course))
+  }
+  if (error.value) {
+    console.error('Something went wrong', error.value?.message)
+  }
 }
-if (error.value) {
-  console.error('Something went wrong', error.value?.message)
-}
+loadData()
 </script>
 
 <style scoped>
