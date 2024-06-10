@@ -69,15 +69,27 @@
           <div class="step-grid">
             <div>{{ step.from }}</div>
             <div>{{ step.to }}</div>
-            <div>{{ step.teaser }}</div>
+            <div v-if="isEditingStep(step)">
+              <UInput v-model="teaserUpdate" />
+            </div>
+            <div v-else>{{ step.teaser }}</div>
             <div>
-              Sort / Edit /
-              <UButton
-                class="ml-6"
-                icon="i-ph-x-circle"
-                color="amber"
-                @click="() => onDeleteStep(step)"
-              />
+              <div v-if="isEditingStep(step)">
+                <UButton icon="i-ph-cloud-arrow-up" @click="onSaveStep" />
+                <UButton icon="i-ph-arrow-arc-left" @click="onCancelEditStep" />
+              </div>
+              <div v-else>
+                <UButton
+                  icon="i-ph-pencil"
+                  @click="() => onOpenEditStep(step)"
+                />
+                <UButton
+                  class="ml-6"
+                  icon="i-ph-x-circle"
+                  color="amber"
+                  @click="() => onDeleteStep(step)"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -101,6 +113,7 @@ import {
   deleteLessonPath,
   createLessonStep,
   deleteLessonStep,
+  saveLessonStep,
 } from '~/db/LessonPathModel'
 
 const props = defineProps(['lessonPaths', 'courseKey'])
@@ -109,10 +122,17 @@ const uiState = reactive({
   openAddPath: false,
   openEditPath: false,
   openSteps: false,
+  openEditStep: false,
 })
+
+const stepToEdit = ref()
+const teaserUpdate = ref('')
 
 const openPath = ref()
 const stepMap = reactive({})
+const isEditingStep = (step) => {
+  return uiState.openEditStep && stepToEdit.value.id === step.id
+}
 
 function setupStepMap(steps) {
   if (steps) {
@@ -169,9 +189,27 @@ const onCreateStep = async (step) => {
   openPath.value.steps.push(step)
   stepMap[step.from] = step
 }
-const onSaveStep = (step) => {
-  console.log('save step', step)
-  // TODO: use model and update local copy
+const onOpenEditStep = (step) => {
+  stepToEdit.value = step
+  teaserUpdate.value = step.teaser
+  uiState.openEditStep = true
+}
+function resetStepEdit() {
+  stepToEdit.value = null
+  teaserUpdate.value = ''
+  uiState.openEditStep = false
+}
+const onSaveStep = async () => {
+  console.log('save step', stepToEdit.value)
+  const delta = Object.assign(stepToEdit.value, { teaser: teaserUpdate.value })
+  await saveLessonStep(delta)
+
+  // TODO: apply change locally
+
+  resetStepEdit()
+}
+const onCancelEditStep = () => {
+  resetStepEdit()
 }
 const onDeleteStep = async (step) => {
   console.log('delete step', step)

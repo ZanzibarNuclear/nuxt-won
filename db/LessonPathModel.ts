@@ -125,6 +125,20 @@ export async function createLessonStep(step: LessonStep) {
   }
 }
 
+export async function saveLessonStep(step: LessonStep) {
+  console.log('saving changes to lesson step', step)
+  const input = mapToStepTable(step)
+  const results = await $fetch(`/api/lesson-steps/${step.id}`, {
+    method: 'PUT',
+    body: input,
+  })
+  if (results) {
+    return mapToPath(results)
+  } else {
+    return null
+  }
+}
+
 export async function deleteLessonStep(id: number) {
   console.log('request to delete step', id)
 
