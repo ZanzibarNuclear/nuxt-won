@@ -2,8 +2,22 @@
   <div>
     <UBreadcrumb :links="learningLinks" />
     <h1>{{ activeLesson.title }}</h1>
-    <LessonContentView :content-parts="learning.contentParts" />
-    <UButton @click="awardCredit">Give me credit</UButton>
+    <LessonContentView :content-parts="learning.contentParts" class="mb-12" />
+    <div class="next-lesson-prompt">
+      <div v-if="nextStep">
+        <div class="mb-4">
+          {{ nextStep.teaser }}
+        </div>
+        <div>
+          <UButton label="Let's go" @click="onGoNext" />
+        </div>
+      </div>
+      <div v-else>
+        <div class="font-bold text-xl">The End</div>
+        <div>You seem to have reached the end of the course.</div>
+        <div>Want to <NuxtLink to="/learning">try another?</NuxtLink></div>
+      </div>
+    </div>
   </div>
   <UModal v-model="showCreditMessage">
     <div class="p-6">
@@ -43,6 +57,7 @@ const learningLinks = computed(() => {
 const learning = useLearningStore()
 const route = useRoute()
 const { lessonKey, courseKey } = route.params
+const nextStep = ref()
 
 const activeLesson = computed(() => {
   if (learning.activeLesson) {
@@ -73,8 +88,21 @@ async function loadData() {
   learning.cacheLesson(lessonData.value.plan)
   learning.useLesson(lessonKey)
   learning.cacheContents(lessonData.value.contents)
+  nextStep.value = learning.lookupStep(lessonKey)
 }
 loadData()
+
+const onGoNext = () => {
+  navigateTo('/learning/courses/' + courseKey + '/lessons/' + nextStep.value.to)
+}
 </script>
 
-<style scoped></style>
+<style scoped>
+.next-lesson-prompt {
+  margin-top: 1rem;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #f5f5f5;
+}
+</style>

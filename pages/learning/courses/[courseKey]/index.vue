@@ -2,6 +2,13 @@
   <div>
     <UBreadcrumb :links="learningLinks" />
     <h1>{{ activeCourse.title }}</h1>
+    <div>
+      <h3>Pick a path through this course</h3>
+      <div v-for="path in learning.activeLessonPaths" class="my-6 px-4">
+        <span class="font-bold">{{ path.name }}</span> {{ path.description }}
+        <UButton label="Let's go" @click="() => onStartLesson(path)" />
+      </div>
+    </div>
     <div><span class="rich-text" v-html="activeCourse.description" /></div>
     <h3>What You Will Learn</h3>
     <div class="my-2 rich-text">
@@ -78,6 +85,11 @@ async function loadData() {
   learning.cacheLessonPaths(courseData.value?.paths)
 }
 loadData()
+
+const onStartLesson = (path) => {
+  learning.choosePath(path.publicKey)
+  navigateTo('/learning/courses/' + courseKey + '/lessons/' + path.trailhead)
+}
 </script>
 
 <style scoped>
