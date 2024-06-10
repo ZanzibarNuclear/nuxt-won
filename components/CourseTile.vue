@@ -2,12 +2,12 @@
   <UCard class="card">
     <template #header>
       <div class="flex">
-        <NuxtImg :src="coverArt" class="cover-art" />
+        <NuxtImg v-if="coverArt" :src="coverArt" class="cover-art" />
       </div>
     </template>
     <div>
       <div class="text-2xl mb-4">{{ title }}</div>
-      <div class="my-2 rich-text">
+      <div class="my-2 rich-text overflow-y-auto h-48">
         <span v-html="description" />
       </div>
     </div>
@@ -17,8 +17,8 @@
           block
           color="primary"
           variant="outline"
-          label="Take a closer look"
-          :to="`/learning/course-${publicKey}`"
+          label="Open this course"
+          @click="() => navigateTo(`/learning/courses/${publicKey}`)"
         />
       </div>
     </template>
@@ -31,17 +31,17 @@ import { useRouter } from 'vue-router'
 const props = defineProps(['course'])
 const router = useRouter()
 
-const { publicKey, title, description, coverArt, syllabus } = props.course
+const { publicKey, title, description, coverArt } = props.course
 
 const goTo = () => {
-  router.push(`/learning/course-${publicKey}`)
+  router.push(`/learning/courses/${publicKey}`)
 }
 </script>
 
 <style lang="scss" scoped>
 .card {
   display: grid;
-  grid-template-rows: max-content 200px 1fr;
+  grid-template-rows: max-content auto 1fr;
 }
 .card img {
   max-height: 150px;

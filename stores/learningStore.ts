@@ -16,7 +16,11 @@ export const useLearningStore = defineStore('learning', () => {
     courseIndex[course.publicKey] = course
   }
   const useCourse = (courseKey: string) => {
-    activeCourse.value = courseIndex[courseKey]
+    if (activeCourse.value?.publicKey !== courseKey) {
+      activeCourse.value = courseIndex[courseKey]
+      activeLesson.value = undefined
+      Object.keys(lessonPlanIndex).forEach((key) => delete lessonPlanIndex[key])
+    }
     return !!activeCourse.value
   }
 
@@ -30,11 +34,7 @@ export const useLearningStore = defineStore('learning', () => {
     plans.forEach((plan) => cacheLesson(plan))
   }
   const lessonsForActiveCourse = computed(() => Object.values(lessonPlanIndex))
-  // const lessonsForActiveCourse = computed(() => {
-  //   Object.values(lessonPlanIndex).filter(
-  //     (plan) => plan.courseId === activeCourse.value?.id
-  //   )
-  // })
+
   const useLesson = (lessonKey: string) => {
     activeLesson.value = lessonPlanIndex[lessonKey]
     return !!activeLesson.value

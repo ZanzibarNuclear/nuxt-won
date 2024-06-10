@@ -1,11 +1,6 @@
 <template>
   <div>
-    <div class="text-sm">You are already getting smarter.</div>
-    <div>
-      <NuxtLink :to="`/learning/course-${learning.activeCourse?.publicKey}`"
-        >Return to list of lessons for course</NuxtLink
-      >
-    </div>
+    <UBreadcrumb :links="learningLinks" />
     <h1>{{ activeLesson.title }}</h1>
     <LessonContentView :content-parts="learning.contentParts" />
     <UButton @click="awardCredit">Give me credit</UButton>
@@ -26,9 +21,28 @@
 import { loadContentParts } from '~/db/ContentPartModel'
 import { loadLessonPlan } from '~/db/LessonPlanModel'
 
+const learningLinks = computed(() => {
+  return [
+    {
+      label: 'Courses',
+      icon: 'i-ph-house-line',
+      to: '/learning',
+    },
+    {
+      label: 'Course Overview',
+      icon: 'i-ph-list-checks',
+      to: '/learning/courses/' + courseKey,
+    },
+    {
+      label: 'Lesson',
+      icon: 'i-ph-book',
+    },
+  ]
+})
+
 const learning = useLearningStore()
 const route = useRoute()
-const lessonKey = route.params.key
+const { lessonKey, courseKey } = route.params
 
 const activeLesson = computed(() => {
   if (learning.activeLesson) {
@@ -45,7 +59,7 @@ const awardCredit = () => {
   showCreditMessage.value = true
 }
 
-if (!learning.useLesson(lessonKey)) {
+async function loadData() {
   const { data: lessonData, pending } = await useAsyncData(
     `lesson-data-${lessonKey}`,
     async () => {
@@ -59,9 +73,8 @@ if (!learning.useLesson(lessonKey)) {
   learning.cacheLesson(lessonData.value.plan)
   learning.useLesson(lessonKey)
   learning.cacheContents(lessonData.value.contents)
-} else {
-  console.log('unknown lesson key')
 }
+loadData()
 </script>
 
 <style scoped></style>
