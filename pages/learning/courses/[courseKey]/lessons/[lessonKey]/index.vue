@@ -15,6 +15,10 @@
       <div v-else>
         <div class="font-bold text-xl">The End</div>
         <div>You seem to have reached the end of the course.</div>
+        <div v-if="!gotCreditForFinishing">
+          Click to <UButton @click="onClaimCredit">claim credit</UButton> for
+          finishing.
+        </div>
         <div>Want to <NuxtLink to="/learning">try another?</NuxtLink></div>
       </div>
     </div>
@@ -70,7 +74,13 @@ const activeLesson = computed(() => {
   }
 })
 
+const gotCreditForFinishing = ref(false)
 const showCreditMessage = ref(false)
+const onClaimCredit = () => {
+  gotCreditForFinishing.value = true
+  logLearningEvent(courseKey, learning.activePath?.publicKey, null, 'finished')
+  showCreditMessage.value = true
+}
 
 async function loadData() {
   const { data: lessonData, pending } = await useAsyncData(
