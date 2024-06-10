@@ -1,14 +1,39 @@
-import type { ContentPart, Course, LessonPlan } from '~/types/won-types'
+import type {
+  ContentPart,
+  Course,
+  LessonPlan,
+  LessonPath,
+} from '~/types/won-types'
 
 export const useLearningStore = defineStore('learning', () => {
   type CourseMap = { [k: string]: Course }
   type LessonPlanMap = { [k: string]: LessonPlan }
+  type LessonPathMap = { [k: string]: LessonPath }
   const courseIndex: CourseMap = reactive({})
+  const lessonPathIndex: LessonPathMap = reactive({})
   const lessonPlanIndex: LessonPlanMap = reactive({})
 
   const activeCourse: Ref<Course | undefined> = ref()
+  const activePath: Ref<LessonPath | undefined> = ref()
   const activeLesson: Ref<LessonPlan | undefined> = ref()
   const contentParts: Ref<ContentPart[]> = ref([])
+
+  const cacheLessonPaths = (paths: LessonPath[]) => {
+    paths.forEach((path) => {
+      lessonPathIndex[path.publicKey] = path
+    })
+  }
+  const activeLessonPaths = computed(() => Object.values(lessonPathIndex))
+  const choosePath = (pathKey: string) => {
+    activePath.value = lessonPathIndex[pathKey]
+  }
+  const lookupStep = (from: string) => {
+    if (!activePath.value || !activePath.value.steps) {
+      console.log('no step found for given lesson')
+      return undefined
+    }
+    return activePath.value.steps.find((step) => step.from === from)
+  }
 
   const courseList = computed(() => Object.values(courseIndex))
 
@@ -18,6 +43,7 @@ export const useLearningStore = defineStore('learning', () => {
   const useCourse = (courseKey: string) => {
     if (activeCourse.value?.publicKey !== courseKey) {
       activeCourse.value = courseIndex[courseKey]
+      activePath.value = undefined
       activeLesson.value = undefined
       Object.keys(lessonPlanIndex).forEach((key) => delete lessonPlanIndex[key])
     }
@@ -52,6 +78,7 @@ export const useLearningStore = defineStore('learning', () => {
     courseList,
     useCourse,
     activeCourse,
+    activePath,
     activeLesson,
     contentParts,
     cacheLesson,
@@ -59,5 +86,9 @@ export const useLearningStore = defineStore('learning', () => {
     useLesson,
     cacheContents,
     lessonsForActiveCourse,
+    cacheLessonPaths,
+    activeLessonPaths,
+    choosePath,
+    lookupStep,
   }
 })

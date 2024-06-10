@@ -31,6 +31,7 @@
 <script setup lang="ts">
 import { loadCourse } from '~/db/CourseModel'
 import { loadLessonPlans } from '~/db/LessonPlanModel'
+import { loadLessonPaths } from '~/db/LessonPathModel'
 
 const learningLinks = [
   {
@@ -59,19 +60,21 @@ const activeCourse = computed(() => {
   }
 })
 
-const { data: courseData, error } = await useAsyncData(
+const { data: courseData } = await useAsyncData(
   `course-${courseKey}`,
   async () => {
-    const [course, lessonPlans] = await Promise.all([
-      loadCourse(courseKey),
-      loadLessonPlans(courseKey),
+    const [course, lessonPlans, paths] = await Promise.all([
+      loadCourse(courseKey as string),
+      loadLessonPlans(courseKey as string),
+      loadLessonPaths(courseKey as string),
     ])
-    return { course, lessonPlans }
+    return { course, lessonPlans, paths }
   }
 )
 learning.cacheCourse(courseData.value?.course)
 learning.useCourse(courseKey)
 learning.cacheLessons(courseData.value?.lessonPlans)
+learning.cacheLessonPaths(courseData.value?.paths)
 </script>
 
 <style scoped>
