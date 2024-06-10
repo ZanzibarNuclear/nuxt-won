@@ -1,5 +1,6 @@
 <template>
   <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
+    <h2>{{ heading }}</h2>
     <UFormGroup label="Title" name="title">
       <UInput v-model="state.title" />
     </UFormGroup>
@@ -31,6 +32,7 @@ const emit = defineEmits(['save-lesson-plan', 'cancel'])
 const props = defineProps({
   courseId: { type: Number, required: true },
   lessonPlan: { type: Object, required: false },
+  heading: { type: String, default: 'Lesson Information' },
 })
 
 const schema = object({

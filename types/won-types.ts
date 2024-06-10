@@ -6,8 +6,8 @@ export type Course = {
   coverArt: string | null
   syllabus: string | null
   publishedAt: string | null
+  paths: LessonPath[] | null
 }
-
 export type LessonPlan = {
   id: number
   publicKey: string
@@ -17,6 +17,22 @@ export type LessonPlan = {
   coverArt: string | null
   objective: string | null
   publishedAt: string | null
+}
+export type LessonPath = {
+  id: number
+  publicKey: string
+  name: string
+  description: string
+  courseKey: string
+  trailhead: string
+  steps: LessonStep[] | null
+}
+export type LessonStep = {
+  id: number
+  lessonPath: string
+  from: string
+  to: string
+  teaser: string
 }
 
 export type TextContent = {
