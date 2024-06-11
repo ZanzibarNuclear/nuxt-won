@@ -2,36 +2,26 @@
   <div>
     <UBreadcrumb :links="breadcrumbLinks" />
     <h1>{{ activeCourse.title }}</h1>
-    <div>
-      <h3>Pick a path through this course</h3>
-      <div v-for="path in learning.activeLessonPaths" class="my-6 px-4">
-        <span class="font-bold">{{ path.name }}</span> {{ path.description }}
-        <UButton label="Let's go" @click="() => onStartLesson(path)" />
-      </div>
-    </div>
     <div><span class="rich-text" v-html="activeCourse.description" /></div>
     <h3>What You Will Learn</h3>
     <div class="my-2 rich-text">
       <span v-html="activeCourse.syllabus" />
     </div>
-    <div>
-      <h3>Lessons</h3>
-      <ul>
-        <li v-for="lesson in learning.lessonsForActiveCourse" class="my-6 px-4">
-          <LessonListItem
-            :lesson-plan="lesson"
-            @click="
-              navigateTo(
-                '/learning/courses/' +
-                  courseKey +
-                  '/lessons/' +
-                  lesson.publicKey
-              )
-            "
-          />
-        </li>
-      </ul>
+  </div>
+  <div class="prompt-box" v-if="isReady">
+    <h3 v-if="isMultiplePaths">Pick a path through this course</h3>
+    <div v-for="path in learning.activeLessonPaths" class="py-2">
+      <hr v-if="isMultiplePaths" class="my-2" />
+      <div class="font-bold">{{ path.name }}</div>
+      <div class="mb-2">{{ path.description }}</div>
+      <UButton @click="() => onStartLesson(path)"
+        >Start <UIcon name="i-ph-arrow-right-duotone"
+      /></UButton>
     </div>
+  </div>
+  <div v-else class="prompt-box">
+    <h3>Nowhere to Go</h3>
+    <div>Sorry, it appears that this course is not ready.</div>
   </div>
 </template>
 
@@ -57,6 +47,9 @@ const learning = useLearningStore()
 
 const route = useRoute()
 const courseKey = route.params.courseKey
+
+const isMultiplePaths = computed(() => learning.activeLessonPaths.length > 1)
+const isReady = computed(() => learning.activeLessonPaths.length > 0)
 
 const activeCourse = computed(() => {
   if (learning.activeCourse) {

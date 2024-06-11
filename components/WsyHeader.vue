@@ -1,3 +1,56 @@
+<template>
+  <div class="prompt-box">
+    <div v-if="isKnownPlayer && !edit">
+      <div class="text-xl">
+        People shall know you as "{{ player.alias }}."
+        <UButton
+          @click="editPlayer"
+          icon="i-mdi-edit"
+          label="change alias"
+          variant="solid"
+          color="primary"
+          size="xs"
+        />
+      </div>
+      <div class="my-2">
+        You joined the discussion on {{ displayAsDateTime(player.joined_at) }}.
+      </div>
+    </div>
+    <div v-else>
+      <div v-if="isSignedIn">
+        <div class="text-xl" v-if="edit">Change Your Alias</div>
+        <div class="text-xl" v-else>Join in the Fun</div>
+        <UForm :state="playerState" :schema="playerSchema" @submit="onSubmit">
+          <UFormGroup
+            label="Alias"
+            description="This is how you will be known to the world. Think of it as a pen name."
+          >
+            <UInput v-model="playerState.alias" />
+          </UFormGroup>
+          <UButton
+            block
+            type="submit"
+            color="gray"
+            variant="solid"
+            :label="isKnownPlayer ? 'Change' : 'Start'"
+            class="mt-2"
+          />
+        </UForm>
+        <UButton
+          @click="cancelEditPlayer"
+          icon="i-mdi-cancel"
+          label="cancel"
+          variant="solid"
+          color="amber"
+          size="xs"
+          class="mt-4"
+        />
+      </div>
+      <div v-else>Who are you? Sign in, please.</div>
+    </div>
+  </div>
+</template>
+
 <script setup lang="ts">
 import { object, string, type InferType } from 'yup'
 import type { FormSubmitEvent } from '#ui/types'
@@ -62,57 +115,3 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
   edit.value = false
 }
 </script>
-
-<template>
-  <div class="my-6 border p-2 rounded-md bg-slate-100">
-    <div v-if="isKnownPlayer && !edit">
-      <div class="text-xl">People know you as "{{ player.alias }}."</div>
-      <div>
-        You joined on {{ displayAsDateTime(player.joined_at) }}.
-        <UBadge class="mx-2" color="primary" variant="solid" rounded
-          >{{ player.karma }} karma points</UBadge
-        >
-        <UButton
-          @click="editPlayer"
-          icon="i-mdi-edit"
-          label="change alias"
-          variant="solid"
-          color="lime"
-          size="xs"
-        />
-      </div>
-    </div>
-    <div v-else>
-      <div v-if="isSignedIn">
-        <div class="text-xl" v-if="edit">Change Your Alias</div>
-        <div class="text-xl" v-else>Join in the Fun</div>
-        <UForm :state="playerState" :schema="playerSchema" @submit="onSubmit">
-          <UFormGroup
-            label="Alias"
-            description="This is how you will be known to the world. Think of it as a pen name."
-          >
-            <UInput v-model="playerState.alias" />
-          </UFormGroup>
-          <UButton
-            block
-            type="submit"
-            color="gray"
-            variant="solid"
-            :label="isKnownPlayer ? 'Change' : 'Start'"
-            class="mt-2"
-          />
-        </UForm>
-        <UButton
-          @click="cancelEditPlayer"
-          icon="i-mdi-cancel"
-          label="cancel"
-          variant="solid"
-          color="amber"
-          size="xs"
-          class="mt-4"
-        />
-      </div>
-      <div v-else>Who are you? Sign in, please.</div>
-    </div>
-  </div>
-</template>
