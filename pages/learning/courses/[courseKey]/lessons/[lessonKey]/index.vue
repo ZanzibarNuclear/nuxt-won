@@ -3,13 +3,15 @@
     <UBreadcrumb :links="breadcrumbLinks" />
     <h1>{{ activeLesson.title }}</h1>
     <LessonContentView :content-parts="learning.contentParts" class="mb-12" />
-    <div class="next-lesson-prompt">
-      <div v-if="nextStep">
+    <div class="prompt-box">
+      <div v-if="nextStep" class="mx-auto">
         <div class="mb-4">
           {{ nextStep.teaser }}
         </div>
         <div>
-          <UButton label="Let's go" @click="onGoNext" />
+          <UButton @click="onGoNext"
+            >Continue <UIcon name="i-ph-arrow-right-duotone"
+          /></UButton>
         </div>
       </div>
       <div v-else>
@@ -111,12 +113,14 @@ const onGoNext = () => {
 }
 </script>
 
-<style scoped>
-.next-lesson-prompt {
+<style>
+.prompt-box {
   margin-top: 1rem;
   padding: 1rem;
   border: 1px solid #ddd;
   border-radius: 4px;
   background-color: #f5f5f5;
+  color: #222222;
+  @apply text-center w-3/4 mx-auto;
 }
 </style>
