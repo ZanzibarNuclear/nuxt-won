@@ -112,15 +112,3 @@ const onGoNext = () => {
   navigateTo('/learning/courses/' + courseKey + '/lessons/' + nextStep.value.to)
 }
 </script>
-
-<style>
-.prompt-box {
-  margin-top: 1rem;
-  padding: 1rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  background-color: #f5f5f5;
-  color: #222222;
-  @apply text-center w-3/4 mx-auto;
-}
-</style>
