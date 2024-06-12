@@ -21,7 +21,7 @@ export const useUserStore = defineStore('user', () => {
   })
 
   async function loadProfile(data: UserProfile) {
-    console.log('loadProfile', data)
+    console.log('User ' + data.screen_name + ' (' + data.id + ')')
     profile.value = { ...data }
   }
 

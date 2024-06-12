@@ -100,7 +100,7 @@ async function loadData() {
   learning.cacheContents(lessonData.value.contents)
   nextStep.value = learning.lookupStep(lessonKey)
 }
-loadData()
+await loadData()
 
 const onGoNext = () => {
   logLearningEvent(

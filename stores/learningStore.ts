@@ -55,12 +55,9 @@ export const useLearningStore = defineStore('learning', () => {
   }
 
   const cacheLesson = (plan: LessonPlan) => {
-    console.log('caching lesson plan', plan)
     lessonPlanIndex[plan.publicKey] = plan
   }
   const cacheLessons = (plans: LessonPlan[]) => {
-    console.log('caching lessons')
-
     plans.forEach((plan) => cacheLesson(plan))
   }
   const lessonsForActiveCourse = computed(() => Object.values(lessonPlanIndex))

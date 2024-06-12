@@ -78,7 +78,7 @@ async function loadData() {
   learning.cacheLessons(courseData.value?.lessonPlans)
   learning.cacheLessonPaths(courseData.value?.paths)
 }
-loadData()
+await loadData()
 
 const onStartLesson = (path) => {
   logLearningEvent(courseKey, path.publicKey, path.trailhead, 'choose-path')

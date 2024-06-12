@@ -21,7 +21,7 @@
     <div>Alternate text: {{ details.alt }}</div>
     <div>Width: {{ details.width }}</div>
   </div>
-  <div v-if="preview">
+  <div v-if="preview" class="flex justify-center">
     <NuxtImg
       v-if="details.src"
       :src="details.src"
