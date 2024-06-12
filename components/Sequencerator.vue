@@ -23,7 +23,7 @@
       />
       <UButton v-else icon="i-ph-tree-palm" class="mx-2" />
       {{ item.publicKey }}
-      {{ truncateString(JSON.stringify(item.details), 30) }}
+      {{ truncateString(JSON.stringify(item.details), 80) }}
     </div>
   </div>
 </template>
