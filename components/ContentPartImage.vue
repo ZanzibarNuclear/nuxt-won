@@ -2,18 +2,18 @@
   <div v-if="edit">
     <div>
       <UFormGroup label="Image URL">
-        <UInput v-model="details.src" />
+        <UInput id="imageUrl" v-model="details.src" />
       </UFormGroup>
       <UFormGroup
         label="Alt text"
         description="Good for screen readers and SEO. Shows up for broken images."
       >
-        <UInput v-model="details.alt" />
+        <UInput id="altText" v-model="details.alt" />
       </UFormGroup>
       <UFormGroup label="Width & Height" hint="optional">
         <div class="flex">
-          <UInput v-model="details.width" placeholder="width" />
-          <UInput v-model="details.height" placeholder="height" />
+          <UInput id="width" v-model="details.width" placeholder="width" />
+          <UInput id="height" v-model="details.height" placeholder="height" />
         </div>
       </UFormGroup>
       <UFormGroup
@@ -21,21 +21,29 @@
         hint="good idea!"
         description="Something clear and interesting. Appears on screen below the image."
       >
-        <UInput v-model="details.caption" />
+        <UInput id="caption" v-model="details.caption" />
       </UFormGroup>
       <UFormGroup
         label="Credit"
         description="Use when credit is due for licensing reasons or as a courtesy."
       >
-        <UInput v-model="details.credit.name" placeholder="Name of owner" />
-        <UInput v-model="details.credit.url" placeholder="URL to original" />
+        <UInput
+          id="credit"
+          v-model="details.credit.name"
+          placeholder="Name of owner"
+        />
+        <UInput
+          id="creditUrl"
+          v-model="details.credit.url"
+          placeholder="URL to original"
+        />
       </UFormGroup>
       <UFormGroup
         label="Background color"
         description="For framing the picture. Prevents problems with light/dark theme changes."
         hint="optional"
       >
-        <UInput v-model="details.bgColor" />
+        <UInput id="bgColor" v-model="details.bgColor" />
       </UFormGroup>
       <div>
         <UButton @click="commit" label="Update" class="mx-1" />

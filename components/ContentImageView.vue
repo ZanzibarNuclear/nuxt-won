@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="border shadow-md p-8" :style="useBgColor">
     <div class="flex justify-center">
       <NuxtImg
         :src="image.src"
@@ -7,7 +7,7 @@
         :title="image.caption"
         :width="useWidth"
         :height="image.height"
-        class="text-center"
+        class="text-center mb-2"
       />
     </div>
     <div v-if="image.caption" class="flex-row text-center">
@@ -16,7 +16,9 @@
     <div v-if="displayCredit" class="text-sm text-center">
       Credit: {{ image.credit.name }}
       <span v-if="image.credit.url"
-        ><NuxtLink to="image.credit.url">source</NuxtLink></span
+        >(<NuxtLink :to="image.credit.url" external target="_blank"
+          >source</NuxtLink
+        ><UIcon name="i-ph-arrow-circle-up-right" />)</span
       >
     </div>
   </div>
@@ -33,6 +35,14 @@ const useWidth = computed(() => {
     return null
   }
 })
+const useBgColor = computed(() => {
+  if (props.image.bgColor) {
+    console.log('has bgColor', props.image.bgColor)
+    return { 'background-color': props.image.bgColor }
+  } else {
+    return null
+  }
+})
 const displayCredit = computed(() => {
   return (
     props.image.credit && (props.image.credit.name || props.image.credit.url)
@@ -40,4 +50,8 @@ const displayCredit = computed(() => {
 })
 </script>
 
-<style scoped></style>
+<style scoped>
+a {
+  color: navy;
+}
+</style>
