@@ -36,7 +36,7 @@
       </div>
     </div>
     <div v-if="editSort">
-      <UModal v-model="editSort">
+      <UModal v-model="editSort" fullscreen>
         <Sequencerator
           :items-to-sequence="partsToReorder"
           @save-sequence="handleSaveSortOrder"
