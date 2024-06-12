@@ -59,14 +59,8 @@
       <span class="font-bold">Background:</span> {{ details.bgColor }}
     </div>
   </div>
-  <div v-if="preview" class="flex justify-center">
-    <NuxtImg
-      v-if="details.src"
-      :src="details.src"
-      :alt="details.alt"
-      :title="details.alt"
-      :width="details.width"
-    />
+  <div v-if="preview">
+    <ContentImageView :image="details" />
   </div>
 </template>
 
@@ -74,26 +68,29 @@
 const props = defineProps(['fields', 'edit', 'preview'])
 const emit = defineEmits(['save', 'cancel'])
 
-const details = ref({
+const details = reactive({
   src: null,
-  alt: '',
-  width: '300px',
+  alt: null,
+  width: null,
+  height: null,
+  caption: null,
+  credit: { name: null, url: null },
+  bgColor: null,
 })
 
 onMounted(() => {
-  details.value = {
-    src: props.fields.src,
-    alt: props.fields.alt,
-    width: props.fields.width,
-    height: props.fields.height,
-    caption: props.fields.caption,
-    credit: props.fields.credit,
-    bgColor: props.fields.bgColor,
-  }
+  details.src = props.fields.src
+  details.alt = props.fields.alt
+  details.width = props.fields.width
+  details.height = props.fields.height
+  details.caption = props.fields.caption
+  details.credit.name = props.fields.credit?.name
+  details.credit.url = props.fields.credit?.url
+  details.bgColor = props.fields.bgColor
 })
 
 const commit = () => {
-  emit('save', details.value)
+  emit('save', details)
 }
 const cancel = () => {
   emit('cancel')
