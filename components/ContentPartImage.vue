@@ -4,11 +4,38 @@
       <UFormGroup label="Image URL">
         <UInput v-model="details.src" />
       </UFormGroup>
-      <UFormGroup label="Alt text">
+      <UFormGroup
+        label="Alt text"
+        description="Good for screen readers and SEO. Shows up for broken images."
+      >
         <UInput v-model="details.alt" />
       </UFormGroup>
-      <UFormGroup label="Width">
-        <UInput v-model="details.width" />
+      <UFormGroup label="Width & Height" hint="optional">
+        <div class="flex">
+          <UInput v-model="details.width" placeholder="width" />
+          <UInput v-model="details.height" placeholder="height" />
+        </div>
+      </UFormGroup>
+      <UFormGroup
+        label="Caption"
+        hint="good idea!"
+        description="Something clear and interesting. Appears on screen below the image."
+      >
+        <UInput v-model="details.caption" />
+      </UFormGroup>
+      <UFormGroup
+        label="Credit"
+        description="Use when credit is due for licensing reasons or as a courtesy."
+      >
+        <UInput v-model="details.credit.name" placeholder="Name of owner" />
+        <UInput v-model="details.credit.url" placeholder="URL to original" />
+      </UFormGroup>
+      <UFormGroup
+        label="Background color"
+        description="For framing the picture. Prevents problems with light/dark theme changes."
+        hint="optional"
+      >
+        <UInput v-model="details.bgColor" />
       </UFormGroup>
       <div>
         <UButton @click="commit" label="Update" class="mx-1" />
@@ -17,9 +44,20 @@
     </div>
   </div>
   <div v-if="!edit && !preview">
-    <div>URL of image: {{ details.src }}</div>
-    <div>Alternate text: {{ details.alt }}</div>
-    <div>Width: {{ details.width }}</div>
+    <div><span class="font-bold">Image location:</span> {{ details.src }}</div>
+    <div><span class="font-bold">Caption:</span> {{ details.caption }}</div>
+    <div>
+      <span class="font-bold">Credit:</span> {{ details.credit?.name }} @
+      <NuxtLink v-if="details.credit?.url" :to="details.credit.url">{{
+        details.credit.url
+      }}</NuxtLink>
+    </div>
+    <div><span class="font-bold">Alternate text:</span> {{ details.alt }}</div>
+    <div>
+      <span class="font-bold">Width:</span> {{ details.width || 'n/a' }}
+      <span class="font-bold">Height:</span> {{ details.height || 'n/a' }}
+      <span class="font-bold">Background:</span> {{ details.bgColor }}
+    </div>
   </div>
   <div v-if="preview" class="flex justify-center">
     <NuxtImg
@@ -47,6 +85,10 @@ onMounted(() => {
     src: props.fields.src,
     alt: props.fields.alt,
     width: props.fields.width,
+    height: props.fields.height,
+    caption: props.fields.caption,
+    credit: props.fields.credit,
+    bgColor: props.fields.bgColor,
   }
 })
 

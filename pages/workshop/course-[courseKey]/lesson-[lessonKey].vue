@@ -140,6 +140,12 @@ const addContent = async () => {
         alt: '',
         width: null,
         height: null,
+        caption: '',
+        credit: {
+          name: '',
+          url: '',
+        },
+        bgColor: '',
       }
       break
     }
