@@ -22,7 +22,8 @@
 
 <script setup lang="ts">
 import { useUserStore } from '~/stores/userStore'
-const { profile, fetchAndLoadProfile } = useUserStore()
+
+const userStore = useUserStore()
 const supabase = useSupabaseClient()
 const user = useSupabaseUser()
 
@@ -37,13 +38,13 @@ const closeAuthPanel = () => {
 }
 
 const screenName = computed(() => {
-  return profile?.screen_name || user.value?.email || 'VIP'
+  return userStore.profile?.screen_name || user.email || 'VIP'
 })
 
 onMounted(async () => {
   signedIn.value = !!user.value
   if (signedIn.value) {
-    await fetchAndLoadProfile()
+    await userStore.fetchAndLoadProfile()
   }
 })
 
