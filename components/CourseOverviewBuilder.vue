@@ -16,6 +16,10 @@
   <div v-else-if="workshop.isCourseActive" class="rich-text">
     <h2>Title: {{ workshop.activeCourse.title }}</h2>
     <div>
+      <h3>Teaser:</h3>
+      <span v-html="workshop.activeCourse.teaser" />
+    </div>
+    <div>
       <NuxtImg
         :src="workshop.activeCourse.coverArt"
         width="250px"

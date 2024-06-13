@@ -3,6 +3,7 @@ export type Course = {
   publicKey: string
   title: string
   description: string | null
+  teaser: string | null
   coverArt: string | null
   syllabus: string | null
   publishedAt: string | null

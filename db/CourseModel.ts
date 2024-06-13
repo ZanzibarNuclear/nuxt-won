@@ -6,9 +6,11 @@ const mapToObject = (data): Course => {
     publicKey: data.public_key,
     title: data.title,
     description: data.description,
+    teaser: data.teaser,
     coverArt: data.cover_art,
     syllabus: data.syllabus,
     publishedAt: data.published_at,
+    paths: null,
   }
 }
 
@@ -18,6 +20,7 @@ const mapToTable = (course: Course) => {
     public_key: course.publicKey,
     title: course.title,
     description: course.description,
+    teaser: course.teaser,
     cover_art: course.coverArt,
     syllabus: course.syllabus,
     published_at: course.publishedAt,
@@ -40,7 +43,6 @@ export async function loadCourse(key: string) {
 
 export async function createCourse(course: Course) {
   const input = mapToTable({ ...course, publicKey: genKey(10) })
-  // input['public_key'] = genKey(10)
   console.log('course data in', input)
   const results = await $fetch('/api/courses', {
     method: 'POST',

@@ -8,7 +8,7 @@
     <div>
       <div class="text-2xl mb-4">{{ title }}</div>
       <div class="my-2 rich-text overflow-y-auto h-48">
-        <span v-html="description" />
+        <span v-html="blurb" />
       </div>
     </div>
     <template #footer>
@@ -30,8 +30,11 @@ import { logLearningEvent } from '~/db/EventModel'
 
 const props = defineProps(['course'])
 
-const { publicKey, title, description, coverArt } = props.course
+const { publicKey, title, description, teaser, coverArt } = props.course
 
+const blurb = computed(() => {
+  return teaser || description
+})
 const goTo = () => {
   logLearningEvent(publicKey, null, null, 'open-course')
   navigateTo(`/learning/courses/${publicKey}`)
