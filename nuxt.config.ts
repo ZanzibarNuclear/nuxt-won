@@ -1,7 +1,4 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-// TODO: figure out how to use, whether it does anything useful
-// import type { Database } from '~/types/supabase'
-
 export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: [
@@ -12,7 +9,7 @@ export default defineNuxtConfig({
     '@nuxtjs/supabase',
     // 'nuxt-tiptap-editor',
     '@nuxt/test-utils/module',
-    "@nuxt/image"
+    '@nuxt/image',
   ],
   runtimeConfig: {
     wsyInvitationsResendKey: process.env.WSY_RESEND_PROJECT_KEY,

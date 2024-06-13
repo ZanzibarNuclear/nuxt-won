@@ -1,0 +1,93 @@
+From VistaCreate (a.k.a. Vistaprint) https://create.vista.com/colors/color-names
+
+Steel blue
+==========
+steel blue: #4682B4
+sky blue: #87CEEB
+blue green: #0D98BA
+azure: #007fff
+
+Ocean natural theme
+===================
+  "blue is the new green"
+light sea green: #20B2AA
+medium turquoise: #48D1CC
+Tiffany blue: #0ABAB5
+Teal: #008080
+
+Cherenkov
+=========
+  from light to dark
+#33DDFF
+#00BFFF
+#00A1E6
+#008BD1
+#0071C2
+
+Electric blue
+=============
+electric blue: #7DF9FF
+cyan: #00FFFF
+turquoise: #40e0d0
+dark turquoise: #00ced1
+
+Blue grey
+=========
+  reliability, professionalism, and stability; livid, anger
+Blue grey: #6699CC
+serenity: #b3cee5
+baby blue: #89CFF0
+steel blue: #4682B4
+
+Aqua
+====
+  energy, movement, ocean, serenity
+aqua: #33FFFF
+light cyan: #E0FFFF
+cyan: #00FFFF
+blue green: #0D98BA
+
+Peach fuzz
+==========
+peach fuzz: #ffbe98
+peach puff: #ffdab9
+apricot: #FBCEB1
+peach: #ffe5b4
+
+Grayish
+=======
+  blends well with other colors
+Gunmetal grey: #8D918D
+silver: #c0c0c0
+grey: #808080
+sage green: #b2ac88
+
+Pewter set
+==========================
+  Serious, neutrality, depth
+pewter: #91A092
+sage green: #b2ac88
+ebony: #555D50
+charcoal: #36454F
+
+Bluesy
+===========
+medium blue: #0000CD
+royal blue: #4169E1
+blue: #0000ff
+dark blue: #00008B
+
+Orangey
+=======
+  positive, warm, comforting, liveliness, energy
+sandy brown: #F4A460
+orange: #FFA500
+dark orange: #ff8c00
+burnt orange: #cc5500
+
+Sophisti-blue
+=============
+Chambray: #405580
+Royal blue: #4169E1
+blue: #0000ff
+dark blue: #00008B

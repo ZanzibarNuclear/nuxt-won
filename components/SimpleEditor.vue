@@ -4,7 +4,7 @@
       <QuillEditor
         ref="editorRef"
         :options="quillOptions"
-        toolbar="minimal"
+        :toolbar="notTooSimpleToolbar"
         content-type="html"
         v-model:content="editorContent"
       />
@@ -30,6 +30,20 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css'
 
 const props = defineProps(['initialContent'])
 const emit = defineEmits(['shareChanges', 'close'])
+
+const notTooSimpleToolbar = [
+  [{ header: [1, 2, 3, false] }],
+  ['bold', 'italic', 'underline', { script: 'super' }, { script: 'sub' }],
+  ['link'],
+  [
+    { indent: '+1' },
+    { indent: '-1' },
+    'blockquote',
+    { list: 'ordered' },
+    { list: 'bullet' },
+  ],
+  ['clean'],
+]
 
 const editorRef = ref()
 const editorContent = ref('')
