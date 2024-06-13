@@ -8,7 +8,7 @@
 const links = [
   [
     {
-      label: 'Nuclear News',
+      label: 'News & Essays',
       icon: 'i-heroicons-newspaper',
       to: '/features/nuclear-news',
     },
@@ -31,11 +31,6 @@ const links = [
       label: 'Fun and Games',
       icon: 'i-heroicons-puzzle-piece',
       to: '/features/fun-and-games',
-    },
-    {
-      label: 'Essays',
-      icon: 'i-heroicons-document-text',
-      to: '/essays',
     },
   ],
   [

@@ -41,11 +41,19 @@ const features = [
     routeName: 'features-daily-lessons',
   },
   {
-    category: 'learning',
+    category: 'games',
+    name: 'Fun & Games',
+    coverImage: '/images/word-search.jpg',
+    description: 'Games with a nuclear theme.',
+    callToAction: "Let's Play",
+    routeName: 'features-fun-and-games',
+  },
+  {
+    category: 'hands-on',
     name: 'Simulators',
     coverImage: '/images/Cherenkov-radiation.jpg',
     description: 'Try nuclear simulators - fun and educational.',
-    callToAction: 'Learn By Doing',
+    callToAction: 'Learn By Experiment',
     routeName: 'features-simulators',
   },
 ]

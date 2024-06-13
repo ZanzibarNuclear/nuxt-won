@@ -37,7 +37,7 @@ async function loadData() {
     console.error('Something went wrong', error.value?.message)
   }
 }
-loadData()
+await loadData()
 </script>
 
 <style scoped>
