@@ -20,7 +20,8 @@
       <UIcon name="i-ph-arrow-elbow-down-right-duotone" /> {{ course.title }}
     </h3>
     <div class="rich-text">
-      <span v-html="course.description" />
+      <span v-if="course.teaser" v-html="course.teaser" />
+      <span v-else v-html="course.description" />
     </div>
   </div>
 </template>
@@ -70,6 +71,12 @@ const onCancelCreateCourse = () => (uiState.addCourse = false)
   margin-top: 1rem;
   margin-bottom: 1rem;
   list-style: disc;
+  list-style-position: inside;
+}
+.rich-text :deep(ol) {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  list-style: decimal;
   list-style-position: inside;
 }
 </style>

@@ -2,12 +2,13 @@
   <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
     <h2>{{ heading }}</h2>
     <UFormGroup label="Title" name="title">
-      <UInput v-model="state.title" />
+      <UInput id="title" v-model="state.title" />
     </UFormGroup>
     <SimpleEditorFormGroup :fields="state" field-name="description" />
+    <SimpleEditorFormGroup :fields="state" field-name="teaser" />
     <SimpleEditorFormGroup :fields="state" field-name="syllabus" />
     <UFormGroup label="Cover Art" name="coverArt">
-      <UInput v-model="state.coverArt" />
+      <UInput id="coverArt" v-model="state.coverArt" />
     </UFormGroup>
     <UButton
       type="submit"
@@ -42,6 +43,7 @@ const schema = object({
   publicKey: string(),
   title: string().required(),
   description: string(),
+  teaser: string(),
   syllabus: string(),
   coverArt: string(),
 })
@@ -51,6 +53,7 @@ const state = reactive({
   publicKey: undefined,
   title: undefined,
   description: undefined,
+  teaser: undefined,
   syllabus: undefined,
   coverArt: undefined,
 })
@@ -58,11 +61,13 @@ const state = reactive({
 const isEdit = computed(() => !!props.course)
 
 const setDefaults = (course) => {
-  const { id, publicKey, title, description, coverArt, syllabus } = course
+  const { id, publicKey, title, description, teaser, coverArt, syllabus } =
+    course
   state.id = id
   state.publicKey = publicKey
   state.title = title
   state.description = description
+  state.teaser = teaser
   state.coverArt = coverArt
   state.syllabus = syllabus
 }
