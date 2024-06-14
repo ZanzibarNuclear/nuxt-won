@@ -49,13 +49,6 @@ const links = [
       external: true,
     },
   ],
-  [
-    {
-      label: 'Curriculum Workshop',
-      icon: 'i-heroicons-academic-cap',
-      to: '/workshop',
-    },
-  ],
 ]
 </script>
 
