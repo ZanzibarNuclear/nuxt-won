@@ -39,11 +39,14 @@ const links = [
       icon: 'i-heroicons-document-text',
       to: 'https://zanzisnuclearstack.substack.com/',
       target: '_blank',
+      external: true,
     },
     {
       label: 'Zanzibar on X',
       icon: 'i-heroicons-x-mark',
-      to: 'https://twitter.com/ZanzibarNuclear',
+      to: 'https://x.com/ZanzibarNuclear',
+      target: '_blank',
+      external: true,
     },
   ],
   [
