@@ -8,6 +8,12 @@
         class="mr-2"
         color="amber"
       />
+      <UButton
+        icon="i-ph-eyes"
+        @click="togglePreview"
+        class="mr-2 mt-2"
+        color="green"
+      />
     </div>
     <div>
       <ContentPartHtml
@@ -72,6 +78,9 @@ const setEdit = () => {
 const handleDelete = () => {
   deleteContentPart(props.part.publicKey)
   emit('removePart', props.part.publicKey)
+}
+const togglePreview = () => {
+  preview.value = !preview.value
 }
 const handleChanges = async (details) => {
   console.log('commit changes', details)
