@@ -95,7 +95,8 @@ const onGoToCourseList = () => {
 }
 
 const onOpenLesson = (lessonKey) =>
-  navigateTo(`/workshop/course-${courseKey}/lesson-${lessonKey}`)
+  navigateTo(`/workshop/courses/${courseKey}/lessons/${lessonKey}`)
+// navigateTo(`/workshop/course-${courseKey}/lesson-${lessonKey}`)
 
 const onPublish = async (courseKey) => {
   const delta = await publishCourse(courseKey)
