@@ -84,7 +84,7 @@ const loadData = async () => {
   workshop.cacheLessons(lessonPlans)
   workshop.cacheCoursePaths(course.publicKey, paths)
 }
-loadData()
+await loadData()
 
 const isPublished = computed(() => {
   return workshop.activeCourse?.publishedAt

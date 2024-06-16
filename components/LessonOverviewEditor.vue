@@ -8,23 +8,25 @@
     />
   </div>
   <div v-else>
-    <div>Public Key: {{ publicKey }}</div>
-    <h3>{{ title }}</h3>
-    <div v-if="coverArt">
-      <NuxtImg :src="coverArt" :alt="title" width="300px" />
+    <div v-if="lesson">
+      <div>Public Key: {{ lesson.publicKey }}</div>
+      <h3>{{ lesson.title }}</h3>
+      <div v-if="lesson.coverArt">
+        <NuxtImg :src="lesson.coverArt" :alt="lesson.title" width="300px" />
+      </div>
+      <UCard class="rich-text">
+        <template #header
+          >Description: <span v-html="lesson.description"
+        /></template>
+        Objective:
+        <div><span v-html="lesson.objective" /></div>
+      </UCard>
     </div>
-    <UCard class="rich-text">
-      <template #header>Description: <span v-html="description" /></template>
-      Objective:
-      <div><span v-html="objective" /></div>
-    </UCard>
   </div>
 </template>
 
 <script setup lang="ts">
 const props = defineProps(['course', 'lesson'])
-
-const { publicKey, coverArt, title, description, objective } = props.lesson
 
 const isEdit = ref(false)
 

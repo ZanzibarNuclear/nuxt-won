@@ -17,7 +17,10 @@
             :lesson="workshop.activeLesson"
           />
         </div>
-        <div v-else-if="item.key === 'content'" class="space-y-3">Content</div>
+        <div v-else-if="item.key === 'content'" class="space-y-3">
+          Content
+          <LessonContentEditor :lesson-key="lessonKey" />
+        </div>
         <div v-if="item.key === 'sequence'" class="space-y-3">
           Content Sequence
           <Sequencerator
@@ -37,7 +40,7 @@
 <script setup lang="ts">
 import { loadCourse } from '~/db/CourseModel'
 import {
-  loadLessonPlans,
+  loadLessonPlan,
   createLessonPlan,
   saveLessonPlan,
   deleteLessonPlan,
@@ -78,23 +81,24 @@ const items = [
 ]
 
 async function loadData() {
+  // load everything to work on lesson, even if already cached
   const { data: courseData, error } = await useAsyncData(
     `course-${courseKey}`,
     async () => {
-      const [course, lessonPlans] = await Promise.all([
+      const [course, lessonPlan] = await Promise.all([
         loadCourse(courseKey),
-        loadLessonPlans(courseKey),
+        loadLessonPlan(lessonKey),
       ])
       console.log('returning course and lesson plans')
 
-      return { course, lessonPlans }
+      return { course, lessonPlan }
     }
   )
-  console.log('using course and lesson plans', courseData.value)
-  const { course, lessonPlans } = courseData.value
+  console.log('using course and lesson plan', courseData.value)
+  const { course, lessonPlan } = courseData.value
   workshop.cacheCourse(course)
   workshop.makeCourseActive(courseKey)
-  workshop.cacheLessons(lessonPlans)
+  workshop.cacheLesson(lessonPlan)
   workshop.makeLessonActive(lessonKey)
 }
 await loadData()
