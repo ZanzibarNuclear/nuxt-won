@@ -11,6 +11,7 @@ const mapToObject = (data): LearningBookmark => {
 
 export async function bookmarkLesson(lessonKey: string, pathKey: string) {
   const user = useUserStore().profile
+  console.log('user', user)
   if (user) {
     const bookmark = await $fetch('/api/users/' + user.id + '/bookmarks', {
       method: 'POST',
@@ -29,6 +30,8 @@ export async function bookmarkLesson(lessonKey: string, pathKey: string) {
 
 export async function getBookmark() {
   const user = useUserStore().profile
+  console.log('user', user)
+
   if (user) {
     const bookmark = await $fetch('/api/users/' + user.id + '/bookmarks')
     if (bookmark) {

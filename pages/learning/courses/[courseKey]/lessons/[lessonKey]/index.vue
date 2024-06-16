@@ -41,6 +41,7 @@
 import { loadContentParts } from '~/db/ContentPartModel'
 import { logLearningEvent } from '~/db/EventModel'
 import { loadLessonPlan } from '~/db/LessonPlanModel'
+import { bookmarkLesson } from '~/db/UserModel'
 
 const breadcrumbLinks = computed(() => {
   return [
@@ -85,7 +86,8 @@ const onClaimCredit = () => {
 }
 
 async function loadData() {
-  const { data: lessonData, pending } = await useAsyncData(
+  const path = learning.activePath
+  const { data: lessonData } = await useAsyncData(
     `lesson-data-${lessonKey}`,
     async () => {
       const [plan, contents] = await Promise.all([
