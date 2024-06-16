@@ -90,16 +90,19 @@ async function loadData() {
   const { data: lessonData } = await useAsyncData(
     `lesson-data-${lessonKey}`,
     async () => {
-      const [plan, contents] = await Promise.all([
+      const [plan, contents, bookmark] = await Promise.all([
         loadLessonPlan(lessonKey),
         loadContentParts(lessonKey),
+        bookmarkLesson(lessonKey, path?.publicKey),
       ])
-      return { plan, contents }
+      return { plan, contents, bookmark }
     }
   )
-  learning.cacheLesson(lessonData.value.plan)
+  const { plan, contents, bookmark } = lessonData.value
+  learning.cacheLesson(plan)
   learning.useLesson(lessonKey)
-  learning.cacheContents(lessonData.value.contents)
+  learning.cacheContents(contents)
+  useUserStore().cacheBookmark(bookmark)
   nextStep.value = learning.lookupStep(lessonKey)
 }
 await loadData()
