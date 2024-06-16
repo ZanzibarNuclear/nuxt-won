@@ -85,3 +85,9 @@ export type ContentPart = {
   details: ContentDetails
   sequence: number
 }
+export type LearningBookmark = {
+  id: string
+  lessonKey: string
+  pathKey: string
+  updatedAt: string
+}
