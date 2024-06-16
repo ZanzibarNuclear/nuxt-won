@@ -39,9 +39,10 @@
 
 <script setup lang="ts">
 import { loadContentParts } from '~/db/ContentPartModel'
+import { loadPath } from '~/db/LessonPathModel'
 import { logLearningEvent } from '~/db/EventModel'
 import { loadLessonPlan } from '~/db/LessonPlanModel'
-import { bookmarkLesson } from '~/db/UserModel'
+import { bookmarkLesson, getBookmark } from '~/db/UserModel'
 
 const breadcrumbLinks = computed(() => {
   return [
@@ -63,6 +64,8 @@ const breadcrumbLinks = computed(() => {
 })
 
 const learning = useLearningStore()
+const userContext = useUserStore()
+
 const route = useRoute()
 const { lessonKey, courseKey } = route.params
 const nextStep = ref()
@@ -87,6 +90,38 @@ const onClaimCredit = () => {
 
 async function loadData() {
   const path = learning.activePath
+
+  // load path if not found, probably due to reloading page
+
+  // FIXME: for ability to refresh lesson without losing path;
+  //   frankly, not so important, user can return to course catalog
+  //   to use their bookmark
+
+  // if (!path) {
+  //   console.log('attempt to load path from bookmark')
+
+  //   const { data: bookmark } = await useAsyncData(`bookmark`, () =>
+  //     getBookmark()
+  //   )
+  //   if (bookmark.value) {
+  //     console.log('found bookmark', bookmark.value)
+
+  //     userContext.cacheBookmark(bookmark.value)
+  //     const { data: path } = await useAsyncData(
+  //       `path-${bookmark.value.pathKey}`,
+  //       () => loadPath(bookmark.value.pathKey)
+  //     )
+  //     if (path.value) {
+  //       console.log('found path', path.value)
+
+  //       learning.cacheLessonPaths([path.value])
+  //       learning.choosePath(path.value.publicKey)
+  //     }
+  //   } else {
+  //     console.log('no bookmark, no path')
+  //   }
+  // }
+
   const { data: lessonData } = await useAsyncData(
     `lesson-data-${lessonKey}`,
     async () => {
@@ -102,7 +137,7 @@ async function loadData() {
   learning.cacheLesson(plan)
   learning.useLesson(lessonKey)
   learning.cacheContents(contents)
-  useUserStore().cacheBookmark(bookmark)
+  userContext.cacheBookmark(bookmark)
   nextStep.value = learning.lookupStep(lessonKey)
 }
 await loadData()

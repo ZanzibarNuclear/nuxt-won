@@ -3,9 +3,17 @@
     <UBreadcrumb :links="breadcrumbLinks" />
     <h1>Topics of Interest</h1>
     <div v-if="hasBookmark">
+      <span class="font-bold mr-2">Bookmark:</span>
       <UButton @click="goToBookmark"
         >Return to the last lesson you viewed</UButton
       >
+    </div>
+    <div v-if="!hasBookmark && !checkedForBookmark">
+      Have you been here before?
+      <UButton @click="checkForBookmark">See if you have a bookmark.</UButton>
+    </div>
+    <div v-if="!hasBookmark && checkedForBookmark">
+      Sorry, we could not find a bookmark.
     </div>
     <div class="mx-auto">
       <div class="course-layout">
@@ -34,6 +42,15 @@ const breadcrumbLinks = [
 
 const learning = useLearningStore()
 const userContext = useUserStore()
+
+const checkedForBookmark = ref(false)
+const checkForBookmark = async () => {
+  const myBookmark = await getBookmark()
+  if (myBookmark) {
+    userContext.cacheBookmark(myBookmark)
+  }
+  checkedForBookmark.value = true
+}
 
 const hasBookmark = computed(() => {
   return userContext.bookmark

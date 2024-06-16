@@ -43,7 +43,7 @@ const mapToStepTable = (step: LessonStep) => {
   }
 }
 
-export async function loadPath(pathKey: LessonPath) {
+export async function loadPath(pathKey: string) {
   const results = await $fetch(`/api/lesson-paths/${pathKey}`)
 
   if (results) {
