@@ -10,5 +10,7 @@ export default defineEventHandler(async (event) => {
     .select()
     .eq('public_key', lessonPathKey)
 
-  return paths
+  console.log('query found path (should only be one)', paths[0])
+
+  return paths[0]
 })

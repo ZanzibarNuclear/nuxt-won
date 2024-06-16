@@ -43,6 +43,22 @@ const mapToStepTable = (step: LessonStep) => {
   }
 }
 
+export async function loadPath(pathKey: string) {
+  const results = await $fetch(`/api/lesson-paths/${pathKey}`)
+
+  if (results) {
+    let path = mapToPath(results)
+    console.log('model: got this path', path)
+
+    path.steps = await loadLessonSteps(path.publicKey)
+    console.log('model: now with steps', path)
+
+    return path
+  } else {
+    return null
+  }
+}
+
 export async function loadLessonPaths(courseKey: string) {
   const results = await $fetch(`/api/courses/${courseKey}/lesson-paths`)
   let paths = []

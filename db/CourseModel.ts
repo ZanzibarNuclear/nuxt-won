@@ -1,4 +1,4 @@
-import type { Course } from '~/types/won-types'
+import type { Course, LearningBookmark } from '~/types/won-types'
 
 const mapToObject = (data): Course => {
   return {
@@ -102,4 +102,8 @@ export async function unpublishCourse(courseKey: string) {
   } else {
     return null
   }
+}
+
+export async function loadBookmarkContext(bookmark: LearningBookmark) {
+  // TODO: try to fetch path and course in one query
 }
