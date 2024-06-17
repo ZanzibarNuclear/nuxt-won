@@ -47,6 +47,12 @@ export type ImageContent = {
   alt: string
   width: number | null
   height: number | null
+  caption: string | null
+  credit: {
+    name: string | null
+    url: string | null
+  }
+  bgColor: string | null
 }
 export type FormulaContent = {
   latex: string

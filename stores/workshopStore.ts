@@ -1,11 +1,17 @@
 import { defineStore } from 'pinia'
-import type { Course, LessonPlan, LessonPath } from '~/types/won-types'
+import type {
+  Course,
+  LessonPlan,
+  LessonPath,
+  ContentPart,
+} from '~/types/won-types'
 
 export const useWorkshopStore = defineStore('workshop', () => {
   type CourseMap = { [k: string]: Course }
   type LessonMap = { [k: string]: LessonPlan }
   type PathMap = { [k: string]: LessonPath }
   type CoursePathMap = { [k: string]: PathMap }
+  type ContentPartMap = { [k: string]: ContentPart }
 
   const courses: CourseMap = reactive({})
   const courseList = computed(() => Object.values(courses))
@@ -98,6 +104,28 @@ export const useWorkshopStore = defineStore('workshop', () => {
     delete paths[pathKey]
   }
 
+  const contents: ContentPartMap = reactive({})
+
+  const cacheContentPart = (part: ContentPart) => {
+    if (part.publicKey) {
+      contents[part.publicKey] = part
+    } else {
+      console.warn('content part without public key', part)
+    }
+  }
+  const sortedContents = computed(() => {
+    const sorted = Object.values(contents).sort(
+      (partA, partB) => partA.sequence - partB.sequence
+    )
+    return sorted
+  })
+  const removeCachedContentPart = (key: string) => {
+    delete contents[key]
+  }
+  const clearContents = () => {
+    Object.keys(contents).forEach((key) => delete contents[key])
+  }
+
   return {
     courses,
     courseList,
@@ -121,5 +149,9 @@ export const useWorkshopStore = defineStore('workshop', () => {
     activeLessonPaths,
     cacheActiveLessonPath,
     removeActiveLessonPath,
+    cacheContentPart,
+    sortedContents,
+    removeCachedContentPart,
+    clearContents,
   }
 })

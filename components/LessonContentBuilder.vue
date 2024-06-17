@@ -1,7 +1,7 @@
 <template>
   <h2>Content Assembly</h2>
   <div class="flex">
-    <USelect :options="contentTypeOptions" v-model="contentType" />
+    <USelect :options="contentTypeOptions" v-model="nextContentType" />
     <UButton
       label="Add Content"
       size="sm"
@@ -9,7 +9,7 @@
       @click="addContent"
     />
   </div>
-  <div v-for="part in sortedContentParts">
+  <div v-for="part in workshop.sortedContents">
     <ContentPart
       :part="part"
       @cache-updated-part="handleCacheUpdatedPart"
@@ -19,11 +19,7 @@
 </template>
 
 <script setup lang="ts">
-import {
-  loadContentParts,
-  createContentPart,
-  changeSequence,
-} from '~/db/ContentPartModel'
+import { loadContentParts, createContentPart } from '~/db/ContentPartModel'
 import {
   type ContentPart,
   type ContentDetails,
@@ -41,41 +37,12 @@ const contentTypeOptions = [
   LessonContentEnum.video,
   LessonContentEnum.figure,
 ]
-type ContentPartMap = { [k: string]: ContentPart }
+const nextContentType: Ref<LessonContentEnum> = ref(LessonContentEnum.html)
 
-const contentType: Ref<LessonContentEnum> = ref(LessonContentEnum.html)
-const contents: ContentPartMap = reactive({})
-const notIndexed: Ref<ContentPart[]> = ref([]) // if anything ends up here, must be a mistake
-
-const editSort = ref(false)
-const partsToReorder = ref()
-const openToChangeOrder = () => {
-  partsToReorder.value = Object.values(contents).sort(
-    (partA, partB) => partA.sequence - partB.sequence
-  )
-  editSort.value = true
-}
-
-const sortedContentParts = computed(() => {
-  const sorted = Object.values(contents).sort(
-    (partA, partB) => partA.sequence - partB.sequence
-  )
-  sorted.push(...notIndexed.value)
-  return sorted
-})
-
-const cacheContentPart = (part: ContentPart) => {
-  if (part.publicKey) {
-    contents[part.publicKey] = part
-  } else {
-    notIndexed.value.push(part)
-  }
-}
 const nextCount = computed(() => {
-  if (sortedContentParts.value.length > 0) {
-    return (
-      sortedContentParts.value[sortedContentParts.value.length - 1].sequence + 1
-    )
+  const parts = workshop.sortedContents
+  if (parts.length > 0) {
+    return parts[parts.length - 1].sequence + 1
   } else {
     return 1
   }
@@ -87,23 +54,20 @@ async function loadData() {
     () => loadContentParts(props.lessonKey)
   )
   if (parts.value) {
-    parts.value.forEach((part) => cacheContentPart(part))
+    parts.value.forEach((part) => workshop.cacheContentPart(part))
   }
 }
 await loadData()
 
-const handleCacheUpdatedPart = (update: ContentPart) => cacheContentPart(update)
+const handleCacheUpdatedPart = (update: ContentPart) =>
+  workshop.cacheContentPart(update)
 
-const handleRemovePart = (publicKey: string) => delete contents[publicKey]
-
-const handleSaveSortOrder = (reorderedItems) => {
-  const results = changeSequence(reorderedItems)
-  editSort.value = false
-}
+const handleRemovePart = (publicKey: string) =>
+  workshop.removeCachedContentPart(publicKey)
 
 const addContent = async () => {
   let details: ContentDetails
-  switch (contentType.value) {
+  switch (nextContentType.value) {
     case LessonContentEnum.html: {
       details = {
         html: '',
@@ -155,13 +119,13 @@ const addContent = async () => {
     }
   }
   const input = {
-    lessonId: workshop.activeLesson.id,
-    type: contentType.value,
+    lessonId: workshop.activeLesson?.id,
+    type: nextContentType.value,
     sequence: nextCount.value,
     details,
   }
   const minted = await createContentPart(input)
-  cacheContentPart(minted)
+  workshop.cacheContentPart(minted)
 }
 </script>
 

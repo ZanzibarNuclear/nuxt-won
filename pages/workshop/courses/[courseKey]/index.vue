@@ -11,7 +11,7 @@
     <template #item="{ item }">
       <UCard>
         <template #header>
-          <h2 v-if="isLoaded">
+          <h2>
             {{ workshop.activeCourse?.title }} (key:
             {{ workshop.activeCourse?.publicKey }})
           </h2>
@@ -56,12 +56,6 @@ import { loadLessonPaths } from '~/db/LessonPathModel'
 
 const { courseKey } = useRoute().params
 const workshop = useWorkshopStore()
-const isLoaded = ref(false)
-
-onMounted(() => {
-  // FIXME: attempt to resolve hydration problem
-  isLoaded.value = true
-})
 
 const loadData = async () => {
   const { data: courseData } = await useAsyncData(
@@ -72,8 +66,6 @@ const loadData = async () => {
         loadLessonPlans(courseKey),
         loadLessonPaths(courseKey),
       ])
-      console.log('returning course and lesson plans')
-
       return { course, lessonPlans, paths }
     }
   )

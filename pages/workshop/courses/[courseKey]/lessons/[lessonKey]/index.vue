@@ -24,7 +24,7 @@
         <div v-if="item.key === 'sequence'" class="space-y-3">
           Content Sequence
           <Sequencerator
-            :items-to-sequence="partsToReorder"
+            :items-to-sequence="workshop.sortedContents"
             @save-sequence="handleSaveSortOrder"
           />
         </div>
@@ -40,21 +40,16 @@
 <script setup lang="ts">
 import { loadCourse } from '~/db/CourseModel'
 import { loadLessonPlan } from '~/db/LessonPlanModel'
+import { changeSequence } from '~/db/ContentPartModel'
 
 const { courseKey, lessonKey } = useRoute().params
 const workshop = useWorkshopStore()
 
-console.log(
-  'Working on lesson ' + lessonKey + ' which is part of course ' + courseKey
-)
-
-const partsToReorder = ref([])
-const handleSaveSortOrder = (delta) => {
-  console.log('==> implement save', delta)
-}
-
 const onGoToCourse = () => {
   navigateTo(`/workshop/courses/${courseKey}`)
+}
+const handleSaveSortOrder = async (delta) => {
+  const results = await changeSequence(delta)
 }
 
 const items = [
@@ -76,7 +71,7 @@ const items = [
 ]
 
 async function loadData() {
-  // load everything to work on lesson, even if already cached
+  const start = new Date().getMilliseconds()
   const { data: courseData, error } = await useAsyncData(
     `course-${courseKey}`,
     async () => {
@@ -84,17 +79,16 @@ async function loadData() {
         loadCourse(courseKey),
         loadLessonPlan(lessonKey),
       ])
-      console.log('returning course and lesson plans')
-
       return { course, lessonPlan }
     }
   )
-  console.log('using course and lesson plan', courseData.value)
   const { course, lessonPlan } = courseData.value
   workshop.cacheCourse(course)
-  workshop.makeCourseActive(courseKey)
+  workshop.makeCourseActive(courseKey as string)
   workshop.cacheLesson(lessonPlan)
-  workshop.makeLessonActive(lessonKey)
+  workshop.makeLessonActive(lessonKey as string)
+  const end = new Date().getMilliseconds()
+  console.log('elapse time to load lesson data: %dms', end - start)
 }
 await loadData()
 </script>
