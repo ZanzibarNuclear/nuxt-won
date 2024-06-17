@@ -11,7 +11,6 @@
         </template>
 
         <div v-if="item.key === 'overview'" class="space-y-3">
-          <h2>Lesson Overview</h2>
           <LessonOverviewBuilder
             :course="workshop.activeCourse"
             :lesson="workshop.activeLesson"
@@ -90,6 +89,7 @@ async function loadData() {
   workshop.makeCourseActive(courseKey as string)
   workshop.cacheLesson(lessonPlan)
   workshop.makeLessonActive(lessonKey as string)
+  workshop.clearContents()
   workshop.cacheLessonContent(content)
   const end = new Date().getMilliseconds()
   console.log('elapse time to load lesson data: %dms', end - start)
