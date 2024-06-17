@@ -8,7 +8,7 @@
     />
     <UModal v-model="uiState.addLesson" prevent-close>
       <LessonPlanForm
-        :course-id="workshop.activeCourse.id"
+        :course-key="courseKey"
         @save-lesson-plan="onCreateLesson"
         @cancel="onCancelCreateLesson"
       />

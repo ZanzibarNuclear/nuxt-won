@@ -4,7 +4,7 @@ const mapToObject = (data): LessonPlan => {
   return {
     id: data.id,
     publicKey: data.public_key,
-    courseId: data.course_id,
+    courseKey: data.course_key,
     title: data.title,
     description: data.description,
     coverArt: data.cover_art,
@@ -17,7 +17,7 @@ const mapToTable = (lessonPlan: LessonPlan) => {
   return {
     id: lessonPlan.id,
     public_key: lessonPlan.publicKey,
-    course_id: lessonPlan.courseId,
+    course_key: lessonPlan.courseKey,
     title: lessonPlan.title,
     description: lessonPlan.description,
     cover_art: lessonPlan.coverArt,

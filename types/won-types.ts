@@ -12,7 +12,7 @@ export type Course = {
 export type LessonPlan = {
   id: number
   publicKey: string
-  courseId: number
+  courseKey: number
   title: string
   description: string | null
   coverArt: string | null

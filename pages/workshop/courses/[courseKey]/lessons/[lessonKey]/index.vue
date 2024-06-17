@@ -12,14 +12,14 @@
 
         <div v-if="item.key === 'overview'" class="space-y-3">
           <h2>Lesson Overview</h2>
-          <LessonOverviewEditor
+          <LessonOverviewBuilder
             :course="workshop.activeCourse"
             :lesson="workshop.activeLesson"
           />
         </div>
         <div v-else-if="item.key === 'content'" class="space-y-3">
           Content
-          <LessonContentEditor :lesson-key="lessonKey" />
+          <LessonContentBuilder :lesson-key="lessonKey" />
         </div>
         <div v-if="item.key === 'sequence'" class="space-y-3">
           Content Sequence
@@ -39,12 +39,7 @@
 
 <script setup lang="ts">
 import { loadCourse } from '~/db/CourseModel'
-import {
-  loadLessonPlan,
-  createLessonPlan,
-  saveLessonPlan,
-  deleteLessonPlan,
-} from '~/db/LessonPlanModel'
+import { loadLessonPlan } from '~/db/LessonPlanModel'
 
 const { courseKey, lessonKey } = useRoute().params
 const workshop = useWorkshopStore()
