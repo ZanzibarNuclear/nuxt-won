@@ -23,7 +23,6 @@ const mapToTable = (contentPart: ContentPart) => {
 }
 
 export async function loadContentParts(lessonKey: string) {
-  console.log('loadContentParts', lessonKey)
   const results = await $fetch(`/api/lesson-plans/${lessonKey}/content-parts`)
 
   if (results) {

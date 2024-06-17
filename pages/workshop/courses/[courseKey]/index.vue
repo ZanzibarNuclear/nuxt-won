@@ -11,7 +11,7 @@
     <template #item="{ item }">
       <UCard>
         <template #header>
-          <h2 v-if="isLoaded">
+          <h2>
             {{ workshop.activeCourse?.title }} (key:
             {{ workshop.activeCourse?.publicKey }})
           </h2>
@@ -56,12 +56,6 @@ import { loadLessonPaths } from '~/db/LessonPathModel'
 
 const { courseKey } = useRoute().params
 const workshop = useWorkshopStore()
-const isLoaded = ref(false)
-
-onMounted(() => {
-  // FIXME: attempt to resolve hydration problem
-  isLoaded.value = true
-})
 
 const loadData = async () => {
   const { data: courseData } = await useAsyncData(
@@ -72,19 +66,16 @@ const loadData = async () => {
         loadLessonPlans(courseKey),
         loadLessonPaths(courseKey),
       ])
-      console.log('returning course and lesson plans')
-
       return { course, lessonPlans, paths }
     }
   )
-  console.log('using course and lesson plans', courseData.value)
   const { course, lessonPlans, paths } = courseData.value
   workshop.cacheCourse(course)
   workshop.makeCourseActive(course.publicKey)
   workshop.cacheLessons(lessonPlans)
   workshop.cacheCoursePaths(course.publicKey, paths)
 }
-loadData()
+await loadData()
 
 const isPublished = computed(() => {
   return workshop.activeCourse?.publishedAt
@@ -95,7 +86,8 @@ const onGoToCourseList = () => {
 }
 
 const onOpenLesson = (lessonKey) =>
-  navigateTo(`/workshop/course-${courseKey}/lesson-${lessonKey}`)
+  navigateTo(`/workshop/courses/${courseKey}/lessons/${lessonKey}`)
+// navigateTo(`/workshop/course-${courseKey}/lesson-${lessonKey}`)
 
 const onPublish = async (courseKey) => {
   const delta = await publishCourse(courseKey)

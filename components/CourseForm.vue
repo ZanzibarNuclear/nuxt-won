@@ -4,8 +4,8 @@
     <UFormGroup label="Title" name="title">
       <UInput id="title" v-model="state.title" />
     </UFormGroup>
-    <SimpleEditorFormGroup :fields="state" field-name="description" />
     <SimpleEditorFormGroup :fields="state" field-name="teaser" />
+    <SimpleEditorFormGroup :fields="state" field-name="description" />
     <SimpleEditorFormGroup :fields="state" field-name="syllabus" />
     <UFormGroup label="Cover Art" name="coverArt">
       <UInput id="coverArt" v-model="state.coverArt" />

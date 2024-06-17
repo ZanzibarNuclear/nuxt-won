@@ -12,7 +12,7 @@ export type Course = {
 export type LessonPlan = {
   id: number
   publicKey: string
-  courseId: number
+  courseKey: number
   title: string
   description: string | null
   coverArt: string | null
@@ -47,6 +47,12 @@ export type ImageContent = {
   alt: string
   width: number | null
   height: number | null
+  caption: string | null
+  credit: {
+    name: string | null
+    url: string | null
+  }
+  bgColor: string | null
 }
 export type FormulaContent = {
   latex: string

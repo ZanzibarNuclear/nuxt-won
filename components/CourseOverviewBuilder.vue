@@ -1,11 +1,4 @@
 <template>
-  <UButton
-    icon="i-ph-pencil"
-    @click="uiState.editCourse = true"
-    label="Edit course"
-    variant="solid"
-    class="mx-1"
-  />
   <div v-if="uiState.editCourse">
     <CourseForm
       @save-course="onSaveCourse"
@@ -14,6 +7,13 @@
     />
   </div>
   <div v-else-if="workshop.isCourseActive" class="rich-text">
+    <UButton
+      icon="i-ph-pencil"
+      @click="uiState.editCourse = true"
+      label="Edit course"
+      variant="solid"
+      class="mx-1"
+    />
     <h2>Title: {{ workshop.activeCourse.title }}</h2>
     <div>
       <h3>Teaser:</h3>

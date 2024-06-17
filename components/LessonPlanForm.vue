@@ -1,6 +1,6 @@
 <template>
   <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
-    <h2>{{ heading }}</h2>
+    <h3>Lesson Information</h3>
     <UFormGroup label="Title" name="title">
       <UInput v-model="state.title" />
     </UFormGroup>
@@ -14,12 +14,7 @@
       :label="isEdit ? 'Submit changes' : 'Add lesson'"
       class="mr-2"
     />
-    <UButton
-      type="button"
-      label="Cancel"
-      @click="emit('cancel')"
-      class="mr-2"
-    />
+    <UButton type="button" label="Cancel" @click="onCancel" class="mr-2" />
   </UForm>
 </template>
 
@@ -30,29 +25,28 @@ import type { FormSubmitEvent } from '#ui/types'
 const emit = defineEmits(['save-lesson-plan', 'cancel'])
 
 const props = defineProps({
-  courseId: { type: Number, required: true },
+  courseKey: { type: String, required: true },
   lessonPlan: { type: Object, required: false },
-  heading: { type: String, default: 'Lesson Information' },
 })
 
 const schema = object({
   id: number().nullable(),
   publicKey: string().nullable(),
-  courseId: number().nullable(),
   title: string().required(),
   description: string().nullable(),
   objective: string().nullable(),
   coverArt: string().nullable(),
+  courseKey: string().nullable(),
 })
 type Schema = InferType<typeof schema>
 const state = reactive({
   id: undefined,
   publicKey: undefined,
-  courseId: undefined,
   title: undefined,
   description: undefined,
   objective: undefined,
   coverArt: undefined,
+  courseKey: undefined,
 })
 
 const isEdit = computed(() => !!props.lessonPlan)
@@ -68,25 +62,25 @@ const setInitialValues = (lessonPlan) => {
 }
 
 onMounted(() => {
-  state.courseId = props.courseId
+  state.courseKey = props.courseKey
   if (props.lessonPlan) {
     setInitialValues(props.lessonPlan)
   }
 })
-
 onUpdated(() => {
-  state.courseId = props.courseId
+  state.courseKey = props.courseKey
   if (props.lessonPlan) {
     setInitialValues(props.lessonPlan)
   }
 })
 
 async function onSubmit(event: FormSubmitEvent<Schema>) {
-  console.log('clicked save', event.data)
   emit('save-lesson-plan', event.data)
 }
+function onCancel() {
+  emit('cancel')
+}
 </script>
-
 <style scoped>
 form {
   border: 5px lightblue groove;

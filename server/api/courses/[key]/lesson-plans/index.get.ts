@@ -7,8 +7,8 @@ export default defineEventHandler(async (event) => {
   const client = await serverSupabaseClient(event)
   const { data: lessonPlans } = await client
     .from('lesson_plans')
-    .select('*, courses!inner (public_key)')
-    .eq('courses.public_key', courseKey)
+    .select()
+    .eq('course_key', courseKey)
 
   if (lessonPlans && lessonPlans.length > 0) {
     return lessonPlans
