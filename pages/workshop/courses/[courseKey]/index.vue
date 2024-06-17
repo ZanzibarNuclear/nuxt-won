@@ -69,7 +69,6 @@ const loadData = async () => {
       return { course, lessonPlans, paths }
     }
   )
-  console.log('using course and lesson plans', courseData.value)
   const { course, lessonPlans, paths } = courseData.value
   workshop.cacheCourse(course)
   workshop.makeCourseActive(course.publicKey)

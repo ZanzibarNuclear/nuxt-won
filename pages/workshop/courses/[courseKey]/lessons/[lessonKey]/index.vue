@@ -41,6 +41,7 @@
 import { loadCourse } from '~/db/CourseModel'
 import { loadLessonPlan } from '~/db/LessonPlanModel'
 import { changeSequence } from '~/db/ContentPartModel'
+import { loadContentParts } from '~/db/ContentPartModel'
 
 const { courseKey, lessonKey } = useRoute().params
 const workshop = useWorkshopStore()
@@ -50,6 +51,7 @@ const onGoToCourse = () => {
 }
 const handleSaveSortOrder = async (delta) => {
   const results = await changeSequence(delta)
+  console.log('returned from saving part sequence', results)
 }
 
 const items = [
@@ -75,18 +77,20 @@ async function loadData() {
   const { data: courseData, error } = await useAsyncData(
     `course-${courseKey}`,
     async () => {
-      const [course, lessonPlan] = await Promise.all([
+      const [course, lessonPlan, content] = await Promise.all([
         loadCourse(courseKey),
         loadLessonPlan(lessonKey),
+        loadContentParts(lessonKey),
       ])
-      return { course, lessonPlan }
+      return { course, lessonPlan, content }
     }
   )
-  const { course, lessonPlan } = courseData.value
+  const { course, lessonPlan, content } = courseData.value
   workshop.cacheCourse(course)
   workshop.makeCourseActive(courseKey as string)
   workshop.cacheLesson(lessonPlan)
   workshop.makeLessonActive(lessonKey as string)
+  workshop.cacheLessonContent(content)
   const end = new Date().getMilliseconds()
   console.log('elapse time to load lesson data: %dms', end - start)
 }

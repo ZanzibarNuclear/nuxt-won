@@ -6,6 +6,13 @@
       icon="i-ph-cloud-arrow-up"
       @click="handleSaveSequence"
       class="my-4"
+      :disabled="!isDirty"
+    />
+    <UButton
+      label="Reset"
+      size="sm"
+      icon="i-ph-arrow-counter-clockwise-light"
+      @click="onReset"
     />
     <div v-for="(item, index) in items">
       <UButton
@@ -34,6 +41,12 @@ const emit = defineEmits(['saveSequence'])
 
 const items = ref([...props.itemsToSequence])
 
+const isDirty = computed(() =>
+  props.itemsToSequence.some((item, index) => {
+    return item !== items.value[index]
+  })
+)
+
 function truncateString(str: string, length: number) {
   if (str.length > length) {
     return str.substring(0, length) + '...'
@@ -44,13 +57,15 @@ function truncateString(str: string, length: number) {
 const moveItem = (from: number, to: number) => {
   const itemToMove = items.value.splice(from, 1)
   items.value.splice(to, 0, itemToMove[0])
-  console.log(items.value)
 }
 const up = (index: number) => {
   moveItem(index, index - 1)
 }
 const down = (index: number) => {
   moveItem(index, index + 1)
+}
+const onReset = () => {
+  items.value = [...props.itemsToSequence]
 }
 
 const handleSaveSequence = () => {

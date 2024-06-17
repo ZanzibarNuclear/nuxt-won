@@ -113,6 +113,11 @@ export const useWorkshopStore = defineStore('workshop', () => {
       console.warn('content part without public key', part)
     }
   }
+  const cacheLessonContent = (parts: ContentPart[]) => {
+    if (parts && parts.length > 0) {
+      parts.forEach((part) => cacheContentPart(part))
+    }
+  }
   const sortedContents = computed(() => {
     const sorted = Object.values(contents).sort(
       (partA, partB) => partA.sequence - partB.sequence
@@ -150,6 +155,7 @@ export const useWorkshopStore = defineStore('workshop', () => {
     cacheActiveLessonPath,
     removeActiveLessonPath,
     cacheContentPart,
+    cacheLessonContent,
     sortedContents,
     removeCachedContentPart,
     clearContents,
