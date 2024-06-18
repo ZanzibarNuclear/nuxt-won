@@ -1,7 +1,6 @@
 <template>
   <UContainer>
-    <h1 class="text-center">Explore the world of nuclear energy.</h1>
-    <div class="feature-layout">
+    <div class="lg:mt-24 md:mt-16 sm:mt-0 feature-layout">
       <feature-tile
         v-for="feature in features"
         :id="feature.name"
@@ -12,6 +11,9 @@
 </template>
 
 <script setup lang="ts">
+definePageMeta({
+  layout: 'home-layout',
+})
 useSeoMeta({
   title: 'World of Nuclear',
   ogTitle: 'World of Nuclear',
@@ -62,7 +64,12 @@ const features = [
 <style>
 .feature-layout {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-gap: 20px;
+}
+.feature-card-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 20px;
 }
 .rich-text :deep(p) {

@@ -1,5 +1,5 @@
 <template>
-  <UContainer class="bg-regular-pattern bg-no-repeat bg-contain">
+  <UContainer class="bg-hero-pattern bg-no-repeat bg-contain">
     <header>
       <div class="flex flex-center">
         <UButton
@@ -8,8 +8,12 @@
           icon="i-mdi-menu"
           title="Navigation"
           @click="toggleLeftNavVisibility"
-          class="sandwich-bump"
         />
+        <UButton square variant="ghost" to="/">
+          <template #leading>
+            <NuxtImg src="/images/Zanzibar.svg" width="50px" />
+          </template>
+        </UButton>
         <AccountNavatarWidget class="corner" />
       </div>
     </header>
@@ -49,9 +53,5 @@ footer {
 }
 .corner {
   margin-left: auto;
-}
-.sandwich-bump {
-  position: relative;
-  top: 60px;
 }
 </style>

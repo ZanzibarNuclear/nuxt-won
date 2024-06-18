@@ -1,18 +1,18 @@
 <template>
-  <UCard>
+  <UCard class="card">
     <template #header>
-      <div class="flex">
+      <div class="flex h-24">
         <img :src="feature.coverImage" />
       </div>
     </template>
-    <div>
+    <div class="text-center h-36">
       <div class="text-2xl mb-4">{{ feature.name }}</div>
       <div class="description">
         {{ feature.description }}
       </div>
     </div>
     <template #footer>
-      <div class="actions">
+      <div class="actions text-center">
         <UButton
           color="primary"
           variant="solid"

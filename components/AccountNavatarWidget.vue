@@ -1,21 +1,36 @@
 <template>
-  <div class="m-2">
-    <UButton v-if="!signedIn" @click="openAuthPanel" variant="ghost">
-      <UIcon name="i-mdi-login" class="big-icon" /> Sign In
-    </UButton>
+  <div class="widget-bump">
+    <div v-if="!signedIn">
+      <UButton
+        label="Join"
+        to="/user/login"
+        variant="solid"
+        color="primary"
+        icon="i-ph-arrow-bend-down-right-duotone"
+        class="mr-2"
+      />
+      <UButton
+        @click="openAuthPanel"
+        variant="outline"
+        color="blue"
+        icon="i-ph-sign-in"
+        label="Sign In"
+      />
+    </div>
     <UDropdown
       v-if="signedIn"
       :items="items"
       :popper="{ placement: 'bottom-start' }"
       class="text-primary"
       ><UButton
-        color="white"
+        color="blue"
+        variant="solid"
         :label="screenName"
         trailing-icon="i-heroicons-chevron-down-20-solid"
     /></UDropdown>
     <UModal v-model="authPanelIsOpen">
-      <AuthMagicLinkCard @finish="closeAuthPanel" />
       <AuthOAuthCard @finish="closeAuthPanel" />
+      <AuthMagicLinkCard @finish="closeAuthPanel" />
     </UModal>
   </div>
 </template>
@@ -72,5 +87,9 @@ const items = [
 .big-icon {
   font-size: 24px;
   margin-left: 2px;
+}
+.widget-bump {
+  position: relative;
+  top: 80px;
 }
 </style>
