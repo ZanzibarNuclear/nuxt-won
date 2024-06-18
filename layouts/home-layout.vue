@@ -1,5 +1,5 @@
 <template>
-  <UContainer class="bg-regular-pattern bg-no-repeat bg-contain">
+  <UContainer class="bg-hero-pattern bg-no-repeat bg-contain">
     <header>
       <div class="flex flex-center">
         <UButton
@@ -8,16 +8,16 @@
           icon="i-mdi-menu"
           title="Navigation"
           @click="toggleLeftNavVisibility"
-          class="sandwich-bump"
         />
+        <NuxtImg src="/images/Zanzibar.svg" class="pt-5" width="75px" />
         <AccountNavatarWidget class="corner" />
       </div>
     </header>
     <div class="flex gap-x-5">
-      <div class="flex-col mt-14" :hidden="hideNav">
+      <div class="flex-col" :hidden="hideNav">
         <feature-menu />
       </div>
-      <div class="flex-col w-full px-14 py-4">
+      <div class="flex-col w-full px-4 py-4">
         <slot />
       </div>
     </div>
@@ -37,10 +37,10 @@ const toggleLeftNavVisibility = () => {
 <style scoped>
 header {
   margin-top: 1rem;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
 }
 footer {
-  margin-top: 5rem;
+  margin-top: 4rem;
   margin-bottom: 1rem;
 }
 .title {
@@ -49,9 +49,5 @@ footer {
 }
 .corner {
   margin-left: auto;
-}
-.sandwich-bump {
-  position: relative;
-  top: 100px;
 }
 </style>

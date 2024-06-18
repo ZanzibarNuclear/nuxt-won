@@ -1,5 +1,5 @@
 <template>
-  <div class="prompt-box">
+  <div class="prompt-box dark:prompt-box-dark">
     <div v-if="isKnownPlayer && !edit">
       <div class="text-xl">
         People shall know you as "{{ player.alias }}."

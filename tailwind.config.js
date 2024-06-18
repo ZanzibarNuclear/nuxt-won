@@ -18,6 +18,10 @@ module.exports = {
           950: '#072f4a',
         },
       },
+      backgroundImage: {
+        'hero-pattern': "url('/images/WoN-title-banner.jpg')",
+        'regular-pattern': "url('/images/title-banner.jpg')",
+      },
     },
   },
   plugins: [require('@tailwindcss/typography')],

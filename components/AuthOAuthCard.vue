@@ -5,14 +5,6 @@
       <div>You will be asked to share public profile information with us.</div>
     </template>
     <UButton
-      icon="i-mdi-github"
-      size="lg"
-      variant="outline"
-      label="GitHub"
-      class="mx-1"
-      @click="signIn('github')"
-    />
-    <UButton
       icon="i-mdi-google"
       size="lg"
       variant="outline"
@@ -27,6 +19,14 @@
       label="X / Twitter"
       class="mx-1"
       @click="signIn('twitter')"
+    />
+    <UButton
+      icon="i-mdi-github"
+      size="lg"
+      variant="outline"
+      label="GitHub"
+      class="mx-1"
+      @click="signIn('github')"
     />
   </UCard>
 </template>
