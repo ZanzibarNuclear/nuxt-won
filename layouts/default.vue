@@ -14,10 +14,10 @@
       </div>
     </header>
     <div class="flex gap-x-5">
-      <div class="flex-col" :hidden="hideNav">
+      <div class="flex-col mt-14" :hidden="hideNav">
         <feature-menu />
       </div>
-      <div class="flex-col w-full px-4 py-4">
+      <div class="flex-col w-full px-14 py-4">
         <slot />
       </div>
     </div>
@@ -52,6 +52,6 @@ footer {
 }
 .sandwich-bump {
   position: relative;
-  top: 60px;
+  top: 100px;
 }
 </style>

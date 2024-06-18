@@ -9,11 +9,7 @@
           title="Navigation"
           @click="toggleLeftNavVisibility"
         />
-        <UButton square variant="ghost" to="/">
-          <template #leading>
-            <NuxtImg src="/images/Zanzibar.svg" width="50px" />
-          </template>
-        </UButton>
+        <NuxtImg src="/images/Zanzibar.svg" class="pt-5" width="75px" />
         <AccountNavatarWidget class="corner" />
       </div>
     </header>
@@ -41,10 +37,10 @@ const toggleLeftNavVisibility = () => {
 <style scoped>
 header {
   margin-top: 1rem;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
 }
 footer {
-  margin-top: 5rem;
+  margin-top: 4rem;
   margin-bottom: 1rem;
 }
 .title {
