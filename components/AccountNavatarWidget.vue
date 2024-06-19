@@ -5,14 +5,14 @@
         label="Join"
         to="/user/login"
         variant="solid"
-        color="primary"
+        color="amber"
         icon="i-ph-arrow-bend-down-right-duotone"
         class="mr-2"
       />
       <UButton
         @click="openAuthPanel"
-        variant="outline"
-        color="blue"
+        variant="solid"
+        color="primary"
         icon="i-ph-sign-in"
         label="Sign In"
       />
@@ -23,8 +23,9 @@
       :popper="{ placement: 'bottom-start' }"
       class="text-primary"
       ><UButton
-        color="blue"
+        color="green"
         variant="solid"
+        icon="i-ph-person"
         :label="screenName"
         trailing-icon="i-heroicons-chevron-down-20-solid"
     /></UDropdown>
