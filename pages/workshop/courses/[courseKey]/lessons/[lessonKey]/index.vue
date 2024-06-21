@@ -17,11 +17,9 @@
           />
         </div>
         <div v-else-if="item.key === 'content'" class="space-y-3">
-          Content
           <LessonContentBuilder :lesson-key="lessonKey" />
         </div>
         <div v-if="item.key === 'sequence'" class="space-y-3">
-          Content Sequence
           <Sequencerator
             :items-to-sequence="workshop.sortedContents"
             @save-sequence="handleSaveSortOrder"
@@ -50,7 +48,7 @@ const onGoToCourse = () => {
 }
 const handleSaveSortOrder = async (delta) => {
   const results = await changeSequence(delta)
-  console.log('returned from saving part sequence', results)
+  workshop.cacheLessonContent(results)
 }
 
 const items = [
@@ -62,12 +60,12 @@ const items = [
   {
     key: 'content',
     label: 'Content',
-    description: 'Add, edit, and remove content parts.',
+    description: 'Assemble content for the lesson.',
   },
   {
     key: 'sequence',
     label: 'Content Sequence',
-    description: 'Sequence of content parts.',
+    description: 'Change the sequencing of content parts.',
   },
 ]
 
