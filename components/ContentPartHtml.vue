@@ -29,6 +29,9 @@ onMounted(() => {
     html: props.fields.html,
   }
 })
+onUpdated(() => {
+  details.value.html = props.fields.html
+})
 
 const commit = (snapshot: string) => {
   details.value.html = snapshot

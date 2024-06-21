@@ -1,5 +1,4 @@
 <template>
-  <h2>Content Assembly</h2>
   <div class="flex">
     <USelect :options="contentTypeOptions" v-model="nextContentType" />
     <UButton
