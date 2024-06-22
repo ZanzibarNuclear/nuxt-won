@@ -1,12 +1,6 @@
 <template>
   <UContainer class="mt-16">
     <h1>Admin Insights</h1>
-    <!-- <div>
-      <NuxtLink to="/admin/invitations">Invitations</NuxtLink>
-    </div>
-    <div>
-      <NuxtLink to="/admin/users">Members</NuxtLink>
-    </div> -->
     <div class="my-8">
       <UTabs :items="sections" class="w-full">
         <template #members="{ item }">
@@ -24,6 +18,9 @@
 </template>
 
 <script setup lang="ts">
+definePageMeta({
+  middleware: ['admin-route-guard'],
+})
 const sections = [
   {
     label: 'Members',

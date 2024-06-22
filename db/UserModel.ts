@@ -9,7 +9,11 @@ const mapToBookmark = (data): LearningBookmark => {
   }
 }
 
-export async function scanUserProfiles(offset, batchSize, screenName) {
+export async function scanUserProfiles(
+  offset: number,
+  batchSize: number,
+  screenName: string
+) {
   const nextPage = offset / batchSize + 1
   let queryString = `page=${nextPage}&limit=${batchSize}`
   if (screenName) {
