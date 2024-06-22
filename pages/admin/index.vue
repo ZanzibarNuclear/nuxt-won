@@ -15,6 +15,9 @@
         <template #invitations="{ item }">
           <admin-invitation-viewer />
         </template>
+        <template #events="{ item }">
+          <admin-event-viewer />
+        </template>
       </UTabs>
     </div>
   </UContainer>
@@ -29,6 +32,10 @@ const sections = [
   {
     label: 'Invitations',
     slot: 'invitations',
+  },
+  {
+    label: 'Events',
+    slot: 'events',
   },
 ]
 </script>

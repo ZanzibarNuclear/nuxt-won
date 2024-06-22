@@ -1,3 +1,14 @@
+export async function retrieveEvents(offset, batchSize, actor) {
+  console.log(`offset=${offset} batch size=${batchSize}`)
+  const nextPage = offset / batchSize + 1
+  console.log('page', nextPage)
+
+  const events = await $fetch(
+    `/api/admin/events?page=${nextPage}&limit=${batchSize}`
+  )
+  return events
+}
+
 async function logEvent(details) {
   const user = useUserStore().profile
   await $fetch('/api/events', {
