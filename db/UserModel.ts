@@ -1,12 +1,27 @@
 import type { LearningBookmark } from '~/types/won-types'
 
-const mapToObject = (data): LearningBookmark => {
+const mapToBookmark = (data): LearningBookmark => {
   return {
     id: data.id,
     lessonKey: data.lesson_key,
     pathKey: data.path_key,
     updatedAt: data.updated_at,
   }
+}
+
+export async function scanUserProfiles(offset, batchSize) {
+  const nextPage = offset / batchSize + 1
+  const profiles = await $fetch(
+    `/api/admin/users?page=${nextPage}&limit=${batchSize}`
+  )
+  return profiles
+}
+
+export async function getProfilesByScreenName(screenName) {
+  const profiles = await $fetch(
+    `/api/admin/invitations?screen_name=${screenName}`
+  )
+  return profiles
 }
 
 export async function bookmarkLesson(lessonKey: string, pathKey: string) {
@@ -21,7 +36,7 @@ export async function bookmarkLesson(lessonKey: string, pathKey: string) {
         path_key: pathKey,
       },
     })
-    return mapToObject(bookmark)
+    return mapToBookmark(bookmark)
   } else {
     console.log('unknown user; cannot bookmark lesson', lessonKey, pathKey)
     return null
@@ -35,7 +50,7 @@ export async function getBookmark() {
   if (user) {
     const bookmark = await $fetch('/api/users/' + user.id + '/bookmarks')
     if (bookmark) {
-      return mapToObject(bookmark)
+      return mapToBookmark(bookmark)
     } else {
       return null
     }

@@ -1,11 +1,11 @@
 <template>
   <UContainer class="mt-16">
-    <h1>Admin Insights</h1>
+    <h2>Members</h2>
     <div>
       <UButton
         :disabled="lastPage"
         label="Load Invites"
-        @click="loadNextInvites"
+        @click="loadNextBatch"
       />
       next offset: {{ fetchParams.offset }} batch size: {{ fetchParams.limit }}
     </div>
@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import { retrieveInvitations } from '~/db/InvitationModel'
+import { scanUserProfiles } from '~/db/UserModel'
 
 const inView = ref([])
 const fetchParams = reactive({
@@ -29,56 +29,42 @@ const columns = [
     label: 'ID',
   },
   {
-    key: 'name',
-    label: 'invitee',
+    key: 'username',
   },
   {
-    key: 'email',
-    label: 'invitee email',
+    key: 'full_name',
+    label: 'Full Name',
   },
   {
-    key: 'target',
-    label: 'invited to',
+    key: 'screen_name',
+    label: 'Screen Name',
   },
   {
-    key: 'referral_code',
-    label: 'referral code',
+    key: 'joined_at',
+    label: 'Joined Date',
   },
   {
-    key: 'recommended_by_id',
-    label: 'invited by',
+    key: 'join_reason',
+    label: 'Reason',
   },
   {
-    key: 'sent_at',
-    label: 'when invited',
-  },
-  {
-    key: 'confirmed_at',
-    label: 'accepted',
-  },
-  {
-    key: 'unsubscribed_at',
-    label: 'hard decline',
-  },
-  {
-    key: 'delivery_error',
-    label: 'problem with delivery',
+    key: 'nuclear_likes',
+    label: 'Likes',
   },
 ]
 
-// const { data, pending, error, refresh, clear } = await useAsyncData(
-//   'invitations',
-//   () => retrieveInvitations(fetchParams.offset, fetchParams.limit)
-// )
-// inView.value = data.value
-
-const loadNextInvites = async () => {
-  const nextBatch = await retrieveInvitations(
+const loadNextBatch = async () => {
+  const nextBatch = await scanUserProfiles(
     fetchParams.offset,
     fetchParams.limit
   )
   inView.value = nextBatch
-  fetchParams.offset += nextBatch.length + 1
+  fetchParams.offset += nextBatch.length
   lastPage.value = nextBatch.length < fetchParams.limit
 }
+
+const { data, pending, error, refresh, clear } = await useAsyncData(
+  'memberProfiles',
+  () => loadNextBatch()
+)
 </script>

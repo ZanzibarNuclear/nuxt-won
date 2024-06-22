@@ -1,11 +1,11 @@
 <template>
   <UContainer class="mt-16">
-    <h1>Admin Insights</h1>
+    <h2>Invitations</h2>
     <div>
       <UButton
         :disabled="lastPage"
         label="Load Invites"
-        @click="loadNextInvites"
+        @click="loadNextBatch"
       />
       next offset: {{ fetchParams.offset }} batch size: {{ fetchParams.limit }}
     </div>
@@ -66,19 +66,18 @@ const columns = [
   },
 ]
 
-// const { data, pending, error, refresh, clear } = await useAsyncData(
-//   'invitations',
-//   () => retrieveInvitations(fetchParams.offset, fetchParams.limit)
-// )
-// inView.value = data.value
-
-const loadNextInvites = async () => {
+const loadNextBatch = async () => {
   const nextBatch = await retrieveInvitations(
     fetchParams.offset,
     fetchParams.limit
   )
   inView.value = nextBatch
-  fetchParams.offset += nextBatch.length + 1
+  fetchParams.offset += nextBatch.length
   lastPage.value = nextBatch.length < fetchParams.limit
 }
+
+const { data, pending, error, refresh, clear } = await useAsyncData(
+  'invitations',
+  () => loadNextBatch()
+)
 </script>
