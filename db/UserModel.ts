@@ -1,7 +1,5 @@
 import type { LearningBookmark } from '~/types/won-types'
 
-// FIXME: screen name with spaces, etc, does find matching values
-
 const mapToBookmark = (data): LearningBookmark => {
   return {
     id: data.id,
@@ -17,17 +15,9 @@ export async function scanUserProfiles(offset, batchSize, screenName) {
   if (screenName) {
     queryString += `&screen_name=${screenName}`
   }
-  queryString = encodeURI(queryString)
   console.log('scan for profiles with', queryString)
 
   const profiles = await $fetch(`/api/admin/users?${queryString}`)
-  return profiles
-}
-
-export async function getProfilesByScreenName(screenName) {
-  const profiles = await $fetch(
-    `/api/admin/invitations?screen_name=${screenName}`
-  )
   return profiles
 }
 

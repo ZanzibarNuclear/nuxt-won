@@ -27,7 +27,7 @@ export default defineEventHandler(async (event) => {
   }
 
   if (screen_name) {
-    dbQuery.eq('screen_name', decodeURI(screen_name))
+    dbQuery.ilike('screen_name', screen_name)
   }
 
   const { data: eventRows } = await dbQuery
