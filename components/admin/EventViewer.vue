@@ -54,8 +54,8 @@ const loadNextBatch = async () => {
   lastPage.value = nextBatch.length < fetchParams.limit
 }
 
-const { data, pending, error, refresh, clear } = await useAsyncData(
-  'events',
-  () => loadNextBatch()
-)
+// const { data, pending, error, refresh, clear } = await useAsyncData(
+//   'events',
+//   () => loadNextBatch()
+// )
 </script>

@@ -76,8 +76,8 @@ const loadNextBatch = async () => {
   lastPage.value = nextBatch.length < fetchParams.limit
 }
 
-const { data, pending, error, refresh, clear } = await useAsyncData(
-  'invitations',
-  () => loadNextBatch()
-)
+// const { data, pending, error, refresh, clear } = await useAsyncData(
+//   'invitations',
+//   () => loadNextBatch()
+// )
 </script>

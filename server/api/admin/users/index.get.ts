@@ -11,6 +11,8 @@ export default defineEventHandler(async (event) => {
     screen_name,
   } = requestQuery || {}
 
+  console.log('Using screen name "' + screen_name + '"')
+
   const client = await serverSupabaseClient(event)
 
   // start with base query
@@ -25,7 +27,7 @@ export default defineEventHandler(async (event) => {
   }
 
   if (screen_name) {
-    dbQuery.eq('screen_name', screen_name)
+    dbQuery.eq('screen_name', decodeURI(screen_name))
   }
 
   const { data: eventRows } = await dbQuery
