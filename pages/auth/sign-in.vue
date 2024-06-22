@@ -1,8 +1,8 @@
 <template>
   <div>
-    <h1>Sign In or Sign Up</h1>
-    <AuthMagicLinkCard class="my-6" />
+    <h1>Sign In or Join</h1>
     <AuthOAuthCard class="my-6" />
+    <AuthMagicLinkCard class="my-6" />
     <div class="my-12">
       <h3>Why do I need to sign in?</h3>
       <div class="text-md my-4">

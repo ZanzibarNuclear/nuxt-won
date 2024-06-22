@@ -24,7 +24,7 @@
       get smarter just by reading everything this site offers. Have a look
       around. Everything you see if free. You might want to sign up for a free
       account when you want to participate in one or our activities, like
-      <em>What Say You?</em> or <em>Nuclear Simulations</em>.
+      <em>What Say You?</em> or <em>Nuclear Simulators</em>.
     </div>
   </UContainer>
 </template>

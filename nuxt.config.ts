@@ -1,6 +1,10 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
+  components: {
+    global: true,
+    dirs: ['~/components'],
+  },
   modules: [
     '@nuxt/ui',
     'nuxt-icon',
@@ -27,7 +31,7 @@ export default defineNuxtConfig({
       login: '/auth/sign-in',
       callback: '/auth/confirm',
       cookieRedirect: true,
-      include: ['/user(/*)?', '/workshop(/*)?', '/wsy(/*)?'],
+      include: ['/admin(/*)?', '/user(/*)?', '/workshop(/*)?', '/wsy(/*)?'],
     },
     cookieName: 'won',
     cookieOptions: {
