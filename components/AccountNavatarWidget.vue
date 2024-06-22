@@ -3,7 +3,7 @@
     <div v-if="!signedIn">
       <UButton
         label="Join"
-        to="/user/login"
+        to="/auth/sign-in"
         variant="solid"
         color="amber"
         icon="i-ph-arrow-bend-down-right-duotone"

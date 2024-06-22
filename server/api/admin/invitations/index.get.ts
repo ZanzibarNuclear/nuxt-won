@@ -1,7 +1,6 @@
 import { serverSupabaseClient } from '#supabase/server'
 
 export default defineEventHandler(async (event) => {
-  // extract query parameters from URL
   const requestQuery = getQuery(event)
   const {
     page = 1,
@@ -9,6 +8,8 @@ export default defineEventHandler(async (event) => {
     order = 'created_at',
     asc = false,
   } = requestQuery || {}
+
+  console.log('look for invitations: %d %d %s', page, limit, order)
 
   const client = await serverSupabaseClient(event)
 
@@ -29,6 +30,8 @@ export default defineEventHandler(async (event) => {
   // }
 
   const { data: eventRows } = await dbQuery
+
+  console.log('found invitations', eventRows)
 
   return eventRows
 })

@@ -18,3 +18,12 @@ export async function logLearningEvent(courseKey, pathKey, lessonKey, action) {
     action: action,
   })
 }
+
+export async function logWhatSayYouEvent(threadKey, entryId, action) {
+  await logEvent({
+    type: 'wsy',
+    thread_key: threadKey,
+    entry_id: entryId,
+    action: action,
+  })
+}
