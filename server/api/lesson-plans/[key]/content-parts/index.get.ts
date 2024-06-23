@@ -10,8 +10,5 @@ export default defineEventHandler(async (event) => {
     .select('*, lesson_plans!inner (public_key)')
     .eq('lesson_plans.public_key', lessonKey)
 
-  console.log(contentParts)
-
-  // return whatever found, empty list if nothing
   return contentParts
 })

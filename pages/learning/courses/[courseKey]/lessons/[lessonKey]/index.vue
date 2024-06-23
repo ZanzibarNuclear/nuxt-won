@@ -1,9 +1,11 @@
 <template>
-  <div>
+  <div class="w-5/6 mx-auto">
     <UBreadcrumb :links="breadcrumbLinks" />
     <h1>{{ activeLesson.title }}</h1>
     <LessonContentView :content-parts="learning.contentParts" class="mb-12" />
-    <div class="prompt-box">
+    <div
+      class="text-center w-3/4 mx-auto text-[#222222] dark:text-[#ffa] bg-[#f5f5f5] dark:bg-[#333] rounded-md p-4 mb-12"
+    >
       <div v-if="nextStep" class="mx-auto">
         <div class="mb-4">
           {{ nextStep.teaser }}
@@ -15,7 +17,7 @@
         </div>
       </div>
       <div v-else>
-        <div class="font-bold text-xl">The End</div>
+        <div class="font-bold text-xl mb-4">The End</div>
         <div>You seem to have reached the end of the course.</div>
         <div v-if="!gotCreditForFinishing">
           Click to <UButton @click="onClaimCredit">claim credit</UButton> for
@@ -39,7 +41,6 @@
 
 <script setup lang="ts">
 import { loadContentParts } from '~/db/ContentPartModel'
-import { loadPath } from '~/db/LessonPathModel'
 import { logLearningEvent } from '~/db/EventModel'
 import { loadLessonPlan } from '~/db/LessonPlanModel'
 import { bookmarkLesson, getBookmark } from '~/db/UserModel'
@@ -90,37 +91,6 @@ const onClaimCredit = () => {
 
 async function loadData() {
   const path = learning.activePath
-
-  // load path if not found, probably due to reloading page
-
-  // FIXME: for ability to refresh lesson without losing path;
-  //   frankly, not so important, user can return to course catalog
-  //   to use their bookmark
-
-  // if (!path) {
-  //   console.log('attempt to load path from bookmark')
-
-  //   const { data: bookmark } = await useAsyncData(`bookmark`, () =>
-  //     getBookmark()
-  //   )
-  //   if (bookmark.value) {
-  //     console.log('found bookmark', bookmark.value)
-
-  //     userContext.cacheBookmark(bookmark.value)
-  //     const { data: path } = await useAsyncData(
-  //       `path-${bookmark.value.pathKey}`,
-  //       () => loadPath(bookmark.value.pathKey)
-  //     )
-  //     if (path.value) {
-  //       console.log('found path', path.value)
-
-  //       learning.cacheLessonPaths([path.value])
-  //       learning.choosePath(path.value.publicKey)
-  //     }
-  //   } else {
-  //     console.log('no bookmark, no path')
-  //   }
-  // }
 
   const { data: lessonData } = await useAsyncData(
     `lesson-data-${lessonKey}`,

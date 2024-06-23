@@ -14,7 +14,7 @@
       />
     </UModal>
   </div>
-  <div v-for="lesson in workshop.lessonList" class="my-6 px-4">
+  <div v-for="lesson in workshop.sortedLessonPlans" class="my-6 px-4">
     <div class="flex">
       <LessonListItem
         :lesson-plan="lesson"

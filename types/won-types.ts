@@ -18,6 +18,7 @@ export type LessonPlan = {
   coverArt: string | null
   objective: string | null
   publishedAt: string | null
+  sequence: number | null
 }
 export type LessonPath = {
   id: number

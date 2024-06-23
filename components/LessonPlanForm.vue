@@ -9,6 +9,9 @@
     <UFormGroup label="Cover Art" name="coverArt">
       <UInput v-model="state.coverArt" />
     </UFormGroup>
+    <UFormGroup label="Sort order" name="sequence">
+      <UInput v-model="state.sequence" type="number" />
+    </UFormGroup>
     <UButton
       type="submit"
       :label="isEdit ? 'Submit changes' : 'Add lesson'"
@@ -37,6 +40,7 @@ const schema = object({
   objective: string().nullable(),
   coverArt: string().nullable(),
   courseKey: string().nullable(),
+  sequence: number().nullable(),
 })
 type Schema = InferType<typeof schema>
 const state = reactive({
@@ -47,18 +51,21 @@ const state = reactive({
   objective: undefined,
   coverArt: undefined,
   courseKey: undefined,
+  sequence: undefined,
 })
 
 const isEdit = computed(() => !!props.lessonPlan)
 
 const setInitialValues = (lessonPlan) => {
-  const { id, publicKey, title, description, coverArt, objective } = lessonPlan
+  const { id, publicKey, title, description, coverArt, objective, sequence } =
+    lessonPlan
   state.id = id
   state.publicKey = publicKey
   state.title = title
   state.description = description
   state.coverArt = coverArt
   state.objective = objective
+  state.sequence = sequence
 }
 
 onMounted(() => {

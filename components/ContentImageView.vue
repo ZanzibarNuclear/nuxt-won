@@ -1,6 +1,6 @@
 <template>
-  <div class="border shadow-md p-8" :style="useBgColor">
-    <div class="flex justify-center">
+  <div class="my-12 px-12">
+    <div class="flex justify-center border p-4 mb-2" :style="useBgColor">
       <NuxtImg
         :src="image.src"
         :alt="image.alt"
@@ -16,7 +16,11 @@
     <div v-if="displayCredit" class="text-sm text-center">
       Credit: {{ image.credit.name }}
       <span v-if="image.credit.url"
-        >(<NuxtLink :to="image.credit.url" external target="_blank"
+        >(<NuxtLink
+          :to="image.credit.url"
+          external
+          target="_blank"
+          class="text-violet-500 hover:text-violet-600"
           >source</NuxtLink
         ><UIcon name="i-ph-arrow-circle-up-right" />)</span
       >
@@ -52,6 +56,11 @@ const displayCredit = computed(() => {
 
 <style scoped>
 a {
-  color: navy;
+  text-decoration: none;
+  color: lightskyblue;
+}
+a:hover {
+  text-decoration: underline;
+  color: blue;
 }
 </style>

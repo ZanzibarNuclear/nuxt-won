@@ -46,6 +46,22 @@ export const useWorkshopStore = defineStore('workshop', () => {
 
   const lessonPlans: LessonMap = reactive({})
   const lessonList = computed(() => Object.values(lessonPlans))
+
+  const sortedLessonPlans = computed(() => {
+    const plans = Object.values(lessonPlans)
+    plans.sort((a, b) => {
+      if (a.sequence !== null && b.sequence !== null) {
+        return a.sequence - b.sequence
+      } else if (a.sequence !== null) {
+        return -1
+      } else if (b.sequence !== null) {
+        return 1
+      } else {
+        return 0
+      }
+    })
+    return plans
+  })
   const activeLessonKey = ref()
 
   const cacheLesson = (lessonToAdd: LessonPlan) => {
@@ -142,6 +158,7 @@ export const useWorkshopStore = defineStore('workshop', () => {
     makeCourseActive,
     deactivateCourse,
     lessonList,
+    sortedLessonPlans,
     isLessonActive,
     activeLesson,
     cacheLessons,
