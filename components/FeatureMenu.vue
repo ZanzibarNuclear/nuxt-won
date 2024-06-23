@@ -1,5 +1,5 @@
 <template>
-  <div class="w-48 bg-stone-800">
+  <div class="w-48 dark:bg-stone-800">
     <UVerticalNavigation :links="links"> </UVerticalNavigation>
   </div>
 </template>

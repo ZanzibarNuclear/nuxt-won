@@ -3,7 +3,9 @@
     <UBreadcrumb :links="breadcrumbLinks" />
     <h1>{{ activeLesson.title }}</h1>
     <LessonContentView :content-parts="learning.contentParts" class="mb-12" />
-    <div class="prompt-box">
+    <div
+      class="text-center w-3/4 mx-auto text-[#222222] dark:text-[#ffa] bg-[#f5f5f5] dark:bg-[#333] rounded-md p-4 mb-12"
+    >
       <div v-if="nextStep" class="mx-auto">
         <div class="mb-4">
           {{ nextStep.teaser }}
@@ -15,7 +17,7 @@
         </div>
       </div>
       <div v-else>
-        <div class="font-bold text-xl">The End</div>
+        <div class="font-bold text-xl mb-4">The End</div>
         <div>You seem to have reached the end of the course.</div>
         <div v-if="!gotCreditForFinishing">
           Click to <UButton @click="onClaimCredit">claim credit</UButton> for

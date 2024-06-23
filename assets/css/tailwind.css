@@ -28,13 +28,3 @@ a {
   color: #222222;
   @apply text-center w-3/4 mx-auto;
 }
-
-.prompt-box-dark {
-  margin-top: 1rem;
-  padding: 1rem;
-  border: 1px solid #333;
-  border-radius: 4px;
-  background-color: #101010;
-  color: #aaa;
-  @apply text-center w-3/4 mx-auto;
-}

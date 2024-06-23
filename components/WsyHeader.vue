@@ -1,5 +1,7 @@
 <template>
-  <div class="prompt-box dark:prompt-box-dark">
+  <div
+    class="text-center w-3/4 mx-auto text-[#222222] dark:text-[#ffa] bg-[#f5f5f5] dark:bg-[#333] rounded-md p-4 mb-12"
+  >
     <div v-if="isKnownPlayer && !edit">
       <div class="text-xl">
         People shall know you as "{{ player.alias }}."
