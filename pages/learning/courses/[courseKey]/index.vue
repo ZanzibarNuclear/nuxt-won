@@ -8,20 +8,24 @@
       <span v-html="activeCourse.syllabus" />
     </div>
   </div>
-  <div class="prompt-box" v-if="isReady">
-    <h3 v-if="isMultiplePaths">Pick a path through this course</h3>
-    <div v-for="path in learning.activeLessonPaths" class="py-2">
-      <hr v-if="isMultiplePaths" class="my-2" />
-      <div class="font-bold">{{ path.name }}</div>
-      <div class="mb-2">{{ path.description }}</div>
-      <UButton @click="() => onStartLesson(path)"
-        >Start <UIcon name="i-ph-arrow-right-duotone"
-      /></UButton>
+  <div
+    class="text-center w-3/4 mx-auto text-[#222222] dark:text-[#ffa] bg-[#f5f5f5] dark:bg-[#333] rounded-md p-4 mb-12"
+  >
+    <div v-if="isReady">
+      <h3 v-if="isMultiplePaths">Pick a path through this course</h3>
+      <div v-for="path in learning.activeLessonPaths" class="py-2">
+        <hr v-if="isMultiplePaths" class="my-2" />
+        <div class="font-bold">{{ path.name }}</div>
+        <div class="mb-2">{{ path.description }}</div>
+        <UButton @click="() => onStartLesson(path)"
+          >Start <UIcon name="i-ph-arrow-right-duotone"
+        /></UButton>
+      </div>
     </div>
-  </div>
-  <div v-else class="prompt-box">
-    <h3>Nowhere to Go</h3>
-    <div>Sorry, it appears that this course is not ready.</div>
+    <div v-else>
+      <h3>Nowhere to Go</h3>
+      <div>Sorry, it appears that this course is not ready.</div>
+    </div>
   </div>
 </template>
 
