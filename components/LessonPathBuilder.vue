@@ -8,7 +8,7 @@
     />
     <UModal v-model="uiState.openAddPath">
       <LessonPathForm
-        :lessons="workshop.lessonList"
+        :lessons="workshop.sortedLessonPlans"
         :course-key="courseKey"
         @save-path="onAddPath"
         @cancel="onCancelAddPath"
