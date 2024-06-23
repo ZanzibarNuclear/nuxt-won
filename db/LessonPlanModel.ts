@@ -10,6 +10,7 @@ const mapToObject = (data): LessonPlan => {
     coverArt: data.cover_art,
     objective: data.objective,
     publishedAt: data.published_at,
+    sequence: data.sequence,
   }
 }
 
@@ -23,6 +24,7 @@ const mapToTable = (lessonPlan: LessonPlan) => {
     cover_art: lessonPlan.coverArt,
     objective: lessonPlan.objective,
     published_at: lessonPlan.publishedAt,
+    sequence: lessonPlan.sequence,
   }
 }
 

@@ -36,7 +36,7 @@ const features = [
   {
     category: 'learning',
     name: 'Mini Lessons',
-    coverImage: '/images/atomic-symbol.jpg',
+    coverImage: '/images/simple-atom.svg',
     description:
       'Learn everything you need to know to understand how nuclear energy can be put to good use.',
     callToAction: 'Get Smarter Every Day',

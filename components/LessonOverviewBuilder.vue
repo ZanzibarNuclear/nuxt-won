@@ -11,6 +11,7 @@
     <UButton @click="() => (isEdit = true)" label="Edit lesson" class="mx-1" />
     <div v-if="lesson">
       <h2>Title: {{ lesson.title }}</h2>
+      <div>Sequence: {{ lesson.sequence }}</div>
       <div v-if="lesson.coverArt" class="my-6">
         <NuxtImg :src="lesson.coverArt" :alt="lesson.title" width="150px" />
       </div>
