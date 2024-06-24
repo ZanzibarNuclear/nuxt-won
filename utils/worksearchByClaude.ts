@@ -6,14 +6,15 @@ export function generateWordSearch(words, size) {
 
   // Place words in the grid
   for (let word of words) {
+    const capitalized = word.toUpperCase()
     let placed = false
     while (!placed) {
       let direction = Math.floor(Math.random() * 3) // 0: horizontal, 1: vertical, 2: diagonal
       let row = Math.floor(Math.random() * size)
       let col = Math.floor(Math.random() * size)
 
-      if (canPlaceWord(grid, word, row, col, direction)) {
-        placeWord(grid, word, row, col, direction)
+      if (canPlaceWord(grid, capitalized, row, col, direction)) {
+        placeWord(grid, capitalized, row, col, direction)
         placed = true
       }
     }
