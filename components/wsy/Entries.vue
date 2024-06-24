@@ -1,5 +1,5 @@
 <template>
-  <WsyEntryForm v-if="showEntryForm" @close="showEntryForm = false" />
+  <wsy-entry-form v-if="showEntryForm" @close="showEntryForm = false" />
   <div v-else>
     Say something about this topic.
     <UButton
@@ -9,7 +9,7 @@
       @click="showEntryForm = true"
     />
   </div>
-  <WsyViewRecursive :entries="wsy.topLevelEntries" :indent="0" />
+  <wsy-view-recursive :entries="wsy.topLevelEntries" :indent="0" />
 </template>
 
 <script setup lang="ts">

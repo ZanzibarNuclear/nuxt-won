@@ -1,3 +1,16 @@
+<template>
+  <div class="p-4">
+    Invite someone to respond. (Best if it's someone you know.)
+    <UFormGroup label="Email" description="Your friend's email address">
+      <UInput v-model="friendEmail" />
+    </UFormGroup>
+    <UFormGroup label="Name" description="Your friend's name">
+      <UInput v-model="friendName" />
+    </UFormGroup>
+    <UButton class="mt-2" @click="doInvite">Invite</UButton>
+  </div>
+</template>
+
 <script setup lang="ts">
 const wsy = useWsyStore()
 const friendEmail = ref('')
@@ -21,16 +34,3 @@ const doInvite = async () => {
   const invited = alert(alertMsg)
 }
 </script>
-
-<template>
-  <div class="p-4">
-    Invite someone to respond. (Best if it's someone you know.)
-    <UFormGroup label="Email" description="Your friend's email address">
-      <UInput v-model="friendEmail" />
-    </UFormGroup>
-    <UFormGroup label="Name" description="Your friend's name">
-      <UInput v-model="friendName" />
-    </UFormGroup>
-    <UButton class="mt-2" @click="doInvite">Invite</UButton>
-  </div>
-</template>

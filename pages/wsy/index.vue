@@ -1,9 +1,9 @@
 <template>
   <div>
     <h1>What Say You?</h1>
-    <WsyHeader />
-    <WsyTopic v-if="wsyStore.isPlayerLoaded" />
-    <WsyEntries v-if="wsyStore.isActiveThread" />
+    <wsy-header />
+    <wsy-topic v-if="wsyStore.isPlayerLoaded" />
+    <wsy-entries v-if="wsyStore.isActiveThread" />
   </div>
 </template>
 
