@@ -1,9 +1,28 @@
 <template>
   <div>
-    <game-word-search :words="words" />
+    <game-word-search-v2 :words="words" :size="20" />
   </div>
 </template>
 
 <script setup>
-const words = ['twist', 'barbie', 'gomiday', 'amepile']
+const words = [
+  'fission',
+  'fusion',
+  'nucleus',
+  'neutron',
+  'proton',
+  'electron',
+  'chain reaction',
+  'radioactive',
+  'alpha',
+  'beta',
+  'gamma',
+  'cross section',
+  'containment',
+  'reactor',
+  'steam',
+  'turbine',
+  'generator',
+  'power',
+]
 </script>

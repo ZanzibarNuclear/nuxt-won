@@ -6,7 +6,7 @@ export function generateWordSearch(words, size) {
 
   // Place words in the grid
   for (let word of words) {
-    const capitalized = word.toUpperCase()
+    const capitalized = word.toUpperCase().replace(/\s/g, '')
     let placed = false
     while (!placed) {
       let direction = Math.floor(Math.random() * 3) // 0: horizontal, 1: vertical, 2: diagonal
