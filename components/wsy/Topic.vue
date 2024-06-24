@@ -1,16 +1,9 @@
 <template>
   <div v-if="!wsy.activeThread">
     <h3>Of what shall we speak?</h3>
-    <div class="columns-2 my-6">
-      <div>
-        <UFormGroup label="Introduce a new topic">
-          <UInput v-model="newThreadTopic" ref="topicInputRef" />
-        </UFormGroup>
-        <UButton class="mt-2" @click="doStartThread" :disabled="!canStartTopic"
-          >Start</UButton
-        >
-      </div>
-      <wsy-topic-select />
+    <div class="my-6">
+      <wsy-topic-form class="my-6" />
+      <wsy-topic-select class="my-6" />
     </div>
   </div>
   <div v-else>
@@ -34,7 +27,6 @@
 </template>
 
 <script setup lang="ts">
-const supabase = useSupabaseClient()
 const wsy = useWsyStore()
 
 const newThreadTopic = ref('')
@@ -61,34 +53,6 @@ const closeInviteForm = () => {
 onMounted(() => {
   focusOnTopicInput()
 })
-
-const canStartTopic = computed(() => {
-  return newThreadTopic.value || newThreadTopic.value.trim() !== ''
-})
-
-const doStartThread = async () => {
-  console.log('doStartThread')
-  if (!wsy.isPlayerLoaded || !canStartTopic.value) {
-    console.log('Not ready to start thread')
-    return
-  }
-
-  const { data, error } = await supabase
-    .from('wsy_threads')
-    .insert({
-      owner_id: wsy.player.id,
-      public_key: genKey(),
-      topic: newThreadTopic.value,
-    })
-    .select()
-
-  if (error) {
-    console.error('Unable to start topic', error)
-    return
-  }
-  wsy.updateThread(data[0])
-  wsy.activateThread(data[0].public_key)
-}
 
 const doNewTopic = () => {
   newThreadTopic.value = ''

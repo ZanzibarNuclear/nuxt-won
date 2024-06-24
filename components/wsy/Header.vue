@@ -3,6 +3,9 @@
     class="text-center w-3/4 mx-auto text-[#222222] dark:text-[#ffa] bg-[#f5f5f5] dark:bg-[#333] rounded-md p-4 mb-12"
   >
     <div v-if="isKnownPlayer && !edit">
+      <div class="">
+        <UButton icon="i-ph-x" size="xs" @click="emit('close')" />
+      </div>
       <div class="text-xl">
         People shall know you as "{{ player.alias }}."
         <UButton
@@ -57,6 +60,8 @@
 import { object, string, type InferType } from 'yup'
 import type { FormSubmitEvent } from '#ui/types'
 import type { Database } from '~/types/supabase'
+
+const emit = defineEmits(['close'])
 
 const supabase = useSupabaseClient<Database>()
 const user = useSupabaseUser()
