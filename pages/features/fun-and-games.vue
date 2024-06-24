@@ -37,11 +37,11 @@
 </template>
 
 <script setup>
-import { generateWordSearch } from '~/utils/worksearchByClaude'
+import { generateWordSearch } from '~/utils/wordSearchBuilder'
 
 const words = ['reactor', 'fission', 'fusion', 'neutrons', 'chainreaction']
-const puzzle = generateWordSearch(words, 15)
-for (let row of puzzle) {
+const puzzleA = generateWordSearch(words, 15)
+for (let row of puzzleA) {
   console.log(row.join(' '))
 }
 </script>
