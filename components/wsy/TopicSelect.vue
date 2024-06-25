@@ -1,23 +1,25 @@
 <template>
   <div v-if="allTopicsList.length > 0">
     <UFormGroup label="Pick one of these topics">
-      <USelect
-        v-model="chosenTopic"
-        :options="allTopicsList"
-        option-attribute="topic"
-        value-attribute="key"
-      />
+      <div class="flex space-x-2">
+        <USelect
+          v-model="selectedTopic"
+          :options="allTopicsList"
+          option-attribute="topic"
+          value-attribute="key"
+          class="flex-grow"
+        />
+        <UButton size="sm" @click="onChooseSelectedTopic">Open</UButton>
+      </div>
     </UFormGroup>
-    <UButton class="mt-2" @click="doChooseTopic" :disabled="!chosenTopic"
-      >Open</UButton
-    >
   </div>
 </template>
 
 <script setup lang="ts">
 const wsy = useWsyStore()
 const allThreads = ref([])
-const chosenTopic = ref('')
+const selectedTopic = ref('')
+const emit = defineEmits(['openTopic'])
 
 const { data: threadsData } = await useFetch('/api/threads')
 if (threadsData.value?.threads) {
@@ -34,17 +36,11 @@ const allTopicsList = computed(() => {
   return topics
 })
 
-const doChooseTopic = async () => {
-  // TODO: have this emit and let parent handle
-  if (chosenTopic.value === null) return
+const onChooseSelectedTopic = () => {
+  console.log(selectedTopic.value)
 
-  const loadedThread = await $fetch(`/api/threads/${chosenTopic.value}`)
-  const loadedEntries = await $fetch(`/api/entries/${chosenTopic.value}`)
-  const writers = await $fetch(`/api/writers/${chosenTopic.value}`)
-
-  wsy.updateThread(loadedThread)
-  wsy.activateThread(loadedThread.public_key)
-  wsy.loadActiveEntries(loadedEntries)
-  wsy.loadWriters(writers)
+  if (selectedTopic.value !== null) {
+    emit('openTopic', selectedTopic.value)
+  }
 }
 </script>

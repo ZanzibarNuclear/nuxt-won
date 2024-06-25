@@ -52,9 +52,9 @@ const focusOnEntryInput = () => {
   statementEditor.value.focus()
 }
 
-onMounted(() => {
-  focusOnEntryInput()
-})
+// onMounted(() => {
+//   focusOnEntryInput()
+// })
 
 const doPostEntry = async (editor) => {
   if (!wsy.isActiveThread || !wsy.isPlayerLoaded) {

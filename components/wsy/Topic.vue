@@ -3,7 +3,7 @@
     <h3>Of what shall we speak?</h3>
     <div class="my-6">
       <wsy-topic-form class="my-6" />
-      <wsy-topic-select class="my-6" />
+      <wsy-topic-select class="my-6" @open-topic="handleLoadTopic" />
     </div>
   </div>
   <div v-else>
@@ -53,6 +53,25 @@ const closeInviteForm = () => {
 onMounted(() => {
   focusOnTopicInput()
 })
+
+const handleLoadTopic = async (topicKey) => {
+  navigateTo(`/wsy/threads/${topicKey}`)
+  // console.log('thread', topicKey)
+  // if (!topicKey) {
+  //   console.log('Forgot to pick a topic?')
+
+  //   return
+  // }
+
+  // const loadedThread = await $fetch(`/api/threads/${topicKey}`)
+  // const loadedEntries = await $fetch(`/api/entries/${topicKey}`)
+  // const writers = await $fetch(`/api/writers/${topicKey}`)
+
+  // wsy.updateThread(loadedThread)
+  // wsy.activateThread(loadedThread.public_key)
+  // wsy.loadActiveEntries(loadedEntries)
+  // wsy.loadWriters(writers)
+}
 
 const doNewTopic = () => {
   newThreadTopic.value = ''

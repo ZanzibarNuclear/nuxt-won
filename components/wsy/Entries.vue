@@ -14,7 +14,5 @@
 
 <script setup lang="ts">
 const wsy = useWsyStore()
-
-defineProps(['entries', 'indent'])
 const showEntryForm = ref(false)
 </script>
