@@ -1,30 +1,3 @@
-<script setup lang="ts">
-useSeoMeta({
-  title: 'World of Nuclear - Member Account',
-  ogTitle: 'World of Nuclear - Member Account',
-  description: 'Update your profile and preferences.',
-  ogDescription: 'Update your profile and preferences.',
-})
-
-import { useUserStore } from '~/stores/userStore'
-const { fetchAndLoadProfile, updateProfile } = useUserStore()
-
-onBeforeMount(async () => {
-  await fetchAndLoadProfile()
-})
-
-const handleSave = async (updates) => {
-  await updateProfile(updates)
-  isEdit.value = false
-}
-
-const isEdit = ref(false)
-
-const toggleEdit = () => {
-  isEdit.value = !isEdit.value
-}
-</script>
-
 <template>
   <div class="text-2xl font-bold text-primary">Profile and Settings</div>
   <div class="my-8">
@@ -40,3 +13,30 @@ const toggleEdit = () => {
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+import type { UserProfile } from '~/types/won-types'
+
+useSeoMeta({
+  title: 'World of Nuclear - Member Account',
+  ogTitle: 'World of Nuclear - Member Account',
+  description: 'Update your profile and preferences.',
+  ogDescription: 'Update your profile and preferences.',
+})
+
+const { fetchAndLoadProfile, updateProfile } = useUserStore()
+
+onBeforeMount(async () => {
+  await fetchAndLoadProfile()
+})
+
+const handleSave = async (deltas: UserProfile) => {
+  await updateProfile(deltas)
+  isEdit.value = false
+}
+
+const isEdit = ref(false)
+const toggleEdit = () => {
+  isEdit.value = !isEdit.value
+}
+</script>

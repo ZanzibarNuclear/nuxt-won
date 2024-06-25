@@ -26,13 +26,12 @@ export async function scanUserProfiles(
 }
 
 export async function bookmarkLesson(lessonKey: string, pathKey: string) {
-  const user = useUserStore().profile
-  console.log('user', user)
-  if (user) {
-    const bookmark = await $fetch('/api/users/' + user.id + '/bookmarks', {
+  const { profile } = useUserStore()
+  if (profile) {
+    const bookmark = await $fetch('/api/users/' + profile.id + '/bookmarks', {
       method: 'POST',
       body: {
-        id: user.id,
+        id: profile.id,
         lesson_key: lessonKey,
         path_key: pathKey,
       },
@@ -45,11 +44,9 @@ export async function bookmarkLesson(lessonKey: string, pathKey: string) {
 }
 
 export async function getBookmark() {
-  const user = useUserStore().profile
-  console.log('user', user)
-
-  if (user) {
-    const bookmark = await $fetch('/api/users/' + user.id + '/bookmarks')
+  const { profile } = useUserStore()
+  if (profile) {
+    const bookmark = await $fetch('/api/users/' + profile.id + '/bookmarks')
     if (bookmark) {
       return mapToBookmark(bookmark)
     } else {

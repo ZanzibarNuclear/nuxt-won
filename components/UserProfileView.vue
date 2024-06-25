@@ -1,14 +1,5 @@
-<script setup lang="ts">
-import { useUserStore } from '~/stores/userStore'
-
-const user = useUserStore()
-const profile = computed(() => {
-  return user.profile
-})
-</script>
-
 <template>
-  <UCard v-if="user.isProfileLoaded">
+  <UCard v-if="profile">
     <div class="mb-4 grid grid-cols-4">
       <span class="label">User ID</span>
       <span class="col-span-3">{{ profile.id }}</span>
@@ -60,7 +51,15 @@ const profile = computed(() => {
       }}</span>
     </div>
   </UCard>
+  <div v-else>No profile found.</div>
 </template>
+
+<script setup lang="ts">
+const userStore = useUserStore()
+const profile = computed(() => {
+  return userStore.profile || {}
+})
+</script>
 
 <style scoped>
 .label {
