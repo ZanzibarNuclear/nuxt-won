@@ -33,6 +33,7 @@ import { getParticipant } from '~/db/WsyModel'
 const route = useRoute()
 const threadKey = route.params.threadKey
 const wsyStore = useWsyStore()
+const userContext = useUserStore()
 
 const onChooseTopic = () => {
   wsyStore.clearActiveThread()
@@ -67,7 +68,7 @@ if (threadKey) {
     writers,
     participant
   )
-  wsyStore.setPlayer(participant)
+  userContext.setPlayer(participant)
   wsyStore.updateThread(thread)
   wsyStore.loadActiveEntries(entries)
   wsyStore.loadWriters(writers)
