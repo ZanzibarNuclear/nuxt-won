@@ -17,15 +17,17 @@ const friendEmail = ref('')
 const friendName = ref('')
 
 const doInvite = async () => {
+  const body = {
+    friendEmail: friendEmail.value,
+    friendName: friendName.value,
+    solicitorId: wsy.player?.user_id,
+    solicitorAlias: wsy.player?.alias,
+    topicKey: wsy.activeThreadKey,
+  }
+  console.log('Invitation to WSY', body)
   const result = await $fetch('/api/invitations', {
     method: 'POST',
-    body: {
-      friendEmail: friendEmail.value,
-      friendName: friendName.value,
-      solicitorId: wsy.player?.user_id,
-      solicitorAlias: wsy.player?.alias,
-      topicKey: wsy.activeThreadKey,
-    },
+    body,
   })
 
   const alertMsg = result.success

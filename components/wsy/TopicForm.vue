@@ -16,7 +16,23 @@
 
 <script setup lang="ts">
 const wsy = useWsyStore()
+
 const newThreadTopic = ref('')
+const topicInputRef = ref()
+defineShortcuts({
+  meta_f: () => {
+    focusOnTopicInput()
+  },
+})
+const focusOnTopicInput = () => {
+  if (topicInputRef.value) {
+    topicInputRef.value.$refs.input.focus()
+  }
+}
+
+onMounted(() => {
+  focusOnTopicInput()
+})
 
 const doStartThread = async () => {
   if (newThreadTopic.value === '') {

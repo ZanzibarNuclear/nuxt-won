@@ -30,47 +30,9 @@
 const wsy = useWsyStore()
 
 const newThreadTopic = ref('')
-const topicInputRef = ref()
-defineShortcuts({
-  meta_f: () => {
-    focusOnTopicInput()
-  },
-})
-const focusOnTopicInput = () => {
-  if (topicInputRef.value) {
-    topicInputRef.value.$refs.input.focus()
-  }
-}
-
-const inviteOpen = ref(false)
-const openInviteForm = () => {
-  inviteOpen.value = true
-}
-const closeInviteForm = () => {
-  inviteOpen.value = false
-}
-
-onMounted(() => {
-  focusOnTopicInput()
-})
 
 const handleLoadTopic = async (topicKey) => {
   navigateTo(`/wsy/threads/${topicKey}`)
-  // console.log('thread', topicKey)
-  // if (!topicKey) {
-  //   console.log('Forgot to pick a topic?')
-
-  //   return
-  // }
-
-  // const loadedThread = await $fetch(`/api/threads/${topicKey}`)
-  // const loadedEntries = await $fetch(`/api/entries/${topicKey}`)
-  // const writers = await $fetch(`/api/writers/${topicKey}`)
-
-  // wsy.updateThread(loadedThread)
-  // wsy.activateThread(loadedThread.public_key)
-  // wsy.loadActiveEntries(loadedEntries)
-  // wsy.loadWriters(writers)
 }
 
 const doNewTopic = () => {
