@@ -60,6 +60,7 @@
 import { object, string, type InferType } from 'yup'
 import type { FormSubmitEvent } from '#ui/types'
 import type { Database } from '~/types/supabase'
+import { getParticipant } from '~/db/WsyModel'
 
 const emit = defineEmits(['close'])
 
@@ -81,16 +82,11 @@ const isSignedIn = computed(() => !!user.value)
 const player = computed(() => wsy.player)
 const isKnownPlayer = computed(() => player.value)
 
-onMounted(async () => {
-  const { data } = await supabase
-    .from('wsy_participants')
-    .select('*')
-    .eq('user_id', user.value.id)
-  if (data?.length > 0) {
-    wsy.setPlayer(data[0])
-    playerState.alias = data[0].alias
-  }
-})
+// FIXME: maybe consolidate participant info in user store instead of wsy store
+const { data: playerData } = await useAsyncData('participant', () =>
+  getParticipant(user.value.id)
+)
+wsy.setPlayer(playerData)
 
 function editPlayer() {
   edit.value = true

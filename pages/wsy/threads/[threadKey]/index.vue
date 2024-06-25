@@ -1,10 +1,7 @@
 <template>
   <h1>
-    <UButton
-      icon="i-mdi-arrow-left-top"
-      class="mr-2"
-      @click="onChooseTopic"
-    />What Say You?
+    <UButton icon="i-mdi-arrow-left-top" class="mr-2" @click="onChooseTopic" />
+    What Say You?
   </h1>
   <div>
     <div class="flex align-items-center">
@@ -38,6 +35,7 @@ const threadKey = route.params.threadKey
 const wsyStore = useWsyStore()
 
 const onChooseTopic = () => {
+  wsyStore.clearActiveThread()
   navigateTo('/wsy')
 }
 const inviteOpen = ref(false)
@@ -58,11 +56,17 @@ if (threadKey) {
         $fetch(`/api/writers/${threadKey}`),
         getParticipant(),
       ])
-      console.log('returning thread and writer data', thread, entries, writers)
       return { thread, entries, writers, participant }
     }
   )
   const { thread, entries, writers, participant } = wsyData.value
+  console.log(
+    'returning thread and writer data',
+    thread,
+    entries,
+    writers,
+    participant
+  )
   wsyStore.setPlayer(participant)
   wsyStore.updateThread(thread)
   wsyStore.loadActiveEntries(entries)
