@@ -3,9 +3,7 @@
     class="text-center w-3/4 mx-auto text-[#222222] dark:text-[#ffa] bg-[#f5f5f5] dark:bg-[#333] rounded-md p-4 mb-12"
   >
     <div v-if="isKnownPlayer && !edit">
-      <div class="">
-        <UButton icon="i-ph-x" size="xs" @click="emit('close')" />
-      </div>
+      <h3>About You</h3>
       <div class="text-xl">
         People shall know you as "{{ player.alias }}."
         <UButton
@@ -19,6 +17,9 @@
       </div>
       <div class="my-2">
         You joined the discussion on {{ displayAsDateTime(player.joined_at) }}.
+      </div>
+      <div>
+        <UButton icon="i-ph-x" size="xs" label="close" @click="emit('close')" />
       </div>
     </div>
     <div v-else>
@@ -60,13 +61,12 @@
 import { object, string, type InferType } from 'yup'
 import type { FormSubmitEvent } from '#ui/types'
 import type { Database } from '~/types/supabase'
-import { getParticipant } from '~/db/WsyModel'
 
+const props = defineProps(['player'])
 const emit = defineEmits(['close'])
 
 const supabase = useSupabaseClient<Database>()
-const user = useSupabaseUser()
-const wsy = useWsyStore()
+const userContext = useUserStore()
 
 const edit = ref(false)
 
@@ -78,25 +78,19 @@ const playerState = reactive({
   alias: '',
 })
 
-const isSignedIn = computed(() => !!user.value)
-const player = computed(() => wsy.player)
-const isKnownPlayer = computed(() => player.value)
-
-// FIXME: maybe consolidate participant info in user store instead of wsy store
-const { data: playerData } = await useAsyncData('participant', () =>
-  getParticipant(user.value.id)
-)
-wsy.setPlayer(playerData)
+const isSignedIn = computed(() => !!userContext.user)
+const isKnownPlayer = computed(() => !!props.player)
 
 function editPlayer() {
   edit.value = true
+  playerState.alias = props.player.alias || userContext.profile?.alias || ''
 }
 function cancelEditPlayer() {
   edit.value = false
 }
 
 async function onSubmit(event: FormSubmitEvent<Schema>) {
-  if (!user.value) {
+  if (!userContext.user) {
     alert(
       'You are not signed in. How is that possible? Anyway, sign in first please.'
     )
@@ -105,8 +99,8 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
   const { data, error } = await supabase
     .from('wsy_participants')
     .upsert({
-      id: player.value?.id,
-      user_id: user.value.id,
+      id: props.player.id,
+      user_id: userContext.user.id,
       alias: event.data.alias,
     })
     .select()
@@ -114,7 +108,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
   if (error) {
     alert('Something dreadful happened: ' + error.message)
   }
-  wsy.setPlayer(data[0])
+  userContext.setPlayer(data[0])
   edit.value = false
 }
 </script>
