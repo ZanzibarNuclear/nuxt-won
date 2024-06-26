@@ -52,4 +52,9 @@ const cancel = () => {
   list-style: disc;
   list-style-position: inside;
 }
+.rich-text :deep(blockquote) {
+  margin-left: 1rem;
+  border-left: 2px solid goldenrod;
+  padding-left: 1rem;
+}
 </style>
