@@ -4,7 +4,7 @@
     <div class="flex space-x-2">
       <UButton
         :disabled="lastPage"
-        label="Load Invites"
+        label="Load Members"
         @click="loadNextBatch"
       />
       <div class="flex">

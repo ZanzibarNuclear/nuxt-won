@@ -111,3 +111,29 @@ export type UserProfile = {
   joined_at: string
   updated_at: string
 }
+
+// What Say You?
+export type Participant = {
+  id: number
+  user_id: string
+  alias: string
+  joined_at: string
+  karma: number
+}
+export type Entry = {
+  id: number
+  author_id: number
+  statement: string
+  thread_id: number
+  responding_to: number
+  posted_at: string
+}
+export type Thread = {
+  id: number
+  created_at: string
+  public_key: string
+  topic: string
+  starting_entry_id: number
+  owner_id: number
+  entries: Entry[]
+}

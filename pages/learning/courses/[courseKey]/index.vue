@@ -48,7 +48,6 @@ const breadcrumbLinks = [
 ]
 
 const learning = useLearningStore()
-const userContext = useUserStore()
 
 const route = useRoute()
 const courseKey = route.params.courseKey

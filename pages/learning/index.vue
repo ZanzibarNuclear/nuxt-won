@@ -31,7 +31,7 @@
 import { loadCourses } from '~/db/CourseModel'
 import { getBookmark } from '~/db/UserModel'
 import { loadPath } from '~/db/LessonPathModel'
-import type { Course, LessonPath } from '~/types/won-types'
+import type { Course } from '~/types/won-types'
 
 const breadcrumbLinks = [
   {
@@ -60,9 +60,6 @@ const bookmark = computed(() => {
 })
 
 const goToBookmark = async () => {
-  console.log('use this to go there', bookmark)
-
-  // load path and make it active ("choose" it)
   const bookmarkedPath = await loadPath(bookmark.value?.pathKey)
   if (bookmarkedPath) {
     console.log('bookmark, path', bookmark, bookmarkedPath)

@@ -1,41 +1,63 @@
 import { defineStore } from 'pinia'
-import type { LearningBookmark, UserProfile } from '~/types/won-types'
+import type {
+  LearningBookmark,
+  UserProfile,
+  Participant,
+} from '~/types/won-types'
+
+type UserData = {
+  user: null | Object
+  profile: null | UserProfile
+  learningBookmark: null | LearningBookmark
+  player: null | Participant
+}
 
 export const useUserStore = defineStore('user', () => {
-  const profile: Ref<UserProfile | undefined> = ref()
-
-  const isProfileLoaded = computed(() => {
-    return !!profile.value
+  const userData: UserData = reactive({
+    user: null,
+    profile: null,
+    learningBookmark: null,
+    player: null,
   })
 
-  async function loadProfile(data: UserProfile) {
-    console.log('User ' + data.screen_name + ' (' + data.id + ')')
-    profile.value = { ...data }
-  }
-
-  const getUser = () => {
+  const loadUser = () => {
     const user = useSupabaseUser()
     if (!user.value) {
-      console.log('Cannot fetch profile. User not signed in.')
-      return null
+      userData.user = null
     }
-    return user.value
+    userData.user = user.value
+    return userData.user
+  }
+  const user = computed(() => {
+    return userData.user
+  })
+
+  const isProfileLoaded = computed(() => {
+    return !!userData.profile
+  })
+  const profile = computed(() => {
+    return userData.profile
+  })
+  async function loadProfile(data: UserProfile) {
+    console.log('loading profile', data)
+
+    userData.profile = { ...data }
   }
 
   const fetchAndLoadProfile = async (refresh = false) => {
-    const user = getUser()
-    if (!user) {
+    if (!userData.user) {
+      console.log('Unknown users; cannot load profile')
       return false
     }
-    if (isProfileLoaded.value && !refresh) {
-      console.log('Already loaded; not forcing refresh')
+    if (userData.profile && !refresh) {
+      console.log('Profile already loaded; not forcing refresh')
       return true
     }
     const supabase = useSupabaseClient()
     const { data, error } = await supabase
       .from('profiles')
       .select()
-      .eq('id', user.id)
+      .eq('id', userData.user.id)
 
     if (error) {
       console.error(error.message)
@@ -45,13 +67,12 @@ export const useUserStore = defineStore('user', () => {
     return true
   }
 
-  const updateProfile = async (profileChanges) => {
-    const user = getUser()
-    if (!user) {
+  const updateProfile = async (deltas: UserProfile) => {
+    if (!userData.user) {
       return false
     }
     const toPost = {
-      ...profileChanges,
+      ...deltas,
       updated_at: new Date(),
     }
     console.log(toPost)
@@ -59,7 +80,7 @@ export const useUserStore = defineStore('user', () => {
     const { data, error } = await supabase
       .from('profiles')
       .update(toPost)
-      .eq('id', user.id)
+      .eq('id', userData.user.id)
       .select()
 
     if (error) {
@@ -70,20 +91,39 @@ export const useUserStore = defineStore('user', () => {
     return true
   }
 
-  const lastLearningLesson: Ref<LearningBookmark | undefined> = ref()
   const cacheBookmark = (bookmark: LearningBookmark) => {
-    lastLearningLesson.value = bookmark
+    userData.learningBookmark = bookmark
   }
   const bookmark = computed(() => {
-    return lastLearningLesson.value
+    return userData.learningBookmark
   })
+  const clearBookmark = () => {
+    userData.learningBookmark = null
+  }
+
+  function setPlayer(myPlayer: Participant) {
+    userData.player = { ...myPlayer }
+  }
+  const isPlayerLoaded = computed(() => {
+    return !!userData.player
+  })
+  const player = computed(() => {
+    return userData.player
+  })
+
   return {
-    profile,
-    isProfileLoaded,
+    loadUser,
+    user,
     loadProfile,
     fetchAndLoadProfile,
+    isProfileLoaded,
+    profile,
     updateProfile,
-    bookmark,
     cacheBookmark,
+    bookmark,
+    clearBookmark,
+    setPlayer,
+    isPlayerLoaded,
+    player,
   }
 })

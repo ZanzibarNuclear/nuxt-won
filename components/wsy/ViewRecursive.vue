@@ -1,17 +1,17 @@
 <template>
   <div v-for="entry in entries" class="my-3">
-    <WsyPostViewRow
+    <wsy-post-view-row
       :entry="entry"
       :indent="indent"
       @reply="() => openReplyForm(entry.id)"
     />
-    <WsyEntryForm
+    <wsy-entry-form
       v-if="showReplyForm(entry.id)"
       :responding-to="entry.id"
       @close="closeReplyForm"
     />
     <div v-if="wsy.hasResponses(entry.id)">
-      <WsyViewRecursive
+      <wsy-view-recursive
         :entries="wsy.responseEntries(entry.id)"
         :indent="indent + 1"
       />

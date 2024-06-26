@@ -10,11 +10,11 @@ export async function retrieveEvents(offset, batchSize, actor) {
 }
 
 async function logEvent(details) {
-  const user = useUserStore().profile
+  const { profile } = useUserStore()
   await $fetch('/api/events', {
     method: 'POST',
     body: {
-      actor: user.id,
+      actor: profile.id,
       details: details,
     },
   })

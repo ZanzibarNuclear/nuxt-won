@@ -1,37 +1,13 @@
 import { defineStore } from 'pinia'
+import type { Thread, Entry, Participant } from '~/types/won-types'
 
 export const useWsyStore = defineStore('wsy', () => {
-  type Participant = {
-    id: number
-    user_id: string
-    alias: string
-    joined_at: string
-    karma: number
-  }
-  type Entry = {
-    id: number
-    author_id: number
-    statement: string
-    thread_id: number
-    responding_to: number
-    posted_at: string
-  }
-  type Thread = {
-    id: number
-    created_at: string
-    public_key: string
-    topic: string
-    starting_entry_id: number
-    owner_id: number
-    entries: Entry[]
-  }
   type ThreadMap = { [k: string]: Thread }
   type EntryMap = { [k: string]: Entry }
   type ReplyMap = { [k: string]: number[] }
   type WriterMap = { [k: string]: string } // aliases referenced by participant ID
 
   // values
-  const player: Ref<Participant | undefined> = ref()
   const threads: Ref<ThreadMap> = ref({})
   const activeThreadKey: Ref<string | undefined> = ref()
   const entryMap: Ref<EntryMap> = ref({})
@@ -39,7 +15,6 @@ export const useWsyStore = defineStore('wsy', () => {
   const replyTree: Ref<ReplyMap> = ref({})
 
   function reset() {
-    player.value = undefined
     threads.value = {}
     activeThreadKey.value = undefined
     entryMap.value = {}
@@ -58,13 +33,6 @@ export const useWsyStore = defineStore('wsy', () => {
   function loadWriters(writers: Participant[]) {
     writers.forEach((writer) => stashAlias(writer.id, writer.alias))
   }
-  function setPlayer(myPlayer: Participant) {
-    player.value = myPlayer
-    stashAlias(myPlayer.id, myPlayer.alias)
-  }
-  const isPlayerLoaded = computed(() => {
-    return !!player.value
-  })
 
   const activeThread = computed(() => {
     if (activeThreadKey.value) {
@@ -90,6 +58,10 @@ export const useWsyStore = defineStore('wsy', () => {
     } else {
       console.error('Thread not found for key=' + key)
     }
+  }
+  function loadActiveThread(myThread: Thread) {
+    updateThread(myThread)
+    activateThread(myThread.public_key)
   }
   function clearActiveThread() {
     activeThreadKey.value = undefined
@@ -147,12 +119,10 @@ export const useWsyStore = defineStore('wsy', () => {
   }
 
   return {
-    player,
     threads,
     activeThreadKey,
     entryMap,
     replyTree,
-    isPlayerLoaded,
     activeThread,
     isActiveThread,
     activeEntries,
@@ -161,10 +131,10 @@ export const useWsyStore = defineStore('wsy', () => {
     hasResponses,
     responseEntries,
     lookupAlias,
+    loadActiveThread,
     loadActiveEntries,
     loadWriters,
     addEntryToActive,
-    setPlayer,
     updateThread,
     activateThread,
     clearActiveThread,

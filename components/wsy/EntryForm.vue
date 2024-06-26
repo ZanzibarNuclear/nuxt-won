@@ -28,6 +28,7 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css'
 import { QuillEditor } from '@vueup/vue-quill'
 const supabase = useSupabaseClient()
 const wsy = useWsyStore()
+const userContext = useUserStore()
 
 const props = defineProps({
   respondingTo: { type: Number },
@@ -52,13 +53,15 @@ const focusOnEntryInput = () => {
   statementEditor.value.focus()
 }
 
-onMounted(() => {
-  focusOnEntryInput()
-})
+// onMounted(() => {
+//   focusOnEntryInput()
+// })
 
 const doPostEntry = async (editor) => {
-  if (!wsy.isActiveThread || !wsy.isPlayerLoaded) {
-    // somehow made it this far without being logged in or without a registered player
+  if (!wsy.isActiveThread || !userContext.player) {
+    console.warn(
+      'Strange to make it this far without being signed in. Or maybe the thread became inactive.'
+    )
     return
   }
   const statement = editor.getHTML()
@@ -66,7 +69,7 @@ const doPostEntry = async (editor) => {
     .from('wsy_entries')
     .insert({
       thread_id: wsy.activeThread.id,
-      author_id: wsy.player.id,
+      author_id: userContext.player.id,
       statement: statement,
       responding_to: props.respondingTo,
     })

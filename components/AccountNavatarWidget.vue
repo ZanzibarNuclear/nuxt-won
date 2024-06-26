@@ -37,32 +37,25 @@
 </template>
 
 <script setup lang="ts">
-import { useUserStore } from '~/stores/userStore'
-
 const userStore = useUserStore()
-const supabase = useSupabaseClient()
-const user = useSupabaseUser()
 
-const signedIn = ref(false)
+const signedIn = computed(() => !!userStore.user)
+const screenName = computed(() => {
+  return userStore.profile?.screen_name || userStore.user?.email || 'VIP'
+})
+
+onMounted(async () => {
+  userStore.loadUser()
+  await userStore.fetchAndLoadProfile()
+})
+
 const authPanelIsOpen = ref(false)
-
 const openAuthPanel = () => {
   authPanelIsOpen.value = true
 }
 const closeAuthPanel = () => {
   authPanelIsOpen.value = false
 }
-
-const screenName = computed(() => {
-  return userStore.profile?.screen_name || user.email || 'VIP'
-})
-
-onMounted(async () => {
-  signedIn.value = !!user.value
-  if (signedIn.value) {
-    await userStore.fetchAndLoadProfile()
-  }
-})
 
 const items = [
   [
@@ -75,7 +68,7 @@ const items = [
       label: 'Sign Out',
       icon: 'i-mdi-logout',
       click: async () => {
-        await supabase.auth.signOut()
+        await useSupabaseClient().auth.signOut()
         signedIn.value = false
         navigateTo('/')
       },
