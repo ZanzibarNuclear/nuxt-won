@@ -1,20 +1,29 @@
 <template>
-  <div>
+  <client-only>
     <UCard>
       <template #header>
         <h3 class="text-lg font-bold">Word Search Puzzle</h3>
       </template>
 
-      <div class="grid gap-1" :style="gridStyle">
-        <UButton
+      <div class="grid w-3/4 mx-auto bg-slate-900" :style="gridStyle">
+        <div
+          v-for="(letter, index) in flatGrid"
+          :key="index"
+          class="w-10 h-10 text-center text-lg"
+          :class="isSelected(index) ? 'bg-primary' : 'bg-slate-900'"
+          @click="toggleLetter(index)"
+        >
+          {{ letter }}
+        </div>
+        <!-- <UButton
           v-for="(letter, index) in flatGrid"
           :key="index"
           :label="letter"
-          :color="isSelected(index) ? 'primary' : 'gray'"
+          :color="isSelected(index) ? 'primary' : 'yellow'"
           variant="soft"
           size="xs"
           @click="toggleLetter(index)"
-        />
+        /> -->
       </div>
 
       <template #footer>
@@ -23,13 +32,13 @@
             v-for="word in words"
             :key="word"
             :label="word"
-            :color="foundWords.includes(word) ? 'green' : 'primary'"
-            :variant="foundWords.includes(word) ? 'solid' : 'soft'"
+            :color="isFound(word) ? 'green' : 'primary'"
+            :variant="isFound(word) ? 'solid' : 'soft'"
           />
         </div>
       </template>
     </UCard>
-  </div>
+  </client-only>
 </template>
 
 <script setup>
@@ -51,7 +60,18 @@ const flatGrid = computed(() => grid.value.flat())
 const gridStyle = computed(() => ({
   gridTemplateColumns: `repeat(${props.size}, minmax(0, 1fr))`,
 }))
+const upperCaseWords = computed(() =>
+  props.words.map((word) => word.toUpperCase())
+)
+const noSpacesUpper = computed(() =>
+  upperCaseWords.value.map((word) => word.replace(' ', ''))
+)
 
+const isFound = (wordInQuestion) => {
+  const allCapsNoSpaces = wordInQuestion.toUpperCase().replace(' ', '')
+  console.log(allCapsNoSpaces)
+  return foundWords.value.includes(allCapsNoSpaces)
+}
 const selectedLetters = ref([])
 const foundWords = ref([])
 
@@ -74,8 +94,7 @@ function checkForWords() {
     .sort((a, b) => a - b)
     .map((index) => flatGrid.value[index])
     .join('')
-
-  props.words.forEach((word) => {
+  noSpacesUpper.value.forEach((word) => {
     if (selectedWord.includes(word) && !foundWords.value.includes(word)) {
       foundWords.value.push(word)
       selectedLetters.value = []
