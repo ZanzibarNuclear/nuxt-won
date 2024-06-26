@@ -47,7 +47,7 @@
     </div>
     <UModal v-model="uiState.openEditPath">
       <LessonPathForm
-        :lessons="workshop.lessonList"
+        :lessons="workshop.sortedLessonPlans"
         :course-key="courseKey"
         :path="openPath"
         @save-path="onSavePath"
@@ -98,7 +98,7 @@
         <h3>Add a step</h3>
         <LessonStepForm
           :path-key="openPath.publicKey"
-          :lessons="workshop.lessonList"
+          :lessons="workshop.sortedLessonPlans"
           @save-step="onCreateStep"
         />
       </div>
