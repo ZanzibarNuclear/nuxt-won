@@ -36,7 +36,15 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { generateWordSearch } from '~/utils/wordSearchBuilder'
+
+const words = ['reactor', 'fission', 'fusion', 'neutrons', 'chainreaction']
+const puzzleA = generateWordSearch(words, 15)
+for (let row of puzzleA) {
+  console.log(row.join(' '))
+}
+</script>
 
 <style lang="scss" scoped>
 ul {
