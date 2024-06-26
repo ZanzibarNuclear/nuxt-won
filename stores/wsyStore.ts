@@ -59,6 +59,10 @@ export const useWsyStore = defineStore('wsy', () => {
       console.error('Thread not found for key=' + key)
     }
   }
+  function loadActiveThread(myThread: Thread) {
+    updateThread(myThread)
+    activateThread(myThread.public_key)
+  }
   function clearActiveThread() {
     activeThreadKey.value = undefined
   }
@@ -127,6 +131,7 @@ export const useWsyStore = defineStore('wsy', () => {
     hasResponses,
     responseEntries,
     lookupAlias,
+    loadActiveThread,
     loadActiveEntries,
     loadWriters,
     addEntryToActive,

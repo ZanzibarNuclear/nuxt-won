@@ -68,10 +68,9 @@ if (threadKey) {
     participant
   )
   userContext.setPlayer(participant)
-  wsyStore.updateThread(thread)
+  wsyStore.loadActiveThread(thread)
   wsyStore.loadActiveEntries(entries)
   wsyStore.loadWriters(writers)
-  wsyStore.activateThread(threadKey)
 } else {
   console.log('no particular topic')
 }
