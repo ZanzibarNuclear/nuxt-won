@@ -16,12 +16,11 @@
         <UButton @click="onChooseTopic">Change topics</UButton>
       </div>
     </div>
+    <UModal v-model="inviteOpen" class="p-4">
+      <wsy-invite-friends @cancel="closeInviteForm" />
+    </UModal>
     <wsy-entries />
   </div>
-  <UModal v-model="inviteOpen">
-    <wsy-invite-friends />
-    <UButton @click="closeInviteForm" icon="i-mdi-close" label="Close" />
-  </UModal>
 </template>
 
 <script setup lang="ts">
