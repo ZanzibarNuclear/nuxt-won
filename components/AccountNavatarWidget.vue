@@ -33,6 +33,12 @@
       <AuthOAuthCard @finish="closeAuthPanel" />
       <AuthMagicLinkCard @finish="closeAuthPanel" />
     </UModal>
+    <UModal v-model="isFeedbackFormOpen">
+      <feedback-form
+        context="navatar"
+        @deliver-feedback="handleDeliverFeedback"
+      />
+    </UModal>
   </div>
 </template>
 
@@ -57,12 +63,25 @@ const closeAuthPanel = () => {
   authPanelIsOpen.value = false
 }
 
+const isFeedbackFormOpen = ref(false)
+const onOpenFeedbackForm = () => (isFeedbackFormOpen.value = true)
+const handleDeliverFeedback = (feedback) => {
+  console.log('Send this feedback', feedback)
+  isFeedbackFormOpen.value = false
+  alert('Got it. Thanks for the feedback.')
+}
+
 const items = [
   [
     {
       label: 'Profile',
       icon: 'i-mdi-card-account-details',
       to: '/user/account',
+    },
+    {
+      label: 'Feedback',
+      icon: 'i-ph-ear',
+      click: () => onOpenFeedbackForm(),
     },
     {
       label: 'Sign Out',
