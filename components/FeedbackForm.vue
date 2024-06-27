@@ -17,7 +17,7 @@
         :hint="maxFeedbackLength + ' characters max.'"
         :description="warning"
       >
-        <UTextarea v-model="state.comment" autoresize />
+        <UTextarea v-model="state.comment" autoresize :maxrows="10" />
       </UFormGroup>
       <UButton type="submit" label="Send Feedback" />
     </UForm>
