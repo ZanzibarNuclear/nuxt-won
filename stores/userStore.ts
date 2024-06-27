@@ -31,6 +31,9 @@ export const useUserStore = defineStore('user', () => {
   const user = computed(() => {
     return userData.user
   })
+  const clearUser = () => {
+    userData.user = null
+  }
 
   const isProfileLoaded = computed(() => {
     return !!userData.profile
@@ -114,6 +117,7 @@ export const useUserStore = defineStore('user', () => {
   return {
     loadUser,
     user,
+    clearUser,
     loadProfile,
     fetchAndLoadProfile,
     isProfileLoaded,

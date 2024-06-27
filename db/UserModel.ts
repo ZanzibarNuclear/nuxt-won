@@ -57,3 +57,13 @@ export async function getBookmark() {
     return null
   }
 }
+
+export async function submitFeedback(feedback) {
+  const input = {
+    user_id: feedback.userId,
+    context: feedback.context,
+    message: feedback.comment,
+  }
+  const supabase = useSupabaseClient()
+  const { error } = await supabase.from('feedback_messages').insert([input])
+}
