@@ -70,8 +70,6 @@ const warning = computed(() => {
 })
 
 async function onSubmit(event: FormSubmitEvent<Schema>) {
-  console.log(event.data)
-  console.log('Context=' + props.context)
   const feedback = {
     ...event.data,
     context: props.context,

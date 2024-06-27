@@ -43,16 +43,17 @@
 </template>
 
 <script setup lang="ts">
-const userStore = useUserStore()
+import { submitFeedback } from '~/db/UserModel'
+const userContext = useUserStore()
 
-const signedIn = computed(() => !!userStore.user)
+const signedIn = computed(() => !!userContext.user)
 const screenName = computed(() => {
-  return userStore.profile?.screen_name || userStore.user?.email || 'VIP'
+  return userContext.profile?.screen_name || userContext.user?.email || 'VIP'
 })
 
 onMounted(async () => {
-  userStore.loadUser()
-  await userStore.fetchAndLoadProfile()
+  userContext.loadUser()
+  await userContext.fetchAndLoadProfile()
 })
 
 const authPanelIsOpen = ref(false)
@@ -65,8 +66,8 @@ const closeAuthPanel = () => {
 
 const isFeedbackFormOpen = ref(false)
 const onOpenFeedbackForm = () => (isFeedbackFormOpen.value = true)
-const handleDeliverFeedback = (feedback) => {
-  console.log('Send this feedback', feedback)
+const handleDeliverFeedback = async (feedback) => {
+  await submitFeedback(feedback)
   isFeedbackFormOpen.value = false
   alert('Got it. Thanks for the feedback.')
 }
@@ -88,7 +89,7 @@ const items = [
       icon: 'i-mdi-logout',
       click: async () => {
         await useSupabaseClient().auth.signOut()
-        signedIn.value = false
+        userContext.clearUser()
         navigateTo('/')
       },
     },
