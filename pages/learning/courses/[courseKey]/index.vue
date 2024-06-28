@@ -12,14 +12,20 @@
     class="text-center w-3/4 mx-auto text-[#222222] dark:text-[#ffa] bg-[#f5f5f5] dark:bg-[#333] rounded-md p-4 mb-12"
   >
     <div v-if="isReady">
-      <h3 v-if="isMultiplePaths">Pick a path through this course</h3>
-      <div v-for="path in learning.activeLessonPaths" class="py-2">
-        <hr v-if="isMultiplePaths" class="my-2" />
-        <div class="font-bold">{{ path.name }}</div>
-        <div class="mb-2">{{ path.description }}</div>
-        <UButton @click="() => onStartLesson(path)"
-          >Start <UIcon name="i-ph-arrow-right-duotone"
-        /></UButton>
+      <h3>Pick a path to start learning</h3>
+      <div v-if="learning.activeLessonPaths.length === 1">
+        <learning-path-option-card
+          :path="learning.activeLessonPaths[0]"
+          @start-lesson="onStartLesson"
+        />
+      </div>
+      <div v-else class="grid grid-cols-2 gap-y-4 gap-x-4">
+        <div v-for="path in learning.activeLessonPaths">
+          <learning-path-option-card
+            :path="path"
+            @start-lesson="onStartLesson"
+          />
+        </div>
       </div>
     </div>
     <div v-else>
@@ -52,9 +58,7 @@ const learning = useLearningStore()
 const route = useRoute()
 const courseKey = route.params.courseKey
 
-const isMultiplePaths = computed(() => learning.activeLessonPaths.length > 1)
 const isReady = computed(() => learning.activeLessonPaths.length > 0)
-
 const activeCourse = computed(() => {
   if (learning.activeCourse) {
     return learning.activeCourse

@@ -7,9 +7,15 @@
       @share-changes="handleSave"
       @close="handleClose"
     />
-    <div v-else class="rich-text flex items-center">
-      <UIcon class="mr-4" name="i-mdi-edit" @click="handleOpen" />
-      <span v-html="fields[fieldName]" />
+    <div v-else class="flex items-center rich-text">
+      <div>
+        <UIcon
+          class="mr-4 hover:bg-green-500"
+          name="i-mdi-edit"
+          @click="handleOpen"
+        />
+      </div>
+      <div><span v-html="fields[fieldName]" /></div>
     </div>
   </UFormGroup>
 </template>
