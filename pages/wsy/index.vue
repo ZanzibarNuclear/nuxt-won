@@ -1,15 +1,24 @@
 <template>
   <div>
     <h1>What Say You?</h1>
-    <div v-if="!viewHeader">
+    <div v-if="!viewHeader && !viewFeedbackForm">
       <UButton
         @click="viewHeader = true"
-        icon="i-ph-eye"
-        :label="userContext.player.alias || 'Who are you?'"
+        icon="i-ph-person"
+        :label="userContext.player?.alias || 'Who are you?'"
+      />
+      <UButton
+        @click="viewFeedbackForm = true"
+        icon="i-ph-chat-centered-text"
+        label="Give Feedback"
+        class="ml-2"
       />
     </div>
-    <div v-else>
+    <div v-else-if="viewHeader">
       <wsy-header :player="userContext.player" @close="closeHeader" />
+    </div>
+    <div v-else-if="viewFeedbackForm">
+      <feedback-form context="wsy" @feedback-delivered="closeFeedbackForm" />
     </div>
     <wsy-topic v-if="!!userContext.player" />
   </div>
@@ -32,6 +41,7 @@ useSeoMeta({
 
 const userContext = useUserStore()
 const viewHeader = ref(false)
+const viewFeedbackForm = ref(false)
 
 async function getData() {
   userContext.loadUser()
@@ -49,5 +59,9 @@ await getData()
 
 const closeHeader = () => {
   viewHeader.value = false
+}
+const closeFeedbackForm = () => {
+  viewFeedbackForm.value = false
+  alert('Thanks for the feedback.')
 }
 </script>

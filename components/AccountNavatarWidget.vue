@@ -36,14 +36,13 @@
     <UModal v-model="isFeedbackFormOpen">
       <feedback-form
         context="navatar"
-        @deliver-feedback="handleDeliverFeedback"
+        @feedback-delivered="handleFeedbackDelivered"
       />
     </UModal>
   </div>
 </template>
 
 <script setup lang="ts">
-import { submitFeedback } from '~/db/UserModel'
 const userContext = useUserStore()
 
 const signedIn = computed(() => !!userContext.user)
@@ -66,8 +65,7 @@ const closeAuthPanel = () => {
 
 const isFeedbackFormOpen = ref(false)
 const onOpenFeedbackForm = () => (isFeedbackFormOpen.value = true)
-const handleDeliverFeedback = async (feedback) => {
-  await submitFeedback(feedback)
+const handleFeedbackDelivered = async () => {
   isFeedbackFormOpen.value = false
   alert('Got it. Thanks for the feedback.')
 }

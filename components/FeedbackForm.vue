@@ -4,13 +4,19 @@
     <div class="my-4">
       We would love to know what you think about World of Nuclear. What do you
       wish was better? What is missing? Did you find something that's incorrect
-      or not working?
+      or not working? Do you want to say how much you love it?
     </div>
-    <div class="my-4">
-      You can also say how much you enjoy it here. We don't mind getting a pat
-      on the head once in a while.
+    <div v-if="!userContext.user" class="font-bold text-center">
+      This feedback form is for members only.<br />Please join or sign in to
+      give feedback.
     </div>
-    <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
+    <UForm
+      v-else
+      :schema="schema"
+      :state="state"
+      class="space-y-4"
+      @submit="onSubmit"
+    >
       <UFormGroup
         label="Comment"
         name="comment"
@@ -27,6 +33,7 @@
 <script setup lang="ts">
 import { object, string, type InferType } from 'yup'
 import type { FormSubmitEvent } from '#ui/types'
+import { submitFeedback } from '~/db/UserModel'
 
 const props = defineProps({
   context: {
@@ -34,7 +41,7 @@ const props = defineProps({
     default: 'general',
   },
 })
-const emit = defineEmits(['deliverFeedback'])
+const emit = defineEmits(['feedbackDelivered'])
 
 const userContext = useUserStore()
 
@@ -75,7 +82,8 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     context: props.context,
     userId: userContext.user?.id,
   }
-  emit('deliverFeedback', feedback)
+  await submitFeedback(feedback)
+  emit('feedbackDelivered', feedback)
 }
 </script>
 

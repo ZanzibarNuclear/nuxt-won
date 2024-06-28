@@ -2,19 +2,20 @@
   <div>
     <UBreadcrumb :links="breadcrumbLinks" />
     <h1>Topics of Interest</h1>
-    <div v-if="hasBookmark">
-      <span class="font-bold mr-2">Bookmark:</span>
-      <UButton @click="goToBookmark"
-        >Return to the last lesson you viewed</UButton
-      >
+    <UButton
+      v-if="hasBookmark"
+      class="mr-2"
+      @click="goToBookmark"
+      label="Jump to Bookmark"
+    />
+    <div v-else>
+      <div v-if="!checkedForBookmark">
+        Have you been here before?
+        <UButton @click="checkForBookmark">See if you have a bookmark.</UButton>
+      </div>
+      <div v-else>Sorry, we could not find a bookmark.</div>
     </div>
-    <div v-if="!hasBookmark && !checkedForBookmark">
-      Have you been here before?
-      <UButton @click="checkForBookmark">See if you have a bookmark.</UButton>
-    </div>
-    <div v-if="!hasBookmark && checkedForBookmark">
-      Sorry, we could not find a bookmark.
-    </div>
+    <UButton class="mr-2" label="Give Feedback" @click="onShowFeedbackForm" />
     <div class="mx-auto">
       <div class="course-layout">
         <CourseTile
@@ -25,6 +26,12 @@
       </div>
     </div>
   </div>
+  <UModal v-model="showFeedbackForm">
+    <feedback-form
+      context="learning"
+      @feedback-delivered="handleFeedbackDelivered"
+    />
+  </UModal>
 </template>
 
 <script setup lang="ts">
@@ -73,6 +80,15 @@ const goToBookmark = async () => {
     console.warn('bookmarked path not found')
     // TODO: do something about obsolete bookmark, perhaps
   }
+}
+
+const showFeedbackForm = ref(false)
+const onShowFeedbackForm = () => {
+  showFeedbackForm.value = true
+}
+const handleFeedbackDelivered = () => {
+  showFeedbackForm.value = false
+  alert('Thanks for the feedback! We appreciate the chance to improve.')
 }
 
 async function loadData() {
