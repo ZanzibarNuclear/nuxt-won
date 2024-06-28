@@ -12,6 +12,9 @@
         <template #events="{ item }">
           <admin-event-viewer />
         </template>
+        <template #feedback="{ item }">
+          <admin-feedback-viewer />
+        </template>
       </UTabs>
     </div>
   </UContainer>
@@ -33,6 +36,10 @@ const sections = [
   {
     label: 'Events',
     slot: 'events',
+  },
+  {
+    label: 'Feedback',
+    slot: 'feedback',
   },
 ]
 </script>
