@@ -1,10 +1,10 @@
 <template>
   <div>
-    <h2>Invitations</h2>
+    <h2>Feedback</h2>
     <div>
       <UButton
         :disabled="lastPage"
-        label="Load Invites"
+        label="Load Feedback"
         @click="loadNextBatch"
       />
       next offset: {{ fetchParams.offset }} batch size: {{ fetchParams.limit }}
@@ -26,43 +26,23 @@ const lastPage = ref(false)
 const columns = [
   {
     key: 'id',
-    label: 'ID',
+    label: 'Feedback ID',
   },
   {
-    key: 'name',
-    label: 'invitee',
+    key: 'created_at',
+    label: 'When Sent',
   },
   {
-    key: 'email',
-    label: 'invitee email',
+    key: 'user_id',
+    label: 'Member ID',
   },
   {
-    key: 'target',
-    label: 'invited to',
+    key: 'context',
+    label: 'Context',
   },
   {
-    key: 'referral_code',
-    label: 'referral code',
-  },
-  {
-    key: 'recommended_by_id',
-    label: 'invited by',
-  },
-  {
-    key: 'sent_at',
-    label: 'when invited',
-  },
-  {
-    key: 'confirmed_at',
-    label: 'accepted',
-  },
-  {
-    key: 'unsubscribed_at',
-    label: 'hard decline',
-  },
-  {
-    key: 'delivery_error',
-    label: 'problem with delivery',
+    key: 'message',
+    label: 'Message',
   },
 ]
 
@@ -75,9 +55,4 @@ const loadNextBatch = async () => {
   fetchParams.offset += nextBatch.length
   lastPage.value = nextBatch.length < fetchParams.limit
 }
-
-// const { data, pending, error, refresh, clear } = await useAsyncData(
-//   'invitations',
-//   () => loadNextBatch()
-// )
 </script>
