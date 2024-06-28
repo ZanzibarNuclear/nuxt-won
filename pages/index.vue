@@ -31,7 +31,7 @@ const features = [
     description:
       'Long-form discussions for sharing ideas about nuclear energy.',
     callToAction: 'Join the Discussion',
-    routeName: 'features-what-say-you',
+    routeName: 'wsy',
   },
   {
     category: 'learning',
@@ -40,7 +40,7 @@ const features = [
     description:
       'Learn everything you need to know to understand how nuclear energy can be put to good use.',
     callToAction: 'Get Smarter Every Day',
-    routeName: 'features-daily-lessons',
+    routeName: 'learning',
   },
   {
     category: 'games',
@@ -48,7 +48,7 @@ const features = [
     coverImage: '/images/word-search.jpg',
     description: 'Games with a nuclear theme.',
     callToAction: "Let's Play",
-    routeName: 'features-fun-and-games',
+    routeName: 'games',
   },
   {
     category: 'hands-on',
@@ -56,7 +56,7 @@ const features = [
     coverImage: '/images/Cherenkov-radiation.jpg',
     description: 'Try nuclear simulators - fun and educational.',
     callToAction: 'Learn By Experiment',
-    routeName: 'features-simulators',
+    routeName: 'simulators',
   },
 ]
 </script>

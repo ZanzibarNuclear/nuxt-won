@@ -18,24 +18,24 @@ const links = [
       to: '/wsy',
     },
     {
-      label: 'Daily Lessons',
+      label: 'Free Courses',
       icon: 'i-heroicons-academic-cap',
-      to: '/features/daily-lessons',
+      to: '/learning',
     },
     {
       label: 'Simulators',
       icon: 'i-heroicons-cog',
-      to: '/features/simulators',
+      to: '/simulators',
     },
     {
       label: 'Fun and Games',
       icon: 'i-heroicons-puzzle-piece',
-      to: '/features/fun-and-games',
+      to: '/games',
     },
     {
-      label: 'News & Essays',
+      label: 'Essays',
       icon: 'i-heroicons-newspaper',
-      to: '/features/nuclear-news',
+      to: '/essays',
     },
   ],
   [

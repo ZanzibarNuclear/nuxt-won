@@ -1,7 +1,7 @@
 <template>
-  <main>
-    <ContentDoc class="prose prose-stone dark:prose-invert p-3" />
-  </main>
+  <div>
+    <ContentDoc class="prose prose-stone dark:prose-invert p-3 mx-auto" />
+  </div>
 </template>
 
 <style scoped>

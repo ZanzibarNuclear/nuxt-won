@@ -5,12 +5,17 @@
         <h3 class="text-lg font-bold">Word Search Puzzle</h3>
       </template>
 
-      <div class="grid w-3/4 mx-auto bg-slate-900" :style="gridStyle">
+      <div
+        class="grid w-3/4 mx-auto bg-slate-200 dark:bg-slate-900"
+        :style="gridStyle"
+      >
         <div
           v-for="(letter, index) in flatGrid"
           :key="index"
           class="w-10 h-10 text-center text-lg"
-          :class="isSelected(index) ? 'bg-primary' : 'bg-slate-900'"
+          :class="
+            isSelected(index) ? 'bg-primary' : 'bg-slate-200 dark:bg-slate-900'
+          "
           @click="toggleLetter(index)"
         >
           {{ letter }}

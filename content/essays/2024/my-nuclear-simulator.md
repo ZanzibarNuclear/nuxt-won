@@ -14,7 +14,7 @@ However, as you learn about nuclear power, the parts of the simulator open up, g
 
 ## Early days
 
-To get started, go to the [Simulators page](/features/simulators). That page shows what is available to try. Create and access your cute little nuclear power plant.
+To get started, go to the [Simulators page](/simulators). That page shows what is available to try. Create and access your cute little nuclear power plant.
 
 You will need to sign up for an account in order to preserve your settings. Plus, your sim needs a way to contact you when it needs attention. Oh yeah, you're going to love it.
 

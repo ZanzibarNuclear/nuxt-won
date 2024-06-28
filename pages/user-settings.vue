@@ -1,7 +1,5 @@
 <template>
-  <div class="text-2xl font-bold text-primary">
-    Account Information and Settings
-  </div>
+  <h1>Account Information and Settings</h1>
   <div class="my-8">
     <div v-if="isEdit">
       <UButton @click="toggleEdit" icon="i-mdi-cancel" class="mb-6"

@@ -1,5 +1,5 @@
 <template>
-  <UContainer class="w-3/4">
+  <div>
     <h1>Someone invited you...and here you are!</h1>
     <div class="my-6">
       You are being invited to
@@ -25,7 +25,7 @@
       account when you want to participate in one or our activities, like
       <em>What Say You?</em> or <em>Nuclear Simulators</em>.
     </div>
-  </UContainer>
+  </div>
 </template>
 
 <script setup lang="ts">

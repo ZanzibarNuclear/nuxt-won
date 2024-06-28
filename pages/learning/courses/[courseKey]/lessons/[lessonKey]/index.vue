@@ -1,5 +1,5 @@
 <template>
-  <div class="w-5/6 mx-auto">
+  <div>
     <UBreadcrumb :links="breadcrumbLinks" />
     <h1>{{ activeLesson.title }}</h1>
     <LessonContentView :content-parts="learning.contentParts" class="mb-12" />

@@ -1,13 +1,15 @@
 <template>
-  <h1>News & Essays</h1>
-  <div>See what everyone is saying about nuclear energy.</div>
-  <ul>
-    <li>News</li>
-    <li>Fake News</li>
-    <li><NuxtLink to="/essays">Opinions</NuxtLink></li>
-    <li><NuxtLink to="/essays">Deep Thoughts</NuxtLink></li>
-    <li>Works of Fiction</li>
-  </ul>
+  <div>
+    <h1>News & Essays</h1>
+    <div>See what everyone is saying about nuclear energy.</div>
+    <ul>
+      <li>News</li>
+      <li>Fake News</li>
+      <li><NuxtLink to="/essays">Opinions</NuxtLink></li>
+      <li><NuxtLink to="/essays">Deep Thoughts</NuxtLink></li>
+      <li>Works of Fiction</li>
+    </ul>
+  </div>
 </template>
 
 <script setup></script>

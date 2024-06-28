@@ -1,5 +1,5 @@
 <template>
-  <UContainer class="flex flex-col space-y-6">
+  <div class="flex flex-col space-y-6">
     <h1>What Say You?</h1>
     <div>
       Sometimes you want to speak your mind. Sometimes it helps to write down
@@ -23,7 +23,7 @@
     <UButton to="/wsy" variant="outline" class="justify-center"
       >Jump into the Discussion</UButton
     >
-  </UContainer>
+  </div>
 </template>
 
 <script setup lang="ts">

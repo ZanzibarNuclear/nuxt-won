@@ -3,18 +3,18 @@
     <div v-if="!signedIn">
       <UButton
         label="Join"
-        to="/auth/sign-in"
         variant="solid"
         color="amber"
         icon="i-ph-arrow-bend-down-right-duotone"
         class="mr-2"
+        @click="openJoin"
       />
       <UButton
-        @click="openAuthPanel"
+        label="Sign In"
         variant="solid"
         color="primary"
         icon="i-ph-sign-in"
-        label="Sign In"
+        @click="openAuthPanel"
       />
     </div>
     <UDropdown
@@ -54,6 +54,10 @@ onMounted(async () => {
   userContext.loadUser()
   await userContext.fetchAndLoadProfile()
 })
+
+const openJoin = () => {
+  navigateTo('/auth/sign-in')
+}
 
 const authPanelIsOpen = ref(false)
 const openAuthPanel = () => {
@@ -102,6 +106,6 @@ const items = [
 }
 .widget-bump {
   position: relative;
-  top: 80px;
+  top: 85px;
 }
 </style>
