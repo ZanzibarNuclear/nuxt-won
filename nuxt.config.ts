@@ -16,7 +16,8 @@ export default defineNuxtConfig({
     '@nuxt/image',
   ],
   runtimeConfig: {
-    wsyInvitationsResendKey: process.env.WSY_RESEND_PROJECT_KEY,
+    resendWsyKey: process.env.RESEND_WSY_KEY,
+    resendFeedbackKey: process.env.RESEND_FEEDBACK_KEY,
     adminEmail: process.env.ADMIN_EMAIL,
     public: {
       baseUrl: process.env.BASE_URL || 'http://localhost:3000',
