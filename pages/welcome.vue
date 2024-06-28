@@ -1,23 +1,22 @@
 <template>
   <UContainer class="w-3/4">
     <h1>Someone invited you...and here you are!</h1>
+    <div class="my-6">
+      You are being invited to
+      <span class="font-bold italic">{{ serviceInfo.serviceName }}</span
+      >, which is {{ serviceInfo.briefDescription }}. When you are ready,
+      <NuxtLink :to="serviceInfo.urlPath">go there</NuxtLink>. You may need to
+      create an account or sign in first.
+    </div>
     <div v-if="isAccept" class="my-6">
-      I see that you are accepting the invitation to check out Zanzibar's World
-      of Nuclear Energy. Fantastic. You are going to love this experience, and
-      you will learn a lot. Maybe you will even make some friends for life.
+      I see that you are accepting the invitation. Fantastic. You are going to
+      love this experience, and you will learn a lot. Maybe you will even make
+      some friends for life.
     </div>
     <div v-if="isDecline" class="my-6">
-      I see that you are declining the invitation to check out Zanzibar's World
-      of Nuclear Energy. That's okay. We have made a record of that, and we will
-      not send you any more email. After all, affordable energy is not for
-      everyone.
-    </div>
-    <div v-if="serviceInfo" class="my-6">
-      You are being invited to {{ serviceInfo.serviceName }}, which is
-      {{ serviceInfo.briefDescription }}. When you are ready,
-      <NuxtLink :to="`${serviceInfo.urlPath}?topic=${target.topicKey}`"
-        >go there</NuxtLink
-      >. You may need to create an account or sign in first.
+      I see that you are declining the invitation. That's okay. We have made a
+      record of that, and we will not send you any more email. After all,
+      affordable, clean energy is not for everyone, right? (Haha, just kidding.)
     </div>
     <div class="my-6">
       Zanzibar's World of Nuclear Energy is a lot of fun to explore. You will
@@ -42,18 +41,22 @@ const isDecline = computed(() => {
 const isAccept = computed(() => {
   return action.value === 'accept'
 })
-const serviceDecoder = {
-  wsy: {
-    serviceName: 'What Say You?',
-    briefDescription: 'a discussion forum for ideas about nuclear energy',
-    urlPath: '/wsy',
-  },
-}
+
 const serviceInfo = computed(() => {
-  if (target.value?.service) {
-    return serviceDecoder[target.value.service]
-  } else {
-    return null
+  switch (target.value?.service) {
+    case 'wsy':
+      return {
+        serviceName: 'What Say You?',
+        briefDescription: 'a discussion forum for ideas about nuclear energy',
+        urlPath: `/wsy/threads/${target.value.topicKey}`,
+      }
+    default:
+      return {
+        serviceName: 'World of Nuclear',
+        briefDescription:
+          'a digital platform to support the beneficial use of nuclear energy',
+        urlPath: `/`,
+      }
   }
 })
 
@@ -65,13 +68,17 @@ if (action.value !== 'accept' && action.value !== 'decline') {
 } else if (!referralCode.value) {
   console.warn('no referral code found')
 } else {
-  const invitation = await useFetch(`/api/invitations/${action.value}`, {
-    method: 'POST',
-    body: {
-      referralCode: referralCode.value,
-    },
-  })
-  target.value = JSON.parse(invitation.target)
+  const { data: invitation, error } = await useFetch(
+    `/api/invitations/${action.value}`,
+    {
+      method: 'POST',
+      body: {
+        referralCode: referralCode.value,
+      },
+    }
+  )
+  const updated = invitation.value
+  target.value = JSON.parse(updated.target)
 }
 </script>
 
