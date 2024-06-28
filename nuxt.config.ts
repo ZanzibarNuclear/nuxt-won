@@ -17,6 +17,7 @@ export default defineNuxtConfig({
   ],
   runtimeConfig: {
     wsyInvitationsResendKey: process.env.WSY_RESEND_PROJECT_KEY,
+    adminEmail: process.env.ADMIN_EMAIL,
     public: {
       baseUrl: process.env.BASE_URL || 'http://localhost:3000',
     },
