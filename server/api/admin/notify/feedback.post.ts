@@ -11,9 +11,9 @@ export default defineEventHandler(async (event) => {
   const from = 'World of Nuclear (system) <system@support.worldofnuclear.com>'
   const subject = `(${context}) we got feedback. Hurray!!`
 
-  const resend = new Resend(config.wsyInvitationsResendKey)
+  const resend = new Resend(config.resendFeedbackKey)
 
-  if (!message) {
+  if (message) {
     const { data, error: sendError } = await resend.emails.send({
       from,
       to: [adminEmail],

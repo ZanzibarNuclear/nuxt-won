@@ -80,7 +80,7 @@ The person who invited you is known as "${solicitorAlias}" in the forum. We have
 <a href="${config.public.baseUrl}/welcome?action=decline&referral_code=${referralCode}">decline this invitation</a>. We will prevent future invitations from being sent.</p>
 `
 
-  const resend = new Resend(config.wsyInvitationsResendKey)
+  const resend = new Resend(config.resendWsyKey)
   const { data, error: sendError } = await resend.emails.send({
     from,
     to: [friendEmail],
