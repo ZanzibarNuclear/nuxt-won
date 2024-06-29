@@ -17,9 +17,9 @@
       <div class="flex-col mt-14" :hidden="hideNav">
         <feature-menu />
       </div>
-      <div class="flex-col w-full px-14 py-4">
+      <main class="flex-col w-5/6 mx-auto mt-6 px-14 py-4">
         <slot />
-      </div>
+      </main>
     </div>
     <footer class="text-center">
       &copy; Copyright 2024, Nuclear Ambitions

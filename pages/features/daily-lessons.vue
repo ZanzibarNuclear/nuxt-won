@@ -1,5 +1,5 @@
 <template>
-  <UContainer class="w-2/3">
+  <div>
     <h1>Learn about nuclear energy</h1>
     <div class="my-4">
       Enjoy these free courses on topics related to the productive use of
@@ -23,7 +23,7 @@
     <div>
       <UButton to="/learning" label="Go to Lessons" />
     </div>
-  </UContainer>
+  </div>
 </template>
 
 <script setup>

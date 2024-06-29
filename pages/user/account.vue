@@ -1,5 +1,5 @@
 <template>
-  <div class="text-2xl font-bold text-primary">Profile and Settings</div>
+  <h1>Profile and Settings</h1>
   <div class="my-8">
     <div v-if="isEdit">
       <UButton @click="toggleEdit" icon="i-mdi-cancel" class="mb-6">

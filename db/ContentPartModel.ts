@@ -24,7 +24,6 @@ const mapToTable = (contentPart: ContentPart) => {
 
 export async function loadContentParts(lessonKey: string) {
   const results = await $fetch(`/api/lesson-plans/${lessonKey}/content-parts`)
-
   if (results) {
     return results.map((row) => mapToObject(row))
   } else {

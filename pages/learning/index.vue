@@ -2,20 +2,24 @@
   <div>
     <UBreadcrumb :links="breadcrumbLinks" />
     <h1>Topics of Interest</h1>
-    <UButton
-      v-if="hasBookmark"
-      class="mr-2"
-      @click="goToBookmark"
-      label="Jump to Bookmark"
-    />
-    <div v-else>
-      <div v-if="!checkedForBookmark">
-        Have you been here before?
-        <UButton @click="checkForBookmark">See if you have a bookmark.</UButton>
+    <simple-toolbar v-if="isSignedIn">
+      <UButton
+        v-if="hasBookmark"
+        class="mr-2"
+        @click="goToBookmark"
+        label="Jump to Bookmark"
+      />
+      <div v-else>
+        <div v-if="!checkedForBookmark">
+          Have you been here before?
+          <UButton @click="checkForBookmark"
+            >See if you have a bookmark.</UButton
+          >
+        </div>
+        <div v-else>Sorry, we could not find a bookmark.</div>
       </div>
-      <div v-else>Sorry, we could not find a bookmark.</div>
-    </div>
-    <UButton class="mr-2" label="Give Feedback" @click="onShowFeedbackForm" />
+      <UButton class="mr-2" label="Give Feedback" @click="onShowFeedbackForm" />
+    </simple-toolbar>
     <div class="mx-auto">
       <div class="course-layout">
         <CourseTile
@@ -50,6 +54,9 @@ const breadcrumbLinks = [
 const learning = useLearningStore()
 const userContext = useUserStore()
 
+const isSignedIn = computed(() => {
+  return !!userContext.user
+})
 const checkedForBookmark = ref(false)
 const checkForBookmark = async () => {
   const myBookmark = await getBookmark()

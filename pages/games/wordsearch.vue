@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <game-word-search-v2 :words="words" :size="15" />
-  </div>
+  <game-word-search-v2 :words="words" :size="15" />
 </template>
 
 <script setup>

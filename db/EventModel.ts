@@ -14,7 +14,7 @@ async function logEvent(details) {
   await $fetch('/api/events', {
     method: 'POST',
     body: {
-      actor: profile.id,
+      actor: profile?.id,
       details: details,
     },
   })

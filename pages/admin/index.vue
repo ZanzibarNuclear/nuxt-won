@@ -1,5 +1,5 @@
 <template>
-  <UContainer class="mt-16">
+  <div>
     <h1>Admin Insights</h1>
     <div class="my-8">
       <UTabs :items="sections" class="w-full">
@@ -17,7 +17,7 @@
         </template>
       </UTabs>
     </div>
-  </UContainer>
+  </div>
 </template>
 
 <script setup lang="ts">
