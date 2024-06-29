@@ -90,7 +90,6 @@ await loadData()
 
 const onStartLesson = (path) => {
   logLearningEvent(courseKey, path.publicKey, path.trailhead, 'choose-path')
-
   learning.choosePath(path.publicKey)
   navigateTo('/learning/courses/' + courseKey + '/lessons/' + path.trailhead)
 }

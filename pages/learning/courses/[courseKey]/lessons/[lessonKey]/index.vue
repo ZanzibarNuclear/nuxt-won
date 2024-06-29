@@ -90,6 +90,7 @@ const onClaimCredit = () => {
 }
 
 async function loadData() {
+  userContext.loadUser()
   const path = learning.activePath
 
   const { data: lessonData } = await useAsyncData(

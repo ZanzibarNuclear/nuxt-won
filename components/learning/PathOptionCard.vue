@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white p-2">
+  <div class="bg-white dark:bg-slate-700 p-2">
     <div class="font-bold">{{ path.name }}</div>
     <div class="mb-2">{{ path.description }}</div>
     <UButton @click="() => emit('startLesson', path)"
