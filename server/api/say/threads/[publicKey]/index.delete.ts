@@ -1,9 +1,9 @@
 import { serverSupabaseClient } from '#supabase/server'
 
 export default defineEventHandler(async (event) => {
-  // filters: writer, thread
+  const key = getRouterParam(event, 'public_key')
+  console.log('delete thread => key: %s', key)
 
-  console.log('get entries')
   const client = await serverSupabaseClient(event)
   console.warn('implement me')
 
