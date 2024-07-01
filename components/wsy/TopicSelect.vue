@@ -16,21 +16,24 @@
 </template>
 
 <script setup lang="ts">
+import { getAllThreads } from '~/db/WhatSayYouModel'
+
 const wsy = useWsyStore()
 const allThreads = ref([])
 const selectedTopic = ref('')
 const emit = defineEmits(['openTopic'])
 
-const { data: threadsData } = await useFetch('/api/threads')
-if (threadsData.value?.threads) {
-  allThreads.value = threadsData.value.threads
+const { data } = await useAsyncData('allThreads', () => getAllThreads())
+
+if (data.value) {
+  allThreads.value = data.value
 }
 
 const allTopicsList = computed(() => {
   const topics = allThreads.value
-    .filter((thread) => thread.public_key != wsy.activeThreadKey)
+    .filter((thread) => thread.publicKey != wsy.activeThreadKey)
     .map((thread) => ({
-      key: thread.public_key,
+      key: thread.publicKey,
       topic: thread.topic,
     }))
   return topics

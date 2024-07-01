@@ -3,6 +3,7 @@
     <h1>What Say You?</h1>
     <div v-if="!viewHeader && !viewFeedbackForm">
       <UButton
+        variant="solid"
         @click="viewHeader = true"
         icon="i-ph-person"
         :label="userContext.wsyWriter?.penName || 'Who are you?'"

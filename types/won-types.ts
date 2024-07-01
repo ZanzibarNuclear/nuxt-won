@@ -121,27 +121,24 @@ export type WsyWriter = {
   suspendedAt: string | null
   retiredAt: string | null
 }
-export type Participant = {
-  id: number
-  user_id: string
-  alias: string
-  joined_at: string
-  karma: number
-}
-export type Entry = {
-  id: number
-  author_id: number
-  statement: string
-  thread_id: number
-  responding_to: number
-  posted_at: string
-}
-export type Thread = {
-  id: number
-  created_at: string
-  public_key: string
+export type WsyThread = {
+  publicKey: string
   topic: string
-  starting_entry_id: number
-  owner_id: number
-  entries: Entry[]
+  ownerId: number
+  createdAt: string
+  updatedAt: string
+  closedAt: string
+  entries: WsyEntry[]
+}
+export type WsyEntry = {
+  publicKey: string
+  threadKey: string
+  writerId: number
+  inResponseTo: string
+  statement: string
+  createdAt: string
+  postedAt: string
+  updatedAt: string
+  heldForReviewAt: string
+  archivedAt: string
 }

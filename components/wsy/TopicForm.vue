@@ -15,6 +15,11 @@
 </template>
 
 <script setup lang="ts">
+import { startThread } from '~/db/WhatSayYouModel'
+
+const emit = defineEmits(['openTopic'])
+
+const userContext = useUserStore()
 const wsy = useWsyStore()
 
 const newThreadTopic = ref('')
@@ -38,22 +43,12 @@ const doStartThread = async () => {
   if (newThreadTopic.value === '') {
     return
   }
-  const supabase = useSupabaseClient()
-  const { data, error } = await supabase
-    .from('wsy_threads')
-    .insert({
-      owner_id: wsy.player.id,
-      public_key: genKey(),
-      topic: newThreadTopic.value,
-    })
-    .select()
-
-  if (error) {
-    console.error('Trouble starting topic', error)
-    return
-  }
-  wsy.updateThread(data[0])
-  wsy.activateThread(data[0].public_key)
+  const newThread = await startThread(
+    userContext.wsyWriter?.id,
+    newThreadTopic.value
+  )
+  wsy.loadActiveThread(newThread)
+  emit('openTopic', newThread.publicKey)
 }
 </script>
 

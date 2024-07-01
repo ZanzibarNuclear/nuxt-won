@@ -16,7 +16,7 @@
         />
       </div>
       <div class="my-2">
-        You joined the discussion on {{ displayAsDateTime(player.joined_at) }}.
+        You joined the discussion on {{ displayAsDateTime(player.joinedAt) }}.
       </div>
       <div>
         <UButton icon="i-ph-x" size="xs" label="close" @click="emit('close')" />
@@ -97,10 +97,10 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
   const playerId = userContext.user.id
   let player
   if (isEdit.value) {
-    const player = await updateWriter(playerId, penName)
+    player = await updateWriter(playerId, penName)
     isEdit.value = false
   } else {
-    const player = await join(playerId, penName)
+    player = await join(playerId, penName)
   }
   userContext.setWsyWriter(player)
 }
