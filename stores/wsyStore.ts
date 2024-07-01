@@ -49,16 +49,9 @@ export const useWsyStore = defineStore('wsy', () => {
       threads.value[myThread.publicKey].entries = []
     }
   }
-  function openThread(key: string) {
-    if (threads.value[key] !== null) {
-      activeThreadKey.value = key
-    } else {
-      console.error('Thread not found for key=' + key)
-    }
-  }
   function loadActiveThread(myThread: WsyThread) {
     updateThread(myThread)
-    openThread(myThread.publicKey)
+    activeThreadKey.value = myThread.publicKey
   }
   function clearActiveThread() {
     activeThreadKey.value = undefined

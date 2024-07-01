@@ -45,8 +45,8 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
   const body = {
     friendEmail: event.data.email,
     friendName: event.data.name,
-    solicitorId: userContext.player?.user_id,
-    solicitorAlias: userContext.player?.alias,
+    solicitorId: userContext.wsyWriter?.userId,
+    solicitorAlias: userContext.wsyWriter?.penName,
     topicKey: wsy.activeThreadKey,
   }
   console.log('Invitation to WSY', body)

@@ -26,12 +26,11 @@
 <script setup lang="ts">
 import '@vueup/vue-quill/dist/vue-quill.snow.css'
 import { QuillEditor } from '@vueup/vue-quill'
-const supabase = useSupabaseClient()
 const wsy = useWsyStore()
 const userContext = useUserStore()
 
 const props = defineProps({
-  respondingTo: { type: Number },
+  respondingTo: { type: String },
 })
 const emit = defineEmits(['close'])
 
@@ -53,33 +52,27 @@ const focusOnEntryInput = () => {
   statementEditor.value.focus()
 }
 
-// onMounted(() => {
-//   focusOnEntryInput()
-// })
+onMounted(() => {
+  focusOnEntryInput()
+})
 
 const doPostEntry = async (editor) => {
-  if (!wsy.isActiveThread || !userContext.player) {
+  if (!wsy.isActiveThread || !userContext.wsyWriter) {
     console.warn(
       'Strange to make it this far without being signed in. Or maybe the thread became inactive.'
     )
     return
   }
-  const statement = editor.getHTML()
-  const { data, error } = await supabase
-    .from('wsy_entries')
-    .insert({
-      thread_id: wsy.activeThread.id,
-      author_id: userContext.player.id,
-      statement: statement,
-      responding_to: props.respondingTo,
-    })
-    .select()
-
-  if (error) {
-    console.error('Unable to post entry', error)
-    return
-  }
-  wsy.addEntryToActive(data[0])
+  const newEntry = await $fetch('/api/say/entries', {
+    action: 'POST',
+    body: {
+      threadKey: wsy.activeThreadKey,
+      writerId: userContext.wsyWriter?.id,
+      inResponseTo: props.respondingTo,
+      statement: editor.getHTML(),
+    },
+  })
+  wsy.addEntryToActive(newEntry)
   statementEditor.value.setHTML('<p></p>')
   focusOnEntryInput()
   emit('close')

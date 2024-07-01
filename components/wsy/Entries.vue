@@ -9,7 +9,7 @@
       @click="showEntryForm = true"
     />
   </div>
-  <wsy-view-recursive :entries="wsy.topLevelEntries" :indent="0" />
+  <wsy-entry-view-recursive :entries="wsy.topLevelEntries" :indent="0" />
 </template>
 
 <script setup lang="ts">

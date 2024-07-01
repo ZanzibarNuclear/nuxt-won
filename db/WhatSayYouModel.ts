@@ -31,22 +31,6 @@ export const updateWriter = async (userId: string, penName: string) => {
   return update
 }
 
-export const startThread = async (ownerId: number, topic: string) => {
-  const minted = await $fetch('/api/say/threads', {
-    method: 'POST',
-    body: {
-      ownerId,
-      topic,
-    },
-  })
-  return minted
-}
-
-export const getAllThreads = async () => {
-  const threads = await $fetch('/api/say/threads')
-  return threads
-}
-
 export const leave = async (userId: string) => {
   await $fetch(`/api/say/writers/${userId}`, {
     method: 'DELETE',

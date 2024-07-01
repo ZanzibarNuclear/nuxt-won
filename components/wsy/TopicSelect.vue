@@ -16,18 +16,18 @@
 </template>
 
 <script setup lang="ts">
-import { getAllThreads } from '~/db/WhatSayYouModel'
-
 const wsy = useWsyStore()
 const allThreads = ref([])
 const selectedTopic = ref('')
 const emit = defineEmits(['openTopic'])
 
-const { data } = await useAsyncData('allThreads', () => getAllThreads())
-
-if (data.value) {
-  allThreads.value = data.value
+async function loadData() {
+  const threads = await $fetch('/api/say/threads')
+  if (threads) {
+    threads.forEach((thread) => allThreads.value.push(thread))
+  }
 }
+await loadData()
 
 const allTopicsList = computed(() => {
   const topics = allThreads.value

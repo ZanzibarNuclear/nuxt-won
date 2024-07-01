@@ -1,10 +1,10 @@
 <template>
   <div>
     <h1>What Say You?</h1>
-    <div v-if="!viewHeader && !viewFeedbackForm">
+    <div v-if="!viewPlayerCard && !viewFeedbackForm">
       <UButton
         variant="solid"
-        @click="viewHeader = true"
+        @click="viewPlayerCard = true"
         icon="i-ph-person"
         :label="userContext.wsyWriter?.penName || 'Who are you?'"
       />
@@ -15,8 +15,11 @@
         class="ml-2"
       />
     </div>
-    <div v-else-if="viewHeader">
-      <wsy-header :player="userContext.wsyWriter" @close="closeHeader" />
+    <div v-else-if="viewPlayerCard">
+      <wsy-player-card
+        :player="userContext.wsyWriter"
+        @close="closePlayerCard"
+      />
     </div>
     <div v-else-if="viewFeedbackForm">
       <feedback-form context="wsy" @feedback-delivered="closeFeedbackForm" />
@@ -41,7 +44,7 @@ useSeoMeta({
 })
 
 const userContext = useUserStore()
-const viewHeader = ref(false)
+const viewPlayerCard = ref(false)
 const viewFeedbackForm = ref(false)
 
 async function getData() {
@@ -58,8 +61,8 @@ async function getData() {
 }
 await getData()
 
-const closeHeader = () => {
-  viewHeader.value = false
+const closePlayerCard = () => {
+  viewPlayerCard.value = false
 }
 const closeFeedbackForm = () => {
   viewFeedbackForm.value = false
