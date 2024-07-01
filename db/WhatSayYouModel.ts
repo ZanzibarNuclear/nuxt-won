@@ -20,6 +20,16 @@ export const getWriter = async (userId: string) => {
   const writer = await $fetch(`/api/say/writers/${userId}`)
   return writer
 }
+
+export const updateWriter = async (userId: string, penName: string) => {
+  const update = await $fetch(`/api/say/writers/${userId}`, {
+    method: 'PUT',
+    body: {
+      penName,
+    },
+  })
+  return update
+}
 export const leave = async (userId: string) => {
   await $fetch(`/api/say/writers/${userId}`, {
     method: 'DELETE',

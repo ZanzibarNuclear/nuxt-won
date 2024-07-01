@@ -2,10 +2,10 @@
   <div
     class="text-center w-3/4 mx-auto text-[#222222] dark:text-[#ffa] bg-[#f5f5f5] dark:bg-[#333] rounded-md p-4 mb-12"
   >
-    <div v-if="isKnownPlayer && !edit">
+    <div v-if="isKnownPlayer && !isEdit">
       <h3>About You</h3>
       <div class="text-xl">
-        People shall know you as "{{ player.alias }}."
+        People shall know you as "{{ player.penName }}."
         <UButton
           @click="editPlayer"
           icon="i-mdi-edit"
@@ -24,14 +24,14 @@
     </div>
     <div v-else>
       <div v-if="isSignedIn">
-        <div class="text-xl" v-if="edit">Change Your Alias</div>
+        <div class="text-xl" v-if="isEdit">Change Your Alias</div>
         <div class="text-xl" v-else>Join in the Fun</div>
         <UForm :state="playerState" :schema="playerSchema" @submit="onSubmit">
           <UFormGroup
-            label="Alias"
-            description="This is how you will be known to the world. Think of it as a pen name."
+            label="Pen Name"
+            description="This is how you will be known to the world. You can change it later."
           >
-            <UInput v-model="playerState.alias" />
+            <UInput v-model="playerState.penName" />
           </UFormGroup>
           <UButton
             block
@@ -60,33 +60,30 @@
 <script setup lang="ts">
 import { object, string, type InferType } from 'yup'
 import type { FormSubmitEvent } from '#ui/types'
-import type { Database } from '~/types/supabase'
+import { join, updateWriter } from '~/db/WhatSayYouModel'
 
 const props = defineProps(['player'])
 const emit = defineEmits(['close'])
-
-const supabase = useSupabaseClient<Database>()
 const userContext = useUserStore()
-
-const edit = ref(false)
+const isEdit = ref(false)
 
 const playerSchema = object({
-  alias: string(),
+  penName: string(),
 })
 type Schema = InferType<typeof playerSchema>
 const playerState = reactive({
-  alias: '',
+  penName: '',
 })
 
 const isSignedIn = computed(() => !!userContext.user)
 const isKnownPlayer = computed(() => !!props.player)
 
 function editPlayer() {
-  edit.value = true
-  playerState.alias = props.player.alias || userContext.profile?.alias || ''
+  isEdit.value = true
+  playerState.penName = props.player.penName || ''
 }
 function cancelEditPlayer() {
-  edit.value = false
+  isEdit.value = false
 }
 
 async function onSubmit(event: FormSubmitEvent<Schema>) {
@@ -96,19 +93,15 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     )
     return
   }
-  const { data, error } = await supabase
-    .from('wsy_participants')
-    .upsert({
-      id: props.player.id,
-      user_id: userContext.user.id,
-      alias: event.data.alias,
-    })
-    .select()
-
-  if (error) {
-    alert('Something dreadful happened: ' + error.message)
+  const { penName } = event.data
+  const playerId = userContext.user.id
+  let player
+  if (isEdit.value) {
+    const player = await updateWriter(playerId, penName)
+    isEdit.value = false
+  } else {
+    const player = await join(playerId, penName)
   }
-  userContext.setPlayer(data[0])
-  edit.value = false
+  userContext.setWsyWriter(player)
 }
 </script>

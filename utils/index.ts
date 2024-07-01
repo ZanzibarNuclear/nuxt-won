@@ -35,11 +35,8 @@ export const toCamelCase = (row: object) => {
   if (!row) {
     return null
   }
-  console.log(row)
-
   var out = {}
   for (const column in row) {
-    console.log(column)
     if (row.hasOwnProperty(column)) {
       const camelCased = camelCase(column)
       out[camelCased] = row[column]

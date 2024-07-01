@@ -5,7 +5,7 @@
       <UButton
         @click="viewHeader = true"
         icon="i-ph-person"
-        :label="userContext.player?.alias || 'Who are you?'"
+        :label="userContext.wsyWriter?.penName || 'Who are you?'"
       />
       <UButton
         @click="viewFeedbackForm = true"
@@ -15,18 +15,18 @@
       />
     </div>
     <div v-else-if="viewHeader">
-      <wsy-header :player="userContext.player" @close="closeHeader" />
+      <wsy-header :player="userContext.wsyWriter" @close="closeHeader" />
     </div>
     <div v-else-if="viewFeedbackForm">
       <feedback-form context="wsy" @feedback-delivered="closeFeedbackForm" />
     </div>
-    <wsy-topic v-if="!!userContext.player" />
+    <wsy-topic v-if="!!userContext.wsyWriter" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { getParticipant } from '~/db/WsyModel'
-import type { Participant } from '~/types/won-types'
+import { getWriter } from '~/db/WhatSayYouModel'
+import type { WsyWriter } from '~/types/won-types'
 
 useSeoMeta({
   title: 'World of Nuclear - What Say You?',
@@ -46,10 +46,10 @@ const viewFeedbackForm = ref(false)
 async function getData() {
   userContext.loadUser()
   if (userContext.user) {
-    const { data: playerData } = await useAsyncData('participant', () =>
-      getParticipant(userContext.user.id)
+    const { data: playerData } = await useAsyncData('wsyPlayer', () =>
+      getWriter(userContext.user.id)
     )
-    userContext.setPlayer(playerData.value as Participant)
+    userContext.setWsyWriter(playerData.value as WsyWriter)
     console.log('player', playerData.value)
   } else {
     console.log('You need to join or sign in.')

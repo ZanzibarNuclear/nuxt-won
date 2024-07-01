@@ -113,6 +113,14 @@ export type UserProfile = {
 }
 
 // What Say You?
+export type WsyWriter = {
+  id: number
+  userId: string
+  penName: string
+  joinedAt: string
+  suspendedAt: string | null
+  retiredAt: string | null
+}
 export type Participant = {
   id: number
   user_id: string
