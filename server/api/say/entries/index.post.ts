@@ -23,6 +23,7 @@ export default defineEventHandler(async (event) => {
     .from('say_entries')
     .insert(input)
     .select()
+    .single()
 
   if (error) {
     console.error(error.message)

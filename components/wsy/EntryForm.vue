@@ -36,26 +36,6 @@ const emit = defineEmits(['close'])
 
 const statementEditor = ref()
 
-defineShortcuts({
-  meta_e: () => {
-    focusOnEntryInput()
-  },
-  meta_enter: {
-    usingInput: 'statementEditor',
-    handler: () => {
-      console.log('pressed hot key to post entry')
-      doPostEntry(statementEditor.value)
-    },
-  },
-})
-const focusOnEntryInput = () => {
-  statementEditor.value.focus()
-}
-
-onMounted(() => {
-  focusOnEntryInput()
-})
-
 const doPostEntry = async (editor) => {
   if (!wsy.isActiveThread || !userContext.wsyWriter) {
     console.warn(
@@ -64,7 +44,7 @@ const doPostEntry = async (editor) => {
     return
   }
   const newEntry = await $fetch('/api/say/entries', {
-    action: 'POST',
+    method: 'POST',
     body: {
       threadKey: wsy.activeThreadKey,
       writerId: userContext.wsyWriter?.id,
@@ -74,7 +54,6 @@ const doPostEntry = async (editor) => {
   })
   wsy.addEntryToActive(newEntry)
   statementEditor.value.setHTML('<p></p>')
-  focusOnEntryInput()
   emit('close')
 }
 </script>

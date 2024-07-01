@@ -56,15 +56,15 @@ async function loadData() {
           $fetch(`/api/say/threads/${threadKey}`),
           $fetch(`/api/say/entries/?threadKey=${threadKey}`),
           $fetch('/api/say/writers/'),
-          getWriter(userContext.user.id),
+          $fetch(`/api/say/writers/${userContext.user.id}`),
         ])
         return { thread, entries, writers, player }
       }
     )
-    if (error) {
-      console.error(error.message)
-      return
-    }
+    // if (error) {
+    //   console.error(error)
+    //   return
+    // }
     const { thread, entries, writers, player } = wsyData.value
     console.log(
       'returning thread and writer data',

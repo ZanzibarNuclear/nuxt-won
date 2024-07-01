@@ -5,13 +5,20 @@ export default defineEventHandler(async (event) => {
   const requestQuery = getQuery(event)
   const {
     page,
-    limit,
+    limit = 50,
     order = 'created_at',
     asc = false,
     threadKey,
   } = requestQuery || {}
 
-  console.log('get filtered entries: %d %d %s', page, limit, order)
+  console.log(
+    'get filtered entries: %d %d %s',
+    page,
+    limit,
+    order,
+    asc,
+    threadKey
+  )
 
   const client = await serverSupabaseClient(event)
 
@@ -23,7 +30,7 @@ export default defineEventHandler(async (event) => {
     .order(order as string, { ascending: asc as boolean })
 
   // add pagination
-  if (page && limit) {
+  if (page) {
     dbQuery.range((page - 1) * limit, page * limit - 1)
   }
 

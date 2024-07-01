@@ -54,7 +54,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     method: 'POST',
     body,
   })
-
+  emit('cancel')
   const alertMsg = result.success
     ? 'We sent your friend an invitation. You might want to let them know that it was really you.'
     : 'Sorry, we did not send the invitation. The email address you provided may be on our "no contact" list.'
