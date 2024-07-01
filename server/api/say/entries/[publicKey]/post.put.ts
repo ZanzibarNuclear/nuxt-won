@@ -3,10 +3,8 @@ import { toCamelCase } from '~/utils'
 
 export default defineEventHandler(async (event) => {
   const publicKey = getRouterParam(event, 'publicKey')
-  const body = await readBody(event)
-  console.log('update entry => key: %s; input: %s', publicKey, body)
-  const { statement } = body
-  if (!publicKey || !statement) {
+  console.log('post entry => key: %s', publicKey)
+  if (!publicKey) {
     throw createError({
       statusCode: 400,
       statusMessage: `Missing required fields`,
@@ -14,8 +12,7 @@ export default defineEventHandler(async (event) => {
   }
 
   const input = {
-    statement,
-    updated_at: new Date(),
+    posted_at: new Date(),
   }
   const client = await serverSupabaseClient(event)
   const { data, error } = await client
@@ -29,7 +26,7 @@ export default defineEventHandler(async (event) => {
     console.error(error.message)
     throw createError({
       statusCode: 500,
-      statusMessage: `Failed to update thread`,
+      statusMessage: `Failed to post entry`,
     })
   }
   return toCamelCase(data)

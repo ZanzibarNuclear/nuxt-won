@@ -1,11 +1,23 @@
 import { serverSupabaseClient } from '#supabase/server'
+import { toCamelCase } from '~/utils'
 
 export default defineEventHandler(async (event) => {
-  const key = getRouterParam(event, 'public_key')
-  console.log('get entry => key: %s', key)
+  const publicKey = getRouterParam(event, 'publicKey')
+  console.log('get entry => ID: %s', publicKey)
 
   const client = await serverSupabaseClient(event)
-  console.warn('implement me')
+  const { data, error } = await client
+    .from('say_entries')
+    .select('*')
+    .eq('public_key', publicKey)
+    .single()
 
-  return []
+  if (error) {
+    console.error(error.message)
+    throw createError({
+      statusCode: 500,
+      statusMessage: `Failed to retrieve entry`,
+    })
+  }
+  return toCamelCase(data)
 })

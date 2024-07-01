@@ -3,7 +3,7 @@ import { toCamelCase } from '~/utils'
 
 export default defineEventHandler(async (event) => {
   const publicKey = getRouterParam(event, 'publicKey')
-  console.log('update thread => key: %s', publicKey)
+  console.log('close thread => key: %s', publicKey)
   if (!publicKey) {
     throw createError({
       statusCode: 400,
