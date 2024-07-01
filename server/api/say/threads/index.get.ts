@@ -1,11 +1,16 @@
 import { serverSupabaseClient } from '#supabase/server'
+import { toCamelCase } from '~/utils'
 
 export default defineEventHandler(async (event) => {
-  // filters: writer, thread
-
-  console.log('get entries')
+  console.log('get threads')
   const client = await serverSupabaseClient(event)
-  console.warn('implement me')
-
-  return []
+  const { data, error } = await client.from('say_threads').select('*')
+  if (error) {
+    console.error(error.message)
+    throw createError({
+      statusCode: 500,
+      statusMessage: `Failed to retrieve threads`,
+    })
+  }
+  return data?.map((row) => toCamelCase(row))
 })

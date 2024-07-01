@@ -1,11 +1,23 @@
 import { serverSupabaseClient } from '#supabase/server'
+import { toCamelCase } from '~/utils'
 
 export default defineEventHandler(async (event) => {
-  const key = getRouterParam(event, 'public_key')
-  console.log('get thread => key: %s', key)
+  const publicKey = getRouterParam(event, 'publicKey')
+  console.log('get thread => ID: %s', publicKey)
 
   const client = await serverSupabaseClient(event)
-  console.warn('implement me')
+  const { data, error } = await client
+    .from('say_threads')
+    .select('*')
+    .eq('public_key', publicKey)
+    .single()
 
-  return []
+  if (error) {
+    console.error(error.message)
+    throw createError({
+      statusCode: 500,
+      statusMessage: `Failed to retrieve thread`,
+    })
+  }
+  return toCamelCase(data)
 })

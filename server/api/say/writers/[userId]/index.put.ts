@@ -1,5 +1,5 @@
 import { serverSupabaseClient } from '#supabase/server'
-import { toCamelCase, toSnakeCase } from '~/utils'
+import { toCamelCase } from '~/utils'
 
 export default defineEventHandler(async (event) => {
   const userId = getRouterParam(event, 'userId')

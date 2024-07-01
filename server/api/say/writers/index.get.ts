@@ -12,5 +12,5 @@ export default defineEventHandler(async (event) => {
       statusMessage: `Failed to retrieve writers`,
     })
   }
-  return data?.map((writer) => toCamelCase(writer))
+  return data?.map((row) => toCamelCase(row))
 })
