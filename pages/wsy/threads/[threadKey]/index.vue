@@ -24,8 +24,6 @@
 </template>
 
 <script setup lang="ts">
-import { getWriter } from '~/db/WhatSayYouModel'
-
 const route = useRoute()
 const threadKey = route.params.threadKey
 const wsyStore = useWsyStore()
@@ -42,6 +40,9 @@ const openInviteForm = () => {
 const closeInviteForm = () => {
   inviteOpen.value = false
 }
+const topicForPageTitle = computed(() => {
+  return wsyStore.activeThread?.topic || 'Loading...'
+})
 
 async function loadData() {
   // could be coming straight to thread - so load anything that might need to be
@@ -61,10 +62,9 @@ async function loadData() {
         return { thread, entries, writers, player }
       }
     )
-    // if (error) {
-    //   console.error(error)
-    //   return
-    // }
+    if (error.value) {
+      console.log(error.value)
+    }
     const { thread, entries, writers, player } = wsyData.value
     console.log(
       'returning thread and writer data',
@@ -74,6 +74,7 @@ async function loadData() {
       player
     )
     userContext.setWsyWriter(player)
+    wsyStore.clearActiveThread()
     wsyStore.loadActiveThread(thread)
     wsyStore.loadActiveEntries(entries)
     wsyStore.loadWriters(writers)

@@ -5,7 +5,7 @@
         <UInput
           v-model="newThreadTopic"
           ref="topicInputRef"
-          placeholder="Enter a topic here..."
+          placeholder="Write the headline of what you want to discuss."
           class="flex-grow"
         />
         <UButton size="sm" @click="doStartThread">Start</UButton>

@@ -77,7 +77,15 @@ export const useWsyStore = defineStore('wsy', () => {
     return null
   }
 
+  function clearEntries() {
+    if (isActiveThread) {
+      activeThread.value.entries = []
+    }
+    entryMap.value = {}
+    replyTree.value = {}
+  }
   function loadActiveEntries(entries: WsyEntry[]) {
+    clearEntries()
     if (activeThread.value) {
       activeThread.value.entries = entries.map((entry) => {
         return { ...entry }

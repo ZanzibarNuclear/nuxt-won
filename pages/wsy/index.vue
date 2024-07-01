@@ -29,7 +29,6 @@
 </template>
 
 <script setup lang="ts">
-import { getWriter } from '~/db/WhatSayYouModel'
 import type { WsyWriter } from '~/types/won-types'
 
 useSeoMeta({
@@ -44,17 +43,23 @@ useSeoMeta({
 })
 
 const userContext = useUserStore()
+const wsyStore = useWsyStore()
+
 const viewPlayerCard = ref(false)
 const viewFeedbackForm = ref(false)
 
 async function getData() {
   userContext.loadUser()
   if (userContext.user) {
-    const { data: playerData } = await useAsyncData('wsyPlayer', () =>
-      getWriter(userContext.user.id)
-    )
-    userContext.setWsyWriter(playerData.value as WsyWriter)
-    console.log('player', playerData.value)
+    let player = wsyStore.lookupWriter(userContext.user.id)
+    if (!player) {
+      const { data: playerData } = await useAsyncData('wsyPlayer', () =>
+        $fetch(`/api/say/writers/${userContext.user.id}`)
+      )
+      console.log('had to fetch player info', playerData.value)
+      player = playerData.value
+    }
+    userContext.setWsyWriter(player)
   } else {
     console.log('You need to join or sign in.')
   }

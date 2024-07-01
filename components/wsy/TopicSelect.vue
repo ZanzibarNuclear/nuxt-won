@@ -1,6 +1,6 @@
 <template>
   <div v-if="allTopicsList.length > 0">
-    <UFormGroup label="Pick one of these topics">
+    <UFormGroup label="Explore and contribute to one of these topics">
       <div class="flex space-x-2">
         <USelect
           v-model="selectedTopic"
@@ -8,6 +8,7 @@
           option-attribute="topic"
           value-attribute="key"
           class="flex-grow"
+          placeholder="Choose from the list..."
         />
         <UButton size="sm" @click="onChooseSelectedTopic">Open</UButton>
       </div>
