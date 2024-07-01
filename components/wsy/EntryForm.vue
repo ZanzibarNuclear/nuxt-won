@@ -14,7 +14,7 @@
       <UButton
         class="mr-2"
         icon="i-mdi-arrow-right"
-        @click="() => doPostEntry(statementEditor)"
+        @click="() => onPostEntry(statementEditor)"
         title="(ctrl+enter)"
         >Post</UButton
       >
@@ -36,14 +36,14 @@ const emit = defineEmits(['close'])
 
 const statementEditor = ref()
 
-const doPostEntry = async (editor) => {
+const onPostEntry = async (editor) => {
   if (!wsy.isActiveThread || !userContext.wsyWriter) {
     console.warn(
       'Strange to make it this far without being signed in. Or maybe the thread became inactive.'
     )
     return
   }
-  const newEntry = await $fetch('/api/say/entries', {
+  const minted = await $fetch('/api/say/entries', {
     method: 'POST',
     body: {
       threadKey: wsy.activeThreadKey,
@@ -52,7 +52,7 @@ const doPostEntry = async (editor) => {
       statement: editor.getHTML(),
     },
   })
-  wsy.addEntryToActive(newEntry)
+  wsy.addEntryToActive(minted)
   statementEditor.value.setHTML('<p></p>')
   emit('close')
 }

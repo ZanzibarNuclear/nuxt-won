@@ -3,12 +3,19 @@
     <wsy-entry-view-row
       :entry="entry"
       :indent="indent"
-      @reply="() => openReplyForm(entry.publicKey)"
+      @reply="() => onOpenReplyForm(entry.publicKey)"
+      @edit="() => onOpenForEdit(entry)"
     />
     <wsy-entry-form
       v-if="showReplyForm(entry.publicKey)"
       :responding-to="entry.publicKey"
-      @close="closeReplyForm"
+      @close="onCloseReplyForm"
+    />
+    <simple-editor
+      v-if="entryToEdit"
+      :initial-content="entryToEdit.statement"
+      @share-changes="onSaveEntry"
+      @close="onCloseEditForm"
     />
     <div v-if="wsy.hasResponses(entry.publicKey)">
       <wsy-entry-view-recursive
@@ -25,9 +32,29 @@ const wsy = useWsyStore()
 defineProps(['entries', 'indent'])
 
 const activeReply = ref()
+const entryToEdit = ref()
+
 const showReplyForm = (publicKey: string) => publicKey === activeReply.value
-const openReplyForm = (publicKey: string) => (activeReply.value = publicKey)
-const closeReplyForm = () => (activeReply.value = null)
+const onOpenReplyForm = (publicKey: string) => (activeReply.value = publicKey)
+const onCloseReplyForm = () => (activeReply.value = null)
+
+const onOpenForEdit = (entry) => {
+  entryToEdit.value = entry
+}
+const onCloseEditForm = () => (entryToEdit.value = null)
+const onSaveEntry = async (changes) => {
+  const delta = await $fetch(
+    `/api/say/entries/${entryToEdit.value.publicKey}`,
+    {
+      method: 'PUT',
+      body: {
+        statement: changes,
+      },
+    }
+  )
+  wsy.updateEntry(delta)
+  onCloseEditForm()
+}
 </script>
 
 <style scoped></style>

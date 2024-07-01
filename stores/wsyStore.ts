@@ -98,9 +98,20 @@ export const useWsyStore = defineStore('wsy', () => {
   }
   function addEntryToActive(entry: WsyEntry) {
     if (activeThread.value) {
-      activeThread.value.entries.push({ ...entry })
-      entryMap.value[entry.publicKey] = entry
-      addEntryToReplyTree(entry)
+      const entryCopy = { ...entry }
+      activeThread.value.entries.push(entryCopy)
+      entryMap.value[entry.publicKey] = entryCopy
+      addEntryToReplyTree(entryCopy)
+    }
+  }
+  function updateEntry(entry: WsyEntry) {
+    const entryCopy = { ...entry }
+    entryMap.value[entry.publicKey] = entryCopy
+    const indexOf = activeThread.value?.entries.findIndex(
+      (e) => e.publicKey === entry.publicKey
+    )
+    if (indexOf > -1) {
+      activeThread.value.entries[indexOf] = entryCopy
     }
   }
   function addEntryToReplyTree(entry: WsyEntry) {
@@ -133,6 +144,7 @@ export const useWsyStore = defineStore('wsy', () => {
     loadWriters,
     lookupWriter,
     addEntryToActive,
+    updateEntry,
     updateThread,
     clearActiveThread,
     reset,
