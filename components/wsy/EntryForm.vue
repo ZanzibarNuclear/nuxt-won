@@ -3,29 +3,11 @@
     <div>
       Make a statement. Speak your mind. Click Post to share with the world.
     </div>
-    <client-only>
-      <QuillEditor
-        ref="statementEditor"
-        content="<p></p>"
-        content-type="html"
-      />
-    </client-only>
-    <div class="mt-2">
-      <UButton
-        class="mr-2"
-        icon="i-mdi-arrow-right"
-        @click="() => onPostEntry(statementEditor)"
-        title="(ctrl+enter)"
-        >Post</UButton
-      >
-      <UButton @click="() => emit('close')" icon="i-mdi-close" label="Cancel" />
-    </div>
+    <simple-editor @share-changes="onPostEntry" @close="emit('close')" />
   </div>
 </template>
 
 <script setup lang="ts">
-import '@vueup/vue-quill/dist/vue-quill.snow.css'
-import { QuillEditor } from '@vueup/vue-quill'
 const wsy = useWsyStore()
 const userContext = useUserStore()
 
@@ -34,9 +16,7 @@ const props = defineProps({
 })
 const emit = defineEmits(['close'])
 
-const statementEditor = ref()
-
-const onPostEntry = async (editor) => {
+const onPostEntry = async (statement) => {
   if (!wsy.isActiveThread || !userContext.wsyWriter) {
     console.warn(
       'Strange to make it this far without being signed in. Or maybe the thread became inactive.'
@@ -49,11 +29,10 @@ const onPostEntry = async (editor) => {
       threadKey: wsy.activeThreadKey,
       writerId: userContext.wsyWriter?.id,
       inResponseTo: props.respondingTo,
-      statement: editor.getHTML(),
+      statement: statement,
     },
   })
   wsy.addEntryToActive(minted)
-  statementEditor.value.setHTML('<p></p>')
   emit('close')
 }
 </script>
