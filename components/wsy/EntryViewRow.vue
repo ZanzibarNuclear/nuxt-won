@@ -5,11 +5,20 @@
     </div>
     <div class="post">
       <div class="text-xs">
-        <span class="font-bold">{{ wsy.lookupAlias(entry.author_id) }}</span
+        <span class="font-bold">{{
+          wsy.lookupWriter(entry.writerId)?.penName || 'Unknown'
+        }}</span
         ><br />
         {{ displayAsDateTime(entry.posted_at) }}<br />
-        <UButton @click="() => onReply(entry.id)" icon="i-mdi-reply" size="xs"
-          >reply</UButton
+        <UButton @click="emit('reply')" icon="i-mdi-reply" size="xs"
+          >Reply</UButton
+        >
+        <UButton
+          v-if="entry.writerId === userContext.wsyWriter?.id"
+          @click="emit('edit')"
+          icon="i-ph-pencil"
+          size="xs"
+          >Edit</UButton
         >
       </div>
       <div class="rich-text">
@@ -21,6 +30,8 @@
 
 <script setup lang="ts">
 const wsy = useWsyStore()
+const userContext = useUserStore()
+
 const props = defineProps({
   entry: {
     type: Object,
@@ -31,7 +42,7 @@ const props = defineProps({
     default: 0,
   },
 })
-const emit = defineEmits(['reply'])
+const emit = defineEmits(['reply', 'edit'])
 
 const indentStyle = computed(() => {
   if (props.indent) {
@@ -47,9 +58,6 @@ const indentStyle = computed(() => {
 
 const formatEntry = (entry: string) => {
   return entry.replaceAll('\n', '<br/><br/>')
-}
-const onReply = (id: number) => {
-  emit('reply', id)
 }
 </script>
 

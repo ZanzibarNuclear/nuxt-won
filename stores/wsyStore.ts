@@ -1,11 +1,11 @@
 import { defineStore } from 'pinia'
-import type { Thread, Entry, Participant } from '~/types/won-types'
+import type { WsyThread, WsyEntry, WsyWriter } from '~/types/won-types'
 
 export const useWsyStore = defineStore('wsy', () => {
-  type ThreadMap = { [k: string]: Thread }
-  type EntryMap = { [k: string]: Entry }
-  type ReplyMap = { [k: string]: number[] }
-  type WriterMap = { [k: string]: string } // aliases referenced by participant ID
+  type ThreadMap = { [k: string]: WsyThread }
+  type EntryMap = { [k: string]: WsyEntry }
+  type ReplyMap = { [k: string]: string[] }
+  type WriterMap = { [k: string]: WsyWriter } // aliases referenced by participant ID
 
   // values
   const threads: Ref<ThreadMap> = ref({})
@@ -20,18 +20,15 @@ export const useWsyStore = defineStore('wsy', () => {
     entryMap.value = {}
     writerMap.value = {}
     replyTree.value = {}
-    console.log('reset')
   }
 
-  const lookupAlias = (writerId: number) => {
-    const alias = writerMap.value[writerId.toString()]
-    return !!alias ? alias : 'writer ' + writerId
+  function loadWriters(writers: WsyWriter[]) {
+    writers.forEach((writer) => {
+      writerMap.value[writer.id.toString()] = writer
+    })
   }
-  const stashAlias = (writerId: number, alias: string) => {
-    writerMap.value[writerId.toString()] = alias
-  }
-  function loadWriters(writers: Participant[]) {
-    writers.forEach((writer) => stashAlias(writer.id, writer.alias))
+  const lookupWriter = (writerId: number) => {
+    return writerMap.value[writerId.toString()]
   }
 
   const activeThread = computed(() => {
@@ -43,32 +40,25 @@ export const useWsyStore = defineStore('wsy', () => {
   const isActiveThread = computed(() => {
     return !!activeThread.value
   })
-  function updateThread(myThread: Thread) {
+  function updateThread(myThread: WsyThread) {
     console.log(
-      `thread to load: ${myThread.topic} ${myThread.created_at} ${myThread.public_key}`
+      `thread to load: ${myThread.topic} ${myThread.createdAt} ${myThread.publicKey}`
     )
-    threads.value[myThread.public_key] = { ...myThread }
-    if (!threads.value[myThread.public_key].entries) {
-      threads.value[myThread.public_key].entries = []
+    threads.value[myThread.publicKey] = { ...myThread }
+    if (!threads.value[myThread.publicKey].entries) {
+      threads.value[myThread.publicKey].entries = []
     }
   }
-  function activateThread(key: string) {
-    if (threads.value[key] !== null) {
-      activeThreadKey.value = key
-    } else {
-      console.error('Thread not found for key=' + key)
-    }
-  }
-  function loadActiveThread(myThread: Thread) {
+  function loadActiveThread(myThread: WsyThread) {
     updateThread(myThread)
-    activateThread(myThread.public_key)
+    activeThreadKey.value = myThread.publicKey
   }
   function clearActiveThread() {
     activeThreadKey.value = undefined
   }
 
   const topLevelEntries = computed(() => {
-    return activeEntries.value?.filter((entry) => !entry.responding_to)
+    return activeEntries.value?.filter((entry) => !entry.inResponseTo)
   })
   const activeEntries = computed(() => {
     return activeThread.value?.entries
@@ -76,45 +66,64 @@ export const useWsyStore = defineStore('wsy', () => {
   const isActiveEntries = computed(() => {
     return !!activeEntries.value
   })
-  const hasResponses = (id: number) => {
-    return !!replyTree.value[id.toString()]
+  const hasResponses = (entryKey: string) => {
+    return !!replyTree.value[entryKey]
   }
-  const responseEntries = (entryId: number) => {
-    const replies = replyTree.value[entryId.toString()]
+  const responseEntries = (entryKey: string) => {
+    const replies = replyTree.value[entryKey]
     if (replies) {
-      return replies.map((id) => entryMap.value[id.toString()])
+      return replies.map((entryKey) => entryMap.value[entryKey])
     }
     return null
   }
 
-  function loadActiveEntries(entries: Entry[]) {
+  function clearEntries() {
+    if (isActiveThread) {
+      activeThread.value.entries = []
+    }
+    entryMap.value = {}
+    replyTree.value = {}
+  }
+  function loadActiveEntries(entries: WsyEntry[]) {
+    clearEntries()
     if (activeThread.value) {
       activeThread.value.entries = entries.map((entry) => {
         return { ...entry }
       })
       entries.forEach((entry) => {
-        entryMap.value[entry.id.toString()] = entry
+        entryMap.value[entry.publicKey] = entry
         addEntryToReplyTree(entry)
       })
     }
   }
-  function addEntryToActive(entry: Entry) {
+  function addEntryToActive(entry: WsyEntry) {
     if (activeThread.value) {
-      activeThread.value.entries.push({ ...entry })
-      entryMap.value[entry.id.toString()] = entry
-      addEntryToReplyTree(entry)
+      const entryCopy = { ...entry }
+      activeThread.value.entries.push(entryCopy)
+      entryMap.value[entry.publicKey] = entryCopy
+      addEntryToReplyTree(entryCopy)
     }
   }
-  function addEntryToReplyTree(entry: Entry) {
-    if (!entry.responding_to) {
+  function updateEntry(entry: WsyEntry) {
+    const entryCopy = { ...entry }
+    entryMap.value[entry.publicKey] = entryCopy
+    const indexOf = activeThread.value?.entries.findIndex(
+      (e) => e.publicKey === entry.publicKey
+    )
+    if (indexOf > -1) {
+      activeThread.value.entries[indexOf] = entryCopy
+    }
+  }
+  function addEntryToReplyTree(entry: WsyEntry) {
+    if (!entry.inResponseTo) {
       return
     }
-    const parentId = entry.responding_to?.toString()
+    const parentId = entry.inResponseTo
     if (parentId) {
       if (!replyTree.value[parentId]) {
         replyTree.value[parentId] = []
       }
-      replyTree.value[parentId].push(entry.id)
+      replyTree.value[parentId].push(entry.publicKey)
     }
   }
 
@@ -130,13 +139,13 @@ export const useWsyStore = defineStore('wsy', () => {
     topLevelEntries,
     hasResponses,
     responseEntries,
-    lookupAlias,
     loadActiveThread,
     loadActiveEntries,
     loadWriters,
+    lookupWriter,
     addEntryToActive,
+    updateEntry,
     updateThread,
-    activateThread,
     clearActiveThread,
     reset,
   }

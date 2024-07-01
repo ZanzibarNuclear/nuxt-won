@@ -1,15 +1,16 @@
 import { defineStore } from 'pinia'
 import type {
-  LearningBookmark,
   UserProfile,
+  LearningBookmark,
   Participant,
+  WsyWriter,
 } from '~/types/won-types'
 
 type UserData = {
   user: null | Object
   profile: null | UserProfile
   learningBookmark: null | LearningBookmark
-  player: null | Participant
+  wsyWriter: null | WsyWriter
 }
 
 export const useUserStore = defineStore('user', () => {
@@ -17,7 +18,7 @@ export const useUserStore = defineStore('user', () => {
     user: null,
     profile: null,
     learningBookmark: null,
-    player: null,
+    wsyWriter: null,
   })
 
   const loadUser = () => {
@@ -104,14 +105,14 @@ export const useUserStore = defineStore('user', () => {
     userData.learningBookmark = null
   }
 
-  function setPlayer(myPlayer: Participant) {
-    userData.player = { ...myPlayer }
+  function setWsyWriter(writer: WsyWriter) {
+    userData.wsyWriter = { ...writer }
   }
-  const isPlayerLoaded = computed(() => {
-    return !!userData.player
+  const isWsyWriterLoaded = computed(() => {
+    return !!userData.wsyWriter
   })
-  const player = computed(() => {
-    return userData.player
+  const wsyWriter = computed(() => {
+    return userData.wsyWriter
   })
 
   return {
@@ -126,8 +127,8 @@ export const useUserStore = defineStore('user', () => {
     cacheBookmark,
     bookmark,
     clearBookmark,
-    setPlayer,
-    isPlayerLoaded,
-    player,
+    setWsyWriter,
+    isWsyWriterLoaded,
+    wsyWriter,
   }
 })

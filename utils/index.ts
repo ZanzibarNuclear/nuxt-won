@@ -1,4 +1,6 @@
+import { _columns } from '#tailwind-config/theme'
 import { format } from 'date-fns'
+import { camelCase, snakeCase } from 'lodash/string'
 
 export const displayAsDate = (ts: string) => {
   if (!ts || ts === '') {
@@ -27,4 +29,32 @@ function generateRandomString(length: number) {
     randomString += characters.charAt(randomIndex)
   }
   return randomString
+}
+
+export const toCamelCase = (row: object) => {
+  if (!row) {
+    return null
+  }
+  var out = {}
+  for (const column in row) {
+    if (row.hasOwnProperty(column)) {
+      const camelCased = camelCase(column)
+      out[camelCased] = row[column]
+    }
+  }
+  return out
+}
+
+export const toSnakeCase = (obj: object) => {
+  if (!obj) {
+    return null
+  }
+  var row = {}
+  for (const prop in obj) {
+    if (obj.hasOwnProperty(prop)) {
+      const snakeCased = snakeCase(prop)
+      row[snakeCased] = obj[prop]
+    }
+  }
+  return row
 }

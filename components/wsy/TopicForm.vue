@@ -5,7 +5,7 @@
         <UInput
           v-model="newThreadTopic"
           ref="topicInputRef"
-          placeholder="Enter a topic here..."
+          placeholder="Write the headline of what you want to discuss."
           class="flex-grow"
         />
         <UButton size="sm" @click="doStartThread">Start</UButton>
@@ -15,8 +15,9 @@
 </template>
 
 <script setup lang="ts">
+const emit = defineEmits(['openTopic'])
+const userContext = useUserStore()
 const wsy = useWsyStore()
-
 const newThreadTopic = ref('')
 const topicInputRef = ref()
 defineShortcuts({
@@ -38,22 +39,15 @@ const doStartThread = async () => {
   if (newThreadTopic.value === '') {
     return
   }
-  const supabase = useSupabaseClient()
-  const { data, error } = await supabase
-    .from('wsy_threads')
-    .insert({
-      owner_id: wsy.player.id,
-      public_key: genKey(),
+  const newThread = await $fetch('/api/say/threads', {
+    method: 'POST',
+    body: {
+      ownerId: userContext.wsyWriter?.id,
       topic: newThreadTopic.value,
-    })
-    .select()
-
-  if (error) {
-    console.error('Trouble starting topic', error)
-    return
-  }
-  wsy.updateThread(data[0])
-  wsy.activateThread(data[0].public_key)
+    },
+  })
+  wsy.loadActiveThread(newThread)
+  emit('openTopic', newThread.publicKey)
 }
 </script>
 

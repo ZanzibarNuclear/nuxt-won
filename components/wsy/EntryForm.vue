@@ -3,85 +3,36 @@
     <div>
       Make a statement. Speak your mind. Click Post to share with the world.
     </div>
-    <client-only>
-      <QuillEditor
-        ref="statementEditor"
-        content="<p></p>"
-        content-type="html"
-      />
-    </client-only>
-    <div class="mt-2">
-      <UButton
-        class="mr-2"
-        icon="i-mdi-arrow-right"
-        @click="() => doPostEntry(statementEditor)"
-        title="(ctrl+enter)"
-        >Post</UButton
-      >
-      <UButton @click="() => emit('close')" icon="i-mdi-close" label="Cancel" />
-    </div>
+    <simple-editor @share-changes="onPostEntry" @close="emit('close')" />
   </div>
 </template>
 
 <script setup lang="ts">
-import '@vueup/vue-quill/dist/vue-quill.snow.css'
-import { QuillEditor } from '@vueup/vue-quill'
-const supabase = useSupabaseClient()
 const wsy = useWsyStore()
 const userContext = useUserStore()
 
 const props = defineProps({
-  respondingTo: { type: Number },
+  respondingTo: { type: String },
 })
 const emit = defineEmits(['close'])
 
-const statementEditor = ref()
-
-defineShortcuts({
-  meta_e: () => {
-    focusOnEntryInput()
-  },
-  meta_enter: {
-    usingInput: 'statementEditor',
-    handler: () => {
-      console.log('pressed hot key to post entry')
-      doPostEntry(statementEditor.value)
-    },
-  },
-})
-const focusOnEntryInput = () => {
-  statementEditor.value.focus()
-}
-
-// onMounted(() => {
-//   focusOnEntryInput()
-// })
-
-const doPostEntry = async (editor) => {
-  if (!wsy.isActiveThread || !userContext.player) {
+const onPostEntry = async (statement) => {
+  if (!wsy.isActiveThread || !userContext.wsyWriter) {
     console.warn(
       'Strange to make it this far without being signed in. Or maybe the thread became inactive.'
     )
     return
   }
-  const statement = editor.getHTML()
-  const { data, error } = await supabase
-    .from('wsy_entries')
-    .insert({
-      thread_id: wsy.activeThread.id,
-      author_id: userContext.player.id,
+  const minted = await $fetch('/api/say/entries', {
+    method: 'POST',
+    body: {
+      threadKey: wsy.activeThreadKey,
+      writerId: userContext.wsyWriter?.id,
+      inResponseTo: props.respondingTo,
       statement: statement,
-      responding_to: props.respondingTo,
-    })
-    .select()
-
-  if (error) {
-    console.error('Unable to post entry', error)
-    return
-  }
-  wsy.addEntryToActive(data[0])
-  statementEditor.value.setHTML('<p></p>')
-  focusOnEntryInput()
+    },
+  })
+  wsy.addEntryToActive(minted)
   emit('close')
 }
 </script>

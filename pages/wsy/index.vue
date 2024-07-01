@@ -1,11 +1,12 @@
 <template>
   <div>
     <h1>What Say You?</h1>
-    <div v-if="!viewHeader && !viewFeedbackForm">
+    <div v-if="!viewPlayerCard && !viewFeedbackForm">
       <UButton
-        @click="viewHeader = true"
+        variant="solid"
+        @click="viewPlayerCard = true"
         icon="i-ph-person"
-        :label="userContext.player?.alias || 'Who are you?'"
+        :label="userContext.wsyWriter?.penName || 'Who are you?'"
       />
       <UButton
         @click="viewFeedbackForm = true"
@@ -14,19 +15,21 @@
         class="ml-2"
       />
     </div>
-    <div v-else-if="viewHeader">
-      <wsy-header :player="userContext.player" @close="closeHeader" />
+    <div v-else-if="viewPlayerCard">
+      <wsy-player-card
+        :player="userContext.wsyWriter"
+        @close="closePlayerCard"
+      />
     </div>
     <div v-else-if="viewFeedbackForm">
       <feedback-form context="wsy" @feedback-delivered="closeFeedbackForm" />
     </div>
-    <wsy-topic v-if="!!userContext.player" />
+    <wsy-topic v-if="!!userContext.wsyWriter" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { getParticipant } from '~/db/WsyModel'
-import type { Participant } from '~/types/won-types'
+import type { WsyWriter } from '~/types/won-types'
 
 useSeoMeta({
   title: 'World of Nuclear - What Say You?',
@@ -40,25 +43,31 @@ useSeoMeta({
 })
 
 const userContext = useUserStore()
-const viewHeader = ref(false)
+const wsyStore = useWsyStore()
+
+const viewPlayerCard = ref(false)
 const viewFeedbackForm = ref(false)
 
 async function getData() {
   userContext.loadUser()
   if (userContext.user) {
-    const { data: playerData } = await useAsyncData('participant', () =>
-      getParticipant(userContext.user.id)
-    )
-    userContext.setPlayer(playerData.value as Participant)
-    console.log('player', playerData.value)
+    let player = wsyStore.lookupWriter(userContext.user.id)
+    if (!player) {
+      const { data: playerData } = await useAsyncData('wsyPlayer', () =>
+        $fetch(`/api/say/writers/${userContext.user.id}`)
+      )
+      console.log('had to fetch player info', playerData.value)
+      player = playerData.value
+    }
+    userContext.setWsyWriter(player)
   } else {
     console.log('You need to join or sign in.')
   }
 }
 await getData()
 
-const closeHeader = () => {
-  viewHeader.value = false
+const closePlayerCard = () => {
+  viewPlayerCard.value = false
 }
 const closeFeedbackForm = () => {
   viewFeedbackForm.value = false
