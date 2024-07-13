@@ -21,9 +21,7 @@
         <slot />
       </div>
     </div>
-    <footer class="text-center">
-      &copy; Copyright 2024, Nuclear Ambitions
-    </footer>
+    <footer class="text-center">&copy; 2024 Nuclear Ambitions LLC</footer>
   </UContainer>
 </template>
 

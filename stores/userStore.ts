@@ -2,7 +2,6 @@ import { defineStore } from 'pinia'
 import type {
   UserProfile,
   LearningBookmark,
-  Participant,
   WsyWriter,
 } from '~/types/won-types'
 
