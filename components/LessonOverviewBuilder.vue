@@ -9,19 +9,19 @@
   </div>
   <div v-else>
     <UButton @click="() => (isEdit = true)" label="Edit lesson" class="mx-1" />
-    <div v-if="lesson">
-      <h2>Title: {{ lesson.title }}</h2>
-      <div>Sequence: {{ lesson.sequence }}</div>
-      <div v-if="lesson.coverArt" class="my-6">
+    <div v-if="lesson" class="grid-layout">
+      <div class="label">Title:</div>
+      <div class="detail">{{ lesson.title }}</div>
+      <div class="label">Sequence:</div>
+      <div class="detail">{{ lesson.sequence }}</div>
+      <div v-if="lesson.coverArt" class="label">Cover art:</div>
+      <div v-if="lesson.coverArt" class="detail">
         <NuxtImg :src="lesson.coverArt" :alt="lesson.title" width="150px" />
       </div>
-      <UCard class="rich-text">
-        <template #header
-          >Description: <span v-html="lesson.description"
-        /></template>
-        Objective:
-        <div><span v-html="lesson.objective" /></div>
-      </UCard>
+      <div class="label">Description:</div>
+      <div class="detail rich-text"><span v-html="lesson.description" /></div>
+      <div class="label">Objective:</div>
+      <div class="detail rich-text"><span v-html="lesson.objective" /></div>
     </div>
   </div>
 </template>
@@ -44,3 +44,30 @@ const handleCancelUpdateLesson = () => {
   isEdit.value = false
 }
 </script>
+<style lang="scss" scoped>
+.grid-layout {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+}
+.grid-layout .label {
+  font-weight: bold;
+  margin-top: 1rem;
+}
+.grid-layout .detail {
+  margin-top: 1rem;
+}
+.rich-text :deep(p) {
+  margin-bottom: 0.5rem;
+}
+.rich-text :deep(ul) {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  list-style: disc;
+  list-style-position: inside;
+}
+.rich-text :deep(blockquote) {
+  margin-left: 1rem;
+  border-left: 2px solid goldenrod;
+  padding-left: 1rem;
+}
+</style>

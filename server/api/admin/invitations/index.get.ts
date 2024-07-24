@@ -31,7 +31,5 @@ export default defineEventHandler(async (event) => {
 
   const { data: eventRows } = await dbQuery
 
-  console.log('found invitations', eventRows)
-
   return eventRows
 })

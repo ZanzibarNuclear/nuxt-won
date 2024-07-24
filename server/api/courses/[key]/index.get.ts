@@ -10,7 +10,6 @@ export default defineEventHandler(async (event) => {
     .select()
     .eq('public_key', courseKey)
   if (courses && courses.length > 0) {
-    console.log('found', courses)
     return courses[0]
   } else {
     console.log('not found')
