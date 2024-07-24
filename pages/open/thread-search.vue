@@ -16,6 +16,10 @@ async function loadData() {
   }
 }
 await loadData()
+
+const loadTopic = (topicKey) => {
+  navigateTo(`/wsy/threads/${topicKey}`)
+}
 </script>
 
 <style scoped></style>
