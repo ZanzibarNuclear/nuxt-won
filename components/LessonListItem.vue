@@ -1,8 +1,8 @@
 <template>
   <div class="item-container">
-    <h3>{{ lessonPlan.title }}</h3>
-    <img v-if="lessonPlan.coverArt" :src="lessonPlan.coverArt" width="250px" />
-    <div class="rich-text"><span v-html="lessonPlan.description" /></div>
+    <div class="font-bold">
+      {{ lessonPlan.title }} (key: {{ lessonPlan.publicKey }})
+    </div>
   </div>
 </template>
 
@@ -17,8 +17,7 @@ defineProps(['lessonPlan'])
   padding: 0.5rem;
 }
 .item-container:hover {
-  border-color: blue;
-  border-style: dashed;
+  background-color: theme('colors.blue.200');
 }
 .rich-text :deep(p) {
   margin: 0.75rem 0;

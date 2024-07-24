@@ -15,13 +15,24 @@
     </UModal>
   </div>
 
-  <div class="course-list-item" v-for="course in workshop.courseList">
-    <h3 class="clickable-item" @click="() => onOpenCourse(course.publicKey)">
+  <h3>Published</h3>
+  <div class="course-list-item" v-for="course in publishedCourses">
+    <div class="clickable-item" @click="() => onOpenCourse(course.publicKey)">
       <UIcon name="i-ph-arrow-elbow-down-right-duotone" /> {{ course.title }}
-    </h3>
-    <div class="rich-text">
-      <span v-if="course.teaser" v-html="course.teaser" />
-      <span v-else v-html="course.description" />
+    </div>
+  </div>
+
+  <h3>Draft</h3>
+  <div class="course-list-item" v-for="course in draftCourses">
+    <div class="clickable-item" @click="() => onOpenCourse(course.publicKey)">
+      <UIcon name="i-ph-arrow-elbow-down-right-duotone" /> {{ course.title }}
+    </div>
+  </div>
+
+  <h3>For Testing</h3>
+  <div class="course-list-item" v-for="course in testCourses">
+    <div class="clickable-item" @click="() => onOpenCourse(course.publicKey)">
+      <UIcon name="i-ph-arrow-elbow-down-right-duotone" /> {{ course.title }}
     </div>
   </div>
 </template>
@@ -36,6 +47,16 @@ const uiState = reactive({
 
 const { data: courses } = await useAsyncData('courses', () => loadCourses())
 workshop.cacheCourses(courses.value)
+
+const publishedCourses = computed(() =>
+  workshop.courseList.filter((c) => c.publishedAt && !c.testOnly)
+)
+const draftCourses = computed(() =>
+  workshop.courseList.filter((c) => !(c.publishedAt || c.testOnly))
+)
+const testCourses = computed(() =>
+  workshop.courseList.filter((c) => c.testOnly)
+)
 
 const onOpenCourse = async (key) => {
   navigateTo(`/workshop/courses/${key}`)
@@ -54,15 +75,15 @@ const onCancelCreateCourse = () => (uiState.addCourse = false)
 
 <style lang="scss" scoped>
 .course-list-item {
-  margin: 1rem 0;
-  padding: 0.5rem;
+  margin: 0.5rem 0;
+  padding: 0.25rem;
   border: 1px dotted gray;
 }
 .clickable-item {
   cursor: pointer;
 }
-.course-list-item #hover {
-  border-color: blue;
+.course-list-item:hover {
+  background-color: theme('colors.blue.200');
 }
 .rich-text :deep(p) {
   margin: 0.75rem 0;
