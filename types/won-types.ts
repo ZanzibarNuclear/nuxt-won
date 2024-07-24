@@ -8,6 +8,7 @@ export type Course = {
   syllabus: string | null
   publishedAt: string | null
   paths: LessonPath[] | null
+  testOnly: boolean | null
 }
 export type LessonPlan = {
   id: number

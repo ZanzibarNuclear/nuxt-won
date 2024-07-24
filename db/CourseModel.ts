@@ -10,6 +10,7 @@ const mapToObject = (data): Course => {
     coverArt: data.cover_art,
     syllabus: data.syllabus,
     publishedAt: data.published_at,
+    testOnly: data.test_only,
     paths: null,
   }
 }
@@ -24,6 +25,7 @@ const mapToTable = (course: Course) => {
     cover_art: course.coverArt,
     syllabus: course.syllabus,
     published_at: course.publishedAt,
+    test_only: course.testOnly,
   }
 }
 
