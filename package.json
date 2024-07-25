@@ -26,6 +26,7 @@
     "@vueup/vue-quill": "^1.2.0",
     "date-fns": "^3.6.0",
     "lodash": "^4.17.21",
+    "mathjax-full": "^3.2.2",
     "nuxt": "^3.12.4",
     "nuxt-icon": "^0.6.10",
     "nuxt-tiptap-editor": "^1.1.2",
