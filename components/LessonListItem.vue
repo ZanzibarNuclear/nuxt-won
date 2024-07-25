@@ -1,16 +1,36 @@
 <template>
-  <div class="item-container">
-    <div class="font-bold">
-      {{ lessonPlan.title }} (key: {{ lessonPlan.publicKey }})
+  <div class="item-container" :title="lessonPlan.publicKey">
+    <div class="item-layout">
+      <div class="item-label">Title:</div>
+      <div>{{ lessonPlan.title }}</div>
+      <div class="item-label">Published:</div>
+      <div>
+        {{
+          lessonPlan.publishedAt
+            ? displayAsDateTime(lessonPlan.publishedAt)
+            : 'Draft'
+        }}
+      </div>
     </div>
+    <!-- <div class="font-bold">
+      {{ lessonPlan.title }} (key: {{ lessonPlan.publicKey }})
+    </div> -->
   </div>
 </template>
 
 <script setup lang="ts">
+import { displayAsDateTime } from '#imports'
 defineProps(['lessonPlan'])
 </script>
 
 <style scoped>
+.item-layout {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+}
+.item-label {
+  font-weight: bold;
+}
 .item-container {
   border: 1px lightblue solid;
   width: 100%;
