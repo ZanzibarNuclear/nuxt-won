@@ -45,8 +45,12 @@ const uiState = reactive({
   addCourse: false,
 })
 
-const { data: courses } = await useAsyncData('courses', () => loadCourses())
-workshop.cacheCourses(courses.value)
+const loadData = async () => {
+  const { data: courses } = await useAsyncData('courses', () => loadCourses())
+  workshop.cacheCourses(courses.value)
+  workshop.deactivateCourse()
+}
+await loadData()
 
 const publishedCourses = computed(() =>
   workshop.courseList.filter((c) => c.publishedAt && !c.testOnly)

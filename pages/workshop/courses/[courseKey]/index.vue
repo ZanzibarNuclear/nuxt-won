@@ -81,13 +81,11 @@ const isPublished = computed(() => {
   return workshop.activeCourse?.publishedAt
 })
 const onGoToCourseList = () => {
-  workshop.deactivateCourse()
   navigateTo('/workshop/courses')
 }
 
 const onOpenLesson = (lessonKey) =>
   navigateTo(`/workshop/courses/${courseKey}/lessons/${lessonKey}`)
-// navigateTo(`/workshop/course-${courseKey}/lesson-${lessonKey}`)
 
 const onPublish = async (courseKey) => {
   const delta = await publishCourse(courseKey)

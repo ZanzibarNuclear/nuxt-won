@@ -40,12 +40,12 @@ const props = defineProps({
 
 const schema = object({
   id: number(),
-  publicKey: string(),
+  publicKey: string().nullable(),
   title: string().required(),
-  description: string(),
-  teaser: string(),
-  syllabus: string(),
-  coverArt: string(),
+  description: string().nullable(),
+  teaser: string().nullable(),
+  syllabus: string().nullable(),
+  coverArt: string().nullable(),
 })
 type Schema = InferType<typeof schema>
 const state = reactive({
