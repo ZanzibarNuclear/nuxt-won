@@ -28,6 +28,17 @@
 
         <template #footer>
           <div>Have a splendid life!</div>
+          <div v-if="isPublished">
+            Published at: {{ workshop.activeCourse?.publishedAt }}
+            <UButton
+              label="Withdraw"
+              @click="onUnpublish(lessonKey as string)"
+            />
+          </div>
+          <div v-else>
+            This course is an unpublished draft.
+            <UButton label="Publish" @click="onPublish(lessonKey as string)" />
+          </div>
         </template>
       </UCard>
     </template>
@@ -36,12 +47,20 @@
 
 <script setup lang="ts">
 import { loadCourse } from '~/db/CourseModel'
-import { loadLessonPlan } from '~/db/LessonPlanModel'
+import {
+  loadLessonPlan,
+  publishLesson,
+  unpublishLesson,
+} from '~/db/LessonPlanModel'
 import { changeSequence } from '~/db/ContentPartModel'
 import { loadContentParts } from '~/db/ContentPartModel'
 
 const { courseKey, lessonKey } = useRoute().params
 const workshop = useWorkshopStore()
+
+const isPublished = computed(() => {
+  return workshop.activeLesson?.publishedAt
+})
 
 const onGoToCourse = () => {
   navigateTo(`/workshop/courses/${courseKey}`)
@@ -93,6 +112,21 @@ async function loadData() {
   console.log('elapse time to load lesson data: %dms', end - start)
 }
 await loadData()
+
+const onPublish = async (lessonKey: string) => {
+  const delta = await publishLesson(lessonKey)
+  if (delta) {
+    console.log('caching published course', delta)
+    workshop.cacheLesson(delta)
+  }
+}
+const onUnpublish = async (lessonKey: string) => {
+  const delta = await unpublishLesson(lessonKey)
+  if (delta) {
+    console.log('caching unpublished course', delta)
+    workshop.cacheLesson(delta)
+  }
+}
 </script>
 
 <style scoped></style>

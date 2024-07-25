@@ -45,8 +45,12 @@ const uiState = reactive({
   addCourse: false,
 })
 
-const { data: courses } = await useAsyncData('courses', () => loadCourses())
-workshop.cacheCourses(courses.value)
+const loadData = async () => {
+  const { data: courses } = await useAsyncData('courses', () => loadCourses())
+  workshop.cacheCourses(courses.value)
+  workshop.deactivateCourse()
+}
+await loadData()
 
 const publishedCourses = computed(() =>
   workshop.courseList.filter((c) => c.publishedAt && !c.testOnly)
@@ -86,7 +90,7 @@ const onCancelCreateCourse = () => (uiState.addCourse = false)
   background-color: theme('colors.blue.200');
 }
 .rich-text :deep(p) {
-  margin: 0.75rem 0;
+  margin-bottom: 0.5rem;
 }
 .rich-text :deep(ul) {
   margin-top: 1rem;
@@ -99,5 +103,10 @@ const onCancelCreateCourse = () => (uiState.addCourse = false)
   margin-bottom: 1rem;
   list-style: decimal;
   list-style-position: inside;
+}
+.rich-text :deep(blockquote) {
+  margin-left: 1rem;
+  border-left: 2px solid goldenrod;
+  padding-left: 1rem;
 }
 </style>

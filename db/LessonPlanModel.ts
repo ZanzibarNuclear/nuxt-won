@@ -73,3 +73,25 @@ export async function deleteLessonPlan(lessonKey: string) {
     method: 'DELETE',
   })
 }
+
+export async function publishLesson(lessonKey: string) {
+  const results = await $fetch(`/api/lesson-plans/${lessonKey}/publish`, {
+    method: 'PUT',
+  })
+  if (results) {
+    return mapToObject(results)
+  } else {
+    return null
+  }
+}
+
+export async function unpublishLesson(lessonKey: string) {
+  const results = await $fetch(`/api/lesson-plans/${lessonKey}/unpublish`, {
+    method: 'PUT',
+  })
+  if (results) {
+    return mapToObject(results)
+  } else {
+    return null
+  }
+}

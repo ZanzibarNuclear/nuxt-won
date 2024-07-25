@@ -81,22 +81,20 @@ const isPublished = computed(() => {
   return workshop.activeCourse?.publishedAt
 })
 const onGoToCourseList = () => {
-  workshop.deactivateCourse()
   navigateTo('/workshop/courses')
 }
 
-const onOpenLesson = (lessonKey) =>
+const onOpenLesson = (lessonKey: string) =>
   navigateTo(`/workshop/courses/${courseKey}/lessons/${lessonKey}`)
-// navigateTo(`/workshop/course-${courseKey}/lesson-${lessonKey}`)
 
-const onPublish = async (courseKey) => {
+const onPublish = async (courseKey: string) => {
   const delta = await publishCourse(courseKey)
   if (delta) {
     console.log('caching published course', delta)
     workshop.cacheCourse(delta)
   }
 }
-const onUnpublish = async (courseKey) => {
+const onUnpublish = async (courseKey: string) => {
   const delta = await unpublishCourse(courseKey)
   if (delta) {
     console.log('caching unpublished course', delta)

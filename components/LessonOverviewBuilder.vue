@@ -65,6 +65,12 @@ const handleCancelUpdateLesson = () => {
   list-style: disc;
   list-style-position: inside;
 }
+.rich-text :deep(ol) {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  list-style: decimal;
+  list-style-position: inside;
+}
 .rich-text :deep(blockquote) {
   margin-left: 1rem;
   border-left: 2px solid goldenrod;
