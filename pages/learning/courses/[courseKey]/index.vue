@@ -2,6 +2,12 @@
   <div>
     <UBreadcrumb :links="breadcrumbLinks" />
     <h1>{{ activeCourse.title }}</h1>
+    <NuxtImg
+      v-if="activeCourse.coverArt"
+      :src="activeCourse.coverArt"
+      :title="activeCourse.title"
+      class="mb-6"
+    />
     <div><span class="rich-text" v-html="activeCourse.description" /></div>
     <h3>What You Will Learn</h3>
     <div class="my-2 rich-text">
