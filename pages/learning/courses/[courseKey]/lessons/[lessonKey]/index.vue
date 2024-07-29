@@ -2,6 +2,9 @@
   <div>
     <UBreadcrumb :links="breadcrumbLinks" />
     <h1>{{ activeLesson.title }}</h1>
+    <h2 v-if="!activeLesson.publishedAt" class="wip-notice">
+      Under Construction: This lesson is a work in progress.
+    </h2>
     <LessonContentView :content-parts="learning.contentParts" class="mb-12" />
     <div
       class="text-center w-3/4 mx-auto text-[#222222] dark:text-[#ffa] bg-[#f5f5f5] dark:bg-[#333] rounded-md p-4 mb-12"
@@ -123,3 +126,9 @@ const onGoNext = () => {
   navigateTo('/learning/courses/' + courseKey + '/lessons/' + nextStep.value.to)
 }
 </script>
+<style lang="scss" scoped>
+.wip-notice {
+  color: #cc3300;
+  text-align: center;
+}
+</style>
