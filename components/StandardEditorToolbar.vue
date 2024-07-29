@@ -1,5 +1,5 @@
 <template>
-  <div v-if="editor" class="w-full flex flex-row">
+  <div v-if="editor" class="flex">
     <div>
       <UButton
         size="sm"
@@ -41,25 +41,24 @@
         :class="{ 'is-active': editor.isActive('subscript') }"
         title="subscript"
       />
-      <!-- <UButton
-        size="sm"
-        icon="i-ph-text-strikethrough"
-        @click="editor.chain().focus().toggleStrike().run()"
-        :disabled="!editor.can().chain().focus().toggleStrike().run()"
-        :class="{ 'is-active': editor.isActive('strike') }"
-        title="strike-through"
-      /> -->
       <UButton
         size="sm"
         icon="i-ph-text-h"
         @click="editor.chain().focus().toggleHeading({ level: 1 }).run()"
-        :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }"
+        :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }"
         title="heading"
       />
       <UButton
         size="sm"
         icon="i-ph-text-h-two"
         @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
+        :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }"
+        title="sub-heading"
+      />
+      <UButton
+        size="sm"
+        icon="i-ph-text-h-three"
+        @click="editor.chain().focus().toggleHeading({ level: 3 }).run()"
         :class="{ 'is-active': editor.isActive('heading', { level: 3 }) }"
         title="sub-heading"
       />
@@ -84,10 +83,8 @@
         :class="{ 'is-active': editor.isActive('blockquote') }"
         title="block quote"
       />
-    </div>
-    <UDivider orientation="vertical" class="grow"></UDivider>
-    <div class="right">
       <UButton
+        class="push"
         size="sm"
         icon="i-ph-cloud-arrow-up"
         variant="solid"
@@ -112,3 +109,9 @@
 const props = defineProps({ editor: { type: Object, required: true } })
 const emit = defineEmits(['saveChanges', 'closeEditor'])
 </script>
+
+<style lang="scss">
+.push {
+  margin-left: auto;
+}
+</style>

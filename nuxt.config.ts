@@ -8,11 +8,10 @@ export default defineNuxtConfig({
   },
   modules: [
     '@nuxt/ui',
-    'nuxt-icon',
     '@nuxt/content',
     '@pinia/nuxt',
     '@nuxtjs/supabase',
-    // 'nuxt-tiptap-editor',
+    'nuxt-tiptap-editor',
     '@nuxt/test-utils/module',
     '@nuxt/image',
   ],
@@ -25,9 +24,9 @@ export default defineNuxtConfig({
     },
   },
   content: {},
-  // tiptap: {
-  //   prefix: 'Tiptap',
-  // },
+  tiptap: {
+    prefix: 'Tiptap',
+  },
   supabase: {
     redirect: true,
     redirectOptions: {

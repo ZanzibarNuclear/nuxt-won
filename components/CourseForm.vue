@@ -4,9 +4,9 @@
     <UFormGroup label="Title" name="title">
       <UInput id="title" v-model="state.title" />
     </UFormGroup>
-    <SimpleEditorFormGroup :fields="state" field-name="teaser" />
-    <SimpleEditorFormGroup :fields="state" field-name="description" />
-    <SimpleEditorFormGroup :fields="state" field-name="syllabus" />
+    <StandardEditorFormGroup :fields="state" field-name="teaser" />
+    <StandardEditorFormGroup :fields="state" field-name="description" />
+    <StandardEditorFormGroup :fields="state" field-name="syllabus" />
     <UFormGroup label="Cover Art" name="coverArt">
       <UInput id="coverArt" v-model="state.coverArt" />
     </UFormGroup>
@@ -27,10 +27,6 @@
 <script setup lang="ts">
 import { object, string, number, type InferType } from 'yup'
 import type { FormSubmitEvent } from '#ui/types'
-
-const SimpleEditor = defineAsyncComponent(
-  () => import('~/components/SimpleEditor.vue')
-)
 
 const emit = defineEmits(['save-course', 'cancel'])
 const props = defineProps({

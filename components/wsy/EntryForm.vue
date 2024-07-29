@@ -3,7 +3,7 @@
     <div>
       Make a statement. Speak your mind. Click Post to share with the world.
     </div>
-    <simple-editor @share-changes="onPostEntry" @close="emit('close')" />
+    <standard-editor @save-changes="onPostEntry" @cancel-edit="emit('close')" />
   </div>
 </template>
 

@@ -1,11 +1,11 @@
 <template>
   <UFormGroup :label="fieldNameLabel" :name="fieldName">
-    <simple-editor
+    <standard-editor
       v-if="isEdit"
       :id="fieldName"
       :initial-content="fields[fieldName]"
-      @share-changes="handleSave"
-      @close="handleClose"
+      @save-changes="handleSave"
+      @cancel-edit="handleClose"
     />
     <div v-else class="flex items-center rich-text">
       <div>
