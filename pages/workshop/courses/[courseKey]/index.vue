@@ -11,10 +11,7 @@
     <template #item="{ item }">
       <UCard>
         <template #header>
-          <h2>
-            {{ workshop.activeCourse?.title }} (key:
-            {{ workshop.activeCourse?.publicKey }})
-          </h2>
+          <h2>{{ workshop.activeCourse?.title }}</h2>
           <div>{{ item.description }}</div>
         </template>
 

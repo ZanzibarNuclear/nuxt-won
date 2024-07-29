@@ -7,6 +7,7 @@
     <template #item="{ item }">
       <UCard>
         <template #header>
+          <h2>{{ workshop.activeLesson?.title }}</h2>
           {{ item.description }}
         </template>
 
