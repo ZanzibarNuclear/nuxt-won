@@ -1,12 +1,13 @@
 <template>
   <div v-if="editor" class="flex">
-    <div>
+    <div class="w-full flex flex-row gap-x-1 mb-2">
       <UDropdown :items="headings" :popper="{ placement: 'bottom-start' }">
         <UButton
           variant="outline"
           class="mt-0"
           size="sm"
-          label="Style"
+          label="P, H1-3"
+          icon="i-ph-paragraph"
           trailing-icon="i-heroicons-chevron-down-20-solid"
         />
       </UDropdown>
@@ -71,6 +72,7 @@
         :class="{ 'is-active': editor.isActive('blockquote') }"
         title="block quote"
       />
+      <UDivider orientation="vertical" />
       <UButton
         class="push"
         size="sm"
@@ -127,7 +129,7 @@ const headings = [
       label: 'Normal',
       icon: 'i-ph-text-p',
       click: () => {
-        props.editor.chain().focus().toggleParagraph().run()
+        props.editor.chain().focus().setParagraph().run()
       },
     },
   ],

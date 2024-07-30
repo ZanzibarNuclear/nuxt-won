@@ -26,6 +26,7 @@ const editor = useEditor({
     TiptapSuperscript,
     TiptapSubscript,
     TiptapUnderline,
+    TiptapLink,
   ],
 })
 
