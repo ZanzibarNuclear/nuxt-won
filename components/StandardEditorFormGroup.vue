@@ -2,7 +2,6 @@
   <UFormGroup :label="fieldNameLabel" :name="fieldName">
     <standard-editor
       v-if="isEdit"
-      :id="fieldName"
       :initial-content="fields[fieldName]"
       @save-changes="handleSave"
       @cancel-edit="handleClose"
