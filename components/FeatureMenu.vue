@@ -9,46 +9,46 @@ const links = [
   [
     {
       label: 'Home',
-      icon: 'i-heroicons-home',
+      icon: 'i-ph-house',
       to: '/',
     },
     {
       label: 'What Say You',
-      icon: 'i-heroicons-chat-bubble-left-ellipsis',
+      icon: 'i-ph-chat-centered-dots',
       to: '/wsy',
     },
     {
       label: 'Free Courses',
-      icon: 'i-heroicons-academic-cap',
+      icon: 'i-ph-graduation-cap',
       to: '/learning',
     },
     {
       label: 'Simulators',
-      icon: 'i-heroicons-cog',
+      icon: 'i-ph-gear-fine',
       to: '/simulators',
     },
     {
       label: 'Fun and Games',
-      icon: 'i-heroicons-puzzle-piece',
+      icon: 'i-ph-puzzle-piece',
       to: '/games',
     },
     {
-      label: 'Essays',
-      icon: 'i-heroicons-newspaper',
+      label: 'News',
+      icon: 'i-ph-newspaper',
       to: '/essays',
     },
   ],
   [
     {
       label: "Zanzi's Nuclear Stack",
-      icon: 'i-heroicons-document-text',
+      icon: 'i-ph-article',
       to: 'https://zanzisnuclearstack.substack.com/',
       target: '_blank',
       external: true,
     },
     {
       label: 'Zanzibar on X',
-      icon: 'i-heroicons-x-mark',
+      icon: 'i-ph-x-logo',
       to: 'https://x.com/ZanzibarNuclear',
       target: '_blank',
       external: true,

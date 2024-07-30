@@ -1,10 +1,10 @@
 <template>
   <div v-if="edit">
     <div>
-      <SimpleEditor
+      <standard-editor
         :initial-content="details.html"
-        @share-changes="commit"
-        @close="cancel"
+        @save-changes="commit"
+        @cancel-edit="cancel"
       />
     </div>
   </div>

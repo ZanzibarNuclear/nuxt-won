@@ -1,6 +1,16 @@
 <template>
-  <div v-if="editor" class="w-full flex flex-row">
-    <div>
+  <div v-if="editor" class="flex">
+    <div class="w-full flex flex-row gap-x-1 mb-2">
+      <UDropdown :items="headings" :popper="{ placement: 'bottom-start' }">
+        <UButton
+          variant="outline"
+          class="mt-0"
+          size="sm"
+          label="P, H1-3"
+          icon="i-ph-paragraph"
+          trailing-icon="i-ph-caret-double-down"
+        />
+      </UDropdown>
       <UButton
         size="sm"
         icon="i-ph-text-b"
@@ -41,28 +51,6 @@
         :class="{ 'is-active': editor.isActive('subscript') }"
         title="subscript"
       />
-      <!-- <UButton
-        size="sm"
-        icon="i-ph-text-strikethrough"
-        @click="editor.chain().focus().toggleStrike().run()"
-        :disabled="!editor.can().chain().focus().toggleStrike().run()"
-        :class="{ 'is-active': editor.isActive('strike') }"
-        title="strike-through"
-      /> -->
-      <UButton
-        size="sm"
-        icon="i-ph-text-h"
-        @click="editor.chain().focus().toggleHeading({ level: 1 }).run()"
-        :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }"
-        title="heading"
-      />
-      <UButton
-        size="sm"
-        icon="i-ph-text-h-two"
-        @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
-        :class="{ 'is-active': editor.isActive('heading', { level: 3 }) }"
-        title="sub-heading"
-      />
       <UButton
         size="sm"
         icon="i-ph-list-bullets"
@@ -84,10 +72,9 @@
         :class="{ 'is-active': editor.isActive('blockquote') }"
         title="block quote"
       />
-    </div>
-    <UDivider orientation="vertical" class="grow"></UDivider>
-    <div class="right">
+      <UDivider orientation="vertical" />
       <UButton
+        class="push"
         size="sm"
         icon="i-ph-cloud-arrow-up"
         variant="solid"
@@ -97,7 +84,7 @@
       />
       <UButton
         size="sm"
-        icon="i-ph-x-circle"
+        icon="i-ph-pencil-slash"
         variant="solid"
         color="orange"
         @click="() => emit('closeEditor')"
@@ -111,4 +98,46 @@
 <script setup>
 const props = defineProps({ editor: { type: Object, required: true } })
 const emit = defineEmits(['saveChanges', 'closeEditor'])
+
+const headings = [
+  [
+    {
+      label: 'Heading 1',
+      icon: 'i-ph-text-h',
+      class: "{ 'is-active': editor.isActive('heading', { level: 1 }) }",
+      click: () => {
+        props.editor.chain().focus().toggleHeading({ level: 1 }).run()
+      },
+    },
+    {
+      label: 'Heading 2',
+      icon: 'i-ph-text-h-two',
+      class: "{ 'is-active': editor.isActive('heading', { level: 2 }) }",
+      click: () => {
+        props.editor.chain().focus().toggleHeading({ level: 2 }).run()
+      },
+    },
+    {
+      label: 'Heading 3',
+      icon: 'i-ph-text-h-three',
+      class: "{ 'is-active': editor.isActive('heading', { level: 3 }) }",
+      click: () => {
+        props.editor.chain().focus().toggleHeading({ level: 3 }).run()
+      },
+    },
+    {
+      label: 'Normal',
+      icon: 'i-ph-text-p',
+      click: () => {
+        props.editor.chain().focus().setParagraph().run()
+      },
+    },
+  ],
+]
 </script>
+
+<style lang="scss">
+.push {
+  margin-left: auto;
+}
+</style>

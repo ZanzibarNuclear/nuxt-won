@@ -1,12 +1,13 @@
 <template>
   <h1>
-    <UButton icon="i-mdi-arrow-left-top" class="mr-2" @click="onGoToCourse" />
+    <UButton icon="i-ph-arrow-up-left" class="mr-2" @click="onGoToCourse" />
     Lesson Builder
   </h1>
   <UTabs :items="items" class="w-full">
     <template #item="{ item }">
       <UCard>
         <template #header>
+          <h2>{{ workshop.activeLesson?.title }}</h2>
           {{ item.description }}
         </template>
 

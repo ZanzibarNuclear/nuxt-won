@@ -5,7 +5,7 @@
       <div>You will be asked to share public profile information with us.</div>
     </template>
     <UButton
-      icon="i-mdi-google"
+      icon="i-ph-google-logo"
       size="lg"
       variant="outline"
       label="Google"
@@ -13,7 +13,7 @@
       @click="signIn('google')"
     />
     <UButton
-      icon="i-ri-twitter-x-line"
+      icon="i-ph-x-logo"
       size="lg"
       variant="outline"
       label="X / Twitter"
@@ -21,7 +21,7 @@
       @click="signIn('twitter')"
     />
     <UButton
-      icon="i-mdi-github"
+      icon="i-ph-github-logo"
       size="lg"
       variant="outline"
       label="GitHub"

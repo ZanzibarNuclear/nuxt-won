@@ -11,11 +11,11 @@
       :responding-to="entry.publicKey"
       @close="onCloseReplyForm"
     />
-    <simple-editor
+    <standard-editor
       v-if="entryToEdit"
       :initial-content="entryToEdit.statement"
-      @share-changes="onSaveEntry"
-      @close="onCloseEditForm"
+      @save-changes="onSaveEntry"
+      @cancel-edit="onCloseEditForm"
     />
     <div v-if="wsy.hasResponses(entry.publicKey)">
       <wsy-entry-view-recursive

@@ -8,13 +8,13 @@ export default defineNuxtConfig({
   },
   modules: [
     '@nuxt/ui',
-    'nuxt-icon',
     '@nuxt/content',
     '@pinia/nuxt',
     '@nuxtjs/supabase',
-    // 'nuxt-tiptap-editor',
+    'nuxt-tiptap-editor',
     '@nuxt/test-utils/module',
     '@nuxt/image',
+    '@nuxt/icon',
   ],
   runtimeConfig: {
     resendWsyKey: process.env.RESEND_WSY_KEY,
@@ -25,9 +25,9 @@ export default defineNuxtConfig({
     },
   },
   content: {},
-  // tiptap: {
-  //   prefix: 'Tiptap',
-  // },
+  tiptap: {
+    prefix: 'Tiptap',
+  },
   supabase: {
     redirect: true,
     redirectOptions: {
@@ -43,8 +43,13 @@ export default defineNuxtConfig({
       secure: true,
     },
   },
+  icon: {
+    serverBundle: 'remote',
+  },
   ui: {
-    icons: ['mdi', 'ri', 'ph'],
+    icons: {
+      dynamic: true,
+    },
   },
   css: ['~/assets/css/tailwind.css'],
   vite: {

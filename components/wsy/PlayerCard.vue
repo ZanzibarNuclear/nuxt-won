@@ -8,7 +8,7 @@
         People shall know you as "{{ player.penName }}."
         <UButton
           @click="editPlayer"
-          icon="i-mdi-edit"
+          icon="i-ph-pencil-duotone"
           label="change alias"
           variant="solid"
           color="primary"
@@ -44,7 +44,7 @@
         </UForm>
         <UButton
           @click="cancelEditPlayer"
-          icon="i-mdi-cancel"
+          icon="i-ph-pencil-slash"
           label="cancel"
           variant="solid"
           color="amber"
