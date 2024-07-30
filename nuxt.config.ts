@@ -43,7 +43,7 @@ export default defineNuxtConfig({
     },
   },
   ui: {
-    icons: ['mdi', 'ri', 'ph'],
+    icons: ['ph'],
   },
   css: ['~/assets/css/tailwind.css'],
   vite: {

@@ -8,7 +8,7 @@
           size="sm"
           label="P, H1-3"
           icon="i-ph-paragraph"
-          trailing-icon="i-heroicons-chevron-down-20-solid"
+          trailing-icon="i-ph-caret-double-down"
         />
       </UDropdown>
       <UButton
@@ -84,7 +84,7 @@
       />
       <UButton
         size="sm"
-        icon="i-ph-x-circle"
+        icon="i-ph-pencil-slash"
         variant="solid"
         color="orange"
         @click="() => emit('closeEditor')"

@@ -3,7 +3,7 @@
   <div v-else>
     Say something about this topic.
     <UButton
-      icon="i-mdi-edit"
+      icon="i-ph-pencil-duotone"
       size="xs"
       label="Start"
       @click="showEntryForm = true"

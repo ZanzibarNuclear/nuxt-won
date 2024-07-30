@@ -10,7 +10,7 @@
       <div>
         <UIcon
           class="mr-4 hover:bg-green-500"
-          name="i-mdi-edit"
+          name="i-ph-pencil-duotone"
           @click="handleOpen"
         />
       </div>

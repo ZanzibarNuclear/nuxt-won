@@ -1,10 +1,6 @@
 <template>
   <h1>
-    <UButton
-      icon="i-mdi-arrow-left-top"
-      class="mr-2"
-      @click="onGoToCourseList"
-    />
+    <UButton icon="i-ph-arrow-up-left" class="mr-2" @click="onGoToCourseList" />
     Course Builder
   </h1>
   <UTabs :items="items" class="w-full">
@@ -34,11 +30,19 @@
           <div>Have a nice day!</div>
           <div v-if="isPublished">
             Published at: {{ workshop.activeCourse?.publishedAt }}
-            <UButton label="Withdraw" @click="onUnpublish(courseKey)" />
+            <UButton
+              label="Withdraw"
+              icon="i-ph-globe-x"
+              @click="onUnpublish(courseKey)"
+            />
           </div>
           <div v-else>
             This course is an unpublished draft.
-            <UButton label="Publish" @click="onPublish(courseKey)" />
+            <UButton
+              label="Publish"
+              icon="i-ph-globe"
+              @click="onPublish(courseKey)"
+            />
           </div>
         </template>
       </UCard>

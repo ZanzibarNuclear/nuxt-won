@@ -5,7 +5,7 @@
         <UButton
           size="md"
           variant="ghost"
-          icon="i-mdi-menu"
+          icon="i-ph-list-bold"
           title="Navigation"
           @click="toggleLeftNavVisibility"
         />

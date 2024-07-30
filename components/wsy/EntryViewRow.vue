@@ -1,7 +1,7 @@
 <template>
   <div class="post-vspace" :style="indentStyle">
     <div v-if="indent" class="marker">
-      <UIcon name="i-mdi-arrow-right-bottom" />
+      <UIcon name="i-ph-arrow-down-right" />
     </div>
     <div class="post">
       <div class="text-xs">
@@ -10,7 +10,7 @@
         }}</span
         ><br />
         {{ displayAsDateTime(entry.posted_at) }}<br />
-        <UButton @click="emit('reply')" icon="i-mdi-reply" size="xs"
+        <UButton @click="emit('reply')" icon="i-ph-bend-up-left" size="xs"
           >Reply</UButton
         >
         <UButton

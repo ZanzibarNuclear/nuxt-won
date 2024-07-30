@@ -12,12 +12,14 @@
     </UFormGroup>
     <UButton
       type="submit"
+      icon="i-ph-cloud-arrow-up"
       :label="isEdit ? 'Submit changes' : 'Add course'"
       class="mr-2"
     />
     <UButton
       type="button"
       label="Cancel"
+      icon="i-ph-pencil-slash"
       @click="emit('cancel')"
       class="mr-2"
     />

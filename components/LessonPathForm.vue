@@ -24,7 +24,7 @@
     <UButton
       class="ml-2"
       @click="onCancel"
-      icon="i-mdi-cancel"
+      icon="i-ph-pencil-slash"
       label="Cancel"
       color="amber"
     />

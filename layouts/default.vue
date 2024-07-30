@@ -5,7 +5,7 @@
         <UButton
           size="md"
           variant="ghost"
-          icon="i-mdi-menu"
+          icon="i-ph-list-bold"
           title="Navigation"
           @click="toggleLeftNavVisibility"
           class="sandwich-bump"
@@ -21,9 +21,7 @@
         <slot />
       </main>
     </div>
-    <footer class="text-center">
-      &copy; 2024 Nuclear Ambitions LLC
-    </footer>
+    <footer class="text-center">&copy; 2024 Nuclear Ambitions LLC</footer>
   </UContainer>
 </template>
 

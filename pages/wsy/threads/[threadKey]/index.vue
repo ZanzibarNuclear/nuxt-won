@@ -1,6 +1,6 @@
 <template>
   <h1>
-    <UButton icon="i-mdi-arrow-left-top" class="mr-2" @click="onChangeTopic" />
+    <UButton icon="i-ph-arrow-up-left" class="mr-2" @click="onChangeTopic" />
     What Say You?
   </h1>
   <div>

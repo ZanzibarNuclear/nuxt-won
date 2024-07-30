@@ -32,7 +32,7 @@
       />
     </UFormGroup>
     <UFormGroup>
-      <template #label><UIcon name="i-ri-twitter-x-line" /> Username</template>
+      <template #label><UIcon name="i-ph-x-logo" /> Username</template>
       <UInput placeholder="X Username" v-model="state.x_username" size="sm">
         <template #leading>@</template>
       </UInput>
@@ -41,7 +41,7 @@
       label="LinkedIn"
       description="The part that comes after https://www.linkedin.com/in/"
     >
-      <template #label><UIcon name="i-mdi-linkedin" /> LinkedIn</template>
+      <template #label><UIcon name="i-ph-linkedin-logo" /> LinkedIn</template>
       <UInput
         placeholder="LinkedIn Profile Name"
         v-model="state.linkedin_profile_name"

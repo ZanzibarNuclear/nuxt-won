@@ -27,7 +27,7 @@
         variant="solid"
         icon="i-ph-person"
         :label="screenName"
-        trailing-icon="i-heroicons-chevron-down-20-solid"
+        trailing-icon="i-ph-caret-double-down"
     /></UDropdown>
     <UModal v-model="authPanelIsOpen">
       <AuthOAuthCard @finish="closeAuthPanel" />
@@ -78,7 +78,7 @@ const items = [
   [
     {
       label: 'Profile',
-      icon: 'i-mdi-card-account-details',
+      icon: 'i-ph-identification-card',
       to: '/user/account',
     },
     {
@@ -88,7 +88,7 @@ const items = [
     },
     {
       label: 'Sign Out',
-      icon: 'i-mdi-logout',
+      icon: 'i-ph-sign-out',
       click: async () => {
         await useSupabaseClient().auth.signOut()
         userContext.clearUser()
