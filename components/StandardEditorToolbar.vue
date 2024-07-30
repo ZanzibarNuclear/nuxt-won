@@ -1,6 +1,15 @@
 <template>
   <div v-if="editor" class="flex">
     <div>
+      <UDropdown :items="headings" :popper="{ placement: 'bottom-start' }">
+        <UButton
+          variant="outline"
+          class="mt-0"
+          size="sm"
+          label="Style"
+          trailing-icon="i-heroicons-chevron-down-20-solid"
+        />
+      </UDropdown>
       <UButton
         size="sm"
         icon="i-ph-text-b"
@@ -40,27 +49,6 @@
         :disabled="!editor.can().chain().focus().toggleSubscript().run()"
         :class="{ 'is-active': editor.isActive('subscript') }"
         title="subscript"
-      />
-      <UButton
-        size="sm"
-        icon="i-ph-text-h"
-        @click="editor.chain().focus().toggleHeading({ level: 1 }).run()"
-        :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }"
-        title="heading"
-      />
-      <UButton
-        size="sm"
-        icon="i-ph-text-h-two"
-        @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
-        :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }"
-        title="sub-heading"
-      />
-      <UButton
-        size="sm"
-        icon="i-ph-text-h-three"
-        @click="editor.chain().focus().toggleHeading({ level: 3 }).run()"
-        :class="{ 'is-active': editor.isActive('heading', { level: 3 }) }"
-        title="sub-heading"
       />
       <UButton
         size="sm"
@@ -108,6 +96,42 @@
 <script setup>
 const props = defineProps({ editor: { type: Object, required: true } })
 const emit = defineEmits(['saveChanges', 'closeEditor'])
+
+const headings = [
+  [
+    {
+      label: 'Heading 1',
+      icon: 'i-ph-text-h',
+      class: "{ 'is-active': editor.isActive('heading', { level: 1 }) }",
+      click: () => {
+        props.editor.chain().focus().toggleHeading({ level: 1 }).run()
+      },
+    },
+    {
+      label: 'Heading 2',
+      icon: 'i-ph-text-h-two',
+      class: "{ 'is-active': editor.isActive('heading', { level: 2 }) }",
+      click: () => {
+        props.editor.chain().focus().toggleHeading({ level: 2 }).run()
+      },
+    },
+    {
+      label: 'Heading 3',
+      icon: 'i-ph-text-h-three',
+      class: "{ 'is-active': editor.isActive('heading', { level: 3 }) }",
+      click: () => {
+        props.editor.chain().focus().toggleHeading({ level: 3 }).run()
+      },
+    },
+    {
+      label: 'Normal',
+      icon: 'i-ph-text-p',
+      click: () => {
+        props.editor.chain().focus().toggleParagraph().run()
+      },
+    },
+  ],
+]
 </script>
 
 <style lang="scss">

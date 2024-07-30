@@ -40,11 +40,35 @@ onBeforeUnmount(() => {
 
 const handleSave = () => {
   const snapshot = editor.value?.getHTML()
-  console.log('saving...', snapshot)
-  emit('saveChanges', snapshot)
+  const fixLi = snapshot?.replaceAll(
+    /<li><p>(.*?)<\/p><(\/?)(ol|li|ul)>/gi,
+    '<li>$1<$2$3>'
+  )
+  console.log('saving...', fixLi)
+  emit('saveChanges', fixLi)
 }
 const handleClose = () => {
   console.log('closing...')
   emit('cancelEdit')
 }
 </script>
+
+<style lang="scss">
+.tiptap {
+  :first-child {
+    margin-top: 0;
+  }
+
+  /* List styles */
+  ul,
+  ol {
+    padding: 0 1rem;
+    margin: 1.25rem 1rem 1.25rem 0.4rem;
+
+    li p {
+      margin-top: 0.25em;
+      margin-bottom: 0.25em;
+    }
+  }
+}
+</style>
