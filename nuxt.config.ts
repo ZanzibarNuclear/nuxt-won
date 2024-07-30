@@ -44,10 +44,12 @@ export default defineNuxtConfig({
     },
   },
   icon: {
-    serverBundle: 'auto',
+    serverBundle: 'remote',
   },
   ui: {
-    icons: ['ph'],
+    icons: {
+      dynamic: true,
+    },
   },
   css: ['~/assets/css/tailwind.css'],
   vite: {

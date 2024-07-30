@@ -10,10 +10,16 @@
         {{ wsyStore.activeThread?.topic || 'Loading...' }}
       </div>
       <div class="m-2">
-        <UButton @click="openInviteForm" label="Invite someone to this topic" />
+        <UButton
+          @click="openInviteForm"
+          icon="i-ph-envelope"
+          label="Invite a friend"
+        />
       </div>
       <div class="m-2">
-        <UButton @click="onChangeTopic">Change topics</UButton>
+        <UButton @click="onChangeTopic" icon="i-ph-arrow-counter-clockwise"
+          >Change topics</UButton
+        >
       </div>
     </div>
     <UModal v-model="inviteOpen" class="p-4">

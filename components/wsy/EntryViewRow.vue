@@ -10,15 +10,16 @@
         }}</span
         ><br />
         {{ displayAsDateTime(entry.posted_at) }}<br />
-        <UButton @click="emit('reply')" icon="i-ph-bend-up-left" size="xs"
-          >Reply</UButton
-        >
         <UButton
           v-if="entry.writerId === userContext.wsyWriter?.id"
           @click="emit('edit')"
           icon="i-ph-pencil"
           size="xs"
+          class="mr-1"
           >Edit</UButton
+        >
+        <UButton @click="emit('reply')" icon="i-ph-chat-text" size="xs"
+          >Reply</UButton
         >
       </div>
       <div class="rich-text">
