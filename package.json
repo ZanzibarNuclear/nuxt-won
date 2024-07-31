@@ -1,5 +1,10 @@
 {
   "name": "world-of-nuclear",
+  "description": "Platform to support the productive use of nuclear energy.",
+  "author": {
+    "name": "Nuclear Ambitions LLC",
+    "url": "https://nuclearambitions.com"
+  },
   "private": true,
   "type": "module",
   "scripts": {
