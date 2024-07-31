@@ -18,7 +18,9 @@
     <div>Caption: {{ details.caption }}</div>
   </div>
   <div v-if="preview">
-    <div>TODO: Render equation</div>
+    <ClientOnly>
+      <div>TODO: Render equation</div>
+    </ClientOnly>
   </div>
 </template>
 

@@ -56,20 +56,23 @@ const handleClose = () => {
 
 <style lang="scss">
 .tiptap {
-  :first-child {
-    margin-top: 0;
+  p {
+    margin: 1em 0;
+    font-size: medium;
   }
-
-  /* List styles */
-  ul,
-  ol {
-    padding: 0 1rem;
-    margin: 1.25rem 1rem 1.25rem 0.4rem;
-
-    li p {
-      margin-top: 0.25em;
-      margin-bottom: 0.25em;
-    }
+  h1 {
+    font-size: 2rem;
+  }
+  h2 {
+    font-size: 1.5rem;
+    @apply text-primary;
+  }
+  h3 {
+    font-size: 1.2rem;
+  }
+  h4 {
+    font-size: 1rem;
+    font-weight: bold;
   }
 }
 </style>
