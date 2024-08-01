@@ -56,6 +56,10 @@ import {
 import { changeSequence } from '~/db/ContentPartModel'
 import { loadContentParts } from '~/db/ContentPartModel'
 
+definePageMeta({
+  colorMode: 'light'
+})
+
 const { courseKey, lessonKey } = useRoute().params
 const workshop = useWorkshopStore()
 

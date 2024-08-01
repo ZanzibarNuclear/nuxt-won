@@ -5,7 +5,9 @@
     @save-changes="handleSave"
     @close-editor="handleClose"
   />
-  <TiptapEditorContent :editor="editor" />
+  <div class="editor-frame">
+    <TiptapEditorContent :editor="editor" />
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -55,6 +57,10 @@ const handleClose = () => {
 </script>
 
 <style lang="scss">
+.editor-frame {
+  overflow-y: scroll; /* Adds a vertical scrollbar */
+  max-height: 60vh; /* Sets a maximum height for the element */
+}
 .tiptap {
   p {
     margin: 1em 0;
