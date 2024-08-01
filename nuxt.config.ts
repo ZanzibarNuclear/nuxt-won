@@ -2,6 +2,9 @@
 export default defineNuxtConfig({
   compatibilityDate: '2024-07-13',
   devtools: { enabled: true },
+  colorMode: {
+    preference: 'light'
+  },
   components: {
     global: true,
     dirs: ['~/components'],
