@@ -9,7 +9,7 @@
           title="Navigation"
           @click="toggleLeftNavVisibility"
         />
-        <NuxtImg src="/images/Zanzibar.svg" class="pt-5" width="75px" />
+        <NuxtImg src="/images/Zanzibar-2024-07.jpg" class="pt-5" width="75px" />
         <AccountNavatarWidget class="corner" />
       </div>
     </header>
