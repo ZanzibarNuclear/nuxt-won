@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="32.089157mm"
+   height="32.089161mm"
+   viewBox="0 0 32.089157 32.089161"
+   version="1.1"
+   id="svg1"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <g
+     id="layer1"
+     transform="translate(-91.180414,-154.45582)">
+    <g
+       id="g14">
+      <rect
+         style="fill:#fefadc;fill-opacity:1;fill-rule:evenodd;stroke:#4682b4;stroke-width:0.264583;stroke-dasharray:0.264583, 0.529171;stroke-dashoffset:0;stroke-opacity:1"
+         id="rect13"
+         width="31.824577"
+         height="31.824579"
+         x="91.312706"
+         y="154.5881" />
+      <path
+         style="fill:none;stroke:#4682b4;stroke-width:1.05833;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+         d="m 93.351858,184.69211 c 9.494202,-20.67429 2.63589,-27.81479 2.63589,-27.81479"
+         id="path10" />
+      <path
+         style="fill:none;stroke:#4682b4;stroke-width:1.05833;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+         d="m 121.32591,184.39656 c -9.4942,-20.67429 -2.63589,-27.81479 -2.63589,-27.81479"
+         id="path11" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:14.1111px;font-family:Orbitron;-inkscape-font-specification:'Orbitron, @wght=600';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;font-variation-settings:'wght' 600;fill:#4682b4;fill-opacity:1;stroke:#4682b4;stroke-width:0.333999;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1"
+         x="107.38583"
+         y="168.80838"
+         id="text11"><tspan
+           id="tspan11"
+           style="font-size:14.1111px;text-align:center;text-anchor:middle;fill:#4682b4;fill-opacity:1;stroke:#4682b4;stroke-width:0.334;stroke-opacity:1"
+           x="107.38583"
+           y="168.80838">W</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:14.1111px;font-family:Orbitron;-inkscape-font-specification:'Orbitron, @wght=600';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;font-variation-settings:'wght' 600;text-align:center;text-anchor:middle;fill:#4682b4;fill-opacity:1;stroke:#4682b4;stroke-width:0.333999;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1"
+         x="106.35187"
+         y="183.39615"
+         id="text12"><tspan
+           id="tspan12"
+           style="font-size:14.1111px;text-align:center;text-anchor:middle;fill:#4682b4;fill-opacity:1;stroke:#4682b4;stroke-width:0.334;stroke-opacity:1"
+           x="106.35187"
+           y="183.39615"
+           dx="1.5730934">N</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:Orbitron;-inkscape-font-specification:'Orbitron, @wght=600';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;font-variation-settings:'wght' 600;fill:#4682b4;fill-opacity:1;stroke:#4682b4;stroke-width:0.333999;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1"
+         x="107.22852"
+         y="172.4265"
+         id="text13"><tspan
+           id="tspan13"
+           style="font-size:5.64444px;text-align:center;text-anchor:middle;fill:#4682b4;fill-opacity:1;stroke:#4682b4;stroke-width:0.334;stroke-opacity:1"
+           x="107.22852"
+           y="172.4265">o</tspan></text>
+    </g>
+  </g>
+</svg>

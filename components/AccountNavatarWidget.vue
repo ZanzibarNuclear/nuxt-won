@@ -104,8 +104,10 @@ const items = [
   font-size: 24px;
   margin-left: 2px;
 }
+/*
 .widget-bump {
   position: relative;
   top: 85px;
 }
+  */
 </style>
