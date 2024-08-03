@@ -61,8 +61,8 @@ const breadcrumbLinks = computed(() => {
       to: '/learning/courses/' + courseKey,
     },
     {
-      label: 'Lesson',
-      icon: 'i-ph-book',
+      label: activeLesson.value.title || 'Lesson',
+      icon: 'i-ph-book-open',
     },
   ]
 })

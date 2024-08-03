@@ -1,6 +1,5 @@
 <template>
   <div>
-    <UBreadcrumb :links="breadcrumbLinks" />
     <h1>Topics of Interest</h1>
     <simple-toolbar v-if="isSignedIn">
       <UButton

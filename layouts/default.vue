@@ -12,10 +12,10 @@
           />
         </div>
         <div class="logo">
-          <NuxtImg src="/images/won-logo-full.svg" />
+          <NuxtImg src="/images/Zanzibar-2024-07.jpg" class="pt-3" />
         </div>
       </div>
-      <div class="account">
+      <div class="p-4">
         <AccountNavatarWidget />
       </div>
     </header>
@@ -23,7 +23,7 @@
       <div class="flex-col" :hidden="hideNav">
         <feature-menu />
       </div>
-      <main class="flex-col w-5/6 mx-auto px-14 py-4">
+      <main class="flex-col w-5/6 mx-auto pt-16 px-14 py-4">
         <slot />
       </main>
     </div>
@@ -44,31 +44,18 @@ header {
   justify-content: space-between;
   align-items: center;
   padding: 0.5rem 1.0rem;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 .logo-menu {
   display: flex;
   align-items: center;
 }
 .logo img {
-  height: 60px;
+  width: 75px;
 }
 .menu-sandwich {
   font-size: 24px;
   margin-left: 1.0rem;
   cursor: pointer;
-}
-.account button {
-    padding: 10px 20px;
-    background-color: dodgerblue;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.account button:hover {
-    background-color: deepskyblue;
 }
 
 /* Responsive design */
@@ -85,16 +72,5 @@ header {
 footer {
   margin-top: 5rem;
   margin-bottom: 1rem;
-}
-.title {
-  flex: 1;
-  text-align: center;
-}
-.corner {
-  margin-left: auto;
-}
-.sandwich-bump {
-  position: relative;
-  top: 100px;
 }
 </style>
