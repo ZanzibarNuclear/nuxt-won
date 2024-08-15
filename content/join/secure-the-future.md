@@ -25,16 +25,10 @@ We face a pivotal moment in our energy landscape:
 - **Workforce Development**: This transition creates opportunities for a new generation of nuclear engineers and technicians.
 - **Economic Growth**: The nuclear industry supports hundreds of thousands of high-skill jobs across the country.
 
-## Benefits of Membership
-
-- **Stay Informed**: Access the latest research, policy updates, and technological advancements in nuclear energy.
-- **Network**: Connect with industry professionals, researchers, and fellow enthusiasts.
-- **Influence Policy**: Join our advocacy efforts to shape responsible nuclear energy policies.
-- **Career Opportunities**: Discover job openings and educational programs in the growing nuclear sector.
-- **Events**: Participate in webinars, conferences, and workshops led by experts in the field.
-
 ## Join Us in Shaping a Sustainable Future
 
 By becoming a member, you're supporting the continued operation of our clean energy workhorses while championing the development of next-generation nuclear technology. Together, we can ensure a seamless transition to a more advanced, efficient, and sustainable nuclear future.
 
 Sign up today and be part of maintaining and advancing our vital nuclear infrastructure!
+
+Still not convinced? Review these [benefits of membership](benefits-of-joining).

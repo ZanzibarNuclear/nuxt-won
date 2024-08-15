@@ -9,16 +9,10 @@ Are you passionate about fighting climate change while meeting the world's growi
 - **Energy Independence**: Reduce reliance on fossil fuel imports and enhance national energy security.
 - **Advanced Applications**: Beyond electricity, nuclear technology has applications in medicine, space exploration, and industrial processes.
 
-## Benefits of Membership
-
-- **Stay Informed**: Access the latest research, policy updates, and technological advancements in nuclear energy.
-- **Network**: Connect with industry professionals, researchers, and fellow enthusiasts.
-- **Influence Policy**: Join our advocacy efforts to shape responsible nuclear energy policies.
-- **Career Opportunities**: Discover job openings and educational programs in the growing nuclear sector.
-- **Events**: Participate in webinars, conferences, and workshops led by experts in the field.
-
 ## Join Us in Shaping a Sustainable Future
 
 By becoming a member, you're not just joining a platform - you're becoming part of a community dedicated to solving one of humanity's greatest challenges. Together, we can work towards a cleaner, more prosperous future powered by safe and efficient nuclear energy.
 
 Sign up today and be part of the energy revolution!
+
+Still not convinced? Review these [benefits of membership](benefits-of-joining).

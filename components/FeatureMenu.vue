@@ -33,9 +33,9 @@ const links = [
       to: '/games',
     },
     {
-      label: 'News',
+      label: 'News & Perspective',
       icon: 'i-ph-newspaper',
-      to: '/essays',
+      to: 'https://blog.worldofnuclear.com',
     },
   ],
   [
