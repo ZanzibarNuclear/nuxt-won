@@ -1,19 +1,18 @@
 <template>
-  <header class="bg-gray-200 py-4 w-7/8 mx-auto">
-    <div class="flex justify-between items-center">
-      <div class="flex items-center space-x-4">
-        <img src="/images/logo/logo-sq-pirate.jpg" alt="Logo" class="h-8 w-8" />
+  <header class="py-4 mx-auto logo-container">
+    <div className="grid grid-rows-2 gap-4">
+      <NuxtLink to="https://worldofnuclear.com">
+        <img src="/images/logo/logo-sq-smooth.jpg" alt="Logo" class="logo-above h-20 w-20" />
+      </NuxtLink>
+      <div class="flex items-center w-full justify-around">
+        <span class="text-3xl text-slate-400 border-t-2 border-b-2">Zanzibar's World of Nuclear
+          Energy</span>
       </div>
-      <span class="font-medium text-lg">Zanzibar's World of Nuclear Energy</span>
-      <div class="flex items-center space-x-4">
-        <button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
-          Account
-        </button>
-      </div>
+      <AccountNavatarWidget class="account-above" />
+      <nav>
+        <LayoutHorizontalMenu class="flex justify-center space-x-8 mt-4" />
+      </nav>
     </div>
-    <nav class="mt-4 flex justify-center space-x-8">
-      <LayoutHorizontalMenu />
-    </nav>
   </header>
 </template>
 
@@ -21,4 +20,22 @@
 
 </script>
 
-<style scoped></style>
+<style scoped>
+.logo-container {
+  position: relative;
+}
+
+.logo-above {
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  z-index: 1;
+}
+
+.account-above {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  z-index: 1;
+}
+</style>

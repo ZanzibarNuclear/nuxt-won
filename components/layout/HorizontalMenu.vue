@@ -15,7 +15,7 @@ const links = [
     to: '/wsy',
   },
   {
-    label: 'Free Courses',
+    label: 'Fun Lessons',
     icon: 'i-ph-graduation-cap',
     to: '/learning',
   },
@@ -24,11 +24,11 @@ const links = [
     icon: 'i-ph-gear-fine',
     to: '/simulators',
   },
-  // {
-  //   label: 'Fun and Games',
-  //   icon: 'i-ph-puzzle-piece',
-  //   to: '/games',
-  // },
+  {
+    label: 'Fun and Games',
+    icon: 'i-ph-puzzle-piece',
+    to: '/games',
+  },
   {
     label: 'News & Perspective',
     icon: 'i-ph-newspaper',
