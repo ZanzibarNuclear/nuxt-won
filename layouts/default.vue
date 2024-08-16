@@ -1,31 +1,28 @@
 <template>
-  <UContainer>
-    <header>
-      <div class="logo-menu">
-        <div class="logo">
-          <NuxtImg src="/images/logo/logo-sq-smooth.jpg" class="pt-3" />
+  <UContainer class="w-7/8 mx-auto">
+    <header class="py-4">
+      <div class="grid grid-cols-6 gap-4">
+        <div class="col-span-4">
+          <div class="logo-menu">
+            <div class="logo">
+              <NuxtImg src="/images/logo/logo-sq-smooth.jpg" class="pt-3" />
+            </div>
+          </div>
+          <div class="title-bar text-center font-bold text-3xl text-slate-400 border-t-2 border-b-2 py-1">
+            Zanzibar's World of Nuclear Energy
+          </div>
+        </div>
+        <div class="col-span-2">
+          <AccountNavatarWidget />
+        </div>
+        <div class="grid col-span-6">
+          <horizontal-menu />
         </div>
       </div>
-      <div class="title-bar text-center font-bold text-3xl text-slate-400 border-t-2 border-b-2 py-1">
-        Zanzibar's
-        World of
-        Nuclear Energy
-      </div>
-      <div class="p-4">
-        <AccountNavatarWidget />
-      </div>
     </header>
-    <div class="flex gap-x-5">
-      <div class="menu-sandwich">
-        <UButton size="md" variant="ghost" icon="i-ph-list-bold" title="Navigation" @click="toggleLeftNavVisibility" />
-      </div>
-      <div class="flex-col" :hidden="hideNav">
-        <feature-menu />
-      </div>
-      <main class="flex-col w-5/6 mx-auto pt-16 px-14 py-4">
-        <slot />
-      </main>
-    </div>
+    <main class="flex-col mx-auto pt-16 px-14 py-4">
+      <slot />
+    </main>
     <footer class="text-center">&copy; 2024 Nuclear Ambitions LLC</footer>
   </UContainer>
 </template>
