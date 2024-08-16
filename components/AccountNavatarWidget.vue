@@ -1,43 +1,24 @@
 <template>
   <div class="widget-bump">
     <div v-if="!signedIn">
-      <UButton
-        label="Join"
-        variant="solid"
-        color="amber"
-        icon="i-ph-arrow-bend-down-right-duotone"
-        class="mr-2"
-        @click="openJoin"
-      />
-      <UButton
-        label="Sign In"
-        variant="solid"
-        color="primary"
-        icon="i-ph-sign-in"
-        @click="openAuthPanel"
-      />
+      <div>
+        <UButton label="Join" variant="solid" color="amber" icon="i-ph-arrow-bend-down-right-duotone" class="mr-2 mb-1"
+          @click="openJoin" />
+      </div>
+      <div>
+        <UButton label="Sign In" variant="solid" color="primary" icon="i-ph-sign-in" @click="openAuthPanel" />
+      </div>
     </div>
-    <UDropdown
-      v-if="signedIn"
-      :items="items"
-      :popper="{ placement: 'bottom-start' }"
-      class="text-primary"
-      ><UButton
-        color="green"
-        variant="solid"
-        icon="i-ph-person"
-        :label="screenName"
-        trailing-icon="i-ph-caret-double-down"
-    /></UDropdown>
+    <UDropdown v-if="signedIn" :items="items" :popper="{ placement: 'bottom-start' }" class="text-primary">
+      <UButton color="green" variant="solid" icon="i-ph-person" :label="screenName"
+        trailing-icon="i-ph-caret-double-down" />
+    </UDropdown>
     <UModal v-model="authPanelIsOpen">
       <AuthOAuthCard @finish="closeAuthPanel" />
       <AuthMagicLinkCard @finish="closeAuthPanel" />
     </UModal>
     <UModal v-model="isFeedbackFormOpen">
-      <feedback-form
-        context="navatar"
-        @feedback-delivered="handleFeedbackDelivered"
-      />
+      <feedback-form context="navatar" @feedback-delivered="handleFeedbackDelivered" />
     </UModal>
   </div>
 </template>
@@ -104,6 +85,7 @@ const items = [
   font-size: 24px;
   margin-left: 2px;
 }
+
 /*
 .widget-bump {
   position: relative;
