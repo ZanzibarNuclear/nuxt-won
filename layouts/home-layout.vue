@@ -9,7 +9,7 @@
         <slot />
       </div>
     </div>
-    <footer class="text-center">&copy; 2024 Nuclear Ambitions LLC</footer>
+    <LayoutFooter />
   </UContainer>
 </template>
 

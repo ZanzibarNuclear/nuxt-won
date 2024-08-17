@@ -4,7 +4,7 @@
     <main class="flex-col mx-auto pt-6 px-14 py-4">
       <slot />
     </main>
-    <footer class="text-center">&copy; 2024 Nuclear Ambitions LLC</footer>
+    <LayoutFooter />
   </UContainer>
 </template>
 
