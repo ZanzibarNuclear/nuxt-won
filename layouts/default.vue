@@ -1,7 +1,7 @@
 <template>
-  <UContainer class="w-7/8 mx-auto page-container">
+  <UContainer class="w-7/8 mx-auto">
     <LayoutBasicHeader />
-    <main class="flex-col mx-auto pt-16 px-14 py-4">
+    <main class="flex-col mx-auto pt-6 px-14 py-4">
       <slot />
     </main>
     <footer class="text-center">&copy; 2024 Nuclear Ambitions LLC</footer>
@@ -16,10 +16,6 @@ const toggleLeftNavVisibility = () => {
 </script>
 
 <style scoped>
-.page-container {
-  min-width: 240px;
-}
-
 /* Responsive design */
 @media screen and (max-width: 600px) {
   header {

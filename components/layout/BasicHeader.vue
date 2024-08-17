@@ -1,14 +1,15 @@
 <template>
-  <header class="py-4 mx-auto logo-container">
-    <div className="grid grid-rows-2 gap-4">
-      <NuxtLink to="https://worldofnuclear.com">
-        <img src="/images/logo/logo-sq-smooth.jpg" alt="Logo" class="logo-above h-20 w-20" />
+  <header class="mx-auto logo-container">
+    <div className="grid grid-rows-2">
+      <NuxtLink to="/">
+        <NuxtImg src="/images/logo/logo-sq-smooth.jpg" alt="Logo" width="60" height="60" class="top-left" />
       </NuxtLink>
       <div class="flex items-center w-full justify-around">
-        <span class="text-3xl text-slate-400 border-t-2 border-b-2">Zanzibar's World of Nuclear
+        <span class="mt-6 pb-1 text-3xl text-slate-400 border-t-2 border-b-2 border-slate-400">Zanzibar's World of
+          Nuclear
           Energy</span>
       </div>
-      <AccountNavatarWidget class="account-above" />
+      <AccountNavatarWidget class="top-right" />
       <nav>
         <LayoutHorizontalMenu class="flex justify-center space-x-8 mt-4" />
       </nav>
@@ -25,14 +26,14 @@
   position: relative;
 }
 
-.logo-above {
+.top-left {
   position: absolute;
   top: 10px;
   left: 20px;
   z-index: 1;
 }
 
-.account-above {
+.top-right {
   position: absolute;
   top: 10px;
   right: 20px;
