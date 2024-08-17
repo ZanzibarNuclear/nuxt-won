@@ -19,7 +19,7 @@ module.exports = {
         },
       },
       backgroundImage: {
-        'hero-pattern': "url('/images/WoN-title-hero-v3.jpg')",
+        'hero-pattern': "url('/images/bg/mt-diablo-1920x455.jpg')",
         'regular-pattern': "url('/images/WoN-title-banner-v3.jpg')",
       },
     },
