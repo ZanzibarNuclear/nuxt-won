@@ -2,18 +2,11 @@
   <div>
     <h1>Topics of Interest</h1>
     <simple-toolbar v-if="isSignedIn">
-      <UButton
-        v-if="hasBookmark"
-        class="mr-2"
-        @click="goToBookmark"
-        label="Jump to Bookmark"
-      />
+      <UButton v-if="hasBookmark" class="mr-2" @click="goToBookmark" label="Jump to Bookmark" />
       <div v-else>
         <div v-if="!checkedForBookmark">
           Have you been here before?
-          <UButton @click="checkForBookmark"
-            >See if you have a bookmark.</UButton
-          >
+          <UButton @click="checkForBookmark">See if you have a bookmark.</UButton>
         </div>
         <div v-else>Sorry, we could not find a bookmark.</div>
       </div>
@@ -21,19 +14,12 @@
     </simple-toolbar>
     <div class="mx-auto">
       <div class="course-layout">
-        <CourseTile
-          v-for="course in learning.publishedCourses"
-          class="mx-2 my-4"
-          :course="course"
-        />
+        <CourseTile v-for="course in learning.publishedCourses" class="mx-2 my-4" :course="course" />
       </div>
     </div>
   </div>
   <UModal v-model="showFeedbackForm">
-    <feedback-form
-      context="learning"
-      @feedback-delivered="handleFeedbackDelivered"
-    />
+    <feedback-form context="learning" @feedback-delivered="handleFeedbackDelivered" />
   </UModal>
 </template>
 

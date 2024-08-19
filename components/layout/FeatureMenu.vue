@@ -1,6 +1,6 @@
 <template>
-  <div class="w-48 bg-slate-200 dark:bg-stone-800">
-    <UVerticalNavigation :links="links"> </UVerticalNavigation>
+  <div class="w-48 bg-slate-200 dark:bg-slate-700">
+    <UVerticalNavigation :links="links" labelClass="plain-link" />
   </div>
 </template>
 
@@ -57,4 +57,8 @@ const links = [
 ]
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.plain-link {
+  text-decoration: none;
+}
+</style>

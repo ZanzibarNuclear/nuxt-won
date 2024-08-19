@@ -1,5 +1,5 @@
 <template>
-  <header class="mx-auto logo-container">
+  <header class="mx-auto my-12 logo-container">
     <div className="grid grid-rows-2">
       <NuxtLink to="/">
         <NuxtImg src="/images/logo/logo-sq-smooth.jpg" alt="Logo" width="60" height="60" class="top-left" />

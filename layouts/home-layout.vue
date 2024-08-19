@@ -1,11 +1,11 @@
 <template>
-  <UContainer class="bg-[#f6f2eb] bg-hero-pattern bg-no-repeat bg-contain w-7/8 mx-auto">
+  <UContainer class="bg-[#f6f2eb] dark:bg-slate-800 bg-hero-pattern bg-no-repeat bg-contain w-7/8 mx-auto">
     <LayoutHeroHeader />
     <div class="grid grid-cols-5 w-full px-4">
       <nav class="col-span-1">
-        <LayoutFeatureMenu />
+        <LayoutFeatureMenu class=" my-16" />
       </nav>
-      <div class="col-span-4">
+      <div class="col-span-4 my-16">
         <slot />
       </div>
     </div>
