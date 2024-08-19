@@ -1,7 +1,7 @@
 <template>
-  <UContainer class="w-7/8 mx-auto bg-[#f6f2eb] dark:bg-slate-800 ">
+  <UContainer class="bg-[#f6f2eb] dark:bg-slate-800 grid grid-cols-6 px-4 min-w-96 min-h-screen">
     <LayoutBasicHeader />
-    <main class="flex-col mx-auto my-16 px-14">
+    <main class="w-full col-span-4 col-start-2">
       <slot />
     </main>
     <LayoutFooter />

@@ -6,13 +6,13 @@
 }
 
 h1 {
-  @apply text-3xl my-6 text-primary;
+  @apply text-3xl mt-2 mb-6 font-bold text-nuclear-blue-800;
 }
 h2 {
   @apply text-2xl my-4 font-bold;
 }
 h3 {
-  @apply text-xl my-4 text-primary;
+  @apply text-xl my-4 text-nuclear-blue-800;
 }
 
 a {

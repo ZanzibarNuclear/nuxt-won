@@ -1,18 +1,14 @@
 <template>
-  <header class="mx-auto my-12 logo-container">
-    <div className="grid grid-rows-2">
+  <header class="p-4 w-full rounded-xl col-span-6">
+    <div className="grid grid-rows-2 logo-container">
       <NuxtLink to="/">
-        <NuxtImg src="/images/logo/logo-sq-smooth.jpg" alt="Logo" width="60" height="60" class="top-left" />
+        <NuxtImg src="/images/logo/logo-sq-smooth.jpg" alt="Logo" width="100" class="top-left" />
       </NuxtLink>
-      <div class="flex items-center w-full justify-around">
-        <span class="mt-6 pb-1 text-3xl text-slate-400 border-t-2 border-b-2 border-slate-400">Zanzibar's World of
-          Nuclear
-          Energy</span>
+      <div class="title-bar text-center font-bold text-3xl text-slate-400 border-t-2 border-b-2">
+        Zanzibar's World of Nuclear Energy
       </div>
       <AccountNavatarWidget class="top-right" />
-      <nav>
-        <LayoutHorizontalMenu class="flex justify-center space-x-8 mt-4" />
-      </nav>
+      <LayoutHorizontalMenu />
     </div>
   </header>
 </template>
@@ -29,14 +25,14 @@
 .top-left {
   position: absolute;
   top: 10px;
-  left: 20px;
+  left: 50px;
   z-index: 1;
 }
 
 .top-right {
   position: absolute;
   top: 10px;
-  right: 20px;
+  right: 50px;
   z-index: 1;
 }
 </style>
