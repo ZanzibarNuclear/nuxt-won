@@ -1,5 +1,5 @@
 <template>
-  <UCard class="card">
+  <UCard class="card bg-slate-200 dark:bg-slate-700">
     <template #header>
       <div class="flex">
         <NuxtImg v-if="coverArt" :src="coverArt" class="cover-art" />
@@ -13,13 +13,7 @@
     </div>
     <template #footer>
       <div class="actions">
-        <UButton
-          block
-          color="primary"
-          variant="outline"
-          label="Open this course"
-          @click="goTo"
-        />
+        <UButton block color="primary" variant="outline" label="Open this course" @click="goTo" />
       </div>
     </template>
   </UCard>
@@ -46,25 +40,30 @@ const goTo = () => {
   display: grid;
   grid-template-rows: max-content auto 1fr;
 }
+
 .card img {
   max-height: 150px;
   margin: 0 auto;
 }
+
 .rich-text :deep(p) {
   margin-bottom: 0.5rem;
 }
+
 .rich-text :deep(ul) {
   margin-top: 1rem;
   margin-bottom: 1rem;
   list-style: disc;
   list-style-position: inside;
 }
+
 .rich-text :deep(ol) {
   margin-top: 1rem;
   margin-bottom: 1rem;
   list-style: decimal;
   list-style-position: inside;
 }
+
 .rich-text :deep(blockquote) {
   margin-left: 1rem;
   border-left: 2px solid goldenrod;

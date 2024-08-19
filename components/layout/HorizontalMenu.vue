@@ -1,5 +1,6 @@
 <template>
-  <UHorizontalNavigation :links="links" class="border-b border-gray-200 dark:border-gray-800" />
+  <UHorizontalNavigation :links="links"
+    class="border-b border-gray-200 dark:border-gray-800 bg-slate-200 dark:bg-slate-800" />
 </template>
 
 <script setup lang="ts">
