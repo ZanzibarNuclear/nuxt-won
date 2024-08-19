@@ -1,5 +1,5 @@
 <template>
-  <UContainer class="w-7/8 mx-auto">
+  <UContainer class="w-7/8 mx-auto bg-[#f6f2eb]">
     <LayoutBasicHeader />
     <main class="flex-col mx-auto pt-6 px-14 py-4">
       <slot />

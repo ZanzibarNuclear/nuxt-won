@@ -1,5 +1,5 @@
 <template>
-  <UContainer class="bg-hero-pattern bg-no-repeat bg-contain w-7/8 mx-auto">
+  <UContainer class="bg-hero-pattern bg-no-repeat bg-contain w-7/8 mx-auto bg-[#f6f2eb]">
     <LayoutHeroHeader />
     <div class="grid grid-cols-5 w-full px-4">
       <nav class="col-span-1">
