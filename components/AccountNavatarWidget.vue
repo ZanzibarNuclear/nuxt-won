@@ -10,7 +10,7 @@
       </div>
     </div>
     <UDropdown v-if="signedIn" :items="items" :popper="{ placement: 'bottom-start' }" class="text-primary">
-      <UButton color="green" variant="solid" icon="i-ph-person" :label="screenName"
+      <UButton color="primary" variant="solid" icon="i-ph-person" :label="screenName"
         trailing-icon="i-ph-caret-double-down" />
     </UDropdown>
     <UModal v-model="authPanelIsOpen">

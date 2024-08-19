@@ -16,7 +16,7 @@ h3 {
 }
 
 a {
-  @apply underline text-blue-400 hover:text-blue-800 visited:text-purple-400;
+  @apply underline text-nuclear-blue-800 hover:text-nuclear-blue-500 visited:text-nuclear-blue-800;
 }
 
 .prompt-box {
