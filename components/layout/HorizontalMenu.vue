@@ -1,15 +1,12 @@
 <template>
-  <UHorizontalNavigation :links="links"
-    class="border-b border-gray-200 dark:border-gray-800 bg-slate-200 dark:bg-slate-800" />
+  <nav>
+    <UHorizontalNavigation :links="links"
+      class="flex justify-center space-x-8 mt-4 dark:border-gray-800 dark:bg-slate-800" />
+  </nav>
 </template>
 
 <script setup lang="ts">
 const links = [
-  // {
-  //   label: 'Home',
-  //   icon: 'i-ph-house',
-  //   to: '/',
-  // },
   {
     label: 'What Say You',
     icon: 'i-ph-chat-centered-dots',

@@ -7,9 +7,9 @@
 </template>
 
 <script setup lang="ts">
-definePageMeta({
-  layout: 'home-layout',
-})
+// definePageMeta({
+//   layout: 'home-layout',
+// })
 useSeoMeta({
   title: 'World of Nuclear',
   ogTitle: 'World of Nuclear',
