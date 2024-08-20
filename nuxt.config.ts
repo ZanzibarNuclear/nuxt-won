@@ -27,7 +27,12 @@ export default defineNuxtConfig({
       baseUrl: process.env.BASE_URL || 'http://localhost:3000',
     },
   },
-  content: {},
+  content: {
+    documentDriven: false,
+    markdown: {
+      anchorLinks: false
+    }
+  },
   tiptap: {
     prefix: 'Tiptap',
   },
