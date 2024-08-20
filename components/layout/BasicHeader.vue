@@ -9,7 +9,6 @@
       </div>
       <AccountNavatarWidget class="top-right" />
       <LayoutHorizontalMenu />
-      <JoinCta />
     </div>
   </header>
 </template>
