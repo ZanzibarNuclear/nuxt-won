@@ -1,5 +1,26 @@
 <template>
   <UContainer>
+    <h1>Welcome to the World of Nuclear!</h1>
+
+    <nuxt-img src="/images/Zanzibar-2024-07.jpg" width="250px" class="zanzi-photo" />
+
+    <div class="mb-6">I am Zanzibar, and this is my world of nuclear energy.</div>
+
+    <div class="mb-6">Who am I? Just your friendly nuclear hero,
+      champion of the productive uses of nuclear energy.</div>
+
+    <div class="mb-6">You have found a safe zone to learn about all aspects of nuclear energy,
+      especially how it
+      contributes to our wellbeing.</div>
+
+    <div class="mb-12">Check out what we have to offer.</div>
+
+    <UDivider :avatar="{ src: '/images/radiation-symbol.svg' }" size="sm" />
+
+    <h1 class="mt-12">Free activities and information. Enjoy!</h1>
+
+    <JoinCta class="my-12" />
+
     <div class="feature-layout">
       <feature-tile v-for="feature in features" :id="feature.name" :feature="feature" />
     </div>
@@ -58,6 +79,11 @@ const features = [
 </script>
 
 <style>
+.zanzi-photo {
+  float: left;
+  margin-right: 1.5rem;
+}
+
 .feature-layout {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
