@@ -15,7 +15,6 @@ const benefits = ref()
 const load = async () => {
   const { data } = await useAsyncData(() => queryContent('join', '_benefits-of-joining').where({ _partial: true }).findOne())
   benefits.value = data.value
-  // benefits.value = data.value
 }
 await load()
 
