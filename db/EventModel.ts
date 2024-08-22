@@ -38,3 +38,11 @@ export async function logWhatSayYouEvent(threadKey, entryId, action) {
     action: action,
   })
 }
+
+export async function logJoinImpression(messageKey) {
+  await logEvent({
+    type: 'join-cta',
+    message_key: messageKey,
+  })
+
+}
