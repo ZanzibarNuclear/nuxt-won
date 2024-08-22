@@ -9,6 +9,7 @@
 </template>
 
 <script lang="ts" setup>
+import { logJoinImpression } from '~/db/EventModel'
 const chosen = ref()
 const loadReason = async () => {
   const { data } = await useAsyncData(() => queryContent('join/_reasons').where({ _partial: true }).find())
@@ -20,6 +21,9 @@ const loadReason = async () => {
 
   const index = Math.floor(Math.random() * numReasons)
   chosen.value = data.value ? data.value[index] : null
+  if (chosen.value) {
+    logJoinImpression(chosen.value._path)
+  }
 }
 await loadReason()
 </script>
