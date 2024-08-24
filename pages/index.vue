@@ -25,6 +25,9 @@
       <feature-tile v-for="feature in features" :id="feature.name" :feature="feature" />
     </div>
   </UContainer>
+
+  <NuxtImg src="/images/pp-river-scene-w-won-logo.jpg" class="mx-auto my-12" />
+
 </template>
 
 <script setup lang="ts">
