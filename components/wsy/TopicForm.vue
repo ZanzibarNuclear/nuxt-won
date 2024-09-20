@@ -2,12 +2,8 @@
   <div>
     <UFormGroup label="Introduce a new topic">
       <div class="flex space-x-2">
-        <UInput
-          v-model="newThreadTopic"
-          ref="topicInputRef"
-          placeholder="Write the headline of what you want to discuss."
-          class="flex-grow"
-        />
+        <UInput v-model="newThreadTopic" ref="topicInputRef"
+          placeholder="Write the headline of what you want to discuss." class="flex-grow" />
         <UButton size="sm" @click="doStartThread">Start</UButton>
       </div>
     </UFormGroup>
@@ -46,8 +42,12 @@ const doStartThread = async () => {
       topic: newThreadTopic.value,
     },
   })
-  wsy.loadActiveThread(newThread)
-  emit('openTopic', newThread.publicKey)
+  if (newThread) {
+    wsy.loadActiveThread(newThread)
+    emit('openTopic', newThread.publicKey)
+  } else {
+    console.error('Failed to start thread')
+  }
 }
 </script>
 

@@ -29,5 +29,5 @@ export default defineEventHandler(async (event) => {
       statusMessage: `Failed to create thread`,
     })
   }
-  return toCamelCase(data)
+  return toCamelCase(data[0])
 })
