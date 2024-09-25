@@ -64,6 +64,16 @@ export default defineNuxtConfig({
     define: {
       global: 'window',
     },
+    css: {
+      preprocessorOptions: {
+        sass: {
+          api: 'modern'
+        },
+        scss: {
+          api: 'modern'
+        }
+      }
+    }
   },
   tailwindcss: {
     quiet: true,
