@@ -3,11 +3,11 @@
     <h1>Simulators</h1>
     <div class="my-4 text-md">
       <p>
-        Some day you will be able to start and care for your own simulated
-        nuclear power plant. How awesome is that? Super awesome.
+        Build and run your own pressurized water reactor (PWR). This is going to be super fun when it's working.
       </p>
-
-      <p>But we don't have this yet. Instead, try <NuxtLink to="/wsy">What Say You?</NuxtLink>
+      <p>
+        This is a work in progress. Want to see what we have so far? <NuxtLink
+          to="https://won-sim-go-175440446399.us-west1.run.app/">Take a look.</NuxtLink>
       </p>
     </div>
     <h1>Fantasy Games</h1>
