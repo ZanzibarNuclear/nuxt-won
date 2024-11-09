@@ -13,6 +13,11 @@ const links = [
       to: '/',
     },
     {
+      label: 'Flux',
+      icon: 'i-ph-lightning',
+      to: '/flux',
+    },
+    {
       label: 'What Say You',
       icon: 'i-ph-chat-centered-dots',
       to: '/wsy',

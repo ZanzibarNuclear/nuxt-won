@@ -46,10 +46,19 @@ useSeoMeta({
 const features = [
   {
     category: 'forum',
+    name: 'Flux',
+    coverImage: '/images/flux-theme-v1.jpg',
+    description:
+      'Social media for ideas about nuclear energy. Share thoughts as they come to you.',
+    callToAction: 'Start a Chain Reaction',
+    routeName: 'flux',
+  },
+  {
+    category: 'forum',
     name: 'What Say You?',
     coverImage: '/images/speech-bubbles.png',
     description:
-      'Long-form discussions for sharing ideas about nuclear energy.',
+      'Long-form discussions about nuclear energy. Share your perspective, and challenge others to share theirs.',
     callToAction: 'Join the Discussion',
     routeName: 'wsy',
   },
@@ -63,20 +72,20 @@ const features = [
     routeName: 'learning',
   },
   {
-    category: 'games',
-    name: 'Fun & Games',
-    coverImage: '/images/word-search.jpg',
-    description: 'Games with a nuclear theme.',
-    callToAction: "Let's Play",
-    routeName: 'games',
-  },
-  {
     category: 'hands-on',
     name: 'Simulators',
     coverImage: '/images/Cherenkov-radiation.jpg',
     description: 'Try nuclear simulators - fun and educational.',
     callToAction: 'Learn By Experiment',
     routeName: 'simulators',
+  },
+  {
+    category: 'games',
+    name: 'Fun & Games',
+    coverImage: '/images/word-search.jpg',
+    description: 'Games with a nuclear theme.',
+    callToAction: "Let's Play",
+    routeName: 'games',
   },
 ]
 </script>
