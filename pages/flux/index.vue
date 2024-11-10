@@ -1,6 +1,9 @@
 <template>
   <div>
-    <h1>What Say You?</h1>
+    <h1>Flux</h1>
+    <div class="my-4">
+      <NuxtImg src="/images/flux-theme-v1.jpg" alt="Flux Theme" />
+    </div>
     <div>
       Flux is all about sharing your thoughts and discovering what others are thinking. This is meant to be a safe place
       to discuss nuclear energy.
@@ -10,8 +13,10 @@
     <div class="my-4">
       This feature is under construction. Try it out, and let us know what you think.
     </div>
+
+    <h2>Try Flux</h2>
     <div class="my-4">
-      <NuxtLink to="https://flux.worldofnuclear.com">Try Flux!!</NuxtLink>
+      <NuxtLink to="https://flux.worldofnuclear.com">Try Flux.</NuxtLink> See if you can start a chain reaction.
     </div>
   </div>
 </template>
