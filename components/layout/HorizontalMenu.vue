@@ -10,15 +10,15 @@ const links = [
   {
     label: 'Flux',
     icon: 'i-ph-lightning',
-    to: '/flux',
+    to: 'https://flux.worldofnuclear.com',
   },
   {
-    label: 'What Say You',
+    label: 'What Say You?',
     icon: 'i-ph-chat-centered-dots',
     to: '/wsy',
   },
   {
-    label: 'Fun Lessons',
+    label: 'Up Your NuIQ',
     icon: 'i-ph-graduation-cap',
     to: '/learning',
   },
@@ -33,7 +33,7 @@ const links = [
     to: '/games',
   },
   {
-    label: 'News & Perspective',
+    label: 'Get Perspective',
     icon: 'i-ph-newspaper',
     to: 'https://blog.worldofnuclear.com',
   },
