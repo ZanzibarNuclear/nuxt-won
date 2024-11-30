@@ -1,7 +1,7 @@
 <template>
-  <UContainer class="bg-[#f6f2eb] dark:bg-slate-800 grid grid-cols-6 px-4 min-w-[600px] min-h-screen">
-    <LayoutCompactHeader />
-    <main class="mt-[100px] mb-16 w-full col-span-4 col-start-2">
+  <UContainer class="bg-[#f6f2eb] dark:bg-slate-800 grid grid-cols-6 px-4 min-w-96 min-h-screen">
+    <LayoutBasicHeader />
+    <main class="w-full col-span-4 col-start-2">
       <slot />
     </main>
     <LayoutFooter />
@@ -16,15 +16,6 @@ const toggleLeftNavVisibility = () => {
 </script>
 
 <style scoped>
-html,
-body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  width: 100%;
-  background-color: #f6f2eb;
-}
-
 /* Responsive design */
 @media screen and (max-width: 600px) {
   header {

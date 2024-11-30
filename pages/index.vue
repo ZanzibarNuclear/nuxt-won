@@ -1,19 +1,18 @@
 <template>
   <UContainer>
-    <h1>Welcome to the World of Nuclear!</h1>
+    <h1 class="mb-12 text-center text-3xl font-bold">Welcome to Zanzibar's World of Nuclear Energy!</h1>
 
     <nuxt-img src="/images/Zanzibar-2024-07.jpg" width="250px" class="zanzi-photo" />
 
-    <div class="mb-6">I am Zanzibar, and this is my world of nuclear energy.</div>
+    <div class="mb-6">I am Zanzibar, your upbeat nuclear hero. I bring positive energy to the discussion about the
+      productive uses of nuclear energy. The technology is ready for humanity to thrive.</div>
 
-    <div class="mb-6">Who am I? Just your friendly nuclear hero,
-      champion of the productive uses of nuclear energy.</div>
+    <div class="mb-6">The World of Nuclear is a safe place to learn about all aspects of nuclear energy. We like to
+      focus on verifiable truth and forward-thinking creativity. Skeptics and newbies are most welcome. Those who are
+      already know about nuclear energy are also welcome to discuss and debate.</div>
 
-    <div class="mb-6">You have found a safe zone to learn about all aspects of nuclear energy,
-      especially how it
-      contributes to our wellbeing.</div>
-
-    <div class="mb-12">Check out what we have to offer.</div>
+    <div class="mb-12">Spend some time here. There's a lot to discover, as we build new ways to interact and learn.
+      Enjoy!</div>
 
     <UDivider :avatar="{ src: '/images/radiation-symbol.svg' }" size="sm" />
 
