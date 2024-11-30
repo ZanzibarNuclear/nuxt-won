@@ -11,7 +11,7 @@
       </h1>
       <AccountNavatarWidget class="-mt-3 ml-auto" />
     </div>
-    <LayoutHorizontalMenu class="-mt-5" />
+    <LayoutCompactMenu class="-mt-5" />
   </header>
 </template>
 
