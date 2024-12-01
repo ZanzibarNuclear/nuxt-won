@@ -2,15 +2,11 @@
   <div class="widget-bump">
     <div v-if="!signedIn">
       <div>
-        <UButton label="Join" variant="solid" color="amber" icon="i-ph-arrow-bend-down-right-duotone" class="mr-2 mb-1"
-          @click="openJoin" />
-      </div>
-      <div>
         <UButton label="Sign In" variant="solid" color="primary" icon="i-ph-sign-in" @click="openAuthPanel" />
       </div>
     </div>
     <UDropdown v-if="signedIn" :items="items" :popper="{ placement: 'bottom-start' }" class="text-primary">
-      <UButton color="primary" variant="solid" icon="i-ph-person" :label="screenName"
+      <UButton color="primary" variant="solid" icon="i-ph-person" :title="screenName"
         trailing-icon="i-ph-caret-double-down" />
     </UDropdown>
     <UModal v-model="authPanelIsOpen">
@@ -28,7 +24,7 @@ const userContext = useUserStore()
 
 const signedIn = computed(() => !!userContext.user)
 const screenName = computed(() => {
-  return userContext.profile?.screen_name || userContext.user?.email || 'VIP'
+  return userContext.profile?.screen_name || 'VIP'
 })
 
 onMounted(async () => {
