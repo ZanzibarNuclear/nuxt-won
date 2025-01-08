@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: 'class', // Enable dark mode using the 'dark' class
   content: ['./index.html', './src/**/*.{vue,js,ts}'],
   theme: {
     extend: {
@@ -17,10 +18,26 @@ module.exports = {
           900: '#0b4b6f',
           950: '#072f4a',
         },
+        nuclear: {
+          black: '#000000', // Background color
+          cherenkov: '#20C8FB', // Primary highlight color
+          navy: '#1A74E2', // Secondary accent color
+          raisin: '#1F2123', // Subtle section backgrounds
+          lightgray: '#D3D3D3', // Text color for readability
+        },
       },
       backgroundImage: {
         'hero-pattern': "url('/images/bg/mt-diablo-1920x455.jpg')",
         'regular-pattern': "url('/images/WoN-title-banner-v3.jpg')",
+      },
+      fontFamily: {
+        // Add futuristic fonts for headings and body text
+        heading: ['Orbitron', 'sans-serif'],
+        body: ['Roboto', 'sans-serif'],
+      },
+      boxShadow: {
+        // Add glowing effects for hover states
+        cherenkov: '0 0 10px #20C8FB',
       },
     },
   },

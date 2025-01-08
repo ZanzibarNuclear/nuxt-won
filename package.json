@@ -18,20 +18,20 @@
   },
   "dependencies": {
     "@nuxt/content": "^2.13.4",
-    "@nuxt/image": "^1.8.1",
-    "@nuxt/ui": "^2.19.2",
-    "@pinia/nuxt": "^0.5.5",
-    "@supabase/gotrue-js": "^2.66.0",
-    "date-fns": "^3.6.0",
+    "@nuxt/image": "^1.9.0",
+    "@nuxt/ui": "^2.20.0",
+    "@pinia/nuxt": "^0.9.0",
+    "@supabase/gotrue-js": "^2.67.3",
+    "date-fns": "^4.1.0",
     "lodash": "^4.17.21",
     "mathjax-full": "^3.2.2",
-    "nuxt": "^3.14.159",
-    "nuxt-tiptap-editor": "^1.2.1",
-    "pinia": "^2.2.6",
-    "resend": "^3.5.0",
+    "nuxt": "^3.15.1",
+    "nuxt-tiptap-editor": "^2.1.4",
+    "pinia": "^2.3.0",
+    "resend": "^4.0.1",
     "vue": "^3.4.34",
-    "vue-router": "^4.4.5",
-    "yup": "^1.4.0"
+    "vue-router": "^4.5.0",
+    "yup": "^1.6.1"
   },
   "prettier": {
     "semi": false,
@@ -39,17 +39,17 @@
     "tabWidth": 2
   },
   "devDependencies": {
-    "@nuxt/test-utils": "^3.14.4",
-    "@nuxtjs/supabase": "^1.2.2",
+    "@nuxt/test-utils": "^3.15.1",
+    "@nuxtjs/supabase": "^1.4.5",
     "@testing-library/vue": "^8.1.0",
-    "@tiptap/extension-link": "^2.9.1",
-    "@tiptap/extension-subscript": "^2.9.1",
-    "@tiptap/extension-superscript": "^2.9.1",
-    "@tiptap/extension-underline": "^2.9.1",
+    "@tiptap/extension-link": "^2.11.0",
+    "@tiptap/extension-subscript": "^2.11.0",
+    "@tiptap/extension-superscript": "^2.11.0",
+    "@tiptap/extension-underline": "^2.11.0",
     "@vue/test-utils": "^2.4.6",
-    "happy-dom": "^15.11.0",
-    "sass": "^1.80.6",
-    "vitest": "^1.6.0",
-    "wrangler": "^3.86.0"
+    "happy-dom": "^15.11.7",
+    "sass": "^1.83.1",
+    "vitest": "^2.1.8",
+    "wrangler": "^3.100.0"
   }
 }

@@ -17,7 +17,6 @@ export default defineNuxtConfig({
     'nuxt-tiptap-editor',
     '@nuxt/test-utils/module',
     '@nuxt/image',
-    '@nuxt/icon',
   ],
   runtimeConfig: {
     resendWsyKey: process.env.RESEND_WSY_KEY,
@@ -76,6 +75,8 @@ export default defineNuxtConfig({
     }
   },
   tailwindcss: {
+    exposeConfig: true,
+    viewer: true,
     quiet: true,
   },
 })
