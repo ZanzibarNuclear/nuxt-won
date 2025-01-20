@@ -1,6 +1,6 @@
 <template>
   <header
-    class="app-header fixed top-0 left-0 right-0 bg-white border-b border-gray-200 z-10 min-w-[600px]"
+    class="fixed top-0 left-0 right-0 bg-heroic-uranium dark:bg-heroic-graphite border-b border-gray-200 z-10 min-w-[600px]"
   >
     <div class="max-w-7xl mx-auto mt-4 px-4 py-3 flex items-center relative">
       <NuxtLink to="/">
@@ -11,13 +11,15 @@
           height="60"
         />
       </NuxtLink>
+      <DarkToggle />
       <AccountNavatarWidget class="-mt-3 ml-auto" />
     </div>
-    <LayoutCompactMenu class="-mt-5" />
   </header>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import DarkToggle from '../DarkToggle.vue'
+</script>
 
 <style>
 .app-header {

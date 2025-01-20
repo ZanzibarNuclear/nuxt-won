@@ -1,11 +1,17 @@
 <template>
-  <UContainer class="bg-[#f6f2eb] dark:bg-slate-800 grid grid-cols-6 px-4 min-w-[600px] min-h-screen">
-    <LayoutCompactHeader />
-    <main class="mt-[100px] mb-16 w-full col-span-4 col-start-2">
-      <slot />
-    </main>
-    <LayoutFooter />
-  </UContainer>
+  <div
+    class="bg-heroic-uranium dark:bg-heroic-graphite text-heroic-graphite dark:text-heroic-lightgray"
+  >
+    <div
+      class="antialiased flex flex-col items-center justify-center min-h-screen place-content-center sm:text-base w-5/6 min-w-80 mx-auto"
+    >
+      <LayoutBasicHeader />
+      <main class="mt-[100px] mb-16 w-full col-span-4 col-start-2">
+        <slot />
+      </main>
+      <LayoutBasicFooter />
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">

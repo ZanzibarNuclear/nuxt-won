@@ -1,38 +1,32 @@
 <template>
-  <header class="p-4 w-full rounded-xl col-span-6">
-    <div className="grid grid-rows-2 logo-container">
-      <NuxtLink to="/">
-        <NuxtImg src="/images/logo/logo-sq-smooth.jpg" alt="Logo" width="100" class="top-left" />
-      </NuxtLink>
-      <div class="title-bar text-center font-bold text-3xl text-slate-400 border-t-2 border-b-2">
-        Zanzibar's World of Nuclear Energy
+  <header>
+    <div
+      class="flex items-center justify-between bg-heroic-uranium dark:bg-heroic-graphite shadow-lg dark:shadow-cherenkov my-4"
+    >
+      <div class="flex-shrink-0">
+        <NuxtImg
+          src="/images/logo/logo-cherenkov-clear-bg.png"
+          alt="World of Nuclear logo"
+        />
       </div>
-      <AccountNavatarWidget class="top-right" />
-      <LayoutHorizontalMenu />
+      <div class="flex space-x-4 mr-2">
+        <DarkToggle />
+        <NavAccountWidget />
+      </div>
+    </div>
+    <div v-if="!hideNav">
+      <NavMenu />
     </div>
   </header>
 </template>
 
-<script setup lang="ts">
-
+<script setup>
+const props = defineProps({
+  hideNav: {
+    type: Boolean,
+    default: false,
+  },
+})
 </script>
 
-<style scoped>
-.logo-container {
-  position: relative;
-}
-
-.top-left {
-  position: absolute;
-  top: 10px;
-  left: 50px;
-  z-index: 1;
-}
-
-.top-right {
-  position: absolute;
-  top: 10px;
-  right: 50px;
-  z-index: 1;
-}
-</style>
+<style lang="scss" scoped></style>
