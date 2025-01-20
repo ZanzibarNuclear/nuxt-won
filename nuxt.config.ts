@@ -53,11 +53,6 @@ export default defineNuxtConfig({
   icon: {
     serverBundle: 'remote',
   },
-  ui: {
-    icons: {
-      dynamic: true,
-    },
-  },
   css: ['~/assets/css/tailwind.css'],
   vite: {
     define: {

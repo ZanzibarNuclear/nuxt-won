@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-nuclear-black w-full">
+  <div class="dark">
     <div class="bg-nuclear-black min-h-screen text-nuclear-lightgray">
       <header class="text-center py-10">
         <h1 class="font-heading text-nuclear-cherenkov text-5xl">

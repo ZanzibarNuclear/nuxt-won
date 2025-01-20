@@ -55,7 +55,7 @@ async function onSendMagicLink(event: FormSubmitEvent<Schema>) {
     })
     if (error) throw error
     alert('Check your email for the login link!')
-  } catch (error) {
+  } catch (error: any) {
     alert(error.error_description || error.message)
   } finally {
     loading.value = false

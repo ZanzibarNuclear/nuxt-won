@@ -1,23 +1,23 @@
 <template>
-  <header class="app-header fixed top-0 left-0 right-0 bg-white border-b border-gray-200 z-10 min-w-[600px]">
+  <header
+    class="app-header fixed top-0 left-0 right-0 bg-white border-b border-gray-200 z-10 min-w-[600px]"
+  >
     <div class="max-w-7xl mx-auto mt-4 px-4 py-3 flex items-center relative">
       <NuxtLink to="/">
-        <NuxtImg src="/images/won-logo-sq.jpg" alt="World of Nuclear Logo" class="w-12 h-12 -mt-4" />
+        <NuxtImg
+          src="/images/logo/logo-cherenkov-clear-bg.png"
+          alt="World of Nuclear Logo"
+          class="-mt-4"
+          height="60"
+        />
       </NuxtLink>
-      <h1
-        class="absolute left-1/2 -translate-x-1/2 text-x3l font-bold text-[nuclear-blue] bg-[#f6f2eb]/30 backdrop-blur-sm rounded-lg p-1">
-        World of
-        Nuclear
-      </h1>
       <AccountNavatarWidget class="-mt-3 ml-auto" />
     </div>
     <LayoutCompactMenu class="-mt-5" />
   </header>
 </template>
 
-<script lang="ts" setup>
-
-</script>
+<script lang="ts" setup></script>
 
 <style>
 .app-header {
