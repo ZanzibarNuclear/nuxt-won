@@ -17,7 +17,6 @@ export default defineNuxtConfig({
     'nuxt-tiptap-editor',
     '@nuxt/test-utils/module',
     '@nuxt/image',
-    '@nuxt/icon',
   ],
   runtimeConfig: {
     resendWsyKey: process.env.RESEND_WSY_KEY,
@@ -54,11 +53,6 @@ export default defineNuxtConfig({
   icon: {
     serverBundle: 'remote',
   },
-  ui: {
-    icons: {
-      dynamic: true,
-    },
-  },
   css: ['~/assets/css/tailwind.css'],
   vite: {
     define: {
@@ -76,6 +70,8 @@ export default defineNuxtConfig({
     }
   },
   tailwindcss: {
+    exposeConfig: true,
+    viewer: true,
     quiet: true,
   },
 })

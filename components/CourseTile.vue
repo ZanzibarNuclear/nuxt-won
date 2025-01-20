@@ -1,5 +1,7 @@
 <template>
-  <UCard class="card bg-slate-200 dark:bg-slate-700">
+  <UCard
+    class="card bg-heroic-lightgray dark:bg-heroic-black text-heroic-black dark:text-heroic-lightgray"
+  >
     <template #header>
       <div class="flex">
         <NuxtImg v-if="coverArt" :src="coverArt" class="cover-art" />

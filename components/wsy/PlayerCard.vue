@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="text-center w-3/4 mx-auto text-[#222222] dark:text-[#ffa] bg-[#f5f5f5] dark:bg-[#333] rounded-md p-4 mb-12"
-  >
+  <div class="text-center w-3/4 mx-auto rounded-md p-4 mb-12">
     <div v-if="isKnownPlayer && !isEdit">
       <h3>About You</h3>
       <div class="text-xl">
@@ -15,9 +13,7 @@
           size="xs"
         />
       </div>
-      <div class="my-2">
-        You joined the discussion on {{ displayAsDateTime(player.joinedAt) }}.
-      </div>
+      <div class="my-2">You joined the discussion on {{ displayAsDateTime(player.joinedAt) }}.</div>
       <div>
         <UButton icon="i-ph-x" size="xs" label="close" @click="emit('close')" />
       </div>
@@ -88,9 +84,7 @@ function cancelEditPlayer() {
 
 async function onSubmit(event: FormSubmitEvent<Schema>) {
   if (!userContext.user) {
-    alert(
-      'You are not signed in. How is that possible? Anyway, sign in first please.'
-    )
+    alert('You are not signed in. How is that possible? Anyway, sign in first please.')
     return
   }
   const { penName } = event.data
