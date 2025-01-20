@@ -28,11 +28,6 @@ const menuItems = [
     route: 'https://flux.worldofnuclear.com',
   },
   {
-    label: 'Essays',
-    icon: 'i-ph-article-ny-times-duotone',
-    route: 'https://blog.worldofnuclear.com',
-  },
-  {
     label: 'Learning',
     icon: 'i-ph-student-duotone',
     route: '/learning',
@@ -41,6 +36,11 @@ const menuItems = [
     label: 'Adventure',
     icon: 'i-ph-person-simple-hike-duotone',
     route: 'https://hero.worldofnuclear.com',
+  },
+  {
+    label: 'Essays',
+    icon: 'i-ph-article-ny-times-duotone',
+    route: 'https://blog.worldofnuclear.com',
   },
 ]
 </script>

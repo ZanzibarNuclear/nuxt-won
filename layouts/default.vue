@@ -6,7 +6,7 @@
       class="antialiased flex flex-col items-center justify-center min-h-screen place-content-center sm:text-base w-5/6 min-w-80 mx-auto"
     >
       <LayoutBasicHeader />
-      <main class="mt-[100px] mb-16 w-full col-span-4 col-start-2">
+      <main class="mb-16 w-full col-span-4 col-start-2">
         <slot />
       </main>
       <LayoutBasicFooter />

@@ -21,7 +21,6 @@
           variant="ghost"
         />
       </div>
-      <UHorizontalNavigation :links="footerLinks" />
     </div>
     <div class="text-center">
       <NuxtLink external to="https://nuclearambitions.com"

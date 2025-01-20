@@ -20,16 +20,10 @@ const editor = useEditor({
   editorProps: {
     attributes: {
       class:
-        'border-2 p-2 prose prose-sm sm:prose lg:prose-lg xl:prose-2xl focus:outline-none',
+        'border-2 bg-white text-slate-700 max-w-none prose prose-stone prose-sm m-0 prose-p:p-1 prose-li:m-0 prose-li:p-0 focus:outline-none',
     },
   },
-  extensions: [
-    TiptapStarterKit,
-    TiptapSuperscript,
-    TiptapSubscript,
-    TiptapUnderline,
-    TiptapLink,
-  ],
+  extensions: [TiptapStarterKit, TiptapSuperscript, TiptapSubscript, TiptapUnderline, TiptapLink],
 })
 
 onMounted(() => {
@@ -43,10 +37,7 @@ onBeforeUnmount(() => {
 
 const handleSave = () => {
   const snapshot = editor.value?.getHTML()
-  const fixLi = snapshot?.replaceAll(
-    /<li><p>(.*?)<\/p><(\/?)(ol|li|ul)>/gi,
-    '<li>$1<$2$3>'
-  )
+  const fixLi = snapshot?.replaceAll(/<li><p>(.*?)<\/p><(\/?)(ol|li|ul)>/gi, '<li>$1<$2$3>')
   console.log('saving...', fixLi)
   emit('saveChanges', fixLi)
 }
@@ -60,6 +51,7 @@ const handleClose = () => {
 .editor-frame {
   overflow-y: scroll; /* Adds a vertical scrollbar */
   max-height: 60vh; /* Sets a maximum height for the element */
+  @apply text-heroic-graphite dark:text-heroic-lightgray bg-heroic-lightgray dark:bg-heroic-graphite;
 }
 .tiptap {
   p {
