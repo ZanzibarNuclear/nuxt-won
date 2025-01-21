@@ -23,7 +23,7 @@
       Enjoy!
     </div>
 
-    <UDivider :avatar="{ src: '/images/radiation-symbol.svg' }" size="sm" />
+    <WonDivider />
 
     <h1 class="mt-12">Free activities and information. Enjoy!</h1>
 
@@ -57,38 +57,29 @@ const features = [
     routeName: 'flux',
   },
   {
-    category: 'forum',
-    name: 'What Say You?',
-    coverImage: '/images/speech-bubbles.png',
-    description:
-      'Long-form discussions about nuclear energy. Share your perspective, and challenge others to share theirs.',
-    callToAction: 'Join the Discussion',
-    routeName: 'wsy',
-  },
-  {
     category: 'learning',
     name: 'Mini Lessons',
-    coverImage: '/images/simple-atom.svg',
+    coverImage: '/images/Cherenkov-radiation.jpg',
     description:
       'Learn everything you need to know to understand how nuclear energy can be put to good use.',
     callToAction: 'Get Smarter Every Day',
     routeName: 'learning',
   },
   {
-    category: 'hands-on',
-    name: 'Simulators',
-    coverImage: '/images/Cherenkov-radiation.jpg',
-    description: 'Try nuclear simulators - fun and educational.',
-    callToAction: 'Learn By Experiment',
-    routeName: 'simulators',
+    category: 'gaming',
+    name: 'Adventure',
+    coverImage: '/images/concept-art/nuclear-knight-2.jpg',
+    description: 'Discover what was lost.',
+    callToAction: 'Explore',
+    outsideRoute: 'https://hero.worldofnuclear.com',
   },
   {
-    category: 'games',
-    name: 'Fun & Games',
-    coverImage: '/images/word-search.jpg',
-    description: 'Games with a nuclear theme.',
-    callToAction: "Let's Play",
-    routeName: 'games',
+    category: 'news',
+    name: 'Essays',
+    coverImage: '/images/concept-art/genius-female-1.jpg',
+    description: 'Long-form writing about nuclear energy.',
+    callToAction: 'Open your mind',
+    outsideRoute: 'https://blog.worldofnuclear.com',
   },
 ]
 </script>

@@ -13,7 +13,20 @@
     </div>
     <template #footer>
       <div class="actions text-center">
-        <UButton color="primary" variant="solid" :label="feature.callToAction" @click="goTo" />
+        <UButton
+          v-if="feature.outsideRoute"
+          color="primary"
+          variant="solid"
+          :label="feature.callToAction"
+          :to="feature.outsideRoute"
+        />
+        <UButton
+          v-else
+          color="primary"
+          variant="solid"
+          :label="feature.callToAction"
+          @click="goTo"
+        />
       </div>
     </template>
   </UCard>
