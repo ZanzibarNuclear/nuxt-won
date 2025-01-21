@@ -1,5 +1,8 @@
 <template>
-  <UCard class="card dark:bg-heroic-black bg-heroic-lightgray hover:shadow-cherenkov" @click="goTo">
+  <UCard
+    class="card dark:bg-heroic-black bg-heroic-lightgray text-heroic-graphite dark:text-heroic-cherenkov hover:shadow-cherenkov"
+    @click="goTo"
+  >
     <template #header>
       <div class="flex h-24">
         <img :src="feature.coverImage" />
