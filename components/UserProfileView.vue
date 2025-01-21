@@ -1,10 +1,6 @@
 <template>
   <UCard v-if="profile">
     <div class="mb-4 grid grid-cols-4">
-      <span class="label">User ID</span>
-      <span class="col-span-3">{{ profile.id }}</span>
-    </div>
-    <div class="mb-4 grid grid-cols-4">
       <span class="label">Screen Name</span>
       <span class="col-span-3">{{ profile.screen_name }}</span>
     </div>
@@ -46,9 +42,7 @@
     </div>
     <div class="mb-4 grid grid-cols-4">
       <span class="label">Last updated</span>
-      <span class="col-span-3">{{
-        displayAsDateTime(profile.updated_at)
-      }}</span>
+      <span class="col-span-3">{{ displayAsDateTime(profile.updated_at) }}</span>
     </div>
   </UCard>
   <div v-else>No profile found.</div>

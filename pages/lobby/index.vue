@@ -52,8 +52,9 @@ const features = [
     category: 'forum',
     name: 'Flux',
     coverImage: '/images/flux-theme-v1.jpg',
-    description: 'Social media for ideas about nuclear energy. Share thoughts as they come to you.',
-    callToAction: 'Start a Chain Reaction',
+    description:
+      'Share your thoughts about nuclear energy. Learn what others think. Start a chain reaction.',
+    callToAction: 'Start a chain Reaction',
     routeName: 'flux',
   },
   {
@@ -61,8 +62,8 @@ const features = [
     name: 'Mini Lessons',
     coverImage: '/images/Cherenkov-radiation.jpg',
     description:
-      'Learn everything you need to know to understand how nuclear energy can be put to good use.',
-    callToAction: 'Get Smarter Every Day',
+      'Learn everything related to nuclear energy. Build a foundation of fundamental concepts.',
+    callToAction: 'Get smarter every day',
     routeName: 'learning',
   },
   {
@@ -70,14 +71,14 @@ const features = [
     name: 'Adventure',
     coverImage: '/images/concept-art/nuclear-knight-2.jpg',
     description: 'Discover what was lost.',
-    callToAction: 'Explore',
+    callToAction: 'Begin the journey',
     outsideRoute: 'https://hero.worldofnuclear.com',
   },
   {
-    category: 'news',
-    name: 'Essays',
+    category: 'information',
+    name: 'Essays & Info',
     coverImage: '/images/concept-art/genius-female-1.jpg',
-    description: 'Long-form writing about nuclear energy.',
+    description: 'Long-form writing about nuclear energy. Collections of useful resources.',
     callToAction: 'Open your mind',
     outsideRoute: 'https://blog.worldofnuclear.com',
   },

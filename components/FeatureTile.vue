@@ -1,5 +1,5 @@
 <template>
-  <UCard class="card dark:bg-slate-700">
+  <UCard class="card dark:bg-heroic-black bg-heroic-lightgray hover:shadow-cherenkov" @click="goTo">
     <template #header>
       <div class="flex h-24">
         <img :src="feature.coverImage" />
@@ -13,20 +13,7 @@
     </div>
     <template #footer>
       <div class="actions text-center">
-        <UButton
-          v-if="feature.outsideRoute"
-          color="primary"
-          variant="solid"
-          :label="feature.callToAction"
-          :to="feature.outsideRoute"
-        />
-        <UButton
-          v-else
-          color="primary"
-          variant="solid"
-          :label="feature.callToAction"
-          @click="goTo"
-        />
+        <UButton color="primary" variant="solid" :label="feature.callToAction" @click="goTo" />
       </div>
     </template>
   </UCard>
@@ -37,7 +24,11 @@ const props = defineProps(['feature'])
 const router = useRouter()
 
 const goTo = async () => {
-  router.push({ name: props.feature.routeName })
+  if (props.feature.outsideRoute) {
+    navigateTo(props.feature.outsideRoute, { external: true })
+  } else if (props.feature.routeName) {
+    router.push({ name: props.feature.routeName })
+  }
 }
 </script>
 
