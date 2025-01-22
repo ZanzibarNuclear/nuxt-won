@@ -1,7 +1,7 @@
 <template>
   <UCard>
     <template #header>
-      <h2>Sign in using your account on any of these services.</h2>
+      <h2>Use your account on one of these services.</h2>
       <div>You will be asked to share public profile information with us.</div>
     </template>
     <UButton

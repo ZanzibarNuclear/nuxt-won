@@ -3,20 +3,42 @@
     <div>
       <div class="flex flex-row justify-around text-heroic-cherenkov mb-4">
         <UButton
-          to="https://zanzisnuclearstack.substack.com/"
-          icon="i-ph-article"
-          label="Zanzi's Nuclear Stack"
+          :to="{ name: 'lobby-gallery' }"
+          icon="i-ph-image-duotone"
+          label="Art Gallery"
           variant="ghost"
         />
         <UButton
+          :to="{ name: 'lobby-guide' }"
+          icon="i-ph-map-trifold-duotone"
+          label="Guide"
+          variant="ghost"
+        />
+        <UButton
+          :to="{ name: 'lobby-credits' }"
+          icon="i-ph-medal-duotone"
+          label="Credits"
+          variant="ghost"
+        />
+      </div>
+    </div>
+    <div>
+      <div class="flex flex-row justify-around text-heroic-cherenkov mb-4">
+        <UButton
           to="https://x.com/ZanzibarNuclear"
-          icon="i-ph-x-logo"
+          icon="i-ph-x-logo-duotone"
           label="Zanzibar on X"
           variant="ghost"
         />
         <UButton
+          to="https://zanzisnuclearstack.substack.com/"
+          icon="i-ph-article-ny-times-duotone"
+          label="Zanzi's Nuclear Stack"
+          variant="ghost"
+        />
+        <UButton
           to="https://davemount.substack.com/"
-          icon="i-ph-article"
+          icon="i-ph-article-ny-times-duotone"
           label="Opinions and Observations"
           variant="ghost"
         />

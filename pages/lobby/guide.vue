@@ -10,31 +10,51 @@
         </div>
         <div>
           <UIcon name="i-ph-star-duotone" class="star" /> The main event at World of Nuclear is our
-          adventure game where you get to run a nuclear power plant. [Step in], and lose yourself
-          while you uncover lost secrets. Advance by learning.
+          adventure game. Lose yourself and discover what was lost. Advance through learning.
+          <NuxtLink to="https://hero.worldofnuclear.com" external>Begin the journey.</NuxtLink>
         </div>
         <div>
-          <UIcon
-            name="i-ph-star-duotone"
-            class="text-uranium-orange dark:text-uranium-ore-bright"
-          />
-          Try Flux, our area for social interaction. Post your thoughts, whether they are deep and
-          well formed or just off the top of your head. Have fun reacting to others. See if you can
-          get a chain reaction going.
+          <UIcon name="i-ph-star-duotone" class="star" />
+          Try expressing yourself on
+          <NuxtLink to="https://flux.worldofnuclear.com" external>Flux</NuxtLink>. Post your
+          thoughts, whether they are deep and well formed or just off the top of your head. Have fun
+          reacting to others. See if you can get a chain reaction going.
         </div>
         <div>
-          <UIcon
-            name="i-ph-star-duotone"
-            class="text-uranium-glow-dark dark:text-uranium-glow-bright"
-          />
-          If you just came here to learn, check out the micro lessons. Each lesson explains a single
-          concept and is short enough to get through in about 10 minutes. Gain credit with each
-          lesson you complete, and unlock more advanced material. Hello.
+          <UIcon name="i-ph-star-duotone" class="star" />
+          If you just came here to learn, check out the
+          <NuxtLink :to="{ name: 'learning' }">mini lessons</NuxtLink>. Each lesson explains a
+          single concept and is short enough to get through in about 10 minutes. Gain credit with
+          each lesson you complete, and unlock more advanced material. Hello.
         </div>
       </div>
       <div>
-        <NuxtImg src="/images/blue-reactor.jpg" width="800" />
+        <NuxtImg
+          src="/images/concept-art/nuclear-power-plant-along-river.jpg"
+          width="800"
+          class="mb-6"
+        />
+        <NuxtImg src="/images/concept-art/riverside-power-plant.jpg" width="800" />
       </div>
+    </div>
+    <div class="mt-6 space-y-6">
+      <h3>Become a member</h3>
+      <div>
+        When you join the World of Nuclear, it shows us that you care, which makes us want to give
+        you more nice things that will attract more nice people like you. Plus, you get to enjoy
+        full participation in the activities here.
+      </div>
+      <div>
+        What you don't get is spam in your inbox. We don't like to send lots of email that you
+        didn't ask for, and we don't give away or sell your sensitive information. Although we will
+        communicate with you from time to time, that's just to keep you informed about what's new in
+        the World of Nuclear.
+      </div>
+      <div>
+        <NuxtLink :to="{ name: 'auth-sign-in' }">Sign up here,</NuxtLink> and join the super nerds
+        (that's us) in our quest to boost good feelings about nuclear.
+      </div>
+      <div></div>
     </div>
     <div class="mt-6 space-y-6">
       <h3>Social Networks</h3>
@@ -57,5 +77,8 @@
 <style scoped>
 .star {
   @apply mr-2 text-uranium-ore-darker dark:text-uranium-ore-bright;
+}
+a {
+  @apply text-heroic-cherenkov hover:text-nuclear-600;
 }
 </style>
