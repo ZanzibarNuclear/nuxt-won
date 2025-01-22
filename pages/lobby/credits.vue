@@ -7,22 +7,29 @@
     </div>
     <div></div>
     <ul>
-      <li>The Nuxt team</li>
-      <li>The Nuxt UI team</li>
+      <li>The extended Nuxt team</li>
       <li>The VueJS team</li>
       <li>The Tailwind CSS team</li>
-      <li>The Tailwind team</li>
-      <li>The Visual Source Code team</li>
       <li>The fastify team</li>
+      <li>The Postgres team</li>
+      <li>Tiptap, ProseMirror</li>
+      <li>The Visual Source Code team</li>
       <li>AI systems: Cursor, Perplexity, Claude, ChatGPT, OpenArt.AI</li>
       <li>Everyone who has ever contributed to JavaScript and TypeScript</li>
-      <li>The Postgres team</li>
       <li>Anyone who has worked on Linux, especially Ubuntu</li>
-      <li>Cloudflare, Supabase, Hetzner</li>
+      <li>Cloudflare, Supabase, Resend, Hetzner</li>
+      <li><em>How to Drive a Nuclear Reactor</em>, by Colin Tucker</li>
       <li>
         Nuclear scientists and engineers who have contributed discoveries, knowledge, and experience
       </li>
-      <li>Dr Seuss for his essay <em>Too Many Daves</em></li>
+      <li>
+        Dr Seuss for his essay
+        <NuxtLink
+          to="https://www.mit.edu/people/dpolicar/writing/poetry/poems/tooManyDaves.html"
+          external
+          ><em>Too Many Daves</em></NuxtLink
+        >
+      </li>
       <li>Many, many more</li>
     </ul>
   </div>
@@ -30,4 +37,8 @@
 
 <script setup lang="ts"></script>
 
-<style scoped></style>
+<style scoped>
+a {
+  @apply text-heroic-cherenkov hover:text-nuclear-600;
+}
+</style>

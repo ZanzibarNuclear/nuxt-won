@@ -1,9 +1,10 @@
 <template>
   <UCard>
     <template #header>
-      <h2>Sign in with Magic Link</h2>
+      <h2>Request a Magic Link</h2>
       <div>
-        We will create a World of Nuclear account for you if you need one.
+        We will send it to the email address you provide. Click on the link to prove that you got
+        it.
       </div>
     </template>
     <UForm :state="state" :schema="schema" @submit="onSendMagicLink">
@@ -31,9 +32,7 @@ const supabase = useSupabaseClient()
 const loading = ref(false)
 
 const schema = object({
-  email: string()
-    .email('Invalid email')
-    .required('We need to know where to send the link'),
+  email: string().email('Invalid email').required('We need to know where to send the link'),
 })
 
 type Schema = InferType<typeof schema>

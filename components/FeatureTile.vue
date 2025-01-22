@@ -1,5 +1,8 @@
 <template>
-  <UCard class="card dark:bg-slate-700">
+  <UCard
+    class="card dark:bg-heroic-black bg-heroic-lightgray text-heroic-graphite dark:text-heroic-cherenkov hover:shadow-cherenkov"
+    @click="goTo"
+  >
     <template #header>
       <div class="flex h-24">
         <img :src="feature.coverImage" />
@@ -24,7 +27,11 @@ const props = defineProps(['feature'])
 const router = useRouter()
 
 const goTo = async () => {
-  router.push({ name: props.feature.routeName })
+  if (props.feature.outsideRoute) {
+    navigateTo(props.feature.outsideRoute, { external: true })
+  } else if (props.feature.routeName) {
+    router.push({ name: props.feature.routeName })
+  }
 }
 </script>
 

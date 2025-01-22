@@ -2,12 +2,28 @@
   <div class="widget-bump">
     <div v-if="!signedIn">
       <div>
-        <UButton label="Sign In" variant="solid" color="primary" icon="i-ph-sign-in" @click="openAuthPanel" />
+        <UButton
+          label="Sign In"
+          variant="solid"
+          color="primary"
+          icon="i-ph-sign-in-duotone"
+          @click="openAuthPanel"
+        />
       </div>
     </div>
-    <UDropdown v-if="signedIn" :items="items" :popper="{ placement: 'bottom-start' }" class="text-primary">
-      <UButton color="primary" variant="solid" icon="i-ph-person" :title="screenName"
-        trailing-icon="i-ph-caret-double-down" />
+    <UDropdown
+      v-if="signedIn"
+      :items="items"
+      :popper="{ placement: 'bottom-start' }"
+      class="text-primary"
+    >
+      <UButton
+        color="primary"
+        variant="solid"
+        icon="i-ph-person-duotone"
+        :title="screenName"
+        trailing-icon="i-ph-caret-double-down-duotone"
+      />
     </UDropdown>
     <UModal v-model="authPanelIsOpen">
       <AuthOAuthCard @finish="closeAuthPanel" />
@@ -54,18 +70,21 @@ const handleFeedbackDelivered = async () => {
 const items = [
   [
     {
+      label: screenName,
+    },
+    {
       label: 'Profile',
-      icon: 'i-ph-identification-card',
+      icon: 'i-ph-identification-card-duotone',
       to: '/user/account',
     },
     {
       label: 'Feedback',
-      icon: 'i-ph-ear',
+      icon: 'i-ph-ear-duotone',
       click: () => onOpenFeedbackForm(),
     },
     {
       label: 'Sign Out',
-      icon: 'i-ph-sign-out',
+      icon: 'i-ph-sign-out-duotone',
       click: async () => {
         await useSupabaseClient().auth.signOut()
         userContext.clearUser()
