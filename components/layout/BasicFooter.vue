@@ -9,7 +9,7 @@
           :label="link.label"
           variant="ghost"
           block
-          class="sm:w-1/2 md:w-1/3 p-2"
+          class="sm:w-1/2 md:w-1/3 p-2 text-center"
         />
       </div>
     </div>
@@ -29,7 +29,7 @@ const footerLinks = [
     to: { name: 'lobby-gallery' },
   },
   {
-    label: 'Art Gallery',
+    label: 'Guide',
     icon: 'i-ph-map-trifold-duotone',
     to: { name: 'lobby-guide' },
   },

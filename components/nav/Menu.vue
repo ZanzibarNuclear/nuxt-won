@@ -20,7 +20,7 @@ const menuItems = [
   {
     label: 'Lobby',
     icon: 'i-ph-building-office-duotone',
-    route: '/',
+    route: '/lobby',
   },
   {
     label: 'Flux',

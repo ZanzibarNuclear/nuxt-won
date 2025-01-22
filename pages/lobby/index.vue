@@ -55,7 +55,7 @@ const features = [
     description:
       'Share your thoughts about nuclear energy. Learn what others think. Start a chain reaction.',
     callToAction: 'Start a chain Reaction',
-    routeName: 'flux',
+    outsideRoute: 'https://flux.worldofnuclear.com',
   },
   {
     category: 'learning',
