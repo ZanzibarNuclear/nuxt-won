@@ -1,5 +1,5 @@
 <template>
-  <footer class="my-4 w-3/4 min-w-80">
+  <footer>
     <div>
       <div class="flex flex-wrap text-heroic-cherenkov mb-4">
         <UButton
@@ -24,6 +24,11 @@
 <script setup>
 const footerLinks = [
   {
+    label: 'WoN Blog',
+    icon: 'i-ph-article-ny-times-duotone',
+    to: 'https://blog.worldofnuclear.com/',
+  },
+  {
     label: 'Art Gallery',
     icon: 'i-ph-image-duotone',
     to: { name: 'lobby-gallery' },
@@ -47,11 +52,6 @@ const footerLinks = [
     label: 'Zanzibar on X',
     icon: 'i-ph-x-logo-duotone',
     to: 'https://x.com/ZanzibarNuclear',
-  },
-  {
-    label: 'Opinions and Observations',
-    icon: 'i-ph-article-ny-times-duotone',
-    to: 'https://davemount.substack.com/',
   },
 ]
 </script>
