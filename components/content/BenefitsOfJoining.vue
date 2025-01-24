@@ -1,19 +1,24 @@
 <template>
   <ClientOnly>
     <div v-if="benefits">
-      <ContentRenderer :value="benefits">
-        <ContentRendererMarkdown :value="benefits" />
-      </ContentRenderer>
-      <UButton class="text-center" color="yellow" variant="solid" label="Join Now" @click="goToJoinPage" />
+      <ContentRenderer v-if="benefits" :value="benefits" />
+      <UButton
+        class="text-center"
+        color="yellow"
+        variant="solid"
+        label="Join Now"
+        @click="goToJoinPage"
+      />
     </div>
   </ClientOnly>
 </template>
 
 <script lang="ts" setup>
-const route = useRouter()
 const benefits = ref()
 const load = async () => {
-  const { data } = await useAsyncData(() => queryContent('join', '_benefits-of-joining').where({ _partial: true }).findOne())
+  const { data } = await useAsyncData('benefits', () => {
+    return queryCollection('join').where('path', '=', '/join/benefits-of-joining').first()
+  })
   benefits.value = data.value
 }
 await load()

@@ -1,4 +1,4 @@
-# Benefits of Membership
+## Benefits of Membership
 
 When you join the World of Nuclear, you join a winning team of people who are passionate about the productive uses of nuclear energy.
 

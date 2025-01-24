@@ -7,7 +7,7 @@
     >
       <div class="min-w-80 w-5/6 mx-auto">
         <LayoutBasicHeader />
-        <main class="mb-16 w-full col-span-4 col-start-2">
+        <main class="mb-16">
           <slot />
         </main>
         <LayoutBasicFooter />
