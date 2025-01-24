@@ -3,13 +3,15 @@
     class="bg-heroic-uranium dark:bg-heroic-graphite text-heroic-graphite dark:text-heroic-lightgray"
   >
     <div
-      class="antialiased flex flex-col items-center justify-center min-h-screen place-content-center sm:text-base w-5/6 min-w-80 mx-auto"
+      class="antialiased flex flex-col items-center justify-center min-h-screen place-content-center sm:text-base"
     >
-      <LayoutBasicHeader />
-      <main class="mb-16 w-full col-span-4 col-start-2">
-        <slot />
-      </main>
-      <LayoutBasicFooter />
+      <div class="min-w-80 w-5/6 mx-auto">
+        <LayoutBasicHeader />
+        <main class="mb-16 w-full col-span-4 col-start-2">
+          <slot />
+        </main>
+        <LayoutBasicFooter />
+      </div>
     </div>
   </div>
 </template>

@@ -2,7 +2,7 @@
   <div class="relative">
     <!-- Main Menu Item -->
     <UButton
-      :to="route"
+      @click="onClick"
       :label="label"
       :icon="icon"
       variant="outline"
@@ -23,15 +23,21 @@ const props = defineProps({
   route: {
     type: String,
   },
+  external: {
+    type: Boolean,
+  },
 })
+const emit = defineEmits(['pickedItem'])
 
-// const isPopupOpen = ref(false)
-// const togglePopup = () => {
-//   isPopupOpen.value = !isPopupOpen.value
-// }
-// const closePopup = () => {
-//   isPopupOpen.value = false
-// }
+const onClick = () => {
+  console.log('clicked menu item ' + props.route)
+  emit('pickedItem')
+  if (props.external) {
+    navigateTo(props.route, { external: true })
+  } else {
+    navigateTo(props.route)
+  }
+}
 </script>
 
 <style scoped>
