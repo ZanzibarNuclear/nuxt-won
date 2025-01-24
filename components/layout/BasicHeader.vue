@@ -1,15 +1,10 @@
 <template>
   <header>
     <div
-      class="flex items-center justify-between bg-heroic-uranium dark:bg-heroic-graphite shadow-lg dark:shadow-cherenkov my-4"
+      class="flex flex-grow-0 items-center justify-between bg-heroic-uranium dark:bg-heroic-graphite shadow-lg dark:shadow-cherenkov my-4"
     >
-      <div class="flex-shrink-0">
-        <NuxtImg src="/images/logo/logo-cherenkov-clear-bg.png" alt="World of Nuclear logo" />
-      </div>
-      <div class="flex space-x-4 mr-2">
-        <DarkToggle />
-        <AccountNavatarWidget />
-      </div>
+      <NuxtImg src="/images/logo/logo-cherenkov-clear-bg.png" alt="World of Nuclear logo" />
+      <AccountNavatarWidget class="mr-4" />
     </div>
     <div v-if="!hideNav">
       <NavMenu />

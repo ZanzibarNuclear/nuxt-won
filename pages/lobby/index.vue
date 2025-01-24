@@ -4,7 +4,7 @@
       Welcome to Zanzibar's World of Nuclear Energy!
     </h1>
 
-    <nuxt-img src="/images/Zanzibar-2024-07.jpg" width="250px" class="zanzi-photo" />
+    <nuxt-img src="/images/Zanzibar-2024-07.jpg" class="zanzi-photo w-1/3" />
 
     <div class="mb-6">
       I am Zanzibar, your upbeat nuclear hero. I bring positive energy to the discussion about the
