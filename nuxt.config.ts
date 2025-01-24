@@ -45,6 +45,13 @@ export default defineNuxtConfig({
   experimental: {
     appManifest: true,
   },
+  nitro: {
+    preset: 'cloudflare-pages',
+    prerender: {
+      autoSubfolderIndex: false,
+      routes: ['/']
+    }
+  },
   tiptap: {
     prefix: 'Tiptap',
   },
