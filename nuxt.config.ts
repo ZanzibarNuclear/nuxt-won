@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  compatibilityDate: '2024-07-13',
+  compatibilityDate: '2025-01-23',
   devtools: { enabled: true },
   colorMode: {
     preference: 'light'
@@ -27,10 +27,23 @@ export default defineNuxtConfig({
     },
   },
   content: {
-    documentDriven: false,
-    markdown: {
-      anchorLinks: false
+    preview: {
+      api: 'https://api.nuxt.studio/'
+    },
+    build: {
+      markdown: {
+        remarkPlugins: {
+          'remark-math': {},
+        },
+        rehypePlugins: {
+          'rehype-katex': {
+          },
+        },
+      }
     }
+  },
+  experimental: {
+    appManifest: true,
   },
   tiptap: {
     prefix: 'Tiptap',
@@ -53,7 +66,7 @@ export default defineNuxtConfig({
   icon: {
     serverBundle: 'remote',
   },
-  css: ['~/assets/css/tailwind.css'],
+  css: ['@/assets/css/font.css', '@/assets/css/tailwind.css', '@/assets/css/katex.0.16.8.min.css'],
   vite: {
     define: {
       global: 'window',

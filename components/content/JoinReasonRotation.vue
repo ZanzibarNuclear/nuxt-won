@@ -1,10 +1,6 @@
 <template>
   <ClientOnly>
-    <div v-if="chosen">
-      <ContentRenderer :value="chosen">
-        <ContentRendererMarkdown :value="chosen" />
-      </ContentRenderer>
-    </div>
+    <ContentRenderer v-if="chosen" :value="chosen" />
   </ClientOnly>
 </template>
 
@@ -12,8 +8,11 @@
 import { logJoinImpression } from '~/db/EventModel'
 const chosen = ref()
 const loadReason = async () => {
-  const { data } = await useAsyncData(() => queryContent('join/_reasons').where({ _partial: true }).find())
+  const { data } = await useAsyncData('join-pages', () => {
+    return queryCollection('join').where('path', 'LIKE', '/join/reasons/%').all()
+  })
   if (!data.value || !data.value.length) {
+    console.log('nothing found')
     return
   }
   const numReasons = data.value ? data.value.length : 0
