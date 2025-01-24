@@ -23,6 +23,7 @@
           :icon="item.icon"
           :label="item.label"
           :route="item.route"
+          :external="item.external"
         />
         <DarkToggle />
       </div>
@@ -40,6 +41,8 @@
           :icon="item.icon"
           :label="item.label"
           :route="item.route"
+          :external="item.external"
+          @picked-item="closeMenu"
         />
         <DarkToggle />
       </div>
@@ -68,6 +71,7 @@ const menuItems = [
     label: 'Flux',
     icon: 'i-ph-lightning-duotone',
     route: 'https://flux.worldofnuclear.com',
+    external: true,
   },
   {
     label: 'Learning',
@@ -78,11 +82,13 @@ const menuItems = [
     label: 'Adventure',
     icon: 'i-ph-person-simple-hike-duotone',
     route: 'https://hero.worldofnuclear.com',
+    external: true,
   },
   // {
   //   label: 'Essays',
   //   icon: 'i-ph-article-ny-times-duotone',
   //   route: 'https://blog.worldofnuclear.com',
+  // external: true
   // },
 ]
 </script>
