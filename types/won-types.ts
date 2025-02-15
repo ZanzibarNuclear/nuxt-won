@@ -99,6 +99,14 @@ export type LearningBookmark = {
   pathKey: string
   updatedAt: string
 }
+
+export type UserInfo = {
+  id: string
+  alias: string
+  roles: string[]
+  profile?: UserProfile
+}
+
 export type UserProfile = {
   id: string
   screen_name: string

@@ -22,6 +22,7 @@ export default defineNuxtConfig({
     resendWsyKey: process.env.RESEND_WSY_KEY,
     resendFeedbackKey: process.env.RESEND_FEEDBACK_KEY,
     adminEmail: process.env.ADMIN_EMAIL,
+    wonService: process.env.WON_SERVICE_ENDPOINT,
     public: {
       baseUrl: process.env.BASE_URL || 'http://localhost:3000',
     },
