@@ -15,7 +15,15 @@
         variant="outline"
         label="X / Twitter"
         class="hover:bg-nuclear-100"
-        @click="signIn('twitter')"
+        @click="signIn('x')"
+      />
+      <UButton
+        icon="i-ph-github-logo-duotone"
+        size="lg"
+        variant="outline"
+        label="GitHub"
+        class="hover:bg-nuclear-100"
+        @click="signIn('github')"
       />
       <UButton
         icon="i-ph-discord-logo-duotone"
@@ -23,7 +31,7 @@
         variant="outline"
         label="Discord"
         class="hover:bg-nuclear-100"
-        @click="signIn('github')"
+        @click="signIn('discord')"
       />
       <UButton
         icon="i-ph-apple-logo-duotone"
@@ -31,7 +39,7 @@
         variant="outline"
         label="Apple"
         class="hover:bg-nuclear-100"
-        @click="signIn('github')"
+        @click="signIn('apple')"
       />
       <UButton
         icon="i-ph-instagram-logo-duotone"
@@ -39,7 +47,7 @@
         variant="outline"
         label="Instagram"
         class="hover:bg-nuclear-100"
-        @click="signIn('github')"
+        @click="signIn('instagram')"
       />
       <UButton
         icon="i-ph-linkedin-logo-duotone"
@@ -47,7 +55,7 @@
         variant="outline"
         label="LinkedIn"
         class="hover:bg-nuclear-100"
-        @click="signIn('github')"
+        @click="signIn('linkedin')"
       />
     </div>
     <template #footer>
@@ -60,18 +68,18 @@
 </template>
 
 <script setup lang="ts">
-const config = useRuntimeConfig()
 const emit = defineEmits(['finish'])
-// const supabase = useSupabaseClient()
 
-async function signIn(provider: String) {
+async function signIn(provider: string) {
+  useWonAuth().loginWithOAuth(provider)
+  emit('finish')
+
   // const { data, error } = await supabase.auth.signInWithOAuth({
   //   provider,
   //   options: {
   //     redirectTo: `${config.baseUrl}/auth/confirm`,
   //   },
   // })
-  emit('finish')
 }
 </script>
 
