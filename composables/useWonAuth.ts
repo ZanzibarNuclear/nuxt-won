@@ -4,7 +4,7 @@ export const useWonAuth = () => {
   const error = ref<Error | null>(null)
 
   const loginWithOAuth = async (provider: string) => {
-    navigateTo(`${useRuntimeConfig().public.apiBaseUrl}/login/${provider}`, {
+    navigateTo(`${useRuntimeConfig().public.wonServiceEndpoint}/login/${provider}`, {
       external: true
     })
   }

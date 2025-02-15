@@ -22,7 +22,7 @@
 const config = useRuntimeConfig()
 
 const { data: courses } = await useAsyncData('courseList', () =>
-  $fetch(`${config.wonService}/courses`),
+  $fetch(`${config.wonServiceEndpoint}/courses`),
 )
 </script>
 
