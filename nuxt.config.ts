@@ -10,16 +10,14 @@ export default defineNuxtConfig({
     dirs: ['~/components'],
   },
   modules: [
-    '@nuxt/ui',
-    '@nuxt/content',
     '@pinia/nuxt',
-    '@nuxtjs/supabase',
+    '@nuxt/ui',
+    '@nuxt/image',
+    '@nuxt/content',
     'nuxt-tiptap-editor',
     '@nuxt/test-utils/module',
-    '@nuxt/image',
   ],
   runtimeConfig: {
-    resendWsyKey: process.env.RESEND_WSY_KEY,
     resendFeedbackKey: process.env.RESEND_FEEDBACK_KEY,
     adminEmail: process.env.ADMIN_EMAIL,
     public: {
@@ -55,21 +53,6 @@ export default defineNuxtConfig({
   },
   tiptap: {
     prefix: 'Tiptap',
-  },
-  supabase: {
-    redirect: true,
-    redirectOptions: {
-      login: '/auth/sign-in',
-      callback: '/auth/confirm',
-      cookieRedirect: true,
-      include: ['/admin(/*)?', '/user(/*)?', '/workshop(/*)?', '/wsy(/*)?'],
-    },
-    cookieName: 'won',
-    cookieOptions: {
-      maxAge: 60 * 60 * 8,
-      sameSite: 'lax',
-      secure: true,
-    },
   },
   icon: {
     serverBundle: 'remote',

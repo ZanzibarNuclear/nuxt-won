@@ -1,23 +1,19 @@
 import { defineStore } from 'pinia'
 import type {
-  UserProfile,
   LearningBookmark,
-  WsyWriter,
   UserInfo,
+  UserProfile,
 } from '~/types/won-types'
 
 type UserData = {
-  user: null | UserInfo
-  learningBookmark: null | LearningBookmark
-  wsyWriter: null | WsyWriter
+  user: UserInfo | null
+  learningBookmark: LearningBookmark | null
 }
 
 export const useUserStore = defineStore('user', () => {
   const userData: UserData = reactive({
     user: null,
-    profile: null,
     learningBookmark: null,
-    wsyWriter: null,
   })
 
   const setActiveUser = (activeUser: any) => {
@@ -62,18 +58,6 @@ export const useUserStore = defineStore('user', () => {
     userData.learningBookmark = null
   }
 
-  function setWsyWriter(writer: WsyWriter) {
-    userData.wsyWriter = { ...writer }
-  }
-
-  const isWsyWriterLoaded = computed(() => {
-    return !!userData.wsyWriter
-  })
-
-  const wsyWriter = computed(() => {
-    return userData.wsyWriter
-  })
-
   return {
     setActiveUser,
     isSignedIn,
@@ -85,8 +69,5 @@ export const useUserStore = defineStore('user', () => {
     cacheBookmark,
     bookmark,
     clearBookmark,
-    setWsyWriter,
-    isWsyWriterLoaded,
-    wsyWriter,
   }
 })

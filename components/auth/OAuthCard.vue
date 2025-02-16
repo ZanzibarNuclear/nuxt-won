@@ -73,13 +73,6 @@ const emit = defineEmits(['finish'])
 async function signIn(provider: string) {
   useWonAuth().loginWithOAuth(provider)
   emit('finish')
-
-  // const { data, error } = await supabase.auth.signInWithOAuth({
-  //   provider,
-  //   options: {
-  //     redirectTo: `${config.baseUrl}/auth/confirm`,
-  //   },
-  // })
 }
 </script>
 
