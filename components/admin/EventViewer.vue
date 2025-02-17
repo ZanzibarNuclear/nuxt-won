@@ -1,12 +1,8 @@
 <template>
   <div>
-    <h2>Invitations</h2>
+    <h2>Events</h2>
     <div>
-      <UButton
-        :disabled="lastPage"
-        label="Load Events"
-        @click="loadNextBatch"
-      />
+      <UButton :disabled="lastPage" label="Load Events" @click="loadNextBatch" />
       next offset: {{ fetchParams.offset }} batch size: {{ fetchParams.limit }}
     </div>
     <UTable :rows="inView" :columns="columns" />
@@ -14,13 +10,15 @@
 </template>
 
 <script setup lang="ts">
-import { retrieveEvents } from '~/db/EventModel'
+import { EventRepository, type EventSearch } from '~/api/wonService/EventRepo'
+
+const eventRepo = EventRepository
 
 const inView = ref([])
 const fetchParams = reactive({
   limit: 10,
   offset: 0,
-  actor: null,
+  actor: undefined,
 })
 const lastPage = ref(false)
 
@@ -44,18 +42,11 @@ const columns = [
 ]
 
 const loadNextBatch = async () => {
-  const nextBatch = await retrieveEvents(
-    fetchParams.offset,
-    fetchParams.limit,
-    fetchParams.actor
-  )
-  inView.value = nextBatch
-  fetchParams.offset += nextBatch.length
-  lastPage.value = nextBatch.length < fetchParams.limit
-}
+  const params: EventSearch = fetchParams
+  const events = await eventRepo.find(params)
 
-// const { data, pending, error, refresh, clear } = await useAsyncData(
-//   'events',
-//   () => loadNextBatch()
-// )
+  inView.value = events.items
+  fetchParams.offset += fetchParams.offset + events.total
+  lastPage.value = !events.hasMore
+}
 </script>
