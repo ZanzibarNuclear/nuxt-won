@@ -15,34 +15,20 @@
           <CourseOverviewBuilder />
         </div>
         <div v-else-if="item.key === 'lessons'" class="space-y-3">
-          <LessonListBuilder
-            :course-key="courseKey"
-            @open-lesson="onOpenLesson"
-          />
+          <LessonListBuilder :course-key="courseKey" @open-lesson="onOpenLesson" />
         </div>
         <div v-else-if="item.key === 'paths'" class="space-y-3">
-          <LessonPathBuilder
-            :lesson-paths="workshop.activeLessonPaths"
-            :course-key="courseKey"
-          />
+          <LessonPathBuilder :lesson-paths="workshop.activeLessonPaths" :course-key="courseKey" />
         </div>
         <template #footer>
           <div>Have a nice day!</div>
           <div v-if="isPublished">
             Published at: {{ workshop.activeCourse?.publishedAt }}
-            <UButton
-              label="Withdraw"
-              icon="i-ph-globe-x"
-              @click="onUnpublish(courseKey)"
-            />
+            <UButton label="Withdraw" icon="i-ph-globe-x" @click="onUnpublish(courseKey)" />
           </div>
           <div v-else>
             This course is an unpublished draft.
-            <UButton
-              label="Publish"
-              icon="i-ph-globe"
-              @click="onPublish(courseKey)"
-            />
+            <UButton label="Publish" icon="i-ph-globe" @click="onPublish(courseKey)" />
           </div>
         </template>
       </UCard>
@@ -51,7 +37,7 @@
 </template>
 
 <script setup lang="ts">
-import { loadCourse, publishCourse, unpublishCourse } from '~/db/CourseModel'
+import { LearningRepository as repo } from '~/api/wonService/LearningRepo'
 import { loadLessonPlans } from '~/db/LessonPlanModel'
 import { loadLessonPaths } from '~/db/LessonPathModel'
 
@@ -59,17 +45,15 @@ const { courseKey } = useRoute().params
 const workshop = useWorkshopStore()
 
 const loadData = async () => {
-  const { data: courseData } = await useAsyncData(
-    `course-${courseKey}`,
-    async () => {
-      const [course, lessonPlans, paths] = await Promise.all([
-        loadCourse(courseKey),
-        loadLessonPlans(courseKey),
-        loadLessonPaths(courseKey),
-      ])
-      return { course, lessonPlans, paths }
-    }
-  )
+  const { data: courseData } = await useAsyncData(`course-${courseKey}`, async () => {
+    const key = courseKey as string
+    const [course, lessonPlans, paths] = await Promise.all([
+      repo.getCourse(key),
+      repo.getLessonPlansForCourse(key),
+      repo.getPathsForCourse(key),
+    ])
+    return { course, lessonPlans, paths }
+  })
   const { course, lessonPlans, paths } = courseData.value
   workshop.cacheCourse(course)
   workshop.makeCourseActive(course.publicKey)
@@ -89,14 +73,14 @@ const onOpenLesson = (lessonKey: string) =>
   navigateTo(`/workshop/courses/${courseKey}/lessons/${lessonKey}`)
 
 const onPublish = async (courseKey: string) => {
-  const delta = await publishCourse(courseKey)
+  const delta = await repo.publishCourse(courseKey)
   if (delta) {
     console.log('caching published course', delta)
     workshop.cacheCourse(delta)
   }
 }
 const onUnpublish = async (courseKey: string) => {
-  const delta = await unpublishCourse(courseKey)
+  const delta = await repo.unpublishCourse(courseKey)
   if (delta) {
     console.log('caching unpublished course', delta)
     workshop.cacheCourse(delta)

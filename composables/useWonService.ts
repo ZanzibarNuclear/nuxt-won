@@ -11,7 +11,7 @@ export const useWonService = () => {
         credentials: 'include', // This is crucial for sending cookies
       })
     },
-    put: async (url: string, data: any) => {
+    put: async (url: string, data?: any) => {
       console.log(`putting to ${url}:`, data)
       return await $fetch(`${useRuntimeConfig().public.wonServiceEndpoint}/${url}`, {
         method: 'PUT',

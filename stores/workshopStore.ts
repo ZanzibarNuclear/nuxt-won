@@ -1,13 +1,13 @@
 import { defineStore } from 'pinia'
 import type {
-  Course,
   LessonPlan,
   LessonPath,
   ContentPart,
 } from '~/types/won-types'
+import type { CourseType } from '~/api/wonService/schema'
 
 export const useWorkshopStore = defineStore('workshop', () => {
-  type CourseMap = { [k: string]: Course }
+  type CourseMap = { [k: string]: CourseType }
   type LessonMap = { [k: string]: LessonPlan }
   type PathMap = { [k: string]: LessonPath }
   type CoursePathMap = { [k: string]: PathMap }
@@ -17,10 +17,10 @@ export const useWorkshopStore = defineStore('workshop', () => {
   const courseList = computed(() => Object.values(courses))
   const activeCourseKey = ref()
 
-  const cacheCourse = (courseToCache: Course) => {
+  const cacheCourse = (courseToCache: CourseType) => {
     courses[courseToCache.publicKey] = courseToCache
   }
-  const cacheCourses = (items: Course[]) => {
+  const cacheCourses = (items: CourseType[]) => {
     items.forEach((course) => cacheCourse(course))
   }
   const getCourse = (publicKey: string) => {

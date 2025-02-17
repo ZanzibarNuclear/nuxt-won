@@ -8,10 +8,7 @@
       @click="() => (uiState.addCourse = true)"
     />
     <UModal v-model="uiState.addCourse" prevent-close>
-      <CourseForm
-        @save-course="onCreateCourse"
-        @cancel="onCancelCreateCourse"
-      />
+      <CourseForm @save-course="onCreateCourse" @cancel="onCancelCreateCourse" />
     </UModal>
   </div>
 
@@ -37,8 +34,9 @@
   </div>
 </template>
 
-<script setup>
-import { loadCourses, createCourse } from '~/db/CourseModel'
+<script setup lang="ts">
+import { LearningRepository as repo } from '~/api/wonService/LearningRepo'
+import type { CreateCourseType } from '~/api/wonService/schema'
 
 const workshop = useWorkshopStore()
 const uiState = reactive({
@@ -46,28 +44,26 @@ const uiState = reactive({
 })
 
 const loadData = async () => {
-  const { data: courses } = await useAsyncData('courses', () => loadCourses())
+  const { data: courses } = await useAsyncData('courses', () => repo.getCourses())
   workshop.cacheCourses(courses.value)
   workshop.deactivateCourse()
 }
 await loadData()
 
 const publishedCourses = computed(() =>
-  workshop.courseList.filter((c) => c.publishedAt && !c.testOnly)
+  workshop.courseList.filter((c) => c.publishedAt && !c.testOnly),
 )
 const draftCourses = computed(() =>
-  workshop.courseList.filter((c) => !(c.publishedAt || c.testOnly))
+  workshop.courseList.filter((c) => !(c.publishedAt || c.testOnly)),
 )
-const testCourses = computed(() =>
-  workshop.courseList.filter((c) => c.testOnly)
-)
+const testCourses = computed(() => workshop.courseList.filter((c) => c.testOnly))
 
-const onOpenCourse = async (key) => {
+const onOpenCourse = async (key: string) => {
   navigateTo(`/workshop/courses/${key}`)
 }
 
-const onCreateCourse = async (details) => {
-  const minted = await createCourse(details)
+const onCreateCourse = async (details: CreateCourseType) => {
+  const minted = await repo.createCourse(details)
   if (minted) {
     workshop.cacheCourse(minted)
   }
