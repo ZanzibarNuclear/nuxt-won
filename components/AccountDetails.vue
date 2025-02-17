@@ -1,45 +1,35 @@
 <script setup>
-const supabase = useSupabaseClient()
+const won = useWonService()
+const wonAuth = useWonAuth()
+const userStore = useUserStore()
 
-const loading = ref(true)
 const username = ref('')
 const website = ref('')
-const avatar_path = ref('')
+const avatarUrl = ref('')
+const loading = ref(false)
 
-loading.value = true
-const user = useSupabaseUser()
-
-const { data } = await supabase
-  .from('profiles')
-  .select(`username, website, avatar_url`)
-  .eq('id', user.value.id)
-  .single()
-
-if (data) {
-  username.value = data.username
-  website.value = data.website
-  avatar_path.value = data.avatar_url
+if (userStore.isSignedIn) {
+  loading.value = true
+  const user = userStore.user
+  const profile = await won.get('/profiles/' + user.id)
+  if (profile) {
+    username.value = profile.username
+    website.value = profile.website
+    avatarUrl.value = profile.avatarUrl
+  }
+  loading.value = false
 }
-
-loading.value = false
 
 async function updateProfile() {
   try {
     loading.value = true
-    const user = useSupabaseUser()
-
+    const user = userStore().user
     const updates = {
-      id: user.value.id,
       username: username.value,
       website: website.value,
-      avatar_url: avatar_path.value,
-      updated_at: new Date(),
+      avatarUrl: avatarUrl.value,
     }
-
-    const { error } = await supabase.from('profiles').upsert(updates, {
-      returning: 'minimal', // Don't return the value after inserting
-    })
-    if (error) throw error
+    await won.put('/profiles/' + user.id, updates)
   } catch (error) {
     alert(error.message)
   } finally {
@@ -50,9 +40,8 @@ async function updateProfile() {
 async function signOut() {
   try {
     loading.value = true
-    const { error } = await supabase.auth.signOut()
-    if (error) throw error
-    user.value = null
+    await wonAuth.signOut()
+    userStore.clearUser()
   } catch (error) {
     alert(error.message)
   } finally {
