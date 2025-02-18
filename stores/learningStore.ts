@@ -1,24 +1,19 @@
-import type {
-  ContentPart,
-  Course,
-  LessonPlan,
-  LessonPath,
-} from '~/types/won-types'
+import type { LessonContentType, CourseType, LessonPlanType, LessonPathType } from '~/api/wonService/schema'
 
 export const useLearningStore = defineStore('learning', () => {
-  type CourseMap = { [k: string]: Course }
-  type LessonPlanMap = { [k: string]: LessonPlan }
-  type LessonPathMap = { [k: string]: LessonPath }
+  type CourseMap = { [k: string]: CourseType }
+  type LessonPlanMap = { [k: string]: LessonPlanType }
+  type LessonPathMap = { [k: string]: LessonPathType }
   const courseIndex: CourseMap = reactive({})
   const lessonPathIndex: LessonPathMap = reactive({})
   const lessonPlanIndex: LessonPlanMap = reactive({})
 
-  const activeCourse: Ref<Course | undefined> = ref()
-  const activePath: Ref<LessonPath | undefined> = ref()
-  const activeLesson: Ref<LessonPlan | undefined> = ref()
-  const contentParts: Ref<ContentPart[]> = ref([])
+  const activeCourse: Ref<CourseType | undefined> = ref()
+  const activePath: Ref<LessonPathType | undefined> = ref()
+  const activeLesson: Ref<LessonPlanType | undefined> = ref()
+  const contentParts: Ref<LessonContentType[]> = ref([])
 
-  const cacheLessonPaths = (paths: LessonPath[]) => {
+  const cacheLessonPaths = (paths: LessonPathType[]) => {
     paths.forEach((path) => {
       lessonPathIndex[path.publicKey] = path
     })
@@ -40,7 +35,7 @@ export const useLearningStore = defineStore('learning', () => {
     courseList.value.filter((c) => c.publishedAt)
   )
 
-  const cacheCourse = (course: Course) => {
+  const cacheCourse = (course: CourseType) => {
     courseIndex[course.publicKey] = course
   }
   const useCourse = (courseKey: string) => {
@@ -54,10 +49,10 @@ export const useLearningStore = defineStore('learning', () => {
     return !!activeCourse.value
   }
 
-  const cacheLesson = (plan: LessonPlan) => {
+  const cacheLesson = (plan: LessonPlanType) => {
     lessonPlanIndex[plan.publicKey] = plan
   }
-  const cacheLessons = (plans: LessonPlan[]) => {
+  const cacheLessons = (plans: LessonPlanType[]) => {
     plans.forEach((plan) => cacheLesson(plan))
   }
   const lessonsForActiveCourse = computed(() => Object.values(lessonPlanIndex))
@@ -67,7 +62,7 @@ export const useLearningStore = defineStore('learning', () => {
     return !!activeLesson.value
   }
 
-  const cacheContents = (parts: ContentPart[]) => {
+  const cacheContents = (parts: LessonContentType[]) => {
     const sorted = parts.sort((partA, partB) => partA.sequence - partB.sequence)
     contentParts.value = sorted
   }

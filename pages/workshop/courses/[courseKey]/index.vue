@@ -38,8 +38,6 @@
 
 <script setup lang="ts">
 import { LearningRepository as repo } from '~/api/wonService/LearningRepo'
-import { loadLessonPlans } from '~/db/LessonPlanModel'
-import { loadLessonPaths } from '~/db/LessonPathModel'
 
 const { courseKey } = useRoute().params
 const workshop = useWorkshopStore()

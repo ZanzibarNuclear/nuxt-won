@@ -2,11 +2,7 @@
   <div>
     <h2>Feedback</h2>
     <div>
-      <UButton
-        :disabled="lastPage"
-        label="Load Feedback"
-        @click="loadNextBatch"
-      />
+      <UButton :disabled="lastPage" label="Load Feedback" @click="loadNextBatch" />
       next offset: {{ fetchParams.offset }} batch size: {{ fetchParams.limit }}
     </div>
     <UTable :rows="inView" :columns="columns" />
@@ -14,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import { retrieveFeedback } from '~/db/FeedbackModel'
+import { MessagingRepository as repo } from '~/api/wonService/MessagingRepo'
 
 const inView = ref([])
 const fetchParams = reactive({
@@ -47,10 +43,7 @@ const columns = [
 ]
 
 const loadNextBatch = async () => {
-  const nextBatch = await retrieveFeedback(
-    fetchParams.offset,
-    fetchParams.limit
-  )
+  const nextBatch = await repo.findFeedback(fetchParams.offset, fetchParams.limit)
   inView.value = nextBatch
   fetchParams.offset += nextBatch.length
   lastPage.value = nextBatch.length < fetchParams.limit

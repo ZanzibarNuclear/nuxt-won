@@ -14,17 +14,14 @@
           {{ nextStep.teaser }}
         </div>
         <div>
-          <UButton @click="onGoNext"
-            >Continue <UIcon name="i-ph-arrow-right-duotone"
-          /></UButton>
+          <UButton @click="onGoNext">Continue <UIcon name="i-ph-arrow-right-duotone" /></UButton>
         </div>
       </div>
       <div v-else>
         <div class="font-bold text-xl mb-4">The End</div>
         <div>You seem to have reached the end of the course.</div>
         <div v-if="!gotCreditForFinishing">
-          Click to <UButton @click="onClaimCredit">claim credit</UButton> for
-          finishing.
+          Click to <UButton @click="onClaimCredit">claim credit</UButton> for finishing.
         </div>
         <div>Want to <NuxtLink to="/learning">try another?</NuxtLink></div>
       </div>
@@ -34,19 +31,14 @@
     <div class="p-6">
       <h2>Congratulations!!</h2>
       <div>Congratulations on completing this lesson. Well done.</div>
-      <div>
-        Anytime you want to refresh your memory, you are welcome to retake the
-        lesson.
-      </div>
+      <div>Anytime you want to refresh your memory, you are welcome to retake the lesson.</div>
     </div>
   </UModal>
 </template>
 
 <script setup lang="ts">
-import { loadContentParts } from '~/db/ContentPartModel'
-import { logLearningEvent } from '~/db/EventModel'
-import { loadLessonPlan } from '~/db/LessonPlanModel'
-import { bookmarkLesson, getBookmark } from '~/db/UserModel'
+import { LearningRepository as learningRepo } from '~/api/wonService/LearningRepo'
+import { EventRepository as eventRepo } from '~/api/wonService/EventRepo'
 
 const breadcrumbLinks = computed(() => {
   return [
@@ -88,40 +80,40 @@ const gotCreditForFinishing = ref(false)
 const showCreditMessage = ref(false)
 const onClaimCredit = () => {
   gotCreditForFinishing.value = true
-  logLearningEvent(courseKey, learning.activePath?.publicKey, null, 'finished')
+  eventRepo.logLearningEvent(
+    courseKey as string,
+    learning.activePath?.publicKey as string,
+    null,
+    'finished',
+  )
   showCreditMessage.value = true
 }
 
 async function loadData() {
-  userContext.loadUser()
+  userContext.user
   const path = learning.activePath
 
-  const { data: lessonData } = await useAsyncData(
-    `lesson-data-${lessonKey}`,
-    async () => {
-      const [plan, contents, bookmark] = await Promise.all([
-        loadLessonPlan(lessonKey),
-        loadContentParts(lessonKey),
-        bookmarkLesson(lessonKey, path?.publicKey),
-      ])
-      return { plan, contents, bookmark }
-    }
-  )
-  const { plan, contents, bookmark } = lessonData.value
+  const { data: lessonData } = await useAsyncData(`lesson-data-${lessonKey}`, async () => {
+    const [plan, contents] = await Promise.all([
+      learningRepo.getLessonPlan(lessonKey),
+      learningRepo.getContents(lessonKey),
+    ])
+    return { plan, contents }
+  })
+  const { plan, contents } = lessonData.value
   learning.cacheLesson(plan)
   learning.useLesson(lessonKey)
   learning.cacheContents(contents)
-  userContext.cacheBookmark(bookmark)
   nextStep.value = learning.lookupStep(lessonKey)
 }
 await loadData()
 
 const onGoNext = () => {
-  logLearningEvent(
+  eventRepo.logLearningEvent(
     courseKey,
     learning.activePath?.publicKey,
     nextStep.value.to,
-    'take-step'
+    'take-step',
   )
   navigateTo('/learning/courses/' + courseKey + '/lessons/' + nextStep.value.to)
 }

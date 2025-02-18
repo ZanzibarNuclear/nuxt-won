@@ -42,7 +42,7 @@ const enableResend = () => {
 
 const login = async () => {
   magicForm.active = false
-  const response: any = await useWoNAuth().loginWithMagicLink(
+  const response: any = await useWonAuth().loginWithMagicLink(
     magicForm.email,
     magicForm.alias,
     magicForm.token,

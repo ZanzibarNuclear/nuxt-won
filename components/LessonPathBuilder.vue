@@ -30,11 +30,7 @@
               icon="i-ph-pencil"
               @click="() => onOpenEditPath(path)"
             />
-            <UButton
-              class="ml-1"
-              icon="i-ph-path"
-              @click="() => onOpenSteps(path)"
-            />
+            <UButton class="ml-1" icon="i-ph-path" @click="() => onOpenSteps(path)" />
             <UButton
               class="ml-6"
               icon="i-ph-x-circle"
@@ -79,10 +75,7 @@
                 <UButton icon="i-ph-arrow-arc-left" @click="onCancelEditStep" />
               </div>
               <div v-else>
-                <UButton
-                  icon="i-ph-pencil"
-                  @click="() => onOpenEditStep(step)"
-                />
+                <UButton icon="i-ph-pencil" @click="() => onOpenEditStep(step)" />
                 <UButton
                   class="ml-6"
                   icon="i-ph-x-circle"
@@ -107,14 +100,7 @@
 </template>
 
 <script setup lang="ts">
-import {
-  createLessonPath,
-  saveLessonPath,
-  deleteLessonPath,
-  createLessonStep,
-  deleteLessonStep,
-  saveLessonStep,
-} from '~/db/LessonPathModel'
+import { LearningRepository as repo } from '~/api/wonService/LearningRepo'
 
 const props = defineProps(['lessonPaths', 'courseKey'])
 const workshop = useWorkshopStore()
@@ -143,13 +129,11 @@ function setupStepMap(steps) {
 }
 function removeStep(stepToRemove) {
   delete stepMap[stepToRemove.from]
-  openPath.value.steps = openPath.value.steps.filter(
-    (step) => step !== stepToRemove
-  )
+  openPath.value.steps = openPath.value.steps.filter((step) => step !== stepToRemove)
 }
 
 const onAddPath = async (pathData) => {
-  const minted = await createLessonPath(pathData)
+  const minted = await repo.createPath(pathData)
   console.log('created a path', minted)
   workshop.cacheActiveLessonPath(minted)
   uiState.openAddPath = false
@@ -164,7 +148,7 @@ const onOpenSteps = (path) => {
   uiState.openSteps = true
 }
 const onSavePath = async (pathData) => {
-  const delta = await saveLessonPath(pathData)
+  const delta = await repo.updatePath(pathData.publicKey, pathData)
   console.log('updated path', delta)
   workshop.cacheActiveLessonPath(delta)
   uiState.openEditPath = false
@@ -176,13 +160,13 @@ const onCancelEditPath = () => {
   uiState.openEditPath = false
 }
 const onDeletePath = async (pathKey: string) => {
-  await deleteLessonPath(pathKey)
+  await repo.deletePath(pathKey)
   workshop.removeActiveLessonPath(pathKey)
 }
 
 const onCreateStep = async (step) => {
   console.log('create step', step)
-  await createLessonStep(step)
+  await repo.createStep(step)
   if (openPath.value && !openPath.value.steps) {
     openPath.value.steps = []
   }
@@ -202,7 +186,7 @@ function resetStepEdit() {
 const onSaveStep = async () => {
   console.log('save step', stepToEdit.value)
   const delta = Object.assign(stepToEdit.value, { teaser: teaserUpdate.value })
-  await saveLessonStep(delta)
+  await repo.updateStep(delta.publicKey, delta)
 
   // TODO: apply change locally
 
@@ -213,7 +197,7 @@ const onCancelEditStep = () => {
 }
 const onDeleteStep = async (step) => {
   console.log('delete step', step)
-  await deleteLessonStep(step.id)
+  await repo.deleteStep(step.id)
   removeStep(step)
 }
 </script>

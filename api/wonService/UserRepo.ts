@@ -3,6 +3,9 @@ const path = '/users'
 
 // repositories/user.ts
 export const UserRepository = {
+  async getUsers(offset: number = 0, limit: number = 0, screenName: string | null = null) {
+    return await won.get(path)
+  },
   async getUser(id: number) {
     return await won.get(`${path}/${id}`)
   },

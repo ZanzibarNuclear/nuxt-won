@@ -39,6 +39,20 @@ export const EventRepository = {
     })
   },
 
+  async logPageHit(pageName: string) {
+    this.logEvent({
+      type: 'pageHit',
+      page: pageName
+    })
+  },
+
+  async logJoinCta(messageKey: string) {
+    this.logEvent({
+      type: 'join-cta',
+      messageKey,
+    })
+  },
+
   async logLearningEvent(courseKey: string, pathKey: string, lessonKey: string, action: string) {
     this.logEvent({
       type: 'learning',
@@ -48,11 +62,4 @@ export const EventRepository = {
       action
     })
   },
-
-  async logJoinCta(messageKey: string) {
-    this.logEvent({
-      type: 'join-cta',
-      messageKey,
-    })
-  }
 }

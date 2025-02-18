@@ -22,7 +22,7 @@
 </template>
 
 <script setup>
-import { logLearningEvent } from '~/db/EventModel'
+import { EventRepository as repo } from '~/api/wonService/EventRepo'
 
 const props = defineProps(['course'])
 
@@ -32,7 +32,7 @@ const blurb = computed(() => {
   return teaser || description
 })
 const goTo = () => {
-  logLearningEvent(publicKey, null, null, 'open-course')
+  repo.logLearningEvent(publicKey, null, null, 'open-course')
   navigateTo(`/learning/courses/${publicKey}`)
 }
 </script>
