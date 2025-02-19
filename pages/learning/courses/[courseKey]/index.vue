@@ -79,10 +79,12 @@ async function loadData() {
     ])
     return { course, lessonPlans, paths }
   })
-  learning.cacheCourse(courseData.value?.course)
-  learning.useCourse(courseKey)
-  learning.cacheLessons(courseData.value?.lessonPlans)
-  learning.cacheLessonPaths(courseData.value?.paths)
+  if (courseData.value) {
+    learning.cacheCourse(courseData.value.course)
+    learning.useCourse(courseData.value.course.publicKey)
+    learning.cacheLessons(courseData.value?.lessonPlans)
+    learning.cacheLessonPaths(courseData.value?.paths)
+  }
 }
 await loadData()
 

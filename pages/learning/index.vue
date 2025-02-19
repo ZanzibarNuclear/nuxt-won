@@ -21,7 +21,7 @@
 
 <script setup lang="ts">
 import { LearningRepository as learningRepo } from '~/api/wonService/LearningRepo'
-import type { Course } from '~/types/won-types'
+import type { CourseType } from '~/api/wonService/schema'
 
 const breadcrumbLinks = [
   {
@@ -47,12 +47,14 @@ const handleFeedbackDelivered = () => {
 }
 
 async function loadData() {
-  const { data, error } = await useAsyncData('learningCatalogAndContext', async () => {
-    return await learningRepo.getCourses()
+  const { data, error } = await useAsyncData('publishedCourses', async () => {
+    console.log('getting published courses')
+    return await learningRepo.getPublishedCourses()
   })
-  const { courses } = data.value
+  console.log(data.value)
+  const courses = data.value
   if (courses) {
-    courses.forEach((course: Course) => learning.cacheCourse(course))
+    courses.forEach((course: CourseType) => learning.cacheCourse(course))
   }
   if (error.value) {
     console.error('Something went wrong', error.value?.message)

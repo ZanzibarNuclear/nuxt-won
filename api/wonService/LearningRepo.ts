@@ -29,6 +29,14 @@ export const LearningRepository = {
     return await won.get(coursePath)
   },
 
+  async getActiveCourses(): Promise<CourseType[]> {
+    return await won.get(`${coursePath}/?archived=false`)
+  },
+
+  async getPublishedCourses(): Promise<CourseType[]> {
+    return await won.get(`${coursePath}/?published=true`)
+  },
+
   async getCourse(key: string): Promise<CourseType> {
     return await won.get(`${coursePath}/${key}`)
   },
