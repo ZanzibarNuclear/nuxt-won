@@ -13,13 +13,9 @@
 </template>
 
 <script setup lang="ts">
-import { EventRepository as eventRepo } from '~/api/wonService/EventRepo'
 const cardStyle = {
   background: 'bg-heroic-graphite',
 }
-onMounted(() => {
-  eventRepo.logPageHit('opener')
-})
 </script>
 
 <style scoped></style>

@@ -16,11 +16,11 @@ import type {
 } from "./schema"
 
 const won = useWonService()
-const coursePath = '/courses'
-const lessonPlanPath = '/lesson-plans'
-const lessonPathPath = '/lesson-paths'
-const lessonStepPath = '/lesson-steps'
-const contentPath = '/lesson-contents'
+const coursePath = 'courses'
+const lessonPlanPath = 'lesson-plans'
+const lessonPathPath = 'lesson-paths'
+const lessonStepPath = 'lesson-steps'
+const contentPath = 'lesson-contents'
 
 // repositories/user.ts
 export const LearningRepository = {

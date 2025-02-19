@@ -1,7 +1,7 @@
 import qs from 'qs'
 
 const won = useWonService()
-const pathBase = '/events'
+const pathBase = 'events'
 
 interface Event {
   actor: string
@@ -29,14 +29,7 @@ export const EventRepository = {
   },
 
   async logEvent(details: any) {
-    const userStore = useUserStore()
-    let userId
-    if (userStore.isSignedIn) {
-      userId = userStore.user?.id
-    }
-    won.post(`path`, {
-      actor: userId, details
-    })
+    won.post(pathBase, { details })
   },
 
   async logPageHit(pageName: string) {
