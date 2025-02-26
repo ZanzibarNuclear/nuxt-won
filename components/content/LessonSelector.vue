@@ -1,18 +1,25 @@
 <template>
   <ClientOnly>
-    <div v-if="lesson">
-      <ContentRenderer v-if="lesson" :value="lesson" />
+    <div v-if="lessons">
+      <div v-for="lesson in lessons" :key="lesson.id">
+        <NuxtLink :to="lesson.path">
+          {{ lesson.title }}
+        </NuxtLink>
+      </div>
     </div>
   </ClientOnly>
 </template>
 
 <script lang="ts" setup>
-const lesson = ref()
+const lessons = ref()
 const load = async () => {
   const { data } = await useAsyncData('benefits', () => {
-    return queryCollection('lessons').where('path', '=', '/lessons/why_nuclear').first()
+    return queryCollection('lessons').all()
   })
-  lesson.value = data.value
+  lessons.value = data.value
+  lessons.value.forEach((lesson) => {
+    console.log(lesson)
+  })
 }
 await load()
 </script>
