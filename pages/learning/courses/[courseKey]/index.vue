@@ -27,10 +27,7 @@
       </div>
       <div v-else class="grid grid-cols-2 gap-y-4 gap-x-4">
         <div v-for="path in learning.activeLessonPaths">
-          <learning-path-option-card
-            :path="path"
-            @start-lesson="onStartLesson"
-          />
+          <learning-path-option-card :path="path" @start-lesson="onStartLesson" />
         </div>
       </div>
     </div>
@@ -42,10 +39,8 @@
 </template>
 
 <script setup lang="ts">
-import { loadCourse } from '~/db/CourseModel'
-import { loadLessonPlans } from '~/db/LessonPlanModel'
-import { loadLessonPaths } from '~/db/LessonPathModel'
-import { logLearningEvent } from '~/db/EventModel'
+import { LearningRepository as learningRepo } from '~/api/wonService/LearningRepo'
+import { EventRepository as eventRepo } from '~/api/wonService/EventRepo'
 
 const breadcrumbLinks = [
   {
@@ -76,26 +71,25 @@ const activeCourse = computed(() => {
 })
 
 async function loadData() {
-  const { data: courseData } = await useAsyncData(
-    `course-${courseKey}`,
-    async () => {
-      const [course, lessonPlans, paths] = await Promise.all([
-        loadCourse(courseKey as string),
-        loadLessonPlans(courseKey as string),
-        loadLessonPaths(courseKey as string),
-      ])
-      return { course, lessonPlans, paths }
-    }
-  )
-  learning.cacheCourse(courseData.value?.course)
-  learning.useCourse(courseKey)
-  learning.cacheLessons(courseData.value?.lessonPlans)
-  learning.cacheLessonPaths(courseData.value?.paths)
+  const { data: courseData } = await useAsyncData(`course-${courseKey}`, async () => {
+    const [course, lessonPlans, paths] = await Promise.all([
+      learningRepo.getCourse(courseKey as string),
+      learningRepo.getLessonPlansForCourse(courseKey as string),
+      learningRepo.getPathsForCourse(courseKey as string),
+    ])
+    return { course, lessonPlans, paths }
+  })
+  if (courseData.value) {
+    learning.cacheCourse(courseData.value.course)
+    learning.useCourse(courseData.value.course.publicKey)
+    learning.cacheLessons(courseData.value?.lessonPlans)
+    learning.cacheLessonPaths(courseData.value?.paths)
+  }
 }
 await loadData()
 
 const onStartLesson = (path) => {
-  logLearningEvent(courseKey, path.publicKey, path.trailhead, 'choose-path')
+  eventRepo.logLearningEvent(courseKey, path.publicKey, path.trailhead, 'choose-path')
   learning.choosePath(path.publicKey)
   navigateTo('/learning/courses/' + courseKey + '/lessons/' + path.trailhead)
 }

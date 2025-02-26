@@ -2,19 +2,15 @@
   <div>
     <h1>Topics of Interest</h1>
     <simple-toolbar v-if="isSignedIn">
-      <UButton v-if="hasBookmark" class="mr-2" @click="goToBookmark" label="Jump to Bookmark" />
-      <div v-else>
-        <div v-if="!checkedForBookmark">
-          Have you been here before?
-          <UButton @click="checkForBookmark">See if you have a bookmark.</UButton>
-        </div>
-        <div v-else>Sorry, we could not find a bookmark.</div>
-      </div>
       <UButton class="mr-2" label="Give Feedback" @click="onShowFeedbackForm" />
     </simple-toolbar>
     <div class="mx-auto">
       <div class="course-layout">
-        <CourseTile v-for="course in learning.publishedCourses" class="mx-2 my-4" :course="course" />
+        <CourseTile
+          v-for="course in learning.publishedCourses"
+          class="mx-2 my-4"
+          :course="course"
+        />
       </div>
     </div>
   </div>
@@ -24,10 +20,8 @@
 </template>
 
 <script setup lang="ts">
-import { loadCourses } from '~/db/CourseModel'
-import { getBookmark } from '~/db/UserModel'
-import { loadPath } from '~/db/LessonPathModel'
-import type { Course } from '~/types/won-types'
+import { LearningRepository as learningRepo } from '~/api/wonService/LearningRepo'
+import type { CourseType } from '~/api/wonService/schema'
 
 const breadcrumbLinks = [
   {
@@ -42,37 +36,6 @@ const userContext = useUserStore()
 const isSignedIn = computed(() => {
   return !!userContext.user
 })
-const checkedForBookmark = ref(false)
-const checkForBookmark = async () => {
-  const myBookmark = await getBookmark()
-  if (myBookmark) {
-    userContext.cacheBookmark(myBookmark)
-  }
-  checkedForBookmark.value = true
-}
-
-const hasBookmark = computed(() => {
-  return userContext.bookmark
-})
-const bookmark = computed(() => {
-  return userContext.bookmark
-})
-
-const goToBookmark = async () => {
-  const bookmarkedPath = await loadPath(bookmark.value?.pathKey)
-  if (bookmarkedPath) {
-    console.log('bookmark, path', bookmark, bookmarkedPath)
-
-    learning.cacheLessonPaths([bookmarkedPath])
-    learning.choosePath(bookmarkedPath?.publicKey)
-    navigateTo(
-      `/learning/courses/${bookmarkedPath.courseKey}/lessons/${bookmark.value?.lessonKey}`
-    )
-  } else {
-    console.warn('bookmarked path not found')
-    // TODO: do something about obsolete bookmark, perhaps
-  }
-}
 
 const showFeedbackForm = ref(false)
 const onShowFeedbackForm = () => {
@@ -84,22 +47,14 @@ const handleFeedbackDelivered = () => {
 }
 
 async function loadData() {
-  const { data: materials, error } = await useAsyncData(
-    'learningCatalogAndContext',
-    async () => {
-      const [courses, bookmark] = await Promise.all([
-        loadCourses(),
-        getBookmark(),
-      ])
-      return { courses, bookmark }
-    }
-  )
-  const { courses, bookmark } = materials.value
+  const { data, error } = await useAsyncData('publishedCourses', async () => {
+    console.log('getting published courses')
+    return await learningRepo.getPublishedCourses()
+  })
+  console.log(data.value)
+  const courses = data.value
   if (courses) {
-    courses.forEach((course: Course) => learning.cacheCourse(course))
-  }
-  if (bookmark) {
-    userContext.cacheBookmark(bookmark)
+    courses.forEach((course: CourseType) => learning.cacheCourse(course))
   }
   if (error.value) {
     console.error('Something went wrong', error.value?.message)

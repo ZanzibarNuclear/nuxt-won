@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts" setup>
-import { logJoinImpression } from '~/db/EventModel'
+import { EventRepository } from '~/api/wonService/EventRepo'
 const chosen = ref()
 const loadReason = async () => {
   const { data } = await useAsyncData('join-pages', () => {
@@ -21,7 +21,7 @@ const loadReason = async () => {
   const index = Math.floor(Math.random() * numReasons)
   chosen.value = data.value ? data.value[index] : null
   if (chosen.value) {
-    logJoinImpression(chosen.value._path)
+    EventRepository.logJoinCta(chosen.value._path)
   }
 }
 await loadReason()

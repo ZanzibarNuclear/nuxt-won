@@ -27,14 +27,14 @@
 </template>
 
 <script setup lang="ts">
-import { saveLessonPlan } from '~/db/LessonPlanModel'
+import { LearningRepository as repo } from '~/api/wonService/LearningRepo'
 
 defineProps(['course', 'lesson'])
 
 const isEdit = ref(false)
 
 const handleSaveLesson = async (details) => {
-  const updated = await saveLessonPlan(details)
+  const updated = await repo.updateLessonPlan(details.publicKey, details)
   if (updated) {
     useWorkshopStore().cacheLesson(updated)
   }

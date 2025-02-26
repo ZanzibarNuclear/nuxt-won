@@ -23,11 +23,7 @@
       </div>
       <div class="label">Cover art:</div>
       <div class="detail">
-        <NuxtImg
-          :src="workshop.activeCourse.coverArt"
-          width="250px"
-          class="my-6"
-        />
+        <NuxtImg :src="workshop.activeCourse.coverArt" width="250px" class="my-6" />
       </div>
       <div class="label">Description:</div>
       <div class="detail rich-text">
@@ -43,7 +39,7 @@
 </template>
 
 <script setup lang="ts">
-import { saveCourse } from '~/db/CourseModel'
+import { LearningRepository as repo } from '~/api/wonService/LearningRepo'
 
 const workshop = useWorkshopStore()
 
@@ -51,10 +47,13 @@ const uiState = reactive({
   editCourse: false,
 })
 
-const onSaveCourse = async (details) => {
-  const updated = await saveCourse(details)
-  if (updated) {
-    workshop.cacheCourse(updated)
+const onSaveCourse = async (details: any) => {
+  const courseKey = workshop.activeCourse?.publicKey
+  if (courseKey) {
+    const updated = await repo.updateCourse(courseKey, details)
+    if (updated) {
+      workshop.cacheCourse(updated)
+    }
   }
   uiState.editCourse = false
 }

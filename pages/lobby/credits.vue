@@ -17,7 +17,7 @@
       <li>AI systems: Cursor, Perplexity, Claude, ChatGPT, OpenArt.AI</li>
       <li>Everyone who has ever contributed to JavaScript and TypeScript</li>
       <li>Anyone who has worked on Linux, especially Ubuntu</li>
-      <li>Cloudflare, Supabase, Resend, Hetzner</li>
+      <li>Cloudflare, Resend, Hetzner</li>
       <li><em>How to Drive a Nuclear Reactor</em>, by Colin Tucker</li>
       <li>
         Nuclear scientists and engineers who have contributed discoveries, knowledge, and experience

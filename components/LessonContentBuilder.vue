@@ -1,12 +1,7 @@
 <template>
   <div class="flex">
     <USelect :options="contentTypeOptions" v-model="nextContentType" />
-    <UButton
-      label="Add Content"
-      size="sm"
-      icon="i-ph-plus-circle"
-      @click="addContent"
-    />
+    <UButton label="Add Content" size="sm" icon="i-ph-plus-circle" @click="addContent" />
   </div>
   <div v-for="part in workshop.sortedContents">
     <ContentPart
@@ -18,12 +13,9 @@
 </template>
 
 <script setup lang="ts">
-import { loadContentParts, createContentPart } from '~/db/ContentPartModel'
-import {
-  type ContentPart,
-  type ContentDetails,
-  LessonContentEnum,
-} from '~/types/won-types'
+import { LearningRepository as repo } from '~/api/wonService/LearningRepo'
+import type { LessonContentType } from '~/api/wonService/schema'
+import { type ContentDetails, LessonContentEnum } from '~/types/won-types'
 
 const workshop = useWorkshopStore()
 
@@ -48,9 +40,8 @@ const nextCount = computed(() => {
 })
 
 async function loadData() {
-  const { data: parts, error } = await useAsyncData(
-    `lesson-${props.lessonKey}-content`,
-    () => loadContentParts(props.lessonKey)
+  const { data: parts, error } = await useAsyncData(`lesson-${props.lessonKey}-content`, () =>
+    repo.getContents(props.lessonKey),
   )
   if (parts.value) {
     parts.value.forEach((part) => workshop.cacheContentPart(part))
@@ -58,11 +49,9 @@ async function loadData() {
 }
 await loadData()
 
-const handleCacheUpdatedPart = (update: ContentPart) =>
-  workshop.cacheContentPart(update)
+const handleCacheUpdatedPart = (update: LessonContentType) => workshop.cacheContentPart(update)
 
-const handleRemovePart = (publicKey: string) =>
-  workshop.removeCachedContentPart(publicKey)
+const handleRemovePart = (publicKey: string) => workshop.removeCachedContentPart(publicKey)
 
 const addContent = async () => {
   let details: ContentDetails
@@ -118,12 +107,12 @@ const addContent = async () => {
     }
   }
   const input = {
-    lessonId: workshop.activeLesson?.id,
+    lessonKey: workshop.activeLesson?.publicKey,
     type: nextContentType.value,
     sequence: nextCount.value,
     details,
   }
-  const minted = await createContentPart(input)
+  const minted = await repo.createContentPart(input)
   workshop.cacheContentPart(minted)
 }
 </script>
