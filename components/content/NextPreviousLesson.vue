@@ -1,31 +1,43 @@
 <template>
   <div class="lesson-navigation">
-    <nuxt-link v-if="hasPreviousLesson" :to="previousLessonLink" class="previous-lesson">
-      &larr; Previous Lesson
-    </nuxt-link>
-    <span v-else class="no-previous-lesson">
-      🌟
-    </span>
+    <UButton v-if="hasPreviousLesson" variant="ghost" :to="previousLessonLink" :label="previousLabel">
+      <template #leading>
+        <UIcon name="i-ph-arrow-fat-line-left-duotone" />
+      </template>
+    </UButton>
+    <UIcon v-else name="i-ph-play-duotone" />
 
-    <nuxt-link v-if="hasNextLesson" :to="nextLessonLink" class="next-lesson">
-      Next Lesson &rarr;
-    </nuxt-link>
-    <span v-else class="no-next-lesson">
-      🎉
-    </span>
+    <UButton v-if="hasNextLesson" variant="ghost" :to="nextLessonLink" :label="nextLabel">
+      <template #trailing>
+        <UIcon name="i-ph-arrow-fat-line-right-duotone" />
+      </template>
+    </UButton>
+    <UIcon v-else name="i-ph-medal-duotone" />
   </div>
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue';
+import { UButton } from '#components';
+import { computed } from 'vue'
 
 const props = defineProps<{
-  previousLessonLink?: string;
-  nextLessonLink?: string;
-}>();
+  previousLessonLink?: any
+  nextLessonLink?: any
+}>()
 
-const hasPreviousLesson = computed(() => !!props.previousLessonLink);
-const hasNextLesson = computed(() => !!props.nextLessonLink);
+const hasPreviousLesson = computed(() => !!props.previousLessonLink)
+const hasNextLesson = computed(() => !!props.nextLessonLink)
+const previousLabel = computed(() => {
+  return `${props.previousLessonLink?.title}` || '🌟'
+})
+const nextLabel = computed(() => {
+  return `${props.nextLessonLink?.title}` || '🎉'
+})
+
+onMounted(() => {
+  console.log(props.previousLessonLink)
+  console.log(props.nextLessonLink)
+})
 </script>
 
 <style scoped>
@@ -34,15 +46,6 @@ const hasNextLesson = computed(() => !!props.nextLessonLink);
   justify-content: space-between;
   align-items: center;
   margin-top: 2rem;
-}
-
-.previous-lesson,
-.next-lesson {
-  padding: 0.5rem 1rem;
-  background-color: #f0f0f0;
-  border-radius: 4px;
-  text-decoration: none;
-  color: #333;
 }
 
 .no-previous-lesson,
