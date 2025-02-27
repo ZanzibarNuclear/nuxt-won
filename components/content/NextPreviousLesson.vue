@@ -28,10 +28,10 @@ const props = defineProps<{
 const hasPreviousLesson = computed(() => !!props.previousLessonLink)
 const hasNextLesson = computed(() => !!props.nextLessonLink)
 const previousLabel = computed(() => {
-  return `${props.previousLessonLink?.title}` || '🌟'
+  return props.previousLessonLink?.title
 })
 const nextLabel = computed(() => {
-  return `${props.nextLessonLink?.title}` || '🎉'
+  return props.nextLessonLink?.title
 })
 
 onMounted(() => {

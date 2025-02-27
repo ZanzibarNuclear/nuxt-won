@@ -1,27 +1,36 @@
 <template>
   <ClientOnly>
-    <div v-if="lessons">
-      <div v-for="lesson in lessons" :key="lesson.id">
-        <NuxtLink :to="lesson.path">
-          {{ lesson.title }}
-        </NuxtLink>
-      </div>
-    </div>
+    <h3>Lesson Selector</h3>
+    <USelect v-model="selectedLesson" :options="lessonOptions" />
+    <UButton @click="goToLesson">Go to Lesson</UButton>
   </ClientOnly>
 </template>
 
 <script lang="ts" setup>
-const lessons = ref()
-const load = async () => {
-  const { data } = await useAsyncData('benefits', () => {
-    return queryCollection('lessons').all()
+const selectedLesson = ref()
+
+const { data: lessons } = await useAsyncData('benefits', () => {
+  return queryCollection('lessons').all()
+})
+const lessonOptions = computed(() => {
+  return lessons.value?.map((lesson) => {
+    return {
+      label: lesson.title,
+      value: lesson.id
+    }
   })
-  lessons.value = data.value
-  lessons.value.forEach((lesson) => {
-    console.log(lesson)
-  })
+})
+
+// const updateSelectedLesson = (pick: object) => {
+//   console.log('selected update: ' + JSON.stringify(pick))
+//   selectedLesson.value = pick
+// }
+const goToLesson = () => {
+  console.log('going to lesson: ' + selectedLesson.value.id)
+  const lesson = lessons.value?.find((lesson) => lesson.id === selectedLesson.value)
+  console.log(lesson)
+  navigateTo(lesson?.path)
 }
-await load()
 </script>
 
 <style></style>
