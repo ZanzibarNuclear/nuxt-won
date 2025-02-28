@@ -5,16 +5,12 @@ date: 2025-01-23
 published: true
 ---
 
+# So Much to Learn
+
 Do you know the old joke? How do you eat an elephant? One bite at a time.
 
-That is also a great approach to learning about nuclear energy. To get a solid understanding of nuclear requires knowledge in many different areas. Packing that knowledge into your brain takes effort and time.
+Of course, no one wants to eat an elephant. But if you want to understand nuclear energy, you will need to learn a lot of science and engineering. To make it easier, try these bite-sized lessons. Each one explains a single concept and should take about 10 minutes to complete.
 
-To make it easier, we break down what you need to know into bite-sized lessons. Each lesson explains a single concept and should take about 10 minutes to complete. The lessons are grouped into courses that focus on a particular aspect of nuclear energy.
-
-Easy enough.
-
-Along the way, we will give you a chance to test yourself, to see what you have learned. As you complete your study, we will give you little rewards that mark your progress.
-
-Here are the courses. Start at the beginning, and we will guide you from one lesson to the next.
+Start at the beginning, or jump into whatever makes you curious. Have fun learning!
 
 :LessonNavigationTree
