@@ -1,13 +1,13 @@
 <template>
   <div class="lesson-navigation">
-    <UButton v-if="hasPrevious" variant="ghost" :to="previous.path" :label="previous.title">
+    <UButton v-if="hasPrevious" variant="ghost" :to="previous?.path" :label="previous?.title">
       <template #leading>
         <UIcon name="i-ph-arrow-fat-line-left-duotone" />
       </template>
     </UButton>
     <UIcon v-else name="i-ph-play-duotone" />
 
-    <UButton v-if="hasNext" variant="ghost" :to="next.path" :label="next.title">
+    <UButton v-if="hasNext" variant="ghost" :to="next?.path" :label="next?.title">
       <template #trailing>
         <UIcon name="i-ph-arrow-fat-line-right-duotone" />
       </template>

@@ -11,7 +11,9 @@ export const useLessons = () => {
     const { data: navTree } = await useAsyncData('navigation', () => {
       return queryCollectionNavigation('lessons')
     })
-    lessonStore.cacheLessonTree(navTree.value?.[0])
+    if (navTree.value?.[0]) {
+      lessonStore.cacheLessonTree(navTree.value?.[0] as Lesson)
+    }
   }
 
   const setCurrentLesson = (lessonStem: string) => {

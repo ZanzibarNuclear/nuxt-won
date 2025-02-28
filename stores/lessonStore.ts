@@ -3,8 +3,10 @@ import { ref, reactive, computed } from 'vue'
 
 export interface Lesson {
   stem: string
-  children?: Lesson[]
+  path: string
+  title: string
   sequence?: number
+  children?: Lesson[]
 }
 
 export const useLessonStore = defineStore('lessonStore', () => {
