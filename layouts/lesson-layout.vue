@@ -1,14 +1,13 @@
 <template>
-  <div class="bg-heroic-uranium dark:bg-heroic-graphite text-heroic-graphite dark:text-heroic-lightgray">
-    <div class="antialiased flex flex-col items-center justify-center min-h-screen place-content-center sm:text-base">
-      <div class="min-w-80 w-5/6 mx-auto">
-        <LayoutBasicHeader :hide-nav="true" />
-        <main class="mb-16">
-          <slot />
-        </main>
-        <LessonSelector />
-        <LayoutBasicFooter />
-      </div>
+  <div
+    class="bg-heroic-uranium dark:bg-heroic-graphite text-heroic-graphite dark:text-heroic-lightgray min-h-screen flex flex-col">
+    <div class="w-5/6 min-w-[80px] mx-auto flex-grow flex flex-col">
+      <LayoutBasicHeader :hide-nav="true" />
+      <main class="flex-grow mb-16">
+        <slot />
+      </main>
+      <LessonSelector />
+      <LayoutBasicFooter />
     </div>
   </div>
 </template>
