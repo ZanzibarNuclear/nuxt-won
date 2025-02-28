@@ -17,10 +17,4 @@ Along the way, we will give you a chance to test yourself, to see what you have 
 
 Here are the courses. Start at the beginning, and we will guide you from one lesson to the next.
 
-**Course Selector goes here**
-
-:CourseSelector
-
-:LessonSelector
-
 :LessonNavigationTree

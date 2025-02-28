@@ -11,6 +11,10 @@
 
 <script lang="ts" setup>
 const route = useRoute()
+definePageMeta({
+  layout: 'lesson-layout',
+})
+
 const { data: post } = await useAsyncData('lessons', () => {
   return queryCollection('lessons').path(route.path).first()
 })

@@ -16,8 +16,3 @@ This is the energy stored in the nucleus of an atom. When you break atoms apart 
 ## Isn't it too powerful?
 
 As with any resource, whether it's used for good or evil depends on how you use it and to what ends. Humans have figured out how to control this power. We can release a lot all at once with devasting effects, or we can release it more slowly and direct it toward productive uses.
-
-:LessonViewer
-
-**Lesson path starts here**
-:LessonSelector

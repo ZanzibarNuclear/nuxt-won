@@ -1,8 +1,12 @@
 <template>
   <ClientOnly>
-    <h3>Lesson Selector</h3>
-    <USelect v-model="selectedLesson" :options="lessonOptions" />
-    <UButton @click="goToLesson">Go to Lesson</UButton>
+    <div class="lesson-selector-container">
+      <h3>Lesson Selector</h3>
+      <div class="selector-row">
+        <USelect v-model="selectedLesson" :options="lessonOptions" class="lesson-select" />
+        <UButton @click="goToLesson">Go to Lesson</UButton>
+      </div>
+    </div>
   </ClientOnly>
 </template>
 
@@ -10,7 +14,10 @@
 const selectedLesson = ref()
 
 const { data: lessons } = await useAsyncData('benefits', () => {
-  return queryCollection('lessons').all()
+  return queryCollection('lessons')
+    .where('published', '=', true)
+    .order('date', 'ASC')
+    .all()
 })
 const lessonOptions = computed(() => {
   return lessons.value?.map((lesson) => {
@@ -21,16 +28,25 @@ const lessonOptions = computed(() => {
   })
 })
 
-// const updateSelectedLesson = (pick: object) => {
-//   console.log('selected update: ' + JSON.stringify(pick))
-//   selectedLesson.value = pick
-// }
 const goToLesson = () => {
-  console.log('going to lesson: ' + selectedLesson.value.id)
-  const lesson = lessons.value?.find((lesson) => lesson.id === selectedLesson.value)
-  console.log(lesson)
-  navigateTo(lesson?.path)
+  const targetLesson = lessons.value?.find((lesson) => lesson.id === selectedLesson.value)
+  navigateTo(targetLesson?.path)
 }
 </script>
 
-<style></style>
+<style scoped>
+.lesson-selector-container {
+  width: 70%;
+  margin: 0 auto;
+}
+
+.selector-row {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.lesson-select {
+  flex: 1;
+}
+</style>
