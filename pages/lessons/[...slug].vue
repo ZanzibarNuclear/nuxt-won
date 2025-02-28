@@ -3,10 +3,6 @@
     <ContentRenderer :value="post" class="prose prose-stone dark:prose-invert p-3 mx-auto" />
   </div>
 
-  <!-- <div v-if="surroundings">
-    <NextPreviousLesson :previous-lesson-link="previousLesson" :next-lesson-link="nextLesson" />
-  </div> -->
-
   <LessonPathSigns />
 
 </template>

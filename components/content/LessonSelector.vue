@@ -3,6 +3,7 @@
     <div class="lesson-selector-container">
       <h3>Lesson Selector</h3>
       <div class="selector-row">
+        <UButton to="/lessons" icon="i-ph-book-open-text-duotone">All Lessons</UButton>
         <USelect v-model="selectedLesson" :options="lessonOptions" class="lesson-select" />
         <UButton @click="goToLesson">Go to Lesson</UButton>
       </div>
@@ -13,23 +14,20 @@
 <script lang="ts" setup>
 const selectedLesson = ref()
 
-const { data: lessons } = await useAsyncData('benefits', () => {
-  return queryCollection('lessons')
-    .where('published', '=', true)
-    .order('date', 'ASC')
-    .all()
-})
+// Use sorted lessons from lesson store
+const lessons = useLessonStore().courseIndex.orderedLessons
+
 const lessonOptions = computed(() => {
-  return lessons.value?.map((lesson) => {
+  return lessons.map((lesson) => {
     return {
       label: lesson.title,
-      value: lesson.id
+      value: lesson.stem
     }
   })
 })
 
 const goToLesson = () => {
-  const targetLesson = lessons.value?.find((lesson) => lesson.id === selectedLesson.value)
+  const targetLesson = lessons.find((lesson) => lesson.stem === selectedLesson.value)
   navigateTo(targetLesson?.path)
 }
 </script>
