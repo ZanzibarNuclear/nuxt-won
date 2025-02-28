@@ -4,8 +4,8 @@
       <h3>Lesson Selector</h3>
       <div class="selector-row">
         <UButton to="/lessons" icon="i-ph-book-open-text-duotone">All Lessons</UButton>
-        <USelect v-model="selectedLesson" :options="lessonOptions" class="lesson-select" />
-        <UButton @click="goToLesson">Go to Lesson</UButton>
+        <USelect v-model="selectedLesson" :options="lessonOptions" @update:model-value="goToLesson"
+          class="lesson-select" />
       </div>
     </div>
   </ClientOnly>
