@@ -1,4 +1,5 @@
 import type { Lesson } from '~/stores/lessonStore'
+import { EventRepository as events } from '~/api/wonService/EventRepo'
 
 export const useLessons = () => {
   const lessonStore = useLessonStore()
@@ -18,6 +19,8 @@ export const useLessons = () => {
 
   const setCurrentLesson = (lessonStem: string) => {
     lessonStore.setCurrentLesson(lessonStem)
+    events.logPageHit(lessonStem)
+
   }
 
   const hasPreviousLesson = computed(() => lessonStore.previousLesson !== null)
