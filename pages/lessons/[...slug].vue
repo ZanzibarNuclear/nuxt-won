@@ -3,9 +3,11 @@
     <ContentRenderer :value="post" class="prose prose-stone dark:prose-invert p-3 mx-auto" />
   </div>
 
-  <div v-if="surroundings">
+  <!-- <div v-if="surroundings">
     <NextPreviousLesson :previous-lesson-link="previousLesson" :next-lesson-link="nextLesson" />
-  </div>
+  </div> -->
+
+  <LessonPathSigns />
 
 </template>
 
@@ -37,7 +39,7 @@ const nextLesson = computed(() => {
 })
 
 onMounted(() => {
-  console.log(surroundings.value)
+  useLessons().setCurrentLesson(post.value?.stem as string)
 })
 </script>
 
