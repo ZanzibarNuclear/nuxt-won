@@ -3,6 +3,7 @@
     <div class="antialiased flex flex-col items-center justify-center min-h-screen place-content-center sm:text-base">
       <div class="min-w-80 w-5/6 mx-auto">
         <LayoutBasicHeader :hide-nav="true" />
+        <UButton to="/lessons" icon="i-ph-book-open-text-duotone">Lessons</UButton>
         <main class="mb-16">
           <slot />
         </main>
