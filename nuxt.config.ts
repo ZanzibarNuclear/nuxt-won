@@ -15,7 +15,6 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     '@nuxt/image',
     '@nuxt/content',
-    'nuxt-tiptap-editor',
     '@nuxt/test-utils/module',
   ],
   runtimeConfig: {
@@ -44,16 +43,6 @@ export default defineNuxtConfig({
   },
   experimental: {
     appManifest: true,
-  },
-  nitro: {
-    preset: process.env.NODE_ENV === 'production' ? 'cloudflare-pages' : undefined,
-    prerender: {
-      autoSubfolderIndex: false,
-      routes: ['/']
-    }
-  },
-  tiptap: {
-    prefix: 'Tiptap',
   },
   icon: {
     serverBundle: 'remote',
