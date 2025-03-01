@@ -59,12 +59,12 @@ const features = [
   },
   {
     category: 'learning',
-    name: 'Mini Lessons',
+    name: 'Lessons',
     coverImage: '/images/Cherenkov-radiation.jpg',
     description:
       'Learn everything related to nuclear energy. Build a foundation of fundamental concepts.',
     callToAction: 'Get smarter every day',
-    routeName: 'learning',
+    routeName: 'lessons',
   },
   {
     category: 'gaming',

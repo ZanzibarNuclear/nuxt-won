@@ -5,7 +5,6 @@
     <main class="flex-grow flex items-center justify-center">
       <slot />
     </main>
-    <CommonSimpleFooter />
   </div>
 </template>
 

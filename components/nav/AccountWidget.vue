@@ -46,7 +46,7 @@
 </template>
 
 <script setup>
-const loggedIn = ref(false)
+const userStore = useUserStore()
 
 const showSignInPanel = ref(false)
 const openSignInPanel = () => (showSignInPanel.value = true)
@@ -57,7 +57,7 @@ const openActionPanel = () => (showActionPanel.value = true)
 const closeActionPanel = () => (showActionPanel.value = false)
 
 const isLoggedIn = computed(() => {
-  return loggedIn.value
+  return userStore.isSignedIn
 })
 const toggleLoggedIn = () => {
   loggedIn.value = !loggedIn.value

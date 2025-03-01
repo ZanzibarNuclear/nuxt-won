@@ -1,26 +1,21 @@
 import { defineStore } from 'pinia'
-import type {
-  Course,
-  LessonPlan,
-  LessonPath,
-  ContentPart,
-} from '~/types/won-types'
+import type { CourseType, LessonPlanType, LessonPathType, LessonContentType } from '~/api/wonService/schema'
 
 export const useWorkshopStore = defineStore('workshop', () => {
-  type CourseMap = { [k: string]: Course }
-  type LessonMap = { [k: string]: LessonPlan }
-  type PathMap = { [k: string]: LessonPath }
+  type CourseMap = { [k: string]: CourseType }
+  type LessonMap = { [k: string]: LessonPlanType }
+  type PathMap = { [k: string]: LessonPathType }
   type CoursePathMap = { [k: string]: PathMap }
-  type ContentPartMap = { [k: string]: ContentPart }
+  type ContentPartMap = { [k: string]: LessonContentType }
 
   const courses: CourseMap = reactive({})
   const courseList = computed(() => Object.values(courses))
   const activeCourseKey = ref()
 
-  const cacheCourse = (courseToCache: Course) => {
+  const cacheCourse = (courseToCache: CourseType) => {
     courses[courseToCache.publicKey] = courseToCache
   }
-  const cacheCourses = (items: Course[]) => {
+  const cacheCourses = (items: CourseType[]) => {
     items.forEach((course) => cacheCourse(course))
   }
   const getCourse = (publicKey: string) => {
@@ -64,10 +59,10 @@ export const useWorkshopStore = defineStore('workshop', () => {
   })
   const activeLessonKey = ref()
 
-  const cacheLesson = (lessonToAdd: LessonPlan) => {
+  const cacheLesson = (lessonToAdd: LessonPlanType) => {
     lessonPlans[lessonToAdd.publicKey] = lessonToAdd
   }
-  const cacheLessons = (items: LessonPlan[]) => {
+  const cacheLessons = (items: LessonPlanType[]) => {
     if (items && items.length > 0) {
       items.forEach((lesson) => cacheLesson(lesson))
     }
@@ -96,9 +91,9 @@ export const useWorkshopStore = defineStore('workshop', () => {
 
   const coursePaths: CoursePathMap = reactive({})
 
-  const cacheCoursePaths = (courseKey: string, paths: LessonPath[]) => {
+  const cacheCoursePaths = (courseKey: string, paths: LessonPathType[]) => {
     const temp: PathMap = {}
-    paths.forEach((path) => (temp[path.publicKey] = path))
+    paths.forEach((path) => (temp[path.publicKey || ''] = path))
     coursePaths[courseKey] = temp
   }
   const getCoursePaths = (courseKey: string) => {
@@ -109,10 +104,10 @@ export const useWorkshopStore = defineStore('workshop', () => {
       return Object.values(getCoursePaths(activeCourseKey.value))
     }
   })
-  const cacheActiveLessonPath = (path: LessonPath) => {
+  const cacheActiveLessonPath = (path: LessonPathType) => {
     if (isCourseActive) {
       const paths = coursePaths[activeCourseKey.value]
-      paths[path.publicKey] = path
+      paths[path.publicKey || ''] = path
     }
   }
   const removeActiveLessonPath = (pathKey: string) => {
@@ -122,14 +117,14 @@ export const useWorkshopStore = defineStore('workshop', () => {
 
   const contents: ContentPartMap = reactive({})
 
-  const cacheContentPart = (part: ContentPart) => {
+  const cacheContentPart = (part: LessonContentType) => {
     if (part.publicKey) {
       contents[part.publicKey] = part
     } else {
       console.warn('content part without public key', part)
     }
   }
-  const cacheLessonContent = (parts: ContentPart[]) => {
+  const cacheLessonContent = (parts: LessonContentType[]) => {
     if (parts && parts.length > 0) {
       parts.forEach((part) => cacheContentPart(part))
     }

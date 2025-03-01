@@ -21,21 +21,13 @@
         class="mr-6"
         @click="() => onOpenLesson(lesson.publicKey)"
       />
-      <UButton
-        @click="onDeleteLesson(lesson.publicKey)"
-        icon="i-ph-x-circle"
-        color="amber"
-      />
+      <UButton @click="onDeleteLesson(lesson.publicKey)" icon="i-ph-x-circle" color="amber" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import {
-  loadLessonPlans,
-  createLessonPlan,
-  deleteLessonPlan,
-} from '~/db/LessonPlanModel'
+import { LearningRepository as repo } from '~/api/wonService/LearningRepo'
 
 const props = defineProps(['courseKey'])
 const emit = defineEmits(['openLesson'])
@@ -46,15 +38,14 @@ const uiState = reactive({
   editLesson: false,
 })
 
-const { data: lessonPlans } = await useAsyncData(
-  `course-${props.courseKey}-lessons`,
-  () => loadLessonPlans(props.courseKey)
+const { data: lessonPlans } = await useAsyncData(`course-${props.courseKey}-lessons`, () =>
+  repo.getLessonPlansForCourse(props.courseKey),
 )
 workshop.cacheLessons(lessonPlans.value)
 
-const onCreateLesson = async (details) => {
+const onCreateLesson = async (details: any) => {
   console.log('add new lesson to course', details)
-  const minted = await createLessonPlan(details)
+  const minted = await repo.createLessonPlan(details)
   if (minted) {
     console.log('added lesson plan', minted)
     workshop.cacheLesson(minted)
@@ -62,15 +53,15 @@ const onCreateLesson = async (details) => {
   uiState.addLesson = false
 }
 
-const onOpenLesson = (lessonKey) => {
+const onOpenLesson = (lessonKey: string) => {
   workshop.makeLessonActive(lessonKey)
   emit('openLesson', lessonKey)
 }
 
 const onCancelCreateLesson = () => (uiState.addLesson = false)
 
-const onDeleteLesson = async (lessonKey) => {
-  const result = await deleteLessonPlan(lessonKey)
+const onDeleteLesson = async (lessonKey: string) => {
+  const result = await repo.deleteLessonPlan(lessonKey)
   workshop.removeLesson(lessonKey)
 }
 </script>

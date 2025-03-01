@@ -2,18 +2,8 @@
   <div class="field">
     <div class="mb-2">
       <UButton icon="i-ph-pencil" @click="setEdit" class="mr-2" />
-      <UButton
-        icon="i-ph-trash"
-        @click="handleDelete"
-        class="mr-2"
-        color="amber"
-      />
-      <UButton
-        icon="i-ph-eyes"
-        @click="togglePreview"
-        class="mr-2 mt-2"
-        color="green"
-      />
+      <UButton icon="i-ph-trash" @click="handleDelete" class="mr-2" color="amber" />
+      <UButton icon="i-ph-eyes" @click="togglePreview" class="mr-2 mt-2" color="green" />
     </div>
     <div>
       <ContentPartHtml
@@ -61,7 +51,7 @@
 </template>
 
 <script setup lang="ts">
-import { saveContentPart, deleteContentPart } from '~/db/ContentPartModel'
+import { LearningRepository as repo } from '~/api/wonService/LearningRepo'
 import { LessonContentEnum } from '~/types/won-types'
 
 const props = defineProps(['part'])
@@ -76,13 +66,13 @@ const setEdit = () => {
   edit.value = true
 }
 const handleDelete = () => {
-  deleteContentPart(props.part.publicKey)
+  repo.deleteContentPart(props.part.publicKey)
   emit('removePart', props.part.publicKey)
 }
 const togglePreview = () => {
   preview.value = !preview.value
 }
-const handleChanges = async (details) => {
+const handleChanges = async (details: any) => {
   console.log('commit changes', details)
   // detect changes - compare prop.details to details
 
@@ -97,7 +87,7 @@ const handleChanges = async (details) => {
   if (props.part?.publicKey) {
     // update
     console.log('update existing part')
-    const update = await saveContentPart(input)
+    const update = await repo.updateContentPart(props.part.publicKey, input)
     // need to cache the return value --- move caching logic to workshop store; but for now can emit
     emit('cacheUpdatedPart', update)
   } else {

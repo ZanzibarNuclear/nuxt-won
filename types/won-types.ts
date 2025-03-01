@@ -99,6 +99,14 @@ export type LearningBookmark = {
   pathKey: string
   updatedAt: string
 }
+
+export type UserInfo = {
+  id: string
+  alias: string
+  roles: string[]
+  profile?: UserProfile
+}
+
 export type UserProfile = {
   id: string
   screen_name: string
@@ -111,35 +119,4 @@ export type UserProfile = {
   linkedin_profile_name: string
   joined_at: string
   updated_at: string
-}
-
-// What Say You?
-export type WsyWriter = {
-  id: number
-  userId: string
-  penName: string
-  joinedAt: string
-  suspendedAt: string | null
-  retiredAt: string | null
-}
-export type WsyThread = {
-  publicKey: string
-  topic: string
-  ownerId: number
-  createdAt: string
-  updatedAt: string
-  closedAt: string
-  entries: WsyEntry[]
-}
-export type WsyEntry = {
-  publicKey: string
-  threadKey: string
-  writerId: number
-  inResponseTo: string
-  statement: string
-  createdAt: string
-  postedAt: string
-  updatedAt: string
-  heldForReviewAt: string
-  archivedAt: string
 }

@@ -2,11 +2,7 @@
   <div>
     <h2>Members</h2>
     <div class="flex space-x-2">
-      <UButton
-        :disabled="lastPage"
-        label="Load Members"
-        @click="loadNextBatch"
-      />
+      <UButton :disabled="lastPage" label="Load Members" @click="loadNextBatch" />
       <div class="flex">
         <span>Screen Name:</span>
         <UInput v-model="fetchParams.screenName" size="md" />
@@ -14,15 +10,13 @@
       </div>
       <UButton label="Clear" @click="reset" />
     </div>
-    <div>
-      next offset: {{ fetchParams.offset }} max rows: {{ fetchParams.limit }}
-    </div>
+    <div>next offset: {{ fetchParams.offset }} max rows: {{ fetchParams.limit }}</div>
     <UTable :rows="inView" :columns="columns" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { scanUserProfiles } from '~/db/UserModel'
+import { UserRepository as repo } from '~/api/wonService/UserRepo'
 
 const inView = ref([])
 const fetchParams = reactive({
@@ -71,20 +65,17 @@ const reset = () => {
 }
 
 const loadNextBatch = async () => {
-  const nextBatch = await scanUserProfiles(
-    fetchParams.offset,
-    fetchParams.limit
-  )
+  const nextBatch = await repo.getUsers(fetchParams.offset, fetchParams.limit)
   inView.value = nextBatch
   fetchParams.offset += nextBatch.length
   lastPage.value = nextBatch.length < fetchParams.limit
 }
 
 const findProfiles = async () => {
-  const nextBatch = await scanUserProfiles(
+  const nextBatch = await repo.getUsers(
     fetchParams.offset,
     fetchParams.limit,
-    fetchParams.screenName
+    fetchParams.screenName,
   )
   inView.value = nextBatch
   fetchParams.offset += nextBatch.length
