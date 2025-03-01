@@ -2,13 +2,7 @@
   <ClientOnly>
     <div v-if="benefits">
       <ContentRenderer v-if="benefits" :value="benefits" />
-      <UButton
-        class="text-center"
-        color="yellow"
-        variant="solid"
-        label="Join Now"
-        @click="goToJoinPage"
-      />
+      <UButton class="text-center" color="yellow" variant="solid" label="Join Now" @click="goToJoinPage" />
     </div>
   </ClientOnly>
 </template>
@@ -24,7 +18,7 @@ const load = async () => {
 await load()
 
 const goToJoinPage = async () => {
-  navigateTo('/auth/sign-in')
+  navigateTo('/sign-in')
 }
 </script>
 
