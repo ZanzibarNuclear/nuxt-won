@@ -7,14 +7,15 @@
     </h2>
     <LessonContentView :content-parts="learning.contentParts" class="mb-12" />
     <div
-      class="text-center w-3/4 mx-auto text-[#222222] dark:text-[#ffa] bg-[#f5f5f5] dark:bg-[#333] rounded-md p-4 mb-12"
-    >
+      class="text-center w-3/4 mx-auto text-[#222222] dark:text-[#ffa] bg-[#f5f5f5] dark:bg-[#333] rounded-md p-4 mb-12">
       <div v-if="nextStep" class="mx-auto">
         <div class="mb-4">
           {{ nextStep.teaser }}
         </div>
         <div>
-          <UButton @click="onGoNext">Continue <UIcon name="i-ph-arrow-right-duotone" /></UButton>
+          <UButton @click="onGoNext">Continue
+            <UIcon name="i-ph-arrow-right-duotone" />
+          </UButton>
         </div>
       </div>
       <div v-else>
@@ -23,7 +24,8 @@
         <div v-if="!gotCreditForFinishing">
           Click to <UButton @click="onClaimCredit">claim credit</UButton> for finishing.
         </div>
-        <div>Want to <NuxtLink to="/learning">try another?</NuxtLink></div>
+        <div>Want to <NuxtLink to="/learning">try another?</NuxtLink>
+        </div>
       </div>
     </div>
   </div>
@@ -102,16 +104,16 @@ async function loadData() {
   })
   const { plan, contents } = lessonData.value
   learning.cacheLesson(plan)
-  learning.useLesson(lessonKey)
+  learning.useLesson(lessonKey as string)
   learning.cacheContents(contents)
-  nextStep.value = learning.lookupStep(lessonKey)
+  nextStep.value = learning.lookupStep(lessonKey as string)
 }
 await loadData()
 
 const onGoNext = () => {
   eventRepo.logLearningEvent(
-    courseKey,
-    learning.activePath?.publicKey,
+    courseKey as string,
+    learning.activePath?.publicKey as string,
     nextStep.value.to,
     'take-step',
   )
