@@ -1,6 +1,6 @@
 <template>
   <div v-if="post">
-    <ContentRenderer :value="post" class="prose prose-stone dark:prose-invert p-3 mx-auto" />
+    <ContentRenderer :value="post" />
   </div>
 
   <LessonPathSigns />
