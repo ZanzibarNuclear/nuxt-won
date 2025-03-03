@@ -12,11 +12,6 @@
 </template>
 
 <script setup lang="ts">
-const hideNav = ref(true)
-const toggleLeftNavVisibility = () => {
-  hideNav.value = !hideNav.value
-}
-
 useLessons().fetchLessonTree()
 </script>
 
