@@ -1,6 +1,5 @@
 <template>
-  <div
-    class="bg-heroic-uranium dark:bg-heroic-graphite text-heroic-graphite dark:text-heroic-lightgray min-h-screen flex flex-col">
+  <div class="min-h-screen flex flex-col">
     <div class="w-5/6 min-w-[80px] mx-auto flex-grow flex flex-col">
       <LayoutBasicHeader :hide-nav="false" />
       <main class="flex-grow mb-16">
@@ -13,11 +12,6 @@
 </template>
 
 <script setup lang="ts">
-const hideNav = ref(true)
-const toggleLeftNavVisibility = () => {
-  hideNav.value = !hideNav.value
-}
-
 useLessons().fetchLessonTree()
 </script>
 

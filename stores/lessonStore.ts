@@ -30,7 +30,6 @@ export const useLessonStore = defineStore('lessonStore', () => {
   })
 
   const indexTree = () => {
-    console.log('index tree', lessonTree.value)
     if (lessonTree.value) {
       courseIndex.courseList = lessonTree.value.children?.filter(
         (child) => child.children != null
@@ -97,6 +96,7 @@ export const useLessonStore = defineStore('lessonStore', () => {
 
   const setCurrentLesson = (lessonStem: string) => {
     currentLesson.value = lookupLesson(lessonStem)
+    console.log('found lesson', currentLesson.value)
   }
 
   return {

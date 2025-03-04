@@ -18,6 +18,7 @@ export const useLessons = () => {
   }
 
   const setCurrentLesson = (lessonStem: string) => {
+    console.log('setting current lesson', lessonStem)
     lessonStore.setCurrentLesson(lessonStem)
     events.logPageHit(lessonStem)
 

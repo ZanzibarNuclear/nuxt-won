@@ -5,8 +5,8 @@
       Please identify yourself using one of these methods.
     </div>
     <AuthOAuthCard class="my-6" />
-    <!-- <UDivider>or</UDivider>
-    <AuthMagicLinkCard class="my-6" /> -->
+    <UDivider>or</UDivider>
+    <AuthMagicLinkCard class="my-6" />
   </div>
 </template>
 
