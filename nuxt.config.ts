@@ -16,6 +16,7 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@nuxt/content',
     '@nuxt/test-utils/module',
+    '@nuxtjs/turnstile',
   ],
   runtimeConfig: {
     resendFeedbackKey: process.env.RESEND_FEEDBACK_KEY,
@@ -24,6 +25,9 @@ export default defineNuxtConfig({
       wonServiceEndpoint: process.env.WON_SERVICE_ENDPOINT,
       baseUrl: process.env.BASE_URL || 'http://localhost:3000',
     },
+    turnstile: {
+      secretKey: process.env.TURNSTILE_SECRET_KEY,
+    }
   },
   content: {
     preview: {

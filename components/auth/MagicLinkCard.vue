@@ -1,15 +1,12 @@
 <template>
   <UCard class="shadow-cherenkov bg-nuclear-50">
     <template #header>
-      <h3>Request a Magic Link</h3>
-    </template>
-    <AuthMagicLinkForm />
-    <template #footer>
+      <div class="text-lg font-bold text-heroic-cherenkov pb-4">Request a magic link</div>
       <div class="font-body text-sm">
-        Give us your email address, and we will send you an email with a link. Click the link in the
-        email to return here signed in.
+        Tell us your email address, and we will send you a link. Click the link to return here, all signed in.
       </div>
     </template>
+    <AuthMagicLinkForm />
   </UCard>
 </template>
 

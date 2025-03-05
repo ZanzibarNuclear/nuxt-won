@@ -11,13 +11,16 @@ export const useWonAuth = () => {
 
   const loginWithMagicLink = async (email: string, alias: string, token: string) => {
     try {
-      const response = await useWonService().post('/login/magiclink', {
+      const data = {
         email,
         alias,
         token
+      }
+      return await $fetch(`${useRuntimeConfig().public.wonServiceEndpoint}/login/magiclink`, {
+        method: 'POST',
+        body: data,
+        credentials: 'include', // This is crucial for sending cookies
       })
-      console.log('loginWithMagicLink response:', response)
-      return response
     } catch (error: any) {
       console.error('Error logging in with magic link', error)
       return { status: 'error', message: error.message }

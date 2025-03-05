@@ -1,6 +1,13 @@
 <template>
   <UCard class="shadow-cherenkov bg-nuclear-50">
-    <div class="space-x-2 space-y-4 text-center">
+    <template #header>
+      <div class="text-lg font-bold text-heroic-cherenkov pb-4">Use an existing account</div>
+      <div class="text-sm">
+        You may be asked to authorize
+        <span class="font-bold italic">Zanzibar's World of Nuclear Energy</span>. Say "yes" to join.
+      </div>
+    </template>
+    <div class="space-x-2 space-y-2 text-center">
       <UButton icon="i-ph-google-logo-duotone" size="lg" variant="outline" label="Google" class="hover:bg-nuclear-100"
         @click="signIn('google')" />
       <UButton icon="i-ph-discord-logo-duotone" size="lg" variant="outline" label="Discord" class="hover:bg-nuclear-100"
@@ -14,12 +21,6 @@
       <UButton icon="i-ph-instagram-logo-duotone" size="lg" variant="outline" label="Instagram"
         class="hover:bg-nuclear-100" @click="signIn('instagram')" />
     </div>
-    <template #footer>
-      <div class="text-sm">
-        You may be asked to authorize
-        <span class="font-bold italic">Zanzibar's World of Nuclear Energy</span>. Say "yes" to join.
-      </div>
-    </template>
   </UCard>
 </template>
 
@@ -27,6 +28,16 @@
 const emit = defineEmits(['finish'])
 
 async function signIn(provider: string) {
+  if (provider === 'x') {
+    alert('X is not supported yet. Please try another identity provider.')
+    return
+  } else if (provider === 'instagram') {
+    alert('Instagram is not supported yet. Please try another identity provider.')
+    return
+  } else if (provider === 'apple') {
+    alert('Apple is not supported yet. Please try another identity provider.')
+    return
+  }
   useWonAuth().loginWithOAuth(provider)
   emit('finish')
 }
