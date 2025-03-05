@@ -4,13 +4,15 @@ import { EventRepository as events } from '~/api/wonService/EventRepo'
 export const useLessons = () => {
   const lessonStore = useLessonStore()
 
-  const fetchLessonTree = async () => {
+  const fetchLessonTree = async (publishedOnly = false) => {
     if (lessonStore.isLoaded) {
       console.log('lesson tree already loaded')
       return
     }
     const { data: navTree } = await useAsyncData('navigation', () => {
-      return queryCollectionNavigation('lessons')
+      return publishedOnly
+        ? queryCollectionNavigation('lessons').where('published', '=', true)
+        : queryCollectionNavigation('lessons')
     })
     if (navTree.value?.[0]) {
       lessonStore.cacheLessonTree(navTree.value?.[0] as Lesson)
