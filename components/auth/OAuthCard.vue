@@ -14,12 +14,12 @@
         @click="signIn('discord')" />
       <UButton icon="i-ph-github-logo-duotone" size="lg" variant="outline" label="GitHub" class="hover:bg-nuclear-100"
         @click="signIn('github')" />
-      <UButton icon="i-ph-x-logo-duotone" size="lg" variant="outline" label="X" class="hover:bg-nuclear-100"
+      <!-- <UButton icon="i-ph-x-logo-duotone" size="lg" variant="outline" label="X" class="hover:bg-nuclear-100"
         @click="signIn('x')" />
       <UButton icon="i-ph-apple-logo-duotone" size="lg" variant="outline" label="Apple" class="hover:bg-nuclear-100"
         @click="signIn('apple')" />
       <UButton icon="i-ph-instagram-logo-duotone" size="lg" variant="outline" label="Instagram"
-        class="hover:bg-nuclear-100" @click="signIn('instagram')" />
+        class="hover:bg-nuclear-100" @click="signIn('instagram')" /> -->
     </div>
   </UCard>
 </template>

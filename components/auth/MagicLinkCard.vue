@@ -6,7 +6,9 @@
         Tell us your email address, and we will send you a link. Click the link to return here, all signed in.
       </div>
     </template>
-    <AuthMagicLinkForm />
+    <div class="mx-auto max-w-md">
+      <AuthMagicLinkForm />
+    </div>
   </UCard>
 </template>
 

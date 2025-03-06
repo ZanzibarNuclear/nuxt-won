@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Sign In or Join</h1>
+    <h1 class="text-center">Sign In</h1>
     <div class="flex items-center gap-4">
       <div>
         <NuxtImg src="/images/Zanzibar-2024-07.jpg" width="70px" fit="contain" />
