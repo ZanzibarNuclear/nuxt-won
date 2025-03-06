@@ -12,14 +12,14 @@
         @click="signIn('google')" />
       <UButton icon="i-ph-discord-logo-duotone" size="lg" variant="outline" label="Discord" class="hover:bg-nuclear-100"
         @click="signIn('discord')" />
+      <UButton icon="i-ph-meta-logo-duotone" size="lg" variant="outline" label="Meta" class="hover:bg-nuclear-100"
+        @click="signIn('meta')" />
       <UButton icon="i-ph-github-logo-duotone" size="lg" variant="outline" label="GitHub" class="hover:bg-nuclear-100"
         @click="signIn('github')" />
-      <!-- <UButton icon="i-ph-x-logo-duotone" size="lg" variant="outline" label="X" class="hover:bg-nuclear-100"
+      <UButton icon="i-ph-x-logo-duotone" size="lg" variant="outline" label="X" class="hover:bg-nuclear-100"
         @click="signIn('x')" />
       <UButton icon="i-ph-apple-logo-duotone" size="lg" variant="outline" label="Apple" class="hover:bg-nuclear-100"
         @click="signIn('apple')" />
-      <UButton icon="i-ph-instagram-logo-duotone" size="lg" variant="outline" label="Instagram"
-        class="hover:bg-nuclear-100" @click="signIn('instagram')" /> -->
     </div>
   </UCard>
 </template>
@@ -30,9 +30,6 @@ const emit = defineEmits(['finish'])
 async function signIn(provider: string) {
   if (provider === 'x') {
     alert('X is not supported yet. Please try another identity provider.')
-    return
-  } else if (provider === 'instagram') {
-    alert('Instagram is not supported yet. Please try another identity provider.')
     return
   } else if (provider === 'apple') {
     alert('Apple is not supported yet. Please try another identity provider.')
