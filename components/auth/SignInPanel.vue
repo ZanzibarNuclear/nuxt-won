@@ -4,9 +4,12 @@
     <div class="pb-2 font-body text-heroic-black dark:text-heroic-lightgray">
       Please identify yourself using one of these methods.
     </div>
-    <AuthOAuthCard class="my-6" />
-    <UDivider>or</UDivider>
-    <AuthMagicLinkCard class="my-6" />
+    <div class="space-y-6">
+      <AuthModalOAuthPanel />
+      <AuthOAuthCard />
+      <UDivider>or</UDivider>
+      <AuthMagicLinkCard />
+    </div>
   </div>
 </template>
 

@@ -1,12 +1,15 @@
-export const useWonAuth = () => {
+export function useWonAuth() {
+  const user = useState('user', () => null)
+  const isAuthenticated = computed(() => !!user.value)
   const userStore = useUserStore()
   const loading = ref(false)
   const error = ref<Error | null>(null)
 
   const loginWithOAuth = async (provider: string) => {
-    navigateTo(`${useRuntimeConfig().public.wonServiceEndpoint}/login/${provider}`, {
-      external: true
-    })
+    // This method is now handled by the modal flow in OAuthCard.vue
+    // We'll keep this as a stub that can be called from other components
+    console.log(`OAuth login with ${provider} initiated`)
+    // The actual implementation is in OAuthCard.vue
   }
 
   const loginWithMagicLink = async (email: string, alias: string, token: string) => {
@@ -67,13 +70,31 @@ export const useWonAuth = () => {
     }
   }
 
+  async function checkAuthStatus() {
+    try {
+      const { data } = await useFetch('https://api.worldofnuclear.com/user/me')
+      const userData = data.value as { user?: typeof user.value }
+      if (userData.user) {
+        user.value = userData.user
+        return true
+      }
+      return false
+    } catch (error) {
+      console.error('Failed to check auth status:', error)
+      return false
+    }
+  }
+
   return {
+    user,
+    isAuthenticated,
     loading,
     error,
     loginWithOAuth,
     loginWithMagicLink,
     getCurrentUser,
     findIdentity,
-    signOut
+    signOut,
+    checkAuthStatus
   }
 }
