@@ -5,6 +5,7 @@ export const useLessons = () => {
   const lessonStore = useLessonStore()
 
   const fetchLessonTree = async (publishedOnly = false) => {
+    console.log('loading lesson tree...how big does this get??')
     if (lessonStore.isLoaded) {
       console.log('lesson tree already loaded')
       return
@@ -17,6 +18,7 @@ export const useLessons = () => {
     if (navTree.value?.[0]) {
       lessonStore.cacheLessonTree(navTree.value?.[0] as Lesson)
     }
+    console.log('done loading lesson tree')
   }
 
   const setCurrentLesson = (lessonStem: string) => {

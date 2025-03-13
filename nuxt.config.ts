@@ -51,7 +51,10 @@ export default defineNuxtConfig({
   icon: {
     serverBundle: 'remote',
   },
-  css: ['@/assets/css/font.css', '@/assets/css/tailwind.css', '@/assets/css/katex.0.16.8.min.css'],
+  turnstile: {
+    siteKey: process.env.TURNSTILE_SITE_KEY
+  },
+  css: ['@/assets/css/font.css', '@/assets/css/tailwind.css', '@/assets/katex/katex.min.css'],
   vite: {
     define: {
       global: 'window',

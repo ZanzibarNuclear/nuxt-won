@@ -26,7 +26,7 @@
     "@sinclair/typebox": "^0.34.28",
     "date-fns": "^4.1.0",
     "jwt-decode": "^4.0.0",
-    "mathjax-full": "^3.2.2",
+    "katex": "^0.16.21",
     "nuxt": "^3.15.4",
     "pinia": "^3.0.1",
     "qs": "^6.14.0",
