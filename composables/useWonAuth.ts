@@ -1,23 +1,29 @@
-export const useWonAuth = () => {
+export function useWonAuth() {
+  const user = useState('user', () => null)
+  const isAuthenticated = computed(() => !!user.value)
   const userStore = useUserStore()
   const loading = ref(false)
   const error = ref<Error | null>(null)
 
   const loginWithOAuth = async (provider: string) => {
-    navigateTo(`${useRuntimeConfig().public.wonServiceEndpoint}/login/${provider}`, {
-      external: true
-    })
+    // This method is now handled by the modal flow in OAuthCard.vue
+    // We'll keep this as a stub that can be called from other components
+    console.log(`OAuth login with ${provider} initiated`)
+    // The actual implementation is in OAuthCard.vue
   }
 
   const loginWithMagicLink = async (email: string, alias: string, token: string) => {
     try {
-      const response = await useWonService().post('/login/magiclink', {
+      const data = {
         email,
         alias,
         token
+      }
+      return await $fetch(`${useRuntimeConfig().public.wonServiceEndpoint}/login/magiclink`, {
+        method: 'POST',
+        body: data,
+        credentials: 'include', // This is crucial for sending cookies
       })
-      console.log('loginWithMagicLink response:', response)
-      return response
     } catch (error: any) {
       console.error('Error logging in with magic link', error)
       return { status: 'error', message: error.message }
@@ -64,13 +70,31 @@ export const useWonAuth = () => {
     }
   }
 
+  async function checkAuthStatus() {
+    try {
+      const { data } = await useFetch('https://api.worldofnuclear.com/user/me')
+      const userData = data.value as { user?: typeof user.value }
+      if (userData.user) {
+        user.value = userData.user
+        return true
+      }
+      return false
+    } catch (error) {
+      console.error('Failed to check auth status:', error)
+      return false
+    }
+  }
+
   return {
+    user,
+    isAuthenticated,
     loading,
     error,
     loginWithOAuth,
     loginWithMagicLink,
     getCurrentUser,
     findIdentity,
-    signOut
+    signOut,
+    checkAuthStatus
   }
 }

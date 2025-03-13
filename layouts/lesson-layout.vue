@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-useLessons().fetchLessonTree()
+useLessons().fetchLessonTree(true)
 </script>
 
 <style scoped>
