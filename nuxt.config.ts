@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: '2025-01-23',
-  devtools: { enabled: true },
+  devtools: { enabled: false },
   sourcemap: true,
   colorMode: {
     preference: 'light'
@@ -28,6 +28,9 @@ export default defineNuxtConfig({
     turnstile: {
       secretKey: process.env.TURNSTILE_SECRET_KEY,
     }
+  },
+  routeRules: {
+    '/admin/**': { appMiddleware: ['admin-route-guard'] },
   },
   content: {
     preview: {
