@@ -1,2 +1,60 @@
 @import 'tailwindcss' theme(static);
+@import '@nuxt/ui-pro';
 @import '@nuxt/ui';
+
+@theme static {
+  /* --container-8xl: 90rem; */
+
+  --color-nuclear-50: #f0f9ff;
+  --color-nuclear-100: #e0f2fe;
+  --color-nuclear-200: #b9e6fe;
+  --color-nuclear-300: #7cd4fd;
+  --color-nuclear-400: #36bffa;
+  --color-nuclear-500: #0ca7eb;
+  --color-nuclear-600: #008bd1;
+  --color-nuclear-700: #016aa3;
+  --color-nuclear-800: #065a86;
+  --color-nuclear-900: #0b4b6f;
+  --color-nuclear-950: #072f4a;
+
+  --color-uranium: #fefadc;
+  --color-cherenkov: #20c8fb;
+  --color-navy: #1a74e2;
+  --color-graphite: #454749;
+  --color-cooling-tower: #d3d3d3; /* find a suitable gray */
+  --color-zircaloy: #d3d3d3; /* FIXME: find a shiny metalic color */
+
+  --color-uranium-ore-bright: #ffff7e;
+  --color-uranium-ore-darker: #ffca11;
+  --color-uranium-orange: #e08400;
+  --color-uranium-glow-bright: #2cfa1f;
+  --color-uranium-glow-dark: #167b10;
+
+  --font-heading: Orbitron, sans-serif;
+  --font-body: Roboto, sans-serif;
+  --font-body-serif: RobotoSerif, serif;
+  --font-heading-serif: Chonburi, serif;
+  --font-heading-slab: RobotoSlab, sans-serif;
+  --font-cursive: Playwrite;
+
+  --list-style-type-none: none;
+  --list-style-type-disc: disc;
+  --list-style-type-decimal: decimal;
+  --list-style-type-square: square;
+  --list-style-type-roman: upper-roman;
+
+  --shadow-cherenkov: 0 0 10px #20c8fb;
+}
+
+/* 
+:root {
+  --ui-bg: var(--ui-color-neutral-50);
+  --ui-text: var(--ui-color-neutral-900);
+  --ui-container: var(--container-8xl);
+}
+
+.dark {
+  --ui-bg: var(--ui-color-neutral-950);
+  --ui-border: var(--ui-color-neutral-900);
+} 
+*/

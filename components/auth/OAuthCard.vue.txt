@@ -1,24 +1,23 @@
 <template>
-  <UCard class="shadow-cherenkov bg-nuclear-50">
+  <UCard>
     <template #header>
-      <div class="text-lg font-bold text-heroic-cherenkov pb-4">Use an existing account</div>
+      <div class="text-lg font-bold pb-4">Use an existing account</div>
       <div class="text-sm">
         You may be asked to authorize
         <span class="font-bold italic">Zanzibar's World of Nuclear Energy</span>. Say "yes" to join.
       </div>
     </template>
     <div class="space-x-2 space-y-2 text-center">
-      <UButton icon="i-ph-google-logo-duotone" size="lg" variant="outline" label="Google" class="hover:bg-nuclear-100"
-        @click="signIn('google')" />
-      <UButton icon="i-ph-discord-logo-duotone" size="lg" variant="outline" label="Discord" class="hover:bg-nuclear-100"
+      <UButton icon="i-ph-google-logo-duotone" size="lg" variant="outline" label="Google" @click="signIn('google')" />
+      <UButton icon="i-ph-discord-logo-duotone" size="lg" variant="outline" label="Discord" 
         @click="signIn('discord')" />
-      <UButton icon="i-ph-meta-logo-duotone" size="lg" variant="outline" label="Meta" class="hover:bg-nuclear-100"
+      <UButton icon="i-ph-meta-logo-duotone" size="lg" variant="outline" label="Meta" 
         @click="signIn('meta')" />
-      <UButton icon="i-ph-github-logo-duotone" size="lg" variant="outline" label="GitHub" class="hover:bg-nuclear-100"
+      <UButton icon="i-ph-github-logo-duotone" size="lg" variant="outline" label="GitHub" 
         @click="signIn('github')" />
-      <UButton icon="i-ph-x-logo-duotone" size="lg" variant="outline" label="X" class="hover:bg-nuclear-100"
+      <UButton icon="i-ph-x-logo-duotone" size="lg" variant="outline" label="X" 
         @click="signIn('x')" />
-      <UButton icon="i-ph-apple-logo-duotone" size="lg" variant="outline" label="Apple" class="hover:bg-nuclear-100"
+      <UButton icon="i-ph-apple-logo-duotone" size="lg" variant="outline" label="Apple" 
         @click="signIn('apple')" />
     </div>
   </UCard>

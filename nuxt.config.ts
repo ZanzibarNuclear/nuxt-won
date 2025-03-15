@@ -14,6 +14,7 @@ export default defineNuxtConfig({
   modules: [
     '@pinia/nuxt',
     '@nuxt/ui',
+    '@nuxt/ui-pro',
     '@nuxt/image',
     '@nuxt/content',
     '@nuxt/test-utils/module',
@@ -58,7 +59,7 @@ export default defineNuxtConfig({
   turnstile: {
     siteKey: process.env.TURNSTILE_SITE_KEY
   },
-  css: ['@/assets/css/main.css', '@/assets/css/font.css', '@/assets/css/tailwind.css', '@/assets/katex/katex.min.css'],
+  css: ['@/assets/css/font.css', '@/assets/css/main.css', '@/assets/katex/katex.min.css'],
   vite: {
     plugins: [
       tailwindcss()

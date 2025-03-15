@@ -34,8 +34,4 @@ useHead({
 })
 </script>
 
-<style>
-body {
-  @apply bg-heroic-uranium dark:bg-heroic-graphite text-heroic-graphite dark:text-heroic-lightgray;
-}
-</style>
+<style></style>

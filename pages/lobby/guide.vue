@@ -23,13 +23,17 @@
         <div>
           <UIcon name="i-ph-star-duotone" class="star" />
           If you just came here to learn, check out the
-          <NuxtLink to="/lessons">mini lessons</NuxtLink>. Each lesson explains a
-          single concept and is short enough to get through in about 10 minutes. Gain credit with
-          each lesson you complete, and unlock more advanced material. Hello.
+          <NuxtLink to="/lessons">mini lessons</NuxtLink>. Each lesson explains a single concept and
+          is short enough to get through in about 10 minutes. Gain credit with each lesson you
+          complete, and unlock more advanced material. Hello.
         </div>
       </div>
       <div>
-        <NuxtImg src="/images/concept-art/nuclear-power-plant-along-river.jpg" width="800" class="mb-6" />
+        <NuxtImg
+          src="/images/concept-art/nuclear-power-plant-along-river.jpg"
+          width="800"
+          class="mb-6"
+        />
         <NuxtImg src="/images/concept-art/riverside-power-plant.jpg" width="800" />
       </div>
     </div>
@@ -70,12 +74,4 @@
 
 <script setup lang="ts"></script>
 
-<style scoped>
-.star {
-  @apply mr-2 text-uranium-ore-darker dark:text-uranium-ore-bright;
-}
-
-a {
-  @apply text-heroic-cherenkov hover:text-nuclear-600;
-}
-</style>
+<style scoped></style>

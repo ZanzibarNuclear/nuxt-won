@@ -4,7 +4,6 @@
 
 <script setup lang="ts">
 const dividerStyle = {
-  border: { base: 'border-heroic-cherenkov dark:border-heroic-cherenkov' },
   avatar: { size: 'md' },
 }
 </script>
