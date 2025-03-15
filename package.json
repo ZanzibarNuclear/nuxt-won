@@ -8,7 +8,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "nuxt build",
+    "build": "NODE_OPTIONS=--max-old-space-size=8192 nuxt build",
     "dev": "nuxt dev",
     "test": "vitest",
     "start": "node .output/server/index.mjs",
