@@ -5,7 +5,7 @@
       Please identify yourself using one of these methods.
     </div>
     <div class="space-y-6">
-      <AuthModalOAuthPanel />
+      <!-- <AuthModalOAuthPanel /> -->
       <AuthOAuthCard />
       <UDivider>or</UDivider>
       <AuthMagicLinkCard />

@@ -7,7 +7,7 @@
       </div>
       <div>Use one of these methods to establish your identity.</div>
     </div>
-    <AuthModalOAuthPanel />
+    <!-- <AuthModalOAuthPanel /> -->
     <AuthOAuthCard class="my-6" />
     <AuthMagicLinkCard class="my-6" />
     <div class="my-12">
