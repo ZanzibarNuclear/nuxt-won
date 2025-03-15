@@ -57,7 +57,7 @@ export default defineNuxtConfig({
   turnstile: {
     siteKey: process.env.TURNSTILE_SITE_KEY
   },
-  css: ['@/assets/css/font.css', '@/assets/css/tailwind.css', '@/assets/katex/katex.min.css'],
+  css: ['@/assets/css/main.css', '@/assets/css/font.css', '@/assets/css/tailwind.css', '@/assets/katex/katex.min.css'],
   vite: {
     define: {
       global: 'window',
