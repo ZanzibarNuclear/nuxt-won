@@ -15,7 +15,7 @@
     <!-- Mobile Navigation -->
     <transition name="fade">
       <div v-show="isMobileMenuOpen"
-        class="md:hidden flex flex-col mt-4 space-y-2 dark:bg-heroic-graphite bg-heroic-uranium p-4 rounded">
+        class="md:hidden flex flex-col mt-4 space-y-2 dark:bg-heroic-graphite bg-heroic-uranium p-4 rounded-sm">
         <NavMenuItem v-for="item in menuItems" :key="item.label" :icon="item.icon" :label="item.label"
           :route="item.route" :external="item.external" @picked-item="closeMenu" />
         <DarkToggle />

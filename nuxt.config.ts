@@ -1,4 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import tailwindcss from '@tailwindcss/vite'
 export default defineNuxtConfig({
   compatibilityDate: '2025-01-23',
   devtools: { enabled: true },
@@ -59,6 +60,9 @@ export default defineNuxtConfig({
   },
   css: ['@/assets/css/main.css', '@/assets/css/font.css', '@/assets/css/tailwind.css', '@/assets/katex/katex.min.css'],
   vite: {
+    plugins: [
+      tailwindcss()
+    ],
     define: {
       global: 'window',
     },
