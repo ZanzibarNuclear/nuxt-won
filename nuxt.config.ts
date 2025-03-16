@@ -30,6 +30,9 @@ export default defineNuxtConfig({
       secretKey: process.env.TURNSTILE_SECRET_KEY,
     }
   },
+  uiPro: {
+    license: process.env.NUXT_UI_PRO_LICENSE
+  },
   routeRules: {
     '/admin/**': { appMiddleware: ['admin-route-guard'] },
   },
