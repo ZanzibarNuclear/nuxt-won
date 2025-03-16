@@ -1,5 +1,5 @@
 <template>
-  <div class="frame">
+  <div class="shadow-lg rounded-lg overflow-hidden mx-auto p-4">
     <NuxtImg class="mx-auto" :src="src" :alt="caption" :width="width" :height="height" />
     <div v-if="credit" class="text-center mt-2 text-sm">
       Photo by:
@@ -24,8 +24,4 @@ defineProps<{
 }>()
 </script>
 
-<style scoped>
-.frame {
-  @apply shadow-lg rounded-lg overflow-hidden mx-auto p-4;
-}
-</style>
+<style scoped></style>

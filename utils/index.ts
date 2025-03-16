@@ -1,4 +1,3 @@
-import { _columns } from '#tailwind-config/theme'
 import { format } from 'date-fns'
 
 export const displayAsDate = (ts: string) => {

@@ -29,12 +29,11 @@
   --color-uranium-glow-bright: #2cfa1f;
   --color-uranium-glow-dark: #167b10;
 
+  --font-sans: Roboto, Lato, sans-serif;
+  --font-serif: 'Roboto Slab', Uchen, serif;
+  --font-cursive: Charm, cursive;
+  --font-mono: 'Courier Prime', Monaco, monospace;
   --font-heading: Orbitron, sans-serif;
-  --font-body: Roboto, sans-serif;
-  --font-body-serif: RobotoSerif, serif;
-  --font-heading-serif: Chonburi, serif;
-  --font-heading-slab: RobotoSlab, sans-serif;
-  --font-cursive: Playwrite;
 
   --list-style-type-none: none;
   --list-style-type-disc: disc;

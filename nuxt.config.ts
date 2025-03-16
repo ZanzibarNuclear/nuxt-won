@@ -1,9 +1,15 @@
+import { window } from './node_modules/happy-dom/src/PropertySymbol';
+import vue from '@vitejs/plugin-vue'
+import uiPro from '@nuxt/ui-pro/vite'
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import tailwindcss from '@tailwindcss/vite'
 export default defineNuxtConfig({
   compatibilityDate: '2025-01-23',
   devtools: { enabled: true },
   sourcemap: true,
+  experimental: {
+    appManifest: true,
+  },
   components: {
     global: true,
     dirs: ['~/components'],
@@ -27,6 +33,10 @@ export default defineNuxtConfig({
       secretKey: process.env.TURNSTILE_SECRET_KEY,
     }
   },
+  css: ['@/assets/css/main.css', '@/assets/katex/katex.min.css'],
+  icon: {
+    serverBundle: 'remote',
+  },
   uiPro: {
     license: process.env.NUXT_UI_PRO_LICENSE,
   },
@@ -49,22 +59,12 @@ export default defineNuxtConfig({
       }
     }
   },
-  experimental: {
-    appManifest: true,
-  },
-  icon: {
-    serverBundle: 'remote',
-  },
   turnstile: {
     siteKey: process.env.TURNSTILE_SITE_KEY
   },
-  css: ['@/assets/css/font.css', '@/assets/css/main.css', '@/assets/katex/katex.min.css'],
   vite: {
-    plugins: [
-      tailwindcss()
-    ],
     define: {
-      global: 'window',
+      global: 'window'
     },
     css: {
       preprocessorOptions: {
@@ -76,5 +76,5 @@ export default defineNuxtConfig({
         }
       }
     }
-  },
+  }
 })

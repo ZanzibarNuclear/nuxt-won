@@ -24,5 +24,7 @@ export default defineAppConfig({
       plus: 'i-ph-plus-duotone',
       search: 'i-ph-magnifying-glass-duotone'
     },
+    select: {
+    }
   }
 })

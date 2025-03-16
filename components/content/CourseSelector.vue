@@ -16,7 +16,7 @@ const courses = ref()
 const load = async () => {
   const { data } = await useAsyncData('benefits', () => {
     // return queryCollection('lessons').where('id', 'LIKE', '/lessons/%/index.md').all()
-    return queryCollection('courses').all()
+    return queryCollection('lessons').where('published', '=', true).all()
   })
   courses.value = data.value
   courses.value.forEach((course: any) => {
