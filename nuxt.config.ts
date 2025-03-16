@@ -4,9 +4,6 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-01-23',
   devtools: { enabled: true },
   sourcemap: true,
-  colorMode: {
-    preference: 'light'
-  },
   components: {
     global: true,
     dirs: ['~/components'],
@@ -31,7 +28,7 @@ export default defineNuxtConfig({
     }
   },
   uiPro: {
-    license: process.env.NUXT_UI_PRO_LICENSE
+    license: process.env.NUXT_UI_PRO_LICENSE,
   },
   routeRules: {
     '/admin/**': { appMiddleware: ['admin-route-guard'] },

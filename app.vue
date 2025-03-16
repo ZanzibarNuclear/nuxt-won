@@ -1,6 +1,6 @@
 <template>
   <UApp>
-    <NuxtLayout>
+    <NuxtLayout class="bg-uranium dark:bg-graphite text-graphite dark:text-cooling-tower">
       <NuxtPage />
     </NuxtLayout>
   </UApp>
