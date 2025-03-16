@@ -13,7 +13,6 @@ export default defineNuxtConfig({
   },
   modules: [
     '@pinia/nuxt',
-    '@nuxt/ui',
     '@nuxt/ui-pro',
     '@nuxt/image',
     '@nuxt/content',
