@@ -18,16 +18,17 @@
 
   --color-uranium: #fefadc;
   --color-cherenkov: #20c8fb;
-  --color-navy: #1a74e2;
   --color-graphite: #454749;
-  --color-cooling-tower: #d3d3d3; /* find a suitable gray */
-  --color-zircaloy: #d3d3d3; /* FIXME: find a shiny metalic color */
+  --color-cooling-tower: #707778;
+  --color-cooling-tower-dark: #8c92ac;
+  --color-zircaloy: #cac9c6;
 
-  --color-uranium-ore-bright: #ffff7e;
-  --color-uranium-ore-darker: #ffca11;
+  --color-uranium-highlight-bright: #ffff7e;
+  --color-uranium-highlight: #ffca11;
   --color-uranium-orange: #e08400;
-  --color-uranium-glow-bright: #2cfa1f;
-  --color-uranium-glow-dark: #167b10;
+
+  --color-radiation-glow: #2cfa1f;
+  --color-radiation-glow-dark: #167b10;
 
   --font-sans: Roboto, Lato, sans-serif;
   --font-serif: 'Roboto Slab', Uchen, serif;
@@ -42,6 +43,11 @@
   --list-style-type-roman: upper-roman;
 
   --shadow-cherenkov: 0 0 10px #20c8fb;
+
+  --color-h1: var(--color-cherenkov);
+  --color-h2: var(--color-nuclear-500);
+  --color-h3: var(--color-uranium-orange);
+  --color-h4: var(--color-cooling-tower);
 }
 
 /* 
@@ -56,3 +62,53 @@
   --ui-border: var(--ui-color-neutral-900);
 } 
 */
+
+h1 {
+  font-family: var(--font-heading);
+  font-size: var(--text-4xl);
+  font-weight: bold;
+  color: var(--color-h1);
+  margin: 1.5em 0 0.5em 0;
+}
+h2 {
+  font-family: var(--font-heading);
+  font-size: var(--text-3xl);
+  font-weight: bold;
+  color: var(--color-h2);
+  margin: 1em 0 0.5em 0;
+}
+h3 {
+  font-family: var(--font-heading);
+  font-size: var(--text-2xl);
+  font-weight: bold;
+  color: var(--color-h3);
+  margin: 0.5em 0 0.25em 0;
+}
+h4 {
+  font-family: var(--font-heading);
+  font-size: large;
+  font-weight: bold;
+  color: var(--color-h4);
+  margin: 0.5em 0 0.25em 0;
+}
+h5 {
+  font-family: var(--font-heading);
+  font-size: medium;
+  color: var(--color-h4);
+}
+h6 {
+  font-family: var(--font-heading);
+  font-size: small;
+  color: var(--color-h4);
+}
+p {
+  margin: 0.5em 0;
+}
+ul,
+ol {
+  margin: 1em 0;
+}
+a:hover {
+  font: bold;
+  color: var(--color-nuclear-500);
+}
