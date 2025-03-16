@@ -1,0 +1,114 @@
+@import 'tailwindcss' theme(static);
+@import '@nuxt/ui-pro';
+
+@theme static {
+  /* --container-8xl: 90rem; */
+
+  --color-nuclear-50: #f0f9ff;
+  --color-nuclear-100: #e0f2fe;
+  --color-nuclear-200: #b9e6fe;
+  --color-nuclear-300: #7cd4fd;
+  --color-nuclear-400: #36bffa;
+  --color-nuclear-500: #0ca7eb;
+  --color-nuclear-600: #008bd1;
+  --color-nuclear-700: #016aa3;
+  --color-nuclear-800: #065a86;
+  --color-nuclear-900: #0b4b6f;
+  --color-nuclear-950: #072f4a;
+
+  --color-uranium: #fefadc;
+  --color-cherenkov: #20c8fb;
+  --color-graphite: #454749;
+  --color-cooling-tower: #707778;
+  --color-cooling-tower-dark: #8c92ac;
+  --color-zircaloy: #cac9c6;
+
+  --color-uranium-highlight-bright: #ffff7e;
+  --color-uranium-highlight: #ffca11;
+  --color-uranium-orange: #e08400;
+
+  --color-radiation-glow: #2cfa1f;
+  --color-radiation-glow-dark: #167b10;
+
+  --font-sans: Roboto, Lato, sans-serif;
+  --font-serif: 'Roboto Slab', Uchen, serif;
+  --font-cursive: Charm, cursive;
+  --font-mono: 'Courier Prime', Monaco, monospace;
+  --font-heading: Orbitron, sans-serif;
+
+  --list-style-type-none: none;
+  --list-style-type-disc: disc;
+  --list-style-type-decimal: decimal;
+  --list-style-type-square: square;
+  --list-style-type-roman: upper-roman;
+
+  --shadow-cherenkov: 0 0 10px #20c8fb;
+
+  --color-h1: var(--color-cherenkov);
+  --color-h2: var(--color-nuclear-500);
+  --color-h3: var(--color-uranium-orange);
+  --color-h4: var(--color-cooling-tower);
+}
+
+/* 
+:root {
+  --ui-bg: var(--ui-color-neutral-50);
+  --ui-text: var(--ui-color-neutral-900);
+  --ui-container: var(--container-8xl);
+}
+
+.dark {
+  --ui-bg: var(--ui-color-neutral-950);
+  --ui-border: var(--ui-color-neutral-900);
+} 
+*/
+
+h1 {
+  font-family: var(--font-heading);
+  font-size: var(--text-4xl);
+  font-weight: bold;
+  color: var(--color-h1);
+  margin: 1.5em 0 0.5em 0;
+}
+h2 {
+  font-family: var(--font-heading);
+  font-size: var(--text-3xl);
+  font-weight: bold;
+  color: var(--color-h2);
+  margin: 1em 0 0.5em 0;
+}
+h3 {
+  font-family: var(--font-heading);
+  font-size: var(--text-2xl);
+  font-weight: bold;
+  color: var(--color-h3);
+  margin: 0.5em 0 0.25em 0;
+}
+h4 {
+  font-family: var(--font-heading);
+  font-size: large;
+  font-weight: bold;
+  color: var(--color-h4);
+  margin: 0.5em 0 0.25em 0;
+}
+h5 {
+  font-family: var(--font-heading);
+  font-size: medium;
+  color: var(--color-h4);
+}
+h6 {
+  font-family: var(--font-heading);
+  font-size: small;
+  color: var(--color-h4);
+}
+p {
+  margin: 0.5em 0;
+}
+ul,
+ol {
+  margin: 1em 0;
+}
+a:hover {
+  font: bold;
+  color: var(--color-nuclear-500);
+}

@@ -4,7 +4,6 @@
   </div>
 
   <LessonPathSigns />
-
 </template>
 
 <script lang="ts" setup>

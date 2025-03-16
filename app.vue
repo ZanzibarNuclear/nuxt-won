@@ -1,7 +1,9 @@
 <template>
-  <NuxtLayout>
-    <NuxtPage />
-  </NuxtLayout>
+  <UApp>
+    <NuxtLayout class="bg-uranium dark:bg-graphite text-graphite dark:text-nuclear-100">
+      <NuxtPage />
+    </NuxtLayout>
+  </UApp>
 </template>
 
 <script setup lang="ts">
@@ -32,8 +34,4 @@ useHead({
 })
 </script>
 
-<style>
-body {
-  @apply bg-heroic-uranium dark:bg-heroic-graphite text-heroic-graphite dark:text-heroic-lightgray;
-}
-</style>
+<style></style>

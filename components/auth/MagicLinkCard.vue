@@ -1,9 +1,10 @@
 <template>
-  <UCard class="shadow-cherenkov bg-nuclear-50">
+  <UCard>
     <template #header>
-      <div class="text-lg font-bold text-heroic-cherenkov pb-4">Request a magic link</div>
+      <div class="text-lg font-bold pb-4">Request a magic link</div>
       <div class="font-body text-sm">
-        Tell us your email address, and we will send you a link. Click the link to return here, all signed in.
+        Tell us your email address, and we will send you a link. Click the link to return here, all
+        signed in.
       </div>
     </template>
     <div class="mx-auto max-w-md">

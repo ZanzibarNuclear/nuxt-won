@@ -37,8 +37,4 @@
 
 <script setup lang="ts"></script>
 
-<style scoped>
-a {
-  @apply text-heroic-cherenkov hover:text-nuclear-600;
-}
-</style>
+<style scoped></style>

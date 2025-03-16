@@ -1,23 +1,33 @@
 <template>
   <ClientOnly>
-    <div class="bg-nuclear-50 dark:bg-heroic-graphite dark:text-heroic-lightgray rounded-lg">
+    <div class="rounded-lg">
       <UForm :state="state" :schema="schema" @submit.prevent="onSubmit">
         <div class="flex flex-col items-center">
-          <UFormGroup class="w-5/6" name="email" :ui="formGroupStyle" label="Email address" required
-            help="Check your spelling before you send.">
+          <UFormGroup
+            class="w-5/6"
+            name="email"
+            :ui="formGroupStyle"
+            label="Email address"
+            required
+            help="Check your spelling before you send."
+          >
             <UInput v-model="state.email" placeholder="email address" icon="i-ph-envelope" />
           </UFormGroup>
-          <UButton type="submit" label="Send Magic Link" :ui="buttonStyle" icon="i-ph-arrow-circle-right-duotone"
-            class="bg-nuclear-700 dark:bg-nuclear-400 text-white hover:bg-nuclear-500 dark:hover:bg-nuclear-300" />
+          <UButton
+            type="submit"
+            label="Send Magic Link"
+            :ui="buttonStyle"
+            icon="i-ph-arrow-circle-right-duotone"
+          />
           <NuxtTurnstile v-model="state.token" class="my-4" />
         </div>
       </UForm>
     </div>
     <UModal v-model="notification.show" :title="notification.heading">
       <UCard>
-        <template #header><span class="text-lg font-bold">{{
-          notification.heading
-            }}</span></template>
+        <template #header
+          ><span class="text-lg font-bold">{{ notification.heading }}</span></template
+        >
         <div>{{ notification?.message }}</div>
         <template #footer>
           <UButton @click="() => (notification.show = false)">Close</UButton>
@@ -56,8 +66,15 @@ const notify = (heading: string, message: string) => {
 
 async function onSubmit(event: FormSubmitEvent<Schema>) {
   console.log('You say your email address is ' + event.data.email + '. We shall see...')
-  const response: any = await useWonAuth().loginWithMagicLink(event.data.email, "Nuclear Fan", event.data.token)
-  notify(response.status === "success" ? "Magic Link Sent" : "Error Sending Magic Link", response.message)
+  const response: any = await useWonAuth().loginWithMagicLink(
+    event.data.email,
+    'Nuclear Fan',
+    event.data.token,
+  )
+  notify(
+    response.status === 'success' ? 'Magic Link Sent' : 'Error Sending Magic Link',
+    response.message,
+  )
 }
 
 const formGroupStyle = {
@@ -65,8 +82,8 @@ const formGroupStyle = {
   inner: '',
   label: {
     wrapper: 'flex content-center items-center justify-between',
-    base: 'block font-medium text-gray-700 dark:text-gray-200 my-1',
-    required: "after:content-['*'] after:ms-0.5 after:text-orange-500 dark:after:text-orange-400",
+    base: 'block font-medium my-1',
+    required: "after:content-['*'] after:ms-0.5",
   },
   size: {
     '2xs': 'text-xs',
@@ -77,10 +94,10 @@ const formGroupStyle = {
     xl: 'text-base',
   },
   container: 'mt-1 relative',
-  description: 'text-xs text-nuclear-800 dark:text-nuclear-400',
-  hint: 'text-xs text-gray-500 dark:text-gray-400',
-  help: 'mt-2 pl-2 text-xs text-gray-500 dark:text-gray-400',
-  error: 'text-xs mt-2 text-orange-500 dark:text-orange-400',
+  description: 'text-xs',
+  hint: 'text-xs',
+  help: 'mt-2 pl-2 text-xs',
+  error: 'text-xs mt-2',
   default: {
     size: 'sm',
   },

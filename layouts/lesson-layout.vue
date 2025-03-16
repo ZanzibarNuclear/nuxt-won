@@ -1,8 +1,8 @@
 <template>
   <div class="min-h-screen flex flex-col">
-    <div class="w-5/6 min-w-[80px] mx-auto flex-grow flex flex-col">
+    <div class="w-5/6 min-w-[80px] mx-auto grow flex flex-col">
       <LayoutBasicHeader :hide-nav="false" />
-      <main class="flex-grow mb-16">
+      <main class="grow mb-16">
         <slot />
       </main>
       <LessonSelector />
