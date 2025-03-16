@@ -23,6 +23,6 @@ export default defineAppConfig({
       minus: 'i-ph-minus-duotone',
       plus: 'i-ph-plus-duotone',
       search: 'i-ph-magnifying-glass-duotone'
-    }
+    },
   }
 })
