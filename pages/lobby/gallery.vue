@@ -1,10 +1,17 @@
 <template>
-  <div class="">
-    <div>
-      <NuxtPicture @click="advanceSlide()" :src="onDisplay" placeholder="/images/blue-reactor.jpg" />
-    </div>
+  <div>
+    <h1 class="text-center">Flux Gallery</h1>
+    <UCarousel
+      v-slot="{ item }"
+      :items="artwork"
+      class="w-full max-w-xs mx-auto"
+      :autoplay="{ delay: 2000 }"
+    >
+      <NuxtPicture @click="advanceSlide()" :src="`/images/art/${item}`" />
+    </UCarousel>
     <div class="text-right mt-2">
-      <UButton variant="ghost" alt="Go to next" :to="{ name: 'lobby' }">
+      <UButton variant="ghost" alt="Go to the lobby" :to="{ name: 'lobby' }">
+        Enter the lobby
         <UIcon name="i-ph-door-duotone" />
         <UIcon name="i-ph-arrow-right" />
       </UButton>
