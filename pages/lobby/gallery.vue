@@ -4,10 +4,15 @@
     <UCarousel
       v-slot="{ item }"
       :items="artwork"
-      class="w-full max-w-xs mx-auto"
-      :autoplay="{ delay: 2000 }"
+      :auto-height="true"
+      :autoplay="{ delay: 3000 }"
+      class="mx-auto max-w-sm"
     >
-      <NuxtPicture @click="advanceSlide()" :src="`/images/art/${item}`" />
+      <NuxtPicture
+        @click="advanceSlide()"
+        :src="`/images/art/${item}`"
+        sizes="100vw sm:50vw md:600px"
+      />
     </UCarousel>
     <div class="text-right mt-2">
       <UButton variant="ghost" alt="Go to the lobby" :to="{ name: 'lobby' }">
