@@ -6,7 +6,7 @@ import uiPro from '@nuxt/ui-pro/vite'
 export default defineNuxtConfig({
   compatibilityDate: '2025-01-23',
   devtools: { enabled: true },
-  sourcemap: true,
+  sourcemap: false,
   experimental: {
     appManifest: true,
   },
