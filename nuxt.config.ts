@@ -1,10 +1,14 @@
+import { window } from './node_modules/happy-dom/src/PropertySymbol';
+import vue from '@vitejs/plugin-vue'
+import uiPro from '@nuxt/ui-pro/vite'
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: '2025-01-23',
   devtools: { enabled: true },
-  sourcemap: true,
-  colorMode: {
-    preference: 'light'
+  sourcemap: false,
+  experimental: {
+    appManifest: true,
   },
   components: {
     global: true,
@@ -12,7 +16,7 @@ export default defineNuxtConfig({
   },
   modules: [
     '@pinia/nuxt',
-    '@nuxt/ui',
+    '@nuxt/ui-pro',
     '@nuxt/image',
     '@nuxt/content',
     '@nuxt/test-utils/module',
@@ -28,6 +32,13 @@ export default defineNuxtConfig({
     turnstile: {
       secretKey: process.env.TURNSTILE_SECRET_KEY,
     }
+  },
+  css: ['@/assets/css/main.css', '@/assets/katex/katex.min.css'],
+  icon: {
+    serverBundle: 'remote',
+  },
+  uiPro: {
+    license: process.env.NUXT_UI_PRO_LICENSE,
   },
   routeRules: {
     '/admin/**': { appMiddleware: ['admin-route-guard'] },
@@ -48,19 +59,12 @@ export default defineNuxtConfig({
       }
     }
   },
-  experimental: {
-    appManifest: true,
-  },
-  icon: {
-    serverBundle: 'remote',
-  },
   turnstile: {
     siteKey: process.env.TURNSTILE_SITE_KEY
   },
-  css: ['@/assets/css/font.css', '@/assets/css/tailwind.css', '@/assets/katex/katex.min.css'],
   vite: {
     define: {
-      global: 'window',
+      global: 'window'
     },
     css: {
       preprocessorOptions: {
@@ -72,5 +76,5 @@ export default defineNuxtConfig({
         }
       }
     }
-  },
+  }
 })

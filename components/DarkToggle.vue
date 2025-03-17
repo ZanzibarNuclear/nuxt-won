@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const colorMode = useColorMode()
+
 const isDark = computed({
   get() {
     return colorMode.value === 'dark'
@@ -14,13 +15,12 @@ const isDark = computed({
   <ClientOnly>
     <UButton
       :icon="isDark ? 'i-ph-moon-stars-duotone' : 'i-ph-sun-duotone'"
+      color="neutral"
       variant="ghost"
-      square
-      aria-label="Dark or light theme"
       @click="isDark = !isDark"
     />
     <template #fallback>
-      <div class="w-8 h-8" />
+      <div class="size-8" />
     </template>
   </ClientOnly>
 </template>

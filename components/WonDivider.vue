@@ -1,12 +1,11 @@
 <template>
-  <UDivider :avatar="{ src: '/images/radiation-symbol.svg' }" size="sm" :ui="dividerStyle" />
+  <USeparator :avatar="{ src: '/images/radiation-symbol.svg' }" :ui="uiStyle" />
 </template>
 
 <script setup lang="ts">
-const dividerStyle = {
-  border: { base: 'border-heroic-cherenkov dark:border-heroic-cherenkov' },
-  avatar: { size: 'md' },
-}
+const uiStyle = ref({
+  avatarSize: '2xl',
+})
 </script>
 
 <style lang="scss" scoped></style>

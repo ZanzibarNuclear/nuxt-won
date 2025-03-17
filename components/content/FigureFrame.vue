@@ -1,11 +1,12 @@
 <template>
-  <div class="frame">
+  <div class="shadow-lg rounded-lg overflow-hidden mx-auto p-4">
     <NuxtImg class="mx-auto" :src="src" :alt="caption" :width="width" :height="height" />
-    <div v-if="credit" class="text-center mt-2 text-sm text-heroic-cherenkov dark:text-heroic-cherenkov">Photo by:
-      <NuxtLink v-if="creditUrl" :to="creditUrl" class="text-heroic-cherenkov">{{ credit }}</NuxtLink>
+    <div v-if="credit" class="text-center mt-2 text-sm">
+      Photo by:
+      <NuxtLink v-if="creditUrl" :to="creditUrl">{{ credit }}</NuxtLink>
       <span v-else>{{ credit }}</span>
     </div>
-    <div v-if="caption" class="mt-6 text-center text-lg text-heroic-graphite dark:text-heroic-lightgray">
+    <div v-if="caption" class="mt-6 text-center text-lg">
       {{ caption }}
     </div>
   </div>
@@ -23,8 +24,4 @@ defineProps<{
 }>()
 </script>
 
-<style scoped>
-.frame {
-  @apply shadow-lg rounded-lg overflow-hidden mx-auto p-4 bg-stone-300 dark:bg-stone-600;
-}
-</style>
+<style scoped></style>

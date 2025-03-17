@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="bg-heroic-uranium dark:bg-heroic-graphite text-heroic-graphite dark:text-heroic-lightgray"
-  >
+  <div>
     <div
       class="antialiased flex flex-col items-center justify-center min-h-screen place-content-center sm:text-base"
     >
