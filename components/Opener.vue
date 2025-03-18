@@ -2,7 +2,7 @@
   <div>
     <NuxtLink :to="{ name: 'lobby-gallery' }">
       <UCard variant="subtle">
-        <h1 class="font-semibold sm:text-5xl text-4xl text-center my-0">Blue is the new green.</h1>
+        <h1 class="text-center my-0">Blue is the new green.</h1>
       </UCard>
     </NuxtLink>
   </div>

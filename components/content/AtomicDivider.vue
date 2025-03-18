@@ -1,10 +1,10 @@
 <template>
-  <UDivider :avatar="{ src: '/images/radiation-symbol.svg' }" size="sm" :ui="dividerStyle" />
+  <USeparator :avatar="{ src: '/images/radiation-symbol.svg' }" :ui="dividerStyle" class="my-6" />
 </template>
 
 <script setup lang="ts">
 const dividerStyle = {
-  avatar: { size: 'md' },
+  avatarSize: 'lg',
 }
 </script>
 

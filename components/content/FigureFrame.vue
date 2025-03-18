@@ -1,5 +1,5 @@
 <template>
-  <div class="shadow-lg rounded-lg overflow-hidden mx-auto p-4">
+  <div class="shadow-xl rounded-lg overflow-hidden mx-auto p-4 mt-6 mb-12">
     <NuxtImg class="mx-auto" :src="src" :alt="caption" :width="width" :height="height" />
     <div v-if="credit" class="text-center mt-2 text-sm">
       Photo by:
