@@ -9,7 +9,7 @@
           :items="lessonOptions"
           arrow
           @update:model-value="goToLesson"
-          class="w-96"
+          class="w-96 dark:bg-cooling-tower dark:text-white"
           color="primary"
         />
       </div>
