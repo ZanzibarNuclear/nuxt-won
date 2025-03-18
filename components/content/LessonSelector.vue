@@ -1,20 +1,18 @@
 <template>
-  <ClientOnly>
-    <div class="lesson-selector-container">
-      <h3 class="text-2xl font-bold text-center mb-2">Pick a Lesson</h3>
-      <div class="selector-row">
-        <UButton to="/lessons" icon="i-ph-book-open-text-duotone">All Lessons</UButton>
-        <USelect
-          v-model="selectedLesson"
-          :items="lessonOptions"
-          arrow
-          @update:model-value="goToLesson"
-          class="w-96 dark:bg-cooling-tower dark:text-white"
-          color="primary"
-        />
-      </div>
+  <div class="lesson-selector-container">
+    <h3 class="text-2xl font-bold text-center mb-2">Pick a Lesson</h3>
+    <div class="selector-row">
+      <UButton to="/lessons" icon="i-ph-book-open-text-duotone">All Lessons</UButton>
+      <USelect
+        v-model="selectedLesson"
+        :items="lessonOptions"
+        arrow
+        @update:model-value="goToLesson"
+        class="w-96 dark:bg-cooling-tower dark:text-white"
+        color="primary"
+      />
     </div>
-  </ClientOnly>
+  </div>
 </template>
 
 <script lang="ts" setup>
